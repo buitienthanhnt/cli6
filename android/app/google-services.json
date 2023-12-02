@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "60395106347",
+    "project_id": "cli6-c4945",
+    "storage_bucket": "cli6-c4945.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60395106347:android:b39cc48d8ab7e56f647a6e",
+        "android_client_info": {
+          "package_name": "com.cli6"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOmPjYBTzbz5NDhoxrAetbS1BodPlg13Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

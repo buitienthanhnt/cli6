@@ -2029,6 +2029,11 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.3.tgz#6209321eb2c1712a7e7466422b8cb1fc0d9dd5d8"
   integrity sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==
 
+"@types/use-sync-external-store@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz#b6725d5f4af24ace33b36fafd295136e75509f43"
+  integrity sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==
+
 "@types/yargs-parser@*":
   version "21.0.3"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-21.0.3.tgz#815e30b786d2e8f0dcd85fd5bcf5e1a04d008f15"
@@ -5801,6 +5806,14 @@ react-native@0.72.7:
     ws "^6.2.2"
     yargs "^17.6.2"
 
+react-redux@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-9.0.0.tgz#5d3a71926ddec69a5ae726587abb7a425f01ffd6"
+  integrity sha512-/X/wiza+G2IXbz1Ow9Gs5qK7KNdoEnzzsR7ne7jcOWJMBOx9wvraPZwFddCs84xqwilvYaoENHowQMiW0axbsQ==
+  dependencies:
+    "@types/use-sync-external-store" "^0.0.3"
+    use-sync-external-store "^1.0.0"
+
 react-refresh@^0.4.0:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.3.tgz#966f1750c191672e76e16c2efa569150cc73ab53"
@@ -5866,6 +5879,16 @@ recast@^0.21.0:
     esprima "~4.0.0"
     source-map "~0.6.1"
     tslib "^2.0.1"
+
+redux-thunk@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-3.0.1.tgz#1022e8c21f1f9ecead282fc59b415f7dab82a1c9"
+  integrity sha512-otjYlnsVhrubBi0OPGpmVVaIRAeF1j3TprEzU+iIPMN2aAnA8S+nMRbGPBmSAfwLXy1j5iUj2Z5wC+BaLMmFBw==
+
+redux@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-5.0.0.tgz#29572e29a439e094ff8fec46883fc45053f6736d"
+  integrity sha512-blLIYmYetpZMET6Q6uCY7Jtl/Im5OBldy+vNPauA8vvsdqyt66oep4EUpAMWNHauTC6xa9JuRPhRB72rY82QGA==
 
 reflect.getprototypeof@^1.0.4:
   version "1.0.4"

@@ -7,7 +7,7 @@ import Home from "@screens/HomeScreen/Home";
 
 //--------------------------------- MoreScreen------------------------------------------//
 // import ColorIcon        from '@screens/MoreScreen/ColorIcon';
-
+import { CategoryTree } from '@screens/MoreScreen/CategoryTree';
 // import SwipeListViews   from '@screens/MoreScreen/SwipeListViews';
 // import SwiperComponent  from '@screens/MoreScreen/SwiperComponent';
 //--------------------------------- MoreScreen------------------------------------------//
@@ -16,7 +16,7 @@ import Home from "@screens/HomeScreen/Home";
 // import Login          from '../screens/AccountScreen/Login';
 // import Wishlist       from '@screens/AccountScreen/Wishlist';
 // import FireStore      from '@screens/AccountScreen/components/firebase/FireStore';
-// import AccountDetail  from '@screens/AccountScreen/AccountDetail';
+import AccountDetail  from '@screens/AccountScreen/AccountDetail';
 // import { UserDetail } from '@screens/AccountScreen/Authen/UserDetail';
 // import { Test, CloudFun, DataBase } from '@screens/AccountScreen/Test';
 // import ExFirebase     from '@screens/AccountScreen/components/firebase';
@@ -86,8 +86,20 @@ export const screens = {
             options: {headerShown: false}
         },
     ],
-    moreTab: [],
-    accountTab: [],
+    moreTab: [
+        {
+            name: "CategoryTree",
+            component: CategoryTree,
+            options: {headerShown: false}
+        },
+    ],
+    accountTab: [
+        {
+            name: "AccountDetail",
+            component: AccountDetail,
+            options: {headerShown: false}
+        },
+    ],
     codeTab:[],
   
 }

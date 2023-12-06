@@ -1,0 +1,37 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "fcm react push message",
+    "dateExported": "2023-08-16T08:00:34.491Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "81ade64a-18b5-4ccd-9736-afa5e83faa76",
+            "colId": "ce407fb6-4eba-4fa2-a62e-563ecb3d6e4d",
+            "containerId": "",
+            "name": "https://fcm.googleapis.com/fcm/send",
+            "url": "https://fcm.googleapis.com/fcm/send",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-08-14T06:33:47.054Z",
+            "modified": "2023-08-16T08:00:14.769Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "key=AAAAeBGZHtQ:APA91bGggB93_pNvy07wXXNSDhqCeq4cx0DUFrZ569ngqgXxanHejv8adyIvuE-GSn0Aui8tSfnadFU1Wc3BykaiOwnVT_h_pzIvU6JlfKTF2rTQ3st28vO9TXAFUxsSWG7BDkDTHUbl"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"registration_ids\": [\n        \"d4DcXh13Slm1BrxLvODAry:APA91bGMzASZ4jcPUvQeg1XfNh-mlFKIJ8uccEsZFZfvZVoshekB8h8Pec9j9vF9_dxWTuvM7mh5n-pQj_SIRGDgqopZPqhS8e9ZvOp_KYLXDY2XINWfRTDgj-1dC0qFGOgsODdYivK1\",\n        \"esmG0-HhT2CKmX7nyapLOj:APA91bEPojsM7go6Yg3mjXdbSbnsG15x88z8k-Od6awC37yBsn6jZRV7_geCkwXaJztsWRPv9VNtqiw-CkV_bS45I23_0MTbSm2AqV5Gp2aqLjoMT7C9Nq0kZKVMENZI8NheI8jH8F2q\",\n        \"e9F78df8T9W4zn6Jb4GeVU:APA91bFSbM2I0yrksySQJQjZUIuvC9qbRLqzV5cgb7fnVZ8l_XFGlggWecx8C-6XChY50y_Pk4PXRtUGWXRuRmrK_eWcVeJtGvVbMi_0wU1B92k16bMv0Kqzd1h76p3GbZ8O8Ya6QU8u\"\n    ],\n    \"notification\": {\n        \"title\": \"Thong bao\",\n        \"body\": \" tha nan conten open paper detail \"\n    },\n    \"data\":{\n        \"link\": \"work\",\n        \"id\": 222,\n        \"screen\": \"PaperDetail/20\"\n    }\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

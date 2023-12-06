@@ -1,53 +1,135 @@
-import * as React from 'react';
-import { View, Text, Button } from 'react-native';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
+
+import React, { useEffect, useState } from 'react';
+import type { PropsWithChildren } from 'react';
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
+
+import { navigationRef } from '@hooks/Navigate'; // để di chuyển qua các màn hình
+
+// https://viblo.asia/p/webpack-5-babel-plugin-module-resolver-djeZ1EN8ZWz tạo Alias trong webpack
+// https://viblo.asia/p/webpack-5-webpack-resolve-alias-extensions-naQZRL4Q5vx
+// https://nguyenvanphuoc.com/bai-viet/cau-hinh-path-alias-voi-react-typescript-craco
+
+// import Icon from 'react-native-vector-icons/FontAwesome';  // npm install react-native-vector-icons --save && thêm: apply from: "../../node_modules/react-native-vector-icons/fonts.gradle" vào: android/app/build.gradle
+// import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BottomTabs from '@bottoms/Bottom';
+import { requestUserPermission } from '@utils/notificationHelper';
+import linking from './linking';
+import { QueryClient, QueryClientProvider } from 'react-query'  // dùng cho getdata api
+import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react 
+import AppStore from './src/redux/AppStore';
+const queryClient = new QueryClient()
 
-function HomeScreen({ navigation }) {
+const Stack = createNativeStackNavigator();
+
+type SectionProps = PropsWithChildren<{
+  title: string;
+}>;
+
+function Section({ children, title }: SectionProps): JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is the home screen!</Text>
-      <Button
-        onPress={() => navigation.navigate('MyModal')}
-        title="Open Modal"
-      />
+    <View style={styles.sectionContainer}>
+      <Text
+        style={[
+          styles.sectionTitle,
+          {
+            color: isDarkMode ? Colors.white : Colors.black,
+          },
+        ]}>
+        {title}
+      </Text>
+      <Text
+        style={[
+          styles.sectionDescription,
+          {
+            color: isDarkMode ? Colors.light : Colors.dark,
+          },
+        ]}>
+        {children}
+      </Text>
     </View>
   );
 }
 
-function ModalScreen({ navigation }) {
+function App(): JSX.Element {
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    requestUserPermission();
+    getFcmToken();
+  }, []);
+
+  const getFcmToken = async () => {
+    const token = await AsyncStorage.getItem("fcmToken");
+    console.log("token in app: ", token);
+    if (token) {
+      setToken(token);
+    }
+  };
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
-      <Button onPress={() => navigation.goBack()} title="Dismiss" />
-    </View>
+    <Provider store={AppStore}>
+      <QueryClientProvider client={queryClient}>
+        {/* linking dùng cho chuyển màn với schema hoặc Linking; ref dùng cho chuyển màn với hook(điều hướng ngoài component)  */}
+        <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>} ref={navigationRef}>
+          <SafeAreaView>
+            <StatusBar backgroundColor="#61dafb" animated={true} networkActivityIndicatorVisible={true} />
+          </SafeAreaView>
+          <Stack.Navigator>
+            <Stack.Screen name="BottomTabs" component={BottomTabs} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
-function DetailsScreen() {
-  return (
-    <View>
-      <Text>Details</Text>
-    </View>
-  );
-}
-
-const RootStack = createNativeStackNavigator();
-
-function App() {
-  return (
-    <NavigationContainer>
-      <RootStack.Navigator>
-        <RootStack.Group>
-          <RootStack.Screen name="Home" component={HomeScreen} />
-          <RootStack.Screen name="Details" component={DetailsScreen} />
-        </RootStack.Group>
-        <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-          <RootStack.Screen name="MyModal" component={ModalScreen} />
-        </RootStack.Group>
-      </RootStack.Navigator>
-    </NavigationContainer>
-  );
-}
+const styles = StyleSheet.create({
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+});
 
 export default App;

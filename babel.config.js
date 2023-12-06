@@ -12,11 +12,10 @@ module.exports = {
 						'@assets': './src/assets',
 						'@config': './src/config',
 						'@hooks': './src/hooks',
-						'@hooks': './src/hooks',
 						'@screens': './src/screens',
 						'@utils': './src/utils',
 						'@bottoms': './src/bottoms',
-						// '@redux': './src/redux',
+						'@redux': './src/redux',
 						// '@services': './src/services',
 						// '@styles': './src/styles',
 						// '@types': './src/types',
@@ -25,4 +24,4 @@ module.exports = {
 				],
 
 			]
-		};
+		}; 

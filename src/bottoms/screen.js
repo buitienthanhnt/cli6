@@ -29,7 +29,7 @@ import Home from "@screens/HomeScreen/Home";
 // import { Sdetail }       from '@screens/PaperScreen/Sdetail';
 // import WebInApp          from '@screens/PaperScreen/WebInApp';
 import PaperList         from '@screens/PaperScreen/PaperList';
-// import PaperDetail       from '@screens/PaperScreen/PaperDetail';
+import PaperDetail       from '@screens/PaperScreen/PaperDetail';
 // import PaperListCategory from '@screens/PaperScreen/PaperListCategory';
 //--------------------------------- PaperScreen------------------------------------------//
 
@@ -80,7 +80,14 @@ export const screens = {
             component: PaperList,
             options: {headerShown: false}
         },
-       
+        {
+            name: "PaperDetail",
+            component: PaperDetail,
+            options: {headerShown: false}
+        },
     ],
+    moreTab: [],
+    accountTab: [],
+    codeTab:[],
   
 }

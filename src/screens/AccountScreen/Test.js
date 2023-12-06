@@ -7,12 +7,13 @@ import Config from "@config/Config";
 import { fechData, getAxios, anyAxios } from "@hooks/NetWorking";
 import * as RootNavigation from "@hooks/Navigate";
 import { useNavigation } from '@react-navigation/native';
+
+// yarn add @react-native-masked-view/masked-view react-native-linear-gradient
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 // import { BasicTable, TopTable } from "../components/Table";
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 
-import functions from '@react-native-firebase/functions';
-import { firebase } from "@react-native-firebase/functions";
+import functions, { firebase } from '@react-native-firebase/functions';
 
 // https://firebase.google.com/docs/database/web/lists-of-data?authuser=0#filtering_data
 import database from '@react-native-firebase/database'; // https://rnfirebase.io/reference/database/reference

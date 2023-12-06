@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Button, Dimensions, Image, Text, TextInput, View, TouchableOpacity, ImageBackground } from "react-native";
-import crashlytics from '@react-native-firebase/crashlytics';
+import React, {useEffect, useState } from "react";
+import { Text, TextInput, View, TouchableOpacity, ImageBackground } from "react-native";
 import auth, { GoogleAuthProvider, firebase} from '@react-native-firebase/auth';  // https://rnfirebase.io/reference/auth/user
 import { GoogleSignin } from '@react-native-google-signin/google-signin';          // yarn add @react-native-google-signin/google-signin
-import { Alert } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 // https://codingpr.com/react-firebase-auth-tutorial/
 // https://codingpr.com/react-firebase-password-reset-feature/
@@ -13,8 +11,6 @@ GoogleSignin.configure({
   });
 
 const Login = (props) => {
-
-    const [value, setValue] = useState(0);
     const [error, setError] = useState(false);
     const [fullName, setFullName] = useState({ name: 'name', familyName: 'family' });
     const [title, setTitle] = useState({ value: 'useEffect() i a Hooks' });

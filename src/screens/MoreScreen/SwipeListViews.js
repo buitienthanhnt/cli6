@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,7 +12,7 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-// npm i react-native-swipe-list-view
+// npm i react-native-swipe-list-view                         // https://github.com/jemise111/react-native-swipe-list-view
 import { SwipeListView } from 'react-native-swipe-list-view'; // examp: https://snack.expo.dev/@jemise111/react-native-swipe-list-view
 
 export default function SwipeListViews() {

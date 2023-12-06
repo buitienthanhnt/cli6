@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View } from 'react-native'
 
+// npm i react-native-swiper --save
 import Swiper from 'react-native-swiper' // https://github.com/leecade/react-native-swiper
 
 export default class SwiperComponent extends Component {

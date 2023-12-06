@@ -39,7 +39,7 @@ import { requestUserPermission } from '@utils/notificationHelper';
 import linking from './linking';
 import { QueryClient, QueryClientProvider } from 'react-query'  // dùng cho getdata api
 import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react 
-import AppStore from './src/redux/AppStore';
+import AppStore from '@redux/AppStore';
 const queryClient = new QueryClient()
 
 const Stack = createNativeStackNavigator();

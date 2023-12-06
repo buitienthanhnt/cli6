@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { View, Text, FlatList, StyleSheet, Button, Image, TouchableOpacity, ImageBackground } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ImageBackground } from "react-native";
 import Config from "@config/Config";
 import axios from 'react-native-axios';                                // npm i react-native-axios
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'; // https://fontawesome.com/v5/search?q=right&o=r

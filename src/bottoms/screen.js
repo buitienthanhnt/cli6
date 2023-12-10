@@ -40,8 +40,8 @@ import Dark                 from "@screens/CodeScreen/Dark";
 import Animate1             from "@screens/CodeScreen/Animate1";
 import TestRedux            from "@screens/CodeScreen/components/test/TestRedux";
 import RgbaColor            from "@screens/components/RgbaColor";
-// import SoundPlay            from "@screens/CodeScreen/SoundPlay";
-// import VideoPlay            from "@screens/CodeScreen/VideoPlay";
+import SoundPlay            from "@screens/CodeScreen/SoundPlay";
+import VideoPlay            from "@screens/CodeScreen/VideoPlay";
 import ScanScreen           from "@screens/CodeScreen/ScanScreen";
 import WebviewApp           from "@screens/components/WebviewApp";
 import FadeInView           from "@screens/CodeScreen/components/animated/FadeInView";
@@ -250,16 +250,16 @@ export const screens = {
             component: QrGenerator,
             options: {headerShown: true}
         },
-        // {
-        //     name: "SoundPlay",
-        //     component: SoundPlay,
-        //     options: {headerShown: true}
-        // },
-        // {
-        //     name: "VideoPlay",
-        //     component: VideoPlay,
-        //     options: {headerShown: true}
-        // },
+        {
+            name: "SoundPlay",
+            component: SoundPlay,
+            options: {headerShown: true}
+        },
+        {
+            name: "VideoPlay",
+            component: VideoPlay,
+            options: {headerShown: true}
+        },
         {
             name: "Dark",
             component: Dark,

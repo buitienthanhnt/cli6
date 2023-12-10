@@ -1,6 +1,7 @@
 module.exports = {
 			presets: ['module:metro-react-native-babel-preset'],
 			plugins: [
+				"nativewind/babel",
 				'react-native-reanimated/plugin',
 				[
 					require.resolve('babel-plugin-module-resolver'),
@@ -17,7 +18,7 @@ module.exports = {
 						'@utils': './src/utils',
 						'@bottoms': './src/bottoms',
 						'@redux': './src/redux',
-						// '@services': './src/services',
+						'@services': './src/services',
 						// '@styles': './src/styles',
 						// '@types': './src/types',
 						},

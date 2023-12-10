@@ -8,8 +8,8 @@ import {
   Clipboard,
 } from 'react-native';
 
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import { RNCamera } from 'react-native-camera';
+import QRCodeScanner from 'react-native-qrcode-scanner'; // yarn add react-native-qrcode-scanner && yarn add react-native-permissions
+import { RNCamera } from 'react-native-camera';          // yarn add react-native-camera
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { Navigate } from '@hooks/Navigate';
 import Icon from 'react-native-vector-icons/FontAwesome';

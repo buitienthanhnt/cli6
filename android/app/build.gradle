@@ -79,6 +79,7 @@ android {
     namespace "com.cli6"
     defaultConfig {
         applicationId "com.cli6"
+        missingDimensionStrategy 'react-native-camera', 'general'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

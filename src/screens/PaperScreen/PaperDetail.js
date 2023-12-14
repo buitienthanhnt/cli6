@@ -113,7 +113,7 @@ const PaperDetail = ({ navigation, route }) => {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 {/* <ActivityIndicator size="small" color="#0000ff" /> */}
-                <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image> 
+                <Image source={require("@assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image> 
             </View>);
     }
 }

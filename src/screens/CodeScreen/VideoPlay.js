@@ -10,7 +10,7 @@ const VideoPlay = () => {
     return (
         <View style={{flex: 1}}>
             <Video
-                source={{ uri: `${Config.public_url}canh_dong_hoa_cai_vang.mp4` }}                  // the video file
+                source={{ uri: `${Config.public_url()}canh_dong_hoa_cai_vang.mp4` }}                  // the video file
                 paused={false}                  // make it start    
                 style={styles.backgroundVideo}  // any style you want
                 repeat={true}                   // make it a loop

@@ -38,7 +38,7 @@ import BottomTabs from '@bottoms/Bottom';
 import { requestUserPermission } from '@utils/notificationHelper';
 import linking from './linking';
 import { QueryClient, QueryClientProvider } from 'react-query'  // dùng cho getdata api
-import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react 
+import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
 import AppStore from '@redux/AppStore';
 const queryClient = new QueryClient()
 
@@ -112,6 +112,7 @@ function App(): JSX.Element {
     </Provider>
   );
 }
+
 
 const styles = StyleSheet.create({
   sectionContainer: {

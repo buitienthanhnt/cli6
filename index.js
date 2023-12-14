@@ -15,6 +15,7 @@ perfCollect();
 AppRegistry.registerComponent(appName, () => App);
 
 
+
 // =============================== //
 // npx uri-scheme open myapp://app/MoreScreen --android (mở app và điều hướng tới 1 màn hình nào đó)
 

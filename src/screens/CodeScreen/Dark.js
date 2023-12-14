@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, Appearance } from "react-native"
+import { Pressable, Text } from "react-native"
 import { withExpoSnack } from 'nativewind';
 import { styled, useColorScheme } from "nativewind";
 
@@ -12,11 +12,7 @@ function Dark() {
   return (
     <StyledPressable
       onPress={()=>{
-        // default for set light/dark theme
-        Appearance.setColorScheme(Appearance.getColorScheme() == 'dark' ? 'light' : 'dark');
-
-        // set light/dark theme by: nativewind
-        // setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
+        setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
       }}
       className="flex-1 items-center justify-center dark:bg-slate-800"
     >

@@ -1,20 +1,22 @@
 import { View, Text, Button } from 'react-native'
 import React, { useState, useCallback, useEffect} from 'react';
+import useDemo from '@hooks/useDemo';
 
 
 const DemoMemo = ()=>{
     const [count, setCount] = useState(0);
+    const {val, d} = useDemo();
+
     // const getData = ()=>{}; // can dung useCallBack do co dung trong ChildrentComponent
     const getData = useCallback(()=>{}, []);
 
     useEffect(()=>{
         console.log('====================================');
         console.log('run useEffect');
-        console.log('====================================');
+       
         return ()=>{
             console.log('====================================');
             console.log("run return function in useEffect");
-            console.log('====================================');
         }
     }, [count]);
 
@@ -24,7 +26,9 @@ const DemoMemo = ()=>{
             <Button title="click" onPress={()=>{
                 setCount(old => old+1);
             }}></Button>
-            <Childrent val ={count} getData={getData}></Childrent>
+            <Childrent val={count} getData={getData}></Childrent>
+
+            <Text>gia tri cua val:: n    {val}</Text>
         </View> 
     );
 }
@@ -41,14 +45,14 @@ const DemoMemo = ()=>{
 // so sanh nong" https://stackoverflow.com/questions/36084515/how-does-shallow-compare-work-in-react
 const Childrent = React.memo(
     ()=>{
-        console.log('====================================');
         console.log("Childrent 123");
         console.log('====================================');
         return(<View>
             <Text>Childrent Childrent</Text>
         </View>)
     }, (prevProps, nextProps) =>{
-        // return prevProps.count === nextProps.count // true se khoong reRender, false se reRender 
+        // return prevProps.count === nextProps.count // true sẽ không reRender, false sẽ reRender 
+        // mặc định hàm này nếu khai báo hàm này sẽ return false nên sẽ bị reRender do đó không nên đưa hàm này vào nếu không cần
     }
 );
 

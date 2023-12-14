@@ -10,10 +10,12 @@ import {
   ScrollView
 } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
+import AlphabetList from "react-native-flatlist-alphabet";
+import { AzData } from './data'
 
 const data = function (length, from = 0) {
   const arr = [];
-  for (let index = from; index < length+from; index++) {
+  for (let index = from; index < length + from; index++) {
     arr.push({
       id: index + "",
       title: "title item: " + index,
@@ -47,13 +49,13 @@ const ExFlash = () => {
         renderItem={renderItem}
         estimatedItemSize={120}
         refreshing={false}
-        onRefresh={()=>{
+        onRefresh={() => {
 
         }}
-        onEndReached={()=>{
-            let newValue = values;
-            let ar = data(20, newValue.length);
-            setValues(newValue.concat(ar));
+        onEndReached={() => {
+          let newValue = values;
+          let ar = data(20, newValue.length);
+          setValues(newValue.concat(ar));
         }}
         onEndReachedThreshold={0.5}
         extraData={values}
@@ -62,8 +64,40 @@ const ExFlash = () => {
   )
 }
 
+const Az = () => {
+  const renderItem = (item) => {
+
+    return (<View style={{ height: 26 }}>
+      <Text>{item.value}</Text>
+    </View>)
+  }
+  return (
+    <View style={{ paddingBottom: 20 }}>
+      <AlphabetList
+        data={AzData}
+        renderItem={renderItem}
+        renderSectionHeader={(item) => {
+          return (
+            <View style={{ backgroundColor: 'gray' }}>
+              <Text>{item.title} |</Text>
+            </View>
+          )
+        }}
+        getItemHeight={() => { return 20 }}
+        sectionHeaderHeight={30}
+        indexLetterColor={'green'}
+        // indexLetterSize={}
+        letterItemStyle={{ height: 18 }}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
+  );
+}
+
 const ExVirtualizedlist = () => {
   const len = 30;
+  return (<Az></Az>);
+
   return (<ExFlash></ExFlash>);
 
   return (

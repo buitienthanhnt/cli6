@@ -1,34 +1,37 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ImageBackground } from "react-native";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { View, Text, FlatList, StyleSheet, Button, Image, TouchableOpacity, ImageBackground } from "react-native";
 import Config from "@config/Config";
 import axios from 'react-native-axios';                                // npm i react-native-axios
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'; // https://fontawesome.com/v5/search?q=right&o=r
 import Collapsible from 'react-native-collapsible';                    // npm install --save react-native-collapsible
+import { useCategory } from "@hooks/Firebase";
 
 const CategoryTree = (props) => {
-    const [category_id, setCategoryId] = useState(0);
-    const [tree, setTree] = useState(null);
+    // const [category_id, setCategoryId] = useState(0);
+    // const [tree, setTree] = useState(null);
     const [refresh, setRefresh] = useState(false);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
-    const getCategoryTree = useCallback(async () => {
-        try {
-            let request = Config.custom_url() + Config.api_request.getCategoryTree + Config.buy_params({ category_id: category_id });
-            const detail = await fetch(request);
-            var result = await detail.json();
-            setTree(result);
-            setRefresh(false)
-        } catch (error) { // goi request ban loi khong co mang kha lau
-            console.log(error);
-            setLoading(false)
-        }
-    }, [category_id])
+    const categoryTree = useCategory();
 
-    useEffect(() => {
-        getCategoryTree();
-    }, [category_id])
+    // const getCategoryTree = useCallback(async () => {
+    //     try {
+    //         let request = Config.custom_url() + Config.api_request.getCategoryTree + Config.buy_params({ category_id: category_id });
+    //         const detail = await fetch(request);
+    //         var result = await detail.json();
+    //         setTree(result);
+    //         setRefresh(false)
+    //     } catch (error) { // goi request ban loi khong co mang kha lau
+    //         console.log(error);
+    //         setLoading(false)
+    //     }
+    // }, [category_id])
 
-    if (!tree) {
+    // useEffect(() => {
+    //     getCategoryTree();
+    // }, [category_id])
+
+    if (!categoryTree) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 {loading && <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>}
@@ -37,7 +40,7 @@ const CategoryTree = (props) => {
         return (
             <ImageBackground style={css.backGroundView} source={require("../../assets/pexels-brakou-abdelghani-1723637.jpg")}>
                 <FlatList
-                    data={tree?.items || []}
+                    data={categoryTree?.items || []}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => {
                         return <CategoryItem data={item} navigation={props.navigation}></CategoryItem>

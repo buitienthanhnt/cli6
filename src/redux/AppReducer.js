@@ -1,4 +1,4 @@
-import AppState from "./AppState";
+import {AppState, Application} from "./AppState";
 
 const Reducer = (state = AppState, action) => {
     let newTaskList = state.data;
@@ -87,4 +87,18 @@ const AuthenReducer = (state = AppState, action)=>{
     return state;
 }
 
-export { Reducer, NumberReducer, PaperReducer, AuthenReducer};
+const AppliReducer = (state = Application, action)=>{
+    switch (action.type) {
+        case "SET_LANG":
+            return {...state, lang: action.lang};
+            break;
+        case "SET_KEY":
+            return {...state, key: action.key};
+            break;
+        default:
+            break;
+    }
+    return state;
+}
+
+export { Reducer, NumberReducer, PaperReducer, AuthenReducer, AppliReducer};

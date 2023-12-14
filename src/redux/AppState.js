@@ -13,4 +13,11 @@ let AppState = {
     ],
 };
 
-export default AppState;
+let Application = {
+    address: '',
+    lang: '',
+    currency: '',
+    key: 112345443
+};
+
+export {AppState, Application};

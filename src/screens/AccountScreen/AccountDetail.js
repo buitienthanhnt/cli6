@@ -4,8 +4,8 @@ import { Button, Image, Text, View, Dimensions, TouchableOpacity, ScrollView, Ac
 // import { Ionicons } from '@expo/vector-icons';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import RBSheet from "react-native-raw-bottom-sheet";  // npm i react-native-raw-bottom-sheet
-import DeviceInfo from 'react-native-device-info';    // npm install --save react-native-device-info  && react-native link
-import DatePicker from 'react-native-date-picker'     // yarn add react-native-date-picker
+import DeviceInfo from 'react-native-device-info';    // npm install --save react-native-device-info  && react-native link react-native-device-info
+import DatePicker from 'react-native-date-picker'
 import { Colors, DateTimePicker, Dialog } from 'react-native-ui-lib';  // npm i react-native-ui-lib // https://wix.github.io/react-native-ui-lib/docs/foundation/colors
 import { useNetInfo } from "@react-native-community/netinfo";
 

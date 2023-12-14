@@ -146,11 +146,11 @@ export const screens = {
             component: ListData,
             options: {headerShown: true}
         },
-        {
-            name: "FsourceForm",
-            component: FsourceForm,
-            options: {headerShown: true}
-        },
+        // {
+        //     name: "FsourceForm",
+        //     component: FsourceForm,
+        //     options: {headerShown: true}
+        // },
     ],
     paperTab: [
         {
@@ -322,7 +322,7 @@ export const screens = {
         //  },
         //  {
         //     name: "ExUploadImg",
-        //     component: ExUploadImg, 
+        //     component: ExUploadImg,
         //     options: {headerShown: true}
         //  },
         //  {

@@ -2,7 +2,7 @@ import { View, Text, TextInput, Button, Switch } from "react-native";
 import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
 import database from '@react-native-firebase/database';
-import { sources } from '../../../../services/firebase';
+import { sources } from '@services/firebase';
 
 const FsourceForm = () => {
     const {

@@ -6,7 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Config from "@config/Config";
 import { anyAxios } from "@hooks/NetWorking";
 import DeviceInfo from 'react-native-device-info';    // npm install --save react-native-device-info  && react-native link react-native-device-info
-import { styled, useColorScheme, withExpoSnack } from "nativewind"; // https://www.nativewind.dev/quick-starts/react-native-cli
+import { withExpoSnack } from 'nativewind';
+import { styled, useColorScheme } from "nativewind";
 import { Navigate } from "@hooks/Navigate";
 import { connect } from "react-redux";
 

@@ -107,5 +107,13 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "resolutions": {
+    "react-native-permissions": "^4.0.0"
+  },
+  "overrides": {
+    "react-native-qrcode-scanner": {
+      "react-native-permissions": "^4.0.0"
+    }
   }
 }

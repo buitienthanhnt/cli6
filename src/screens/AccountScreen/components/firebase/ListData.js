@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View, Dimensions, FlatList } from "react-native
 import database from '@react-native-firebase/database';
 import { firebase } from "@react-native-firebase/auth";
 
-import { sources } from '@services/firebase';
+import { sources } from '../../../../services/firebase';
 import { FlashList } from '@shopify/flash-list';
 
 const ListData = (props) => {

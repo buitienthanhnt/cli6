@@ -148,9 +148,9 @@ const ListNoti = (props) => {
                                     <Text numberOfLines={2}
                                         style={{ color: 'rgba(125, 0, 203, 0.5)', fontSize: 16, fontWeight: '500', }}
                                     >
-                                        {item['notification']['title']}
+                                        {item?.notification?.title}
                                     </Text>
-                                    <Text numberOfLines={3}>{item.notification.body}</Text>
+                                    <Text numberOfLines={3}>{item?.notification?.body}</Text>
                                 </View>
                             </TouchableOpacity>
 

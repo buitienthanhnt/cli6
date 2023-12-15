@@ -7,31 +7,33 @@ import Collapsible from 'react-native-collapsible';                    // npm in
 import { useCategory } from "@hooks/Firebase";
 
 const CategoryTree = (props) => {
-    // const [category_id, setCategoryId] = useState(0);
-    // const [tree, setTree] = useState(null);
+    const useFirebase = false;
+
+    const [category_id, setCategoryId] = useState(0);
+    const [tree, setTree] = useState(null);
     const [refresh, setRefresh] = useState(false);
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const categoryTree = useCategory();
 
-    // const getCategoryTree = useCallback(async () => {
-    //     try {
-    //         let request = Config.custom_url() + Config.api_request.getCategoryTree + Config.buy_params({ category_id: category_id });
-    //         const detail = await fetch(request);
-    //         var result = await detail.json();
-    //         setTree(result);
-    //         setRefresh(false)
-    //     } catch (error) { // goi request ban loi khong co mang kha lau
-    //         console.log(error);
-    //         setLoading(false)
-    //     }
-    // }, [category_id])
+    const getCategoryTree = useCallback(async () => {
+        try {
+            let request = Config.custom_url() + Config.api_request.getCategoryTree + Config.buy_params({ category_id: category_id });
+            const detail = await fetch(request);
+            var result = await detail.json();
+            setTree(result);
+            setRefresh(false)
+        } catch (error) { // goi request ban loi khong co mang kha lau
+            console.log(error);
+            setLoading(false);
+        }
+    }, [category_id])
 
-    // useEffect(() => {
-    //     getCategoryTree();
-    // }, [category_id])
+    useEffect(() => {
+        getCategoryTree();
+    }, [category_id])
 
-    if (!categoryTree) {
+    if (! (useFirebase ? categoryTree : tree)) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 {loading && <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>}
@@ -40,7 +42,7 @@ const CategoryTree = (props) => {
         return (
             <ImageBackground style={css.backGroundView} source={require("../../assets/pexels-brakou-abdelghani-1723637.jpg")}>
                 <FlatList
-                    data={categoryTree?.items || []}
+                    data={(useFirebase ? categoryTree : tree)?.items || []}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => {
                         return <CategoryItem data={item} navigation={props.navigation}></CategoryItem>

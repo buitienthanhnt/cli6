@@ -1,5 +1,11 @@
-import React, {useRef, useEffect} from 'react';
-import {Animated, Text, View} from 'react-native';
+import React, {useRef, useEffect, useCallback} from 'react';
+import {Animated, Text, TouchableOpacity, View} from 'react-native';
+import {
+  AppRegistry,
+  StyleSheet,
+  Image,
+  Easing
+} from 'react-native'
 
 const FadeInView = props => {
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
@@ -25,6 +31,24 @@ const FadeInView = props => {
 
 // You can then use your `FadeInView` in place of a `View` in your components:
 export default () => {
+  const spinvalue = useRef(new Animated.Value(0)).current;
+
+  useEffect(()=>{
+    Animated.timing(spinvalue, {
+      toValue: 1,
+      duration: 4000,
+      easing: Easing.linear
+    }).start()
+  }, [])
+
+  const changeOpaciti = useCallback((targetValue)=>{
+    Animated.timing(spinvalue, {
+      toValue: targetValue,
+      duration: 5000,
+      easing: Easing.linear
+    }).start();
+  }, []);
+
   return (
     <View
       style={{
@@ -42,6 +66,15 @@ export default () => {
           Fading in
         </Text>
       </FadeInView>
+
+      <Animated.View style={{ width: 200, height: 100, backgroundColor: 'green', opacity: spinvalue}}>
+        <TouchableOpacity onPress={()=>{
+          changeOpaciti(0)
+        }}>
+          <Text>demo for opacity</Text>
+        </TouchableOpacity>
+       
+      </Animated.View>
     </View>
   );
 };

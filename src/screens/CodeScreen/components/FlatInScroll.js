@@ -1,5 +1,5 @@
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, VirtualizedList, TouchableHighlight } from "react-native";
-import { useState } from 'react';
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, Animated, Easing } from "react-native";
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 const arr = [
 	1, 2, 3, 4, 5, 6, 7, 8, 89, 90, 0, 12, 34
@@ -7,27 +7,32 @@ const arr = [
 
 const arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 89, 90, 0];
 
-function data(){
+function data() {
 	const element = [];
-	for (let index = 0; index <20; index++) {
-		element.push({ title: 'Title Text ' + index, key: 'item '+ index });
+	for (let index = 0; index < 20; index++) {
+		element.push({ title: 'Title Text ' + index, key: 'item ' + index });
 	}
 	return element;
 };
 
 const FlatInScroll = () => {
-
+	const opacity = useRef(new Animated.Value(0)).current;
 	const [value, setValue] = useState(data());
-
-	const deleteItem = (item, index)=>{
+	const deleteItem = (index) => {
 		let newValue = value;
 		newValue.splice(index, 1);  // https://viblo.asia/p/su-khac-nhau-cua-bo-3-slice-splice-va-split-trong-javascript-924lJW6Y5PM
 		setValue([...newValue]);
 	}
 
+	const renderItem = useCallback(({ item, index, separators }) => {
+		return (
+			<RenderItem item={item} index={index} opacity={opacity} onDelete={deleteItem}></RenderItem>
+		)
+	}, [])
+
 	return (
 		<FlatList
-		style={{padding: 20}}
+			style={{ padding: 20 }}
 			ItemSeparatorComponent={
 				(
 					<View
@@ -36,29 +41,13 @@ const FlatInScroll = () => {
 				)
 			}
 			data={value}
-			renderItem={({ item, index, separators }) => (
-				<TouchableHighlight
-					style={{height: 40, borderRadius: 16, justifyContent: 'center',
-						alignItems: 'center', padding: 8,
-						backgroundColor: 'green'
-					}}
-					key={item.key}
-					onPress={() => {
-						deleteItem(item, index);
-					 }}
-					onShowUnderlay={separators.highlight}
-					onHideUnderlay={separators.unhighlight}>
-					<View >
-						<Text style={{color: 'violet'}}>{item.title}</Text>
-					</View>
-				</TouchableHighlight>
-			)}
+			renderItem={renderItem}
 			ListEmptyComponent={(<View><Text>empty data!!</Text></View>)}
 			initialNumToRender={11}
 			// initialScrollIndex={10}
 			// inverted={true} // dao nguoc huong cuon
-			keyExtractor={(item, index)=>"key_"+item.key}
-			onRefresh={()=>{
+			keyExtractor={(item, index) => "key_" + item.key}
+			onRefresh={() => {
 				console.log(123);
 			}}
 			refreshing={false}
@@ -69,35 +58,41 @@ const FlatInScroll = () => {
 	);
 }
 
-const Item = () => {
-	return (
-		<View>
-			<Text>noi dung trong item childrent</Text>
-			<TouchableOpacity onPress={() => {
-				console.log(123);
-			}}>
-				<Text>onPress</Text>
-				<Text></Text>
-			</TouchableOpacity>
-		</View>
-	);
-}
+const RenderItem = ({ item, index, onDelete }) => {
+	const opacity = useRef(new Animated.Value(0)).current;
+	const x = useRef(new Animated.Value(-100)).current;
 
-const Item2 = () => {
-	return (<View >
-		<FlatList
-			showsVerticalScrollIndicator={false}
-			data={arr2}
-			// getItemCount={()=>{
-			// 	return arr2.length;
-			// }}
-			renderItem={({ item }) => {
-				return <View>
-					<Text>123</Text>
-					<Text></Text>
+	useEffect(() => {
+		Animated.timing(opacity, {
+			toValue: 1,
+			duration: index * 100,
+			easing: Easing.linear
+		}).start();
+
+		Animated.timing(x, {
+			toValue: 0,
+			duration: index * 200,
+			easing: Easing.linear
+		}).start();
+	}, [])
+	return (
+		<Animated.View
+			style={{
+				height: 40, borderRadius: 16, 
+				justifyContent: 'center',
+				alignItems: 'center', padding: 8,
+				backgroundColor: 'green',
+				transform: [{ translateX: x }],
+				opacity: opacity
+			}}
+		>
+			<TouchableOpacity onPress={() => { onDelete(index) }}>
+				<View >
+					<Text style={{ color: 'violet' }}>{item.title}</Text>
 				</View>
-			}}></FlatList>
-	</View>);
+			</TouchableOpacity>
+		</Animated.View>
+	)
 }
 
 const styles = StyleSheet.create({

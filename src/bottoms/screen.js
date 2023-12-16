@@ -63,6 +63,7 @@ import ExAnimated           from '@screens/CodeScreen/components/animated';
 import { ExAnimated1, ExAnimated2, ExAnimated3, ExAnimated4, ExAnimated5 } from '@screens/CodeScreen/components/animated/ExAnimated1';
 import Demopromies          from '@screens/CodeScreen/components/test/Demopromies';
 import DemoTest             from '@screens/CodeScreen/components/test';
+import { Reanimated1 }      from '@screens/CodeScreen/components/animated/Reanimated';
 //--------------------------------- CodeScreen------------------------------------------//
 
 export const screens = {
@@ -363,6 +364,11 @@ export const screens = {
          {
             name: "DemoTest",
             component: DemoTest,
+            options: {headerShown: true}
+         }, // Reanimated1
+         {
+            name: "Reanimated1",
+            component: Reanimated1,
             options: {headerShown: true}
          },
     ]

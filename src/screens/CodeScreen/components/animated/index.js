@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import React, { useCallback, useEffect, useState, useRef } from "react";
+import { View, Text, TouchableOpacity, FlatList, Animated, Easing } from 'react-native';
 
 const screens = [
     {
@@ -49,37 +49,17 @@ const screens = [
     {
         name: 'to show delay',
         component: 'ExAnimated5'
+    }, // Reanimated1
+    {
+        name: 'to Reanimated1',
+        component: 'Reanimated1'
     },
 ];
 
 const ExAnimated = ({ navigation }) => {
 
-    const redirectView = useCallback((viewName) => {
-        navigation.navigate(viewName);
-    }, [navigation]);
-
-    const randomValue = useCallback((max) => {
-        return Math.floor(Math.random() * max);
-    }, []);
-    const randomColor = useCallback(() => {
-        return `rgba(${randomValue(256)}, ${randomValue(256)}, ${randomValue(256)}, 1)`;
-    }, []);
-
     const renderItem = useCallback(({ item, index }) => {
-        return (
-            <TouchableOpacity
-                style={{
-                    height: 60, flex: 1, backgroundColor: randomColor(),
-                    justifyContent: 'center', alignItems: 'center', margin: 2,
-                    borderRadius: 10
-                }}
-                onPress={() => {
-                    redirectView(item.component);
-                }}
-            >
-                <Text>{item.name}</Text>
-            </TouchableOpacity>
-        )
+        return <Item item={item} index={index} navigation={navigation}></Item>
     }, []);
 
     return (
@@ -98,4 +78,48 @@ const ExAnimated = ({ navigation }) => {
         </View>
     )
 };
+
+const Item = ({navigation, item, index }) => {
+
+    const opacity = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: index * 200,
+            easing: Easing.linear
+        }).start()
+    }, []);
+
+    const randomColor = useCallback(() => {
+        return `rgba(${randomValue(256)}, ${randomValue(256)}, ${randomValue(256)}, 1)`;
+    }, []);
+
+    const redirectView = useCallback((viewName) => {
+        navigation.navigate(viewName);
+    }, [navigation]);
+
+    const randomValue = useCallback((max) => {
+        return Math.floor(Math.random() * max);
+    }, []);
+
+    return (
+        <Animated.View style={{
+            height: 60, flex: 1, backgroundColor: randomColor(),
+            justifyContent: 'center', alignItems: 'center', margin: 2,
+            borderRadius: 10,
+            opacity: opacity
+        }}>
+            <TouchableOpacity
+                style={{
+                }}
+                onPress={() => {
+                    redirectView(item.component);
+                }}
+            >
+                <Text>{item.name}</Text>
+            </TouchableOpacity>
+        </Animated.View>
+    )
+}
 export default ExAnimated;

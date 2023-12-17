@@ -87,6 +87,8 @@ target 'cli6' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
   target 'cli6Tests' do
     inherit! :complete
     # Pods for testing

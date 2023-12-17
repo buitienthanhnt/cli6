@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import I18n from "../../../../locales/i18n";
 
 const screens = [
     {
@@ -55,6 +56,8 @@ const DemoTest = ({ navigation }) => {
     const {address, key} = useSelector(state => state.appRe);
     const dispatch = useDispatch();
 
+    const [local, setLocal] = useState(I18n.currentLocale())
+
     const redirectView = useCallback((viewName) => {
         navigation.navigate(viewName);
     }, [navigation]);
@@ -98,9 +101,12 @@ const DemoTest = ({ navigation }) => {
             </View>
 
             <TouchableOpacity onPress={() => {
+                I18n.locale = 'fr';
+                setLocal(I18n.currentLocale());
                 console.log(key);
                 // console.log(number, 'user data: ',user_data);
             }}>
+                <Text>{I18n.t('greeting')} {I18n.currentLocale()}</Text>
                 <Text style={{color: 'violet', fontSize: 16}}>show state{`(test redux)`}:</Text>
             </TouchableOpacity>
             <Text style={{color: 'green', fontSize: 16, fontWeight: '600'}}>

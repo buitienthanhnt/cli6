@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button, Text, View, StyleSheet, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Button, Text, View, StyleSheet, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
 import Animated, { useSharedValue, withSpring, withTiming, useAnimatedStyle, useAnimatedProps } from 'react-native-reanimated';
-
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 // import { styled, useColorScheme } from "nativewind";
 
 const Reanimated1 = () => {
@@ -33,14 +33,6 @@ const Reanimated1 = () => {
             fontSize: withSpring(fSize.value)
         }
     })
-
-    const handlePress = () => {
-        r.value += 10;
-    };
-
-    const animatedProps = useAnimatedProps(() => ({
-        r: withTiming(r.value),
-    }));
 
     return (
         <TouchableWithoutFeedback style={{ padding: 24 }} onPress={() => {
@@ -125,6 +117,27 @@ const Reanimated1 = () => {
     // )
 }
 
+const Reanimated2 = () => {
+    return (
+        // <ScrollView style={{flex: 1}}>
+        //     <Text>withTiming2</Text>
+        // </ScrollView>
+        <View style={styles.container2}>
+            <MapView
+                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                style={styles.map}
+                region={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.015,
+                    longitudeDelta: 0.0121,
+                }}
+            >
+            </MapView>
+        </View>
+    )
+}
+
 const CustomInput = () => {
     const [text, setText] = useState('');
     const position = useSharedValue('absolute');
@@ -193,6 +206,16 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         // marginVertical: 50,
     },
+    container2: {
+        ...StyleSheet.absoluteFillObject,
+        height: 400,
+        width: 400,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      },
+      map: {
+        ...StyleSheet.absoluteFillObject,
+      },
 });
 
-export { Reanimated1 };
+export { Reanimated1, Reanimated2 };

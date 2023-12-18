@@ -5,8 +5,8 @@ const Config = (path = '', params = null) => {
     https: 'https://',
     main: 'laravel1/',
     // ip: "192.168.99.103/",                   // 192.168.1.153             (4700-home)
-    // ip: "192.168.1.150/",                    // 192.168.1.153             (m4700-mochi)
-    ip: '192.168.100.156/',                   // 192.168.100.210           (jm-destop)
+    ip: "192.168.1.150/",                    // 192.168.1.153             (m4700-mochi)
+    // ip: '192.168.100.156/',                   // 192.168.100.210           (jm-destop)
     // ip: "192.168.1.214/",                    // 192.168.100.210           (m6800)
     uri: "laravel1/public/index.php/",        // laravel1/public/index.php
     api_request: {

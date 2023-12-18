@@ -25,7 +25,7 @@ const screens = [
     {
         name: 'Slide Image',
         component: 'ScrollViews'
-    }, // FadeInView
+    },
     {
         name: 'to FadeInView',
         component: 'FadeInView'
@@ -54,6 +54,10 @@ const screens = [
         name: 'to Reanimated1',
         component: 'Reanimated1'
     },
+    {
+        name: 'to Reanimated2',
+        component: 'Reanimated2'
+    },
 ];
 
 const ExAnimated = ({ navigation }) => {
@@ -79,7 +83,7 @@ const ExAnimated = ({ navigation }) => {
     )
 };
 
-const Item = ({navigation, item, index }) => {
+const Item = ({ navigation, item, index }) => {
 
     const opacity = useRef(new Animated.Value(0)).current;
 

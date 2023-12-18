@@ -37,7 +37,8 @@ export default () => {
     Animated.timing(spinvalue, {
       toValue: 1,
       duration: 4000,
-      easing: Easing.linear
+      easing: Easing.linear,
+      useNativeDriver: true
     }).start()
   }, [])
 
@@ -45,7 +46,8 @@ export default () => {
     Animated.timing(spinvalue, {
       toValue: targetValue,
       duration: 5000,
-      easing: Easing.linear
+      easing: Easing.linear,
+      useNativeDriver: true
     }).start();
   }, []);
 

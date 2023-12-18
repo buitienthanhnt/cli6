@@ -87,7 +87,8 @@ const Item = ({navigation, item, index }) => {
         Animated.timing(opacity, {
             toValue: 1,
             duration: index * 200,
-            easing: Easing.linear
+            easing: Easing.linear,
+            useNativeDriver: true,
         }).start()
     }, []);
 

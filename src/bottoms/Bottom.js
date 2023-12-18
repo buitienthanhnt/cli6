@@ -83,14 +83,15 @@ const BottomTabs = ({ navigation, route }) => {
         <Tab.Navigator screenOptions={
             ({ route }) => ({
                 tabBarActiveTintColor: '#669ddd', // màu icon mặc định là xanh, dùng như này sẽ là màu cà chua.
-                tabBarInactiveTintColor: 'gray', // gray cũng là màu mặc định luôn.
-                headerShown: false               // ẩn phần tiêu đề bên trên của: Tab.Navigator
+                tabBarInactiveTintColor: 'gray',  // gray cũng là màu mặc định luôn.
+                headerShown: false                // ẩn phần tiêu đề bên trên của: Tab.Navigator
             })}
         // tabBarOptions={{ showLabel: false }} // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
         >
-            {bottomTabs.map((tab) => {
+            {bottomTabs.map((tab, index) => {
                 return (
                     <Tab.Screen
+                    key={'tabs_'+index}
                         name={tab.name}
                         component={tab.component}
                         options={tab.options}

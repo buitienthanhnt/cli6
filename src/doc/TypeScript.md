@@ -24,4 +24,6 @@ https://evondev.com/typescript-co-ban-p1/
 
 https://xuanthulab.net/tong-quan-ve-ngon-ngu-lap-trinh-typescript.html
 
+https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype
+
 

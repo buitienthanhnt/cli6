@@ -44,6 +44,10 @@ const screens = [
         name: 'to test promies',
         component: 'Demopromies'
     },
+    {
+        name: 'to Nmap',
+        component: 'Nmap'
+    },
 ];
 
 const DemoTest = ({ navigation }) => {

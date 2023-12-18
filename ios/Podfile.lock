@@ -1468,6 +1468,8 @@ PODS:
   - RNGoogleSignin (10.1.1):
     - GoogleSignIn (~> 7.0)
     - React-Core
+  - RNI18n (2.0.15):
+    - React
   - RNNotifee (7.8.2):
     - React-Core
     - RNNotifee/NotifeeCore (= 7.8.2)
@@ -1565,6 +1567,7 @@ DEPENDENCIES:
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
+  - RNI18n (from `../node_modules/react-native-i18n`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -1761,6 +1764,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
+  RNI18n:
+    :path: "../node_modules/react-native-i18n"
   RNNotifee:
     :path: "../node_modules/@notifee/react-native"
   RNPermissions:
@@ -1889,6 +1894,7 @@ SPEC CHECKSUMS:
   RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a
   RNGestureHandler: a5039da2ac028b073ae801289476060b34d559b1
   RNGoogleSignin: aac5c1ec73422109dec1da770247a1e410dcc620
+  RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNNotifee: 8e2d3df3f0e9ce8f5d1fe4c967431138190b6175
   RNPermissions: 665ec47fac8718e933dc197cf6b9190148d00ef8
   RNReanimated: 8a6a83984cb4d61ebf1065b6137150b6b31ce609
@@ -1898,6 +1904,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
-PODFILE CHECKSUM: 245711e356f5b2f09716b2df16bc863fc45d9aa1
+PODFILE CHECKSUM: 3f77af951f5545fadcbdc2d45d9d76badafe2ba5
 
 COCOAPODS: 1.12.1

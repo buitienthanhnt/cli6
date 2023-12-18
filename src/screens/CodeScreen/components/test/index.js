@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import I18n from "../../../../locales/i18n";
+import I18n from "@locales/i18n";
 
 const screens = [
     {

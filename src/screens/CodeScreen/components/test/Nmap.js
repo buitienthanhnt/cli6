@@ -121,7 +121,10 @@ export const Nmap2 = () => {
         })
       },
       (error) => {
-        setLocationStatus(error.message);
+        console.log('====================================');
+        console.log(error);
+        console.log('====================================');
+        // setLocationStatus(error.message);
       },
       {
         enableHighAccuracy: false,

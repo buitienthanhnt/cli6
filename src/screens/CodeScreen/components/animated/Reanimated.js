@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button, Text, View, StyleSheet, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
 import Animated, { useSharedValue, withSpring, withTiming, useAnimatedStyle, useAnimatedProps } from 'react-native-reanimated';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 // import { styled, useColorScheme } from "nativewind";
 
 const Reanimated1 = () => {
@@ -118,23 +117,10 @@ const Reanimated1 = () => {
 }
 
 const Reanimated2 = () => {
-    return (
-        // <ScrollView style={{flex: 1}}>
-        //     <Text>withTiming2</Text>
-        // </ScrollView>
-        <View style={styles.container2}>
-            <MapView
-                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                style={styles.map}
-                region={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.015,
-                    longitudeDelta: 0.0121,
-                }}
-            >
-            </MapView>
-        </View>
+    return(
+        <ScrollView style={{flex: 1}}>
+        <Text>withTiming2</Text>
+    </ScrollView>
     )
 }
 
@@ -196,26 +182,6 @@ const CustomInput = () => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    box: {
-        backgroundColor: '#b58df1',
-        borderRadius: 24,
-        // marginVertical: 50,
-    },
-    container2: {
-        ...StyleSheet.absoluteFillObject,
-        height: 400,
-        width: 400,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      },
-      map: {
-        ...StyleSheet.absoluteFillObject,
-      },
 });
 
 export { Reanimated1, Reanimated2 };

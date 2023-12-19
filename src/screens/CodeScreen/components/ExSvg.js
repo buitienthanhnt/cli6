@@ -23,6 +23,7 @@ import Svg, {
     Mask,
   } from 'react-native-svg';
   // import Call from '@assets/svgIcon/call/call.svg'; // **** https://github.com/kristerkari/react-native-svg-transformer
+  // download svg icon:      https://www.svgrepo.com/vectors/location/ || https://www.svgrepo.com/
 
   import React from 'react';
   import { View, StyleSheet } from 'react-native';

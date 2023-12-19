@@ -64,7 +64,7 @@ import { ExAnimated1, ExAnimated2, ExAnimated3, ExAnimated4, ExAnimated5 } from 
 import Demopromies from '@screens/CodeScreen/components/test/Demopromies';
 import DemoTest from '@screens/CodeScreen/components/test';
 import { Reanimated1, Reanimated2 } from '@screens/CodeScreen/components/animated/Reanimated';
-import Nmap from '@screens/CodeScreen/components/test/Nmap';
+import Nmap, { Nmap2, Nmap3 } from '@screens/CodeScreen/components/test/Nmap';
 //--------------------------------- CodeScreen------------------------------------------//
 
 export const screens = {
@@ -380,6 +380,16 @@ export const screens = {
         {
             name: "Nmap",
             component: Nmap,
+            options: { headerShown: true }
+        },
+        {
+            name: "Nmap2",
+            component: Nmap2,
+            options: { headerShown: true }
+        },
+        {
+            name: "Nmap3",
+            component: Nmap3,
             options: { headerShown: true }
         },
     ]

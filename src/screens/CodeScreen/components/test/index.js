@@ -48,6 +48,14 @@ const screens = [
         name: 'to Nmap',
         component: 'Nmap'
     },
+    {
+        name: 'to Nmap2 google',
+        component: 'Nmap2'
+    },
+    {
+        name: 'to Nmap3 google',
+        component: 'Nmap3'
+    },
 ];
 
 const DemoTest = ({ navigation }) => {

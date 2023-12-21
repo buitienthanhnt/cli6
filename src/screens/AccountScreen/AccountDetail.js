@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"; // gán lại giá trị mà không render lại đối tượng. https://www.w3schools.com/react/react_useref.asp
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"; // gán lại giá trị mà không render lại đối tượng. https://www.w3schools.com/react/react_useref.asp
 import { Button, Image, Text, View, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator, StyleSheet } from "react-native";
 
 // import { Ionicons } from '@expo/vector-icons';
@@ -12,6 +12,9 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import { BasicTable, TopTable } from "@screens/components/Table";
 import { BasicSlider } from "@screens/components/Slider";
 import { firebase } from "@react-native-firebase/auth";
+import ActionSheet from 'react-native-actionsheet'     // https://www.npmjs.com/package/react-native-actionsheet
+
+// useRef doc::    https://react.dev/reference/react/useRef#i-cant-get-a-ref-to-a-custom-component
 
 Colors.loadColors({
     error: '#ff2442',
@@ -25,6 +28,16 @@ const AccountDetail = (props) => {
     const [user, setUser] = useState(null);
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
+    const actionSheet = useRef(null);
+    const actionOptions = useMemo(()=>{
+        return [
+            'Apple map',
+            'Google map',
+            'Custom map',
+            'native app',
+            'Cancel'
+        ];
+    }, [])
     // const { width, height } = Dimensions.get("screen");
     // DeviceInfo.getAndroidId().then((androidId) => {console.log(androidId);}); // https://www.npmjs.com/package/react-native-device-info#getandroidid
     DeviceInfo.getUniqueId().then((uniqueId) => {
@@ -37,12 +50,12 @@ const AccountDetail = (props) => {
     function onAuthStateChanged(user) {
         if (user) {
             setUser(user);
-        }else{
+        } else {
             setUser(null);
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         firebase.auth().onAuthStateChanged(onAuthStateChanged);
     }, []);
 
@@ -84,7 +97,7 @@ const AccountDetail = (props) => {
                 props.navigation.navigate("UserDetail");
             }}></Button>
             }
-            
+
             {/* <Text></Text>
             <Button title="log user" onPress={()=>{
                 console.log(user, '======', firebase.auth().currentUser);
@@ -191,8 +204,22 @@ const AccountDetail = (props) => {
 
             <BasicSlider></BasicSlider>
 
+            <Button title="open action sheet" onPress={() => {
+                actionSheet.current.show();
+            }}></Button>    
+
             <BasicTable></BasicTable>
             <TopTable></TopTable>
+
+            <ActionSheet
+                ref={actionSheet}
+                title={'Which one do you like ?'} // https://www.npmjs.com/package/react-native-actionsheet
+                message={'message you input'}
+                options={actionOptions}
+                cancelButtonIndex={actionOptions.length -1}
+                destructiveButtonIndex={actionOptions.length-1}
+                onPress={(index) => { console.log(index); }}
+            />
 
         </ScrollView>
     )

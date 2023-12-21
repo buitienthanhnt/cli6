@@ -8,24 +8,12 @@ import HomeScreen from "@bottoms/tabs/HomeScreen";
 import PaperScreen from "@bottoms/tabs/PaperScreen";
 import MoreScreen from "@bottoms/tabs/MoreScreen";
 import CodeScreen from "@bottoms/tabs/CodeScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { connect } from "react-redux";
+import useNotification from "@hooks/useNotification";
 
 const Tab = createBottomTabNavigator();
 const BottomTabs = ({ navigation, route }) => {
-    const [count, setCount] = useState(null);
-
-    const count_message = async () => {
-        console.log("___count_message");
-        let noti = await AsyncStorage.getItem('listNotifi');
-        if (noti) {
-            setCount(JSON.parse(noti).length);
-        }
-    };
-
-    useEffect(() => {
-        count_message();
-    }, []);
+    const {notifi_count} = useNotification();
 
     const bottomTabs = useMemo(() => {
         return [
@@ -71,13 +59,13 @@ const BottomTabs = ({ navigation, route }) => {
                 tabBarOptions: { showLabel: false },
                 options: {
                     tabBarLabel: 'code',
-                    tabBarBadge: count,
+                    tabBarBadge: notifi_count,
                     tabBarShowLabel: false,     // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
                     tabBarIcon: ({ focused, color, size }) => (<Icon name={'code'} size={26} color={color} />)
                 }
             },
         ];
-    }, [count]);
+    }, [notifi_count]);
 
     return (
         <Tab.Navigator screenOptions={

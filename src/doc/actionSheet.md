@@ -1,0 +1,1 @@
+https://github.com/beefe/react-native-actionsheet#readme !!!

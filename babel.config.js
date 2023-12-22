@@ -19,7 +19,8 @@ module.exports = {
 						'@bottoms': './src/bottoms',
 						'@redux': './src/redux',
 						'@services': './src/services',
-						'@locales': './src/locales'
+						'@locales': './src/locales',
+						'@netWork': './src/netWork',
 						// '@styles': './src/styles',
 						// '@types': './src/types',
 						},

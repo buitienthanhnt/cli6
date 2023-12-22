@@ -134,41 +134,7 @@ export const Nmap2 = () => {
       },
     );
   };
-  const [coords, setCoords] = useState([]);
   const [currentRegion, setCurrentRegion] = useState(region);
-
-  const getDirections = async (startLoc, destinationLoc) => {
-    try {
-      const KEY = "AIzaSyACd_uzOBcMiTI6ZR5FoWkTaazO0W7g924"; //put your API key here.
-      //otherwise, you'll have an 'unauthorized' error.
-      let resp = await fetch(
-        `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=${KEY}`
-      );
-      let respJson = await resp.json();
-      console.log('!!!!!!!!!!', respJson);
-      let points = decode(respJson.routes[0].overview_polyline.points);
-      console.log(points);
-      let coords = points.map((point, index) => {
-        return {
-          latitude: point[0],
-          longitude: point[1]
-        };
-      });
-      return coords;
-    } catch (error) {
-      return error;
-    }
-  };
-
-  useEffect(() => {
-    //fetch the coordinates and then store its value into the coords Hook.
-    // getDirections("52.5200066,13.404954", "50.1109221,8.6821267")
-    //   .then(coords => {
-    //     console.log('*******', coords);
-    //     setCoords(coords)
-    //   })
-    //   .catch(err => console.log("Something went wrong"));
-  }, []);
 
   const onRegionChange = (regionValue, detail) => {
     setCurrentRegion(regionValue);
@@ -190,21 +156,6 @@ export const Nmap2 = () => {
     );
     alert(`Precise Distance\n\n${pdis} Meter\nOR\n${pdis / 1000} KM`);
   };
-
-  // return (<>
-  //   <MapView
-  //     style={{ flex: 1 }}
-  //     initialRegion={{
-  //       latitude: 52.5200066,
-  //       longitude: 13.404954,
-  //       latitudeDelta: 0.1,
-  //       longitudeDelta: 0.1
-  //     }}
-  //   >
-  //     {/* finally, render the Polyline component with the coords data */}
-  //     {coords.length > 0 && <Polyline coordinates={coords} />}
-  //   </MapView>
-  // </>)
 
   return (
 
@@ -263,9 +214,9 @@ export const Nmap2 = () => {
 }
 
 export const Nmap3 = () => {
-  const [currentLongitude,setCurrentLongitude] = useState('...');
-  const [currentLatitude,setCurrentLatitude] = useState('...');
-  const [locationStatus,setLocationStatus] = useState('');
+  const [currentLongitude, setCurrentLongitude] = useState('...');
+  const [currentLatitude, setCurrentLatitude] = useState('...');
+  const [locationStatus, setLocationStatus] = useState('');
 
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
@@ -315,10 +266,10 @@ export const Nmap3 = () => {
         const currentLatitude =
           JSON.stringify(position.coords.latitude);
 
-          console.log(
-            '+++++++++',
-            currentLatitude, '=====', currentLongitude
-          );
+        console.log(
+          '+++++++++',
+          currentLatitude, '=====', currentLongitude
+        );
 
         //Setting Longitude state
         setCurrentLongitude(currentLongitude);
@@ -403,7 +354,7 @@ export const Nmap3 = () => {
           <View style={{ marginTop: 20 }}>
             <Button
               title="Refresh"
-              onPress={()=>{
+              onPress={() => {
                 getOneTimeLocation()
               }}
             />

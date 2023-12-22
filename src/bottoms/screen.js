@@ -65,6 +65,7 @@ import Demopromies from '@screens/CodeScreen/components/test/Demopromies';
 import DemoTest from '@screens/CodeScreen/components/test';
 import { Reanimated1, Reanimated2 } from '@screens/CodeScreen/components/animated/Reanimated';
 import Nmap, { Nmap2, Nmap3 } from '@screens/CodeScreen/components/test/Nmap';
+import { Stanstacks } from '@screens/CodeScreen/components/test/Stanstacks';
 //--------------------------------- CodeScreen------------------------------------------//
 
 export const screens = {
@@ -390,6 +391,11 @@ export const screens = {
         {
             name: "Nmap3",
             component: Nmap3,
+            options: { headerShown: true }
+        },
+        {
+            name: "Stanstacks",
+            component: Stanstacks,
             options: { headerShown: true }
         },
     ]

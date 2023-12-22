@@ -5,7 +5,7 @@ const Config = (path = '', params = null) => {
     https: 'https://',
     main: 'laravel1/',
     // ip: "192.168.99.103/",                   // 192.168.1.153             (4700-home)
-   ip: "192.168.1.150/",                    // 192.168.1.153             (m4700-mochi)
+    ip: "192.168.1.150/",                    // 192.168.1.153             (m4700-mochi)
     // ip: "192.168.1.214/",                    // 192.168.100.210           (m6800)
     //  ip: '192.168.100.156/',                   // 192.168.100.210           (jm-destop)
     uri: "laravel1/public/index.php/",        // laravel1/public/index.php
@@ -22,6 +22,16 @@ const Config = (path = '', params = null) => {
       registerFcm: 'api/notification/registerFcm',
       uploadImageMb: 'api/mobile/upimage',
     },
+    googleService: {
+      googleMapUrl: 'https://maps.googleapis.com/maps/api/',
+      placeDetail: 'place/details/',
+      placeSearch: 'place/autocomplete/',
+      placeDirections: 'directions/',
+      geoMapApiKey: 'AIzaSyD1L7S_YeVTo4o-ICHBKr9ylYv-vsdFtj0',
+      reponseJson: 'json',
+      responseXml: 'xml',
+    },
+    geoMapApiKey: 'AIzaSyD1L7S_YeVTo4o-ICHBKr9ylYv-vsdFtj0',
     buy_params: function (params) {
       // this không dùng được trong: arrow function vì bản thân this lúc đó sẽ la windown.
       // nên để dùng this thì cần dùng: function để khai báo, qua đó nó sẽ kế thừa ngữ cảnh object cha
@@ -41,7 +51,7 @@ const Config = (path = '', params = null) => {
 
   let url = '';
 
-  if (Config.domain) {
+  if (Config.domain) { 
     url = Config.domain;
   } else {
     url = Config.http + Config.ip + Config.uri;

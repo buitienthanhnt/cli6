@@ -4,6 +4,36 @@ import { useQuery } from 'react-query' :
     // https://tanstack.com/query/latest/docs/react/quick-start
     // https://viblo.asia/p/react-js-suc-manh-cua-react-query-Qbq5QRnwKD8
 
+    <!-- {
+        "data": {
+            "a": 1,
+            "b": "123123sadf"
+        },
+        "dataUpdatedAt": 1703264026488,
+        "error": null,
+        "errorUpdateCount": 0,
+        "errorUpdatedAt": 0,
+        "failureCount": 0,
+        "isError": false,
+        "isFetched": true,
+        "isFetchedAfterMount": true,
+        "isFetching": false,
+        "isIdle": false,
+        "isLoading": false,
+        "isLoadingError": false,
+        "isPlaceholderData": false,
+        "isPreviousData": false,
+        "isRefetchError": false,
+        "isRefetching": false,
+        "isStale": true,
+        "isSuccess": true,
+        "refetch": [Function bound refetch
+        ],
+        "remove": [Function bound remove
+        ],
+        "status": "success"
+    } -->
+
 ==========================================================================
 react hook:
     https://legacy.reactjs.org/docs/hooks-intro.html

@@ -98,7 +98,7 @@ function App(): JSX.Element {
 
   return (
     <Provider store={AppStore}>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient} contextSharing={true}>
         {/* linking dùng cho chuyển màn với schema hoặc Linking; ref dùng cho chuyển màn với hook(điều hướng ngoài component)  */}
         <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>} ref={navigationRef}>
           <SafeAreaView>

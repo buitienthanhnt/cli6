@@ -16,4 +16,12 @@ demo search:
 
 https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address,name,rating,opening_hours,geometry&input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&key=AIzaSyD1L7S_YeVTo4o-ICHBKr9ylYv-vsdFtj0
 
+https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address,name,rating,opening_hours,geometry&input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&key=AIzaSyACd_uzOBcMiTI6ZR5FoWkTaazO0W7g924
+
+detail:"
+https://maps.googleapis.com/maps/api/place/details/json
+  ?fields=name%2Crating%2Cformatted_phone_number
+  &place_id=ChIJN1t_tDeuEmsRUsoyG83frY4
+  &key=YOUR_API_KEY
+
  -->

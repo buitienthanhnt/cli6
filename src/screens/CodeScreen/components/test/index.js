@@ -56,6 +56,10 @@ const screens = [
         name: 'to Nmap3 google',
         component: 'Nmap3'
     },
+    {
+        name: 'to Stankstack google',
+        component: 'Stanstacks'
+    },
 ];
 
 const DemoTest = ({ navigation }) => {

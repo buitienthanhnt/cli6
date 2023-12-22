@@ -11,7 +11,8 @@
       "@utils/*": ["./src/utils/*"],
       "@redux/*": ["./src/redux/*"],
       "@services/*": ["./src/services/*"],
-      "@locales/*": ["./src/locales/*"]
+      "@locales/*": ["./src/locales/*"],
+      "@netWork/*": ["./src/netWork/*"],
     }
   }
 }

@@ -1,3 +1,4 @@
+import { googleMapUrl } from "@utils/maps";
 import Config from "@config/Config";
 // https://developers.google.com/maps/documentation/places/web-service/details
 
@@ -6,7 +7,7 @@ const getPlaceDetail = async (placeId) => {
 		place_id: placeId,
 		key: Config.geoMapApiKey
 	});
-	const url = Config.googleService.googleMapUrl + Config.googleService.placeDetail + Config.googleService.reponseJson + paramUrl;
+	const url = googleMapUrl + Config.googleService.placeDetail + Config.googleService.reponseJson + paramUrl;
 
 	const response = await fetch(url);
 	const data = await response.json();
@@ -19,7 +20,7 @@ const getPlaceSearch = (searchText)=>{
 		radius: 500,
 		key: Config.googleService.geoMapApiKey
 	});
-	const url = Config.googleService.googleMapUrl + Config.googleService.placeSearch + Config.googleService.reponseJson;
+	const url = googleMapUrl + Config.googleService.placeSearch + Config.googleService.reponseJson;
 	return fetch(url+paramUrl);
 }
 
@@ -32,7 +33,7 @@ const getCoordSearch = async (from, to)=>{
 		destination: `${to.lat},${to.lng}`,
 		key: Config.googleService.geoMapApiKey,
 	});
-	const url = Config.googleService.googleMapUrl + Config.googleService.placeDirections + Config.googleService.reponseJson + paramUrl;
+	const url = googleMapUrl + Config.googleService.placeDirections + Config.googleService.reponseJson + paramUrl;
 	const response = await fetch(url);
 	const data = await response.json();
 	return data;

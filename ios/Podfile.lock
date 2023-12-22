@@ -1286,6 +1286,8 @@ PODS:
     - React-Core
   - react-native-date-picker (4.3.4):
     - React-Core
+  - react-native-geolocation (3.1.0):
+    - React-Core
   - react-native-get-random-values (1.10.0):
     - React-Core
   - react-native-google-maps (1.8.4):
@@ -1551,6 +1553,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
+  - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -1706,6 +1709,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
+  react-native-geolocation:
+    :path: "../node_modules/@react-native-community/geolocation"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
   react-native-google-maps:
@@ -1887,6 +1892,7 @@ SPEC CHECKSUMS:
   React-logger: 8edc785c47c8686c7962199a307015e2ce9a0e4f
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-date-picker: db26a4dc48fe4e7c3c3afd5008519fad1091c524
+  react-native-geolocation: ef66fb798d96284c6043f0b16c15d9d1d4955db4
   react-native-get-random-values: 384787fd76976f5aec9465aff6fa9e9129af1e74
   react-native-google-maps: 1e3d5bb85a6b9823bf034c4ec68ab096690e24e8
   react-native-image-picker: be000cd54f1b1bd71dba9677b36847827f9cc012

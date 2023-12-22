@@ -63,8 +63,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Application requires user’s location for better user experience.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Our app does not request this permission or utilize this functionality but it is included in our info.plist since our app utilizes the react-native-permissions library, which references this permission in its code.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>access for open Google map</string>
+	<string>Your current location will be displayed on the map and used to calculate the distance to locations around you.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

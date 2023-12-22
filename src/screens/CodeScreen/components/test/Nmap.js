@@ -9,6 +9,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Location from '@assets/location-svgrepo-comc.svg';
 import LocationDelta from '@assets/location-svgrepo-com.svg';
 import LocationPin from '@assets/location-pin-1-svgrepo-com.svg';
+import { err } from 'react-native-svg';
 
 export default class Nmap extends Component {
   map;
@@ -262,45 +263,37 @@ export const Nmap2 = () => {
 }
 
 export const Nmap3 = () => {
-  const [
-    currentLongitude,
-    setCurrentLongitude
-  ] = useState('...');
-  const [
-    currentLatitude,
-    setCurrentLatitude
-  ] = useState('...');
-  const [
-    locationStatus,
-    setLocationStatus
-  ] = useState('');
+  const [currentLongitude,setCurrentLongitude] = useState('...');
+  const [currentLatitude,setCurrentLatitude] = useState('...');
+  const [locationStatus,setLocationStatus] = useState('');
+
+  const requestLocationPermission = async () => {
+    if (Platform.OS === 'ios') {
+      getOneTimeLocation();
+      subscribeLocationLocation();
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Required',
+            message: 'This App needs to Access your location',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          //To Check, If Permission is granted
+          getOneTimeLocation();
+          subscribeLocationLocation();
+        } else {
+          setLocationStatus('Permission Denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
 
   useEffect(() => {
-    const requestLocationPermission = async () => {
-      if (Platform.OS === 'ios') {
-        getOneTimeLocation();
-        subscribeLocationLocation();
-      } else {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-              title: 'Location Access Required',
-              message: 'This App needs to Access your location',
-            },
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            //To Check, If Permission is granted
-            getOneTimeLocation();
-            subscribeLocationLocation();
-          } else {
-            setLocationStatus('Permission Denied');
-          }
-        } catch (err) {
-          console.warn(err);
-        }
-      }
-    };
     requestLocationPermission();
     return () => {
       Geolocation.clearWatch(watchID);
@@ -322,6 +315,11 @@ export const Nmap3 = () => {
         const currentLatitude =
           JSON.stringify(position.coords.latitude);
 
+          console.log(
+            '+++++++++',
+            currentLatitude, '=====', currentLongitude
+          );
+
         //Setting Longitude state
         setCurrentLongitude(currentLongitude);
 
@@ -329,6 +327,7 @@ export const Nmap3 = () => {
         setCurrentLatitude(currentLatitude);
       },
       (error) => {
+        console.log(error);
         setLocationStatus(error.message);
       },
       {
@@ -404,7 +403,9 @@ export const Nmap3 = () => {
           <View style={{ marginTop: 20 }}>
             <Button
               title="Refresh"
-              onPress={getOneTimeLocation}
+              onPress={()=>{
+                getOneTimeLocation()
+              }}
             />
           </View>
         </View>

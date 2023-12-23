@@ -33,7 +33,7 @@ const CategoryTree = (props) => {
         getCategoryTree();
     }, [category_id])
 
-    if (! (useFirebase ? categoryTree : tree)) {
+    if (! (tree || categoryTree)) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 {loading && <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>}
@@ -42,7 +42,7 @@ const CategoryTree = (props) => {
         return (
             <ImageBackground style={css.backGroundView} source={require("../../assets/pexels-brakou-abdelghani-1723637.jpg")}>
                 <FlatList
-                    data={(useFirebase ? categoryTree : tree)?.items || []}
+                    data={(tree || categoryTree)?.items || []}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => {
                         return <CategoryItem data={item} navigation={props.navigation}></CategoryItem>

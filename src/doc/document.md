@@ -55,6 +55,17 @@ import Collapsible from 'react-native-collapsible';
 import ColorPickerWheel from 'react-native-wheel-color-picker'; 
     // npm install react-native-wheel-color-picker
 ==========================================================================
+rateting: 
+
+https://www.npmjs.com/package/react-native-ratings
+
+yarn add react-native-ratings
+==========================================================================
+react-native-config
+
+yarn add react-native-config
+
+https://www.npmjs.com/package/react-native-config
 
 ==========================================================================
 

@@ -3,6 +3,7 @@ apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'com.google.gms.google-services' // <- Add this line for firebase app
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: "com.facebook.react"
+apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle" // add for: react-native-config not work on android.
 
 /**
  * This is the configuration block to customize your React Native Android app.

@@ -5,7 +5,7 @@ import Config from "@config/Config";
 const getPlaceDetail = async (placeId) => {
 	const paramUrl = Config.buy_params({
 		place_id: placeId,
-		key: Config.geoMapApiKey
+		key: Config.googleService.geoMapApiKey
 	});
 	const url = googleMapUrl + Config.googleService.placeDetail + Config.googleService.reponseJson + paramUrl;
 

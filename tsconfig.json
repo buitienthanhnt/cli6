@@ -13,6 +13,7 @@
       "@services/*": ["./src/services/*"],
       "@locales/*": ["./src/locales/*"],
       "@netWork/*": ["./src/netWork/*"],
+      "@elements/*": ["./src/elements/*"],
     }
   }
 }

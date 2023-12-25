@@ -1,15 +1,17 @@
-import React, {useRef, useEffect, useCallback} from 'react';
-import {Animated, Text, TouchableOpacity, View} from 'react-native';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
+import { Animated, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import {
+  ScrollView,
   AppRegistry,
   StyleSheet,
   Image,
   Easing
-} from 'react-native'
+} from 'react-native';
+import SearchInput from '@elements/SearchInput';
+import Data from '@config/PageList';
 
 const FadeInView = props => {
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
-
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -32,8 +34,7 @@ const FadeInView = props => {
 // You can then use your `FadeInView` in place of a `View` in your components:
 export default () => {
   const spinvalue = useRef(new Animated.Value(0)).current;
-
-  useEffect(()=>{
+  useEffect(() => {
     Animated.timing(spinvalue, {
       toValue: 1,
       duration: 4000,
@@ -42,7 +43,7 @@ export default () => {
     }).start()
   }, [])
 
-  const changeOpaciti = useCallback((targetValue)=>{
+  const changeOpaciti = useCallback((targetValue) => {
     Animated.timing(spinvalue, {
       toValue: targetValue,
       duration: 5000,
@@ -55,8 +56,8 @@ export default () => {
     <View
       style={{
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
       }}>
       <FadeInView
         style={{
@@ -64,19 +65,22 @@ export default () => {
           height: 50,
           backgroundColor: 'powderblue',
         }}>
-        <Text style={{fontSize: 28, textAlign: 'center', margin: 10}}>
+        <Text style={{ fontSize: 28, textAlign: 'center', margin: 10 }}>
           Fading in
         </Text>
       </FadeInView>
 
-      <Animated.View style={{ width: 200, height: 100, backgroundColor: 'green', opacity: spinvalue}}>
-        <TouchableOpacity onPress={()=>{
+      <Animated.View style={{ width: 200, height: 100, backgroundColor: 'green', opacity: spinvalue,  }}>
+        <TouchableOpacity onPress={() => {
           changeOpaciti(0)
         }}>
           <Text>demo for opacity</Text>
         </TouchableOpacity>
-       
       </Animated.View>
+      <SearchInput 
+          inputSource={Data.values}
+          style={{marginTop: 10}}
+        ></SearchInput>
     </View>
   );
 };

@@ -4,7 +4,7 @@ const Data = {
     values : [
         {
             id: 1,
-            title: "title 1", 
+            title: "Phụ Kiện Máy", 
             conten: "conten data 1", 
             url: "",
             writer: "",
@@ -22,7 +22,7 @@ const Data = {
         },
         {
             id: 3,
-            title: "title 3", 
+            title: "Điện Thoại Chính Hãng", 
             conten: "conten data 3", 
             url: "",
             writer: "",
@@ -31,7 +31,7 @@ const Data = {
         },
         {
             id: 4,
-            title: "title 4", 
+            title: " Hà Nội", 
             conten: "conten data 4", 
             url: "",
             writer: "",
@@ -49,7 +49,7 @@ const Data = {
         },
         {
             id: 6,
-            title: "title 6", 
+            title: "Chuột, bàn phím, tai nghe", 
             conten: "conten data 6", 
             url: "",
             writer: "",
@@ -67,7 +67,7 @@ const Data = {
         },
         {
             id: 8,
-            title: "title 8", 
+            title: "Yên Xá, Thanh Trì", 
             conten: "conten data 8", 
             url: "",
             writer: "",
@@ -76,7 +76,7 @@ const Data = {
         },
         {
             id: 8,
-            title: "title 1", 
+            title: "Bàn phím langtu ", 
             conten: "conten data 1", 
             url: "",
             writer: "",
@@ -85,7 +85,7 @@ const Data = {
         },
         {
             id: 9,
-            title: "title 2", 
+            title: "Chia sẻ tin đăng này cho bạn bè", 
             conten: "conten data 2", 
             url: "",
             writer: "",
@@ -94,7 +94,7 @@ const Data = {
         },
         {
             id: 10,
-            title: "title 3", 
+            title: "CÔNG TY TNHH CHỢ TỐT", 
             conten: "conten data 3", 
             url: "",
             writer: "",
@@ -103,7 +103,7 @@ const Data = {
         },
         {
             id: 11,
-            title: "title 4", 
+            title: "HỖ TRỢ KHÁCH HÀNG", 
             conten: "conten data 4", 
             url: "",
             writer: "",
@@ -112,7 +112,7 @@ const Data = {
         },
         {
             id: 12,
-            title: "title 5", 
+            title: "LIÊN KẾT", 
             conten: "conten data 5", 
             url: "",
             writer: "",
@@ -121,7 +121,7 @@ const Data = {
         },
         {
             id: 22,
-            title: "title 6", 
+            title: "TẢI ỨNG DỤNG", 
             conten: "conten data 6", 
             url: "",
             writer: "",

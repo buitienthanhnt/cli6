@@ -21,6 +21,7 @@ module.exports = {
 						'@services': './src/services',
 						'@locales': './src/locales',
 						'@netWork': './src/netWork',
+						'@elements': './src/elements',
 						// '@styles': './src/styles',
 						// '@types': './src/types',
 						},

@@ -2,16 +2,18 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { View, Text, Image, Button, Dimensions, FlatList, TouchableOpacity, StyleSheet, ScrollView, TextInput, Platform, LogBox } from "react-native";
 import { connect } from "react-redux";
+import useDispatchState from '@hooks/redux/useDispatchState';
 
 const TestRedux = (props)=>{
-	console.log('123');
+	const {actionReducer, updateState} = useDispatchState();
 	return(
 		<View style={{flex: 1, padding: 10}}>
 			<Text>{props.g_data.number}</Text>
 			<TouchableOpacity 
 				style={{backgroundColor: 'violet', justifyContent: 'center', alignItems: 'center', borderRadius: 5, height: 30,}} 
 				onPress={()=>{
-					props.add_value(3)
+					// props.add_value(3)
+					updateState(actionReducer.addNumber, 4)
 				}}>
 				<Text>add</Text>
 			</TouchableOpacity>

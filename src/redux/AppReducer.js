@@ -1,45 +1,37 @@
-import {AppState, Application} from "./AppState";
+import { AppState, Application } from "./AppState";
+import actionReducer from "@utils/reduxActiontype";
 
 const Reducer = (state = AppState, action) => {
     let newTaskList = state.data;
     switch (action.type) {
-        case 'FINISH':
-            newTaskList[action.atIndex].isFinished = true;
+        case actionReducer.reFinish:
+            newTaskList[action.value.atIndex].isFinished = true;
             return { ...state, data: newTaskList };
-            break;
-        case 'DELETE':
-            newTaskList = newTaskList.filter((item, i) => i != action.atIndex);
+        case actionReducer.reDelete:
+            newTaskList = newTaskList.filter((item, i) => i != action.value.atIndex);
             return { ...state, data: newTaskList };
-            break;
-        case 'ADD':
-            const newTask = { title: action.title, isFinished: false };
+        case actionReducer.reAdd:
+            const newTask = { title: action.value.title, isFinished: false };
             return { ...state, data: [...newTaskList, newTask] };
-            break;
-        case 'CHANGE_PAPER_ID':
+        case actionReducer.reChangePaperId:
             return { ...state, paper_id: action.paper_id };
-            break;
-        case 'UPDATE_SID':
+        case actionReducer.reUpdateSid:
             return {
-                ...state, _tha_sid: action.sid
+                ...state, _tha_sid: action.value
             };
-            break;
-        case 'UPDATE_CART':
+        case actionReducer.reUpdateCart:
             return {
-                ...state, cart_data: action.cart_data
+                ...state, cart_data: action.value
             };
-            break;
-        case 'LOGIN':
+        case actionReducer.reLogin:
             return {
-                ...state, user_data: action.user_data
+                ...state, user_data: action.value
             };
-            break;
-        case 'LOGOUT':
+        case actionReducer.reLogOut:
             return {
                 ...state, user_data: null
             };
-            break;
         default:
-            break;
     }
     return state;
 };
@@ -47,58 +39,46 @@ const Reducer = (state = AppState, action) => {
 const NumberReducer = (state = AppState, action) => {
     let new_num;
     switch (action.type) {
-        case "ADD_NUMBER":
+        case actionReducer.addNumber:
             new_num = state.number += action.value;
             return { ...state, number: new_num };
-            break;
-        case "SUB_NUMBER":
+        case actionReducer.subNumber:
             new_num = state.number -= 1;
             return { ...state, number: new_num };
-            break;
         default:
-            break;
     }
     return state;
 };
 
-const PaperReducer = (state = AppState, action)=>{
+const PaperReducer = (state = AppState, action) => {
     switch (action.type) {
-        case "ON_MESSAGE":
-            return {...state, message_count: state.message_count + 1};
-            break;
-    
+        case actionReducer.onMessage:
+            return { ...state, message_count: state.message_count + 1 };
         default:
-            break;
     }
     return state;
 }
 
-const AuthenReducer = (state = AppState, action)=>{
+const AuthenReducer = (state = AppState, action) => {
     switch (action.type) {
-        case "SET_USER":
-            return {...state, user_data: action.user_data};
-            break;
-        case "CLEAR_USER":
-            return {...state, user_data: null};
-            break;
+        case actionReducer.setUser:
+            return { ...state, user_data: action.value };
+        case actionReducer.clearUser:
+            return { ...state, user_data: null };
         default:
-            break;
     }
     return state;
 }
 
-const AppliReducer = (state = Application, action)=>{
+const AppliReducer = (state = Application, action) => {
     switch (action.type) {
-        case "SET_LANG":
-            return {...state, lang: action.lang};
-            break;
-        case "SET_KEY":
-            return {...state, key: action.key};
-            break;
+        case actionReducer.setLang:
+            return { ...state, lang: action.value };
+        case actionReducer.setKey:
+            return { ...state, key: action.value };
         default:
-            break;
     }
     return state;
 }
 
-export { Reducer, NumberReducer, PaperReducer, AuthenReducer, AppliReducer};
+export { Reducer, NumberReducer, PaperReducer, AuthenReducer, AppliReducer };

@@ -141,7 +141,7 @@ const DemoTest = ({ navigation }) => {
                 // gọi vào reducer để cập nhập data
                 dispatch({
                     type: 'SET_USER',
-                    user_data: {id: 12, name: 'tha', street: '21b national'}
+                    value: {id: 12, name: 'tha', street: '21b national'}
                 })
             }}>
                 <Text style={{color: 'blue'}}>add number</Text>

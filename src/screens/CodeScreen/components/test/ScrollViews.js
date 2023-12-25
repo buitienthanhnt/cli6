@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef, useState, useMemo, useCallback } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -8,7 +8,12 @@ import {
   ImageBackground,
   Animated,
   useWindowDimensions,
+  Modal,
+  Button,
+  TouchableOpacity,
 } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const images = new Array(6).fill(
   'https://images.unsplash.com/photo-1556740749-887f6717d7e4',
@@ -17,7 +22,34 @@ const images = new Array(6).fill(
 const ScrollViews = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const {width: windowWidth} = useWindowDimensions();
+  const { width: windowWidth } = useWindowDimensions();
+  const [modalVisible, setModalVisible] = useState(false);
+  const modalImages = [
+    {
+      url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
+
+      width: 300,
+      // height: number
+      // Optional, if you know the image size, you can set the optimization performance
+
+      // You can pass props to <Image />.
+      props: {
+        // headers: ...
+      }
+    }, {
+      uri: '',
+      props: {
+        // Or you can set source directory.
+        source: require('@assets/6623ThuydienLaiChau1_1.jpg')
+      },
+    }, {
+      props: { source: require('@assets/trail-5yOnGsKUNGw-unsplash.jpg') }
+    }
+  ]
+
+  const openModal = () => {
+    setModalVisible(!modalVisible);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,8 +70,8 @@ const ScrollViews = () => {
           scrollEventThrottle={1}>
           {images.map((image, imageIndex) => {
             return (
-              <View style={{width: windowWidth, height: 250}} key={imageIndex}>
-                <ImageBackground source={{uri: image}} style={styles.card}>
+              <View style={{ width: windowWidth, height: 250 }} key={imageIndex}>
+                <ImageBackground source={{ uri: image }} style={styles.card}>
                   <View style={styles.textContainer}>
                     <Text style={styles.infoText}>
                       {'Image - ' + imageIndex}
@@ -64,12 +96,21 @@ const ScrollViews = () => {
             return (
               <Animated.View
                 key={imageIndex}
-                style={[styles.normalDot, {width}]}
+                style={[styles.normalDot, { width }]}
               />
             );
           })}
         </View>
       </View>
+
+      <Button title='open modal zoom image' onPress={openModal}></Button>
+
+      <Modal visible={modalVisible} transparent={false}>
+        <ImageViewer imageUrls={modalImages} />
+        <TouchableOpacity onPress={() => { setModalVisible(false) }} style={{ height: 40, justifyContent: 'flex-end', backgroundColor: 'black', paddingLeft: 20 }}>
+          <Icon name='remove' size={28} color='white' />
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 };

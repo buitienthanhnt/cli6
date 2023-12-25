@@ -23,7 +23,7 @@ const screens = [
         component: 'SwipeBtn'
     },
     {
-        name: 'Slide Image',
+        name: 'Slide Image ScrollViews',
         component: 'ScrollViews'
     },
     {

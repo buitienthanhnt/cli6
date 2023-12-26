@@ -43,7 +43,7 @@
     {
         try {
             $app_install_file = 'node_modules/react-native-check-app-install/android/build.gradle';
-            $new_fix_conten = file_get_contents('src\doc\check_app_install_fix.md');
+            $new_fix_conten = file_get_contents('src/doc/check_app_install_fix.md');
             file_put_contents($app_install_file, $new_fix_conten);
         } catch (\Throwable $th) {
             echo($th->getMessage()."\n");
@@ -61,7 +61,7 @@
 
             $decrepted_file = 'node_modules/react-native-color-picker/dist/HoloColorPicker.js';
             $i18n_style_warning_old = file_get_contents($decrepted_file);
-            if (strpos($i18n_style_warning_old, '@react-native-community/slider') === false) {
+            if (strpos($i18n_style_warning_old, "from '@react-native-community/slider'") === false) {
                 $i18n_style_warning_old = str_replace('Slider,', '', $i18n_style_warning_old);
                 $i18n_style_warning_old = str_replace('import React from "react";', 'import React from "react"; import Slider from "@react-native-community/slider";', $i18n_style_warning_old);
 
@@ -71,7 +71,7 @@
             // ================tsx==========================
             $decrepted_file2 = 'node_modules/react-native-color-picker/src/HoloColorPicker.tsx';
             $i18n_style_warning_old2 = file_get_contents($decrepted_file2);
-            if (strpos($i18n_style_warning_old2, '@react-native-community/slider') === false) {
+            if (strpos($i18n_style_warning_old2, "from '@react-native-community/slider'") === false) {
                 $i18n_style_warning_old2 = str_replace('Slider,', '', $i18n_style_warning_old2);
                 $i18n_style_warning_old2 = str_replace('import React from "react"', 'import React from "react"; import Slider from "@react-native-community/slider";', $i18n_style_warning_old2);
     

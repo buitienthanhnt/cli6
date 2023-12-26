@@ -59,6 +59,10 @@ export default () => {
         // alignItems: 'center',
         // justifyContent: 'center',
       }}>
+      <SearchInput
+        inputSource={Data.values}
+        style={{ marginTop: 10,}}
+      ></SearchInput>
       <FadeInView
         style={{
           width: 250,
@@ -70,17 +74,13 @@ export default () => {
         </Text>
       </FadeInView>
 
-      <Animated.View style={{ width: 200, height: 100, backgroundColor: 'green', opacity: spinvalue,  }}>
+      <Animated.View style={{ width: 200, height: 100, backgroundColor: 'green', opacity: spinvalue, }}>
         <TouchableOpacity onPress={() => {
           changeOpaciti(0)
         }}>
           <Text>demo for opacity</Text>
         </TouchableOpacity>
       </Animated.View>
-      <SearchInput 
-          inputSource={Data.values}
-          style={{marginTop: 10}}
-        ></SearchInput>
     </View>
   );
 };

@@ -54,7 +54,7 @@ const SearchInput = (props) => {
                 {visible && <Animated.View style={{
                     borderWidth: 1, borderRadius: 10, position: 'absolute', borderColor: '#68bcff',
                     marginTop: 50, marginHorizontal: 20, width: '100%',
-                    height: 160, paddingHorizontal: 10, paddingVertical: 5,
+                    height: 160, paddingHorizontal: 10, paddingVertical: 5, zIndex: 999, elevation: 999,
                     opacity
                 }}>
                     <ScrollView

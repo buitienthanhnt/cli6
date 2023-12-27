@@ -61,13 +61,14 @@ export default () => {
       }}>
       <SearchInput
         inputSource={Data.values}
-        style={{ marginTop: 10,}}
+        style={{ marginTop: 10, zIndex: 999}}
       ></SearchInput>
       <FadeInView
         style={{
           width: 250,
           height: 50,
           backgroundColor: 'powderblue',
+          zIndex: 1
         }}>
         <Text style={{ fontSize: 28, textAlign: 'center', margin: 10 }}>
           Fading in

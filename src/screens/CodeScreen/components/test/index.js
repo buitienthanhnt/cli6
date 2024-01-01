@@ -17,7 +17,7 @@ const screens = [
         component: 'ExVirtualizedlist'
     },
     {
-        name: 'TestRedux',
+        name: 'TestRedux & permission',
         component: 'TestRedux'
     },
     {
@@ -41,7 +41,7 @@ const screens = [
         component: 'DemoUseCallBack'
     },
     {
-        name: 'to test promies',
+        name: 'promies & hide bottom',
         component: 'Demopromies'
     },
     {

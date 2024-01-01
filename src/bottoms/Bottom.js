@@ -13,7 +13,7 @@ import useNotification from "@hooks/useNotification";
 
 const Tab = createBottomTabNavigator();
 const BottomTabs = ({ navigation, route }) => {
-    const {notifi_count} = useNotification();
+    const { notifi_count } = useNotification();
 
     const bottomTabs = useMemo(() => {
         return [
@@ -25,7 +25,7 @@ const BottomTabs = ({ navigation, route }) => {
                     tabBarShowLabel: false,     // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
                     tabBarIcon: ({ focused, color, size }) => {
                         return (<Icon name={"home"} size={26} color={color} />);
-                    }
+                    },
                 }
             },
             {
@@ -73,13 +73,15 @@ const BottomTabs = ({ navigation, route }) => {
                 tabBarActiveTintColor: '#669ddd', // màu icon mặc định là xanh, dùng như này sẽ là màu cà chua.
                 tabBarInactiveTintColor: 'gray',  // gray cũng là màu mặc định luôn.
                 headerShown: false                // ẩn phần tiêu đề bên trên của: Tab.Navigator
-            })}
+            })
+        }
+            initialRouteName="HomeScreen"
         // tabBarOptions={{ showLabel: false }} // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
         >
             {bottomTabs.map((tab, index) => {
                 return (
                     <Tab.Screen
-                    key={'tabs_'+index}
+                        key={'tabs_' + index}
                         name={tab.name}
                         component={tab.component}
                         options={tab.options}

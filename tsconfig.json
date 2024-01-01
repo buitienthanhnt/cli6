@@ -2,18 +2,19 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
-      "@bottoms/*": ["./src/bottoms/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@config/*": ["./src/config/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@screens/*": ["./src/screens/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@redux/*": ["./src/redux/*"],
+      "@/*":         ["./src/*"],
+      "@bottoms/*":  ["./src/bottoms/*"],
+      "@assets/*":   ["./src/assets/*"],
+      "@config/*":   ["./src/config/*"],
+      "@hooks/*":    ["./src/hooks/*"],
+      "@screens/*":  ["./src/screens/*"],
+      "@utils/*":    ["./src/utils/*"],
+      "@redux/*":    ["./src/redux/*"],
       "@services/*": ["./src/services/*"],
-      "@locales/*": ["./src/locales/*"],
-      "@netWork/*": ["./src/netWork/*"],
+      "@locales/*":  ["./src/locales/*"],
+      "@netWork/*":  ["./src/netWork/*"],
       "@elements/*": ["./src/elements/*"],
+      "@styles/*":   ["./src/styles/*"],
     }
   }
 }

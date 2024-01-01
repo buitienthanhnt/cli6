@@ -8,7 +8,7 @@ const PaperScreen = (props) => {
     }
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName='PaperList'>
             {
                 screens.paperTab.map((item, index)=>{
                     return (

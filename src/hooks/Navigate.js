@@ -10,7 +10,19 @@ export function Navigate(name, params) {
   }
 }
 
+export function HideBottom() {
+  if (navigationRef.isReady()) {
+    console.log(navigationRef.getCurrentRoute());
+    navigationRef.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "none"
+      },
+      tabBarVisible: false
+    })
+  }
+}
+
 // redirect with Linking
-export const LinkingNavigate = (homeScreen = '', options = {})=>{
-	Linking.openURL(`myapp://app/${homeScreen}`);
+export const LinkingNavigate = (homeScreen = '', options = {}) => {
+  Linking.openURL(`myapp://app/${homeScreen}`);
 }

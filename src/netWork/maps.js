@@ -7,8 +7,10 @@ const getPlaceDetail = async (placeId) => {
 		place_id: placeId,
 		key: Config.googleService.geoMapApiKey
 	});
-	const url = googleMapUrl + Config.googleService.placeDetail + Config.googleService.reponseJson + paramUrl;
 
+	// hoặc có thể dùng: api/geocode(https://developers.google.com/maps/documentation/geocoding/requests-geocoding)
+	// để lấy detail.
+	const url = googleMapUrl + Config.googleService.placeDetail + Config.googleService.reponseJson + paramUrl;
 	const response = await fetch(url);
 	const data = await response.json();
 	return data;

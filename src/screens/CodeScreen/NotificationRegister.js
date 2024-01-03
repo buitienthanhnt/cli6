@@ -68,7 +68,7 @@ const NotificationRegister = (props) => {
     };
 
     return (
-        <ScrollView style={{ flex: 1, padding: 6, backgroundColor: 'rgba(0, 114, 0, 0.5)' }}>
+        <View style={{ flex: 1, padding: 6, backgroundColor: 'rgba(0, 114, 0, 0.5)' }}>
             <View style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: 18, fontWeight: "bold" }}>fcmToken: </Text>
                 <Text>(click to coppy)</Text>
@@ -96,7 +96,7 @@ const NotificationRegister = (props) => {
             <View style={{ height: 2, backgroundColor: 'black', marginVertical: 4 }}></View>
 
             <ListNoti g_data = {props.g_data}></ListNoti>
-        </ScrollView>
+        </View>
     )
 }
 

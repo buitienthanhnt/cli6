@@ -24,4 +24,8 @@ https://maps.googleapis.com/maps/api/place/details/json
   &place_id=ChIJN1t_tDeuEmsRUsoyG83frY4
   &key=YOUR_API_KEY
 
+|| hoặc lấy detail: https://developers.google.com/maps/documentation/geocoding/requests-geocoding (không mất phí)
+https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJeRpOeF67j4AR9ydy_PIzPuM&key=YOUR_API_KEY 
+
+
  -->

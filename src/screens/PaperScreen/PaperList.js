@@ -30,7 +30,8 @@ class PaperList extends Component {
         if (!this.state.refreshing) {
             this.setState({ refreshing: true });
             // console.log(Config.url + Config.api_request.getpapers + Config.buy_params({ page: this.state.page }));
-            const data = await fetch(Config.url + Config.api_request.getpapers + Config.buy_params({ page: paper !== false ? paper : this.state.page }));
+            const _url = Config.url + Config.api_request.getpapers + Config.buy_params({ page: paper !== false ? paper : this.state.page });
+            const data = await fetch(_url);
             const result = await data.json();
             var items = this.state.items;
             if (result.data.length) {
@@ -111,7 +112,7 @@ class PaperList extends Component {
                                 }
                             }
                         )()}
-                        
+
 
                         {/* <View style={css.title_container}>
                             <View style={{ flexDirection: "row", justifyContent: "center" }}><Text style={{ fontSize: 18, fontWeight: "600" }}>News</Text></View>

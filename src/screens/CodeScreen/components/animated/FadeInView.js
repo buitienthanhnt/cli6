@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { Animated, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Animated, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import {
   ScrollView,
   AppRegistry,
@@ -61,7 +61,7 @@ export default () => {
       }}>
       <SearchInput
         inputSource={Data.values}
-        style={{ marginTop: 10, zIndex: 999}}
+        style={{ marginTop: 10, zIndex: Platform.OS === 'ios' ? 999 : undefined}}
       ></SearchInput>
       <FadeInView
         style={{

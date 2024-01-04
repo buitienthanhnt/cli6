@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "60395106347",
-    "project_id": "cli6-c4945",
-    "storage_bucket": "cli6-c4945.appspot.com"
+    "project_number": "851155407854",
+    "firebase_url": "https://newpaper-25148-default-rtdb.firebaseio.com",
+    "project_id": "newpaper-25148",
+    "storage_bucket": "newpaper-25148.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:60395106347:android:b39cc48d8ab7e56f647a6e",
+        "mobilesdk_app_id": "1:851155407854:android:6926982f942430fcf1f4ff",
         "android_client_info": {
           "package_name": "com.cli6"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCOmPjYBTzbz5NDhoxrAetbS1BodPlg13Y"
+          "current_key": "AIzaSyAvUjDhPD7PvkZrrwDGEjnZoYZelYfrEa8"
         }
       ],
       "services": {

@@ -56,12 +56,19 @@ class PaperList extends Component {
     }
 
     getCategoryTop = async () => {
-        const data = await fetch(Config.url + Config.api_request.getCategoryTop);
-        const result = await data.json();
-        this.setState({
-            topCategory: result,
-            topRefresh: false
-        })
+        try {
+            const data = await fetch(Config.url + Config.api_request.getCategoryTop);
+            const result = await data.json();
+            this.setState({
+                topCategory: result,
+                topRefresh: false
+            })
+        } catch (error) {
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+        }
+
     }
 
     componentDidUpdate() {
@@ -75,12 +82,12 @@ class PaperList extends Component {
         const height = Dimensions.get("screen").height;
         const width = Dimensions.get("screen").width;
         const onRefresh = () => {
-            this.setState({topRefresh: true});
+            this.setState({ topRefresh: true });
             this.getCategoryTop();
             // setTimeout(() => {
             //     this.setState({topRefresh: false});
             // }, 2000);
-          }
+        }
 
         return (
             <View style={css.container}>
@@ -93,13 +100,13 @@ class PaperList extends Component {
                             <RefreshControl refreshing={this.state.topRefresh} onRefresh={onRefresh} />}
                     >
                         {(
-                            ()=>{
+                            () => {
                                 if (this.state.topCategory) {
                                     return this.state.topCategory && this.state.topCategory.map((item, index) => {
                                         return (
                                             <View key={item.id} style={css.title_container}>
-                                                <TouchableOpacity onPress={()=>{
-                                                    this.props.navigation.navigate("PaperListCategory", {category_id: item.id})
+                                                <TouchableOpacity onPress={() => {
+                                                    this.props.navigation.navigate("PaperListCategory", { category_id: item.id })
                                                 }}>
                                                     <View style={{ flexDirection: "row", justifyContent: "center" }}><Text style={{ fontSize: 18, fontWeight: "600" }}>{item.name}</Text></View>
                                                     <Image source={{ uri: item.image_path }} style={css.top_image} resizeMode="cover" defaultSource={require('../../assets/favicon.png')}></Image>
@@ -107,7 +114,7 @@ class PaperList extends Component {
                                             </View>
                                         )
                                     });
-                                }else{
+                                } else {
                                     return <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>;
                                 }
                             }

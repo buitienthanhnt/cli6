@@ -18,6 +18,11 @@ import {
 
 import { navigationRef } from '@hooks/Navigate'; // để di chuyển qua các màn hình
 import { check, request, requestNotifications, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import Reactotron from 'reactotron-react-native' // adb reverse tcp:9090 tcp:9090 (chạy lênh này nếu dùng qua android hay máy ảo android để kíck hoạt reactotron)
+
+if(__DEV__) { // adb reverse tcp:9090 tcp:9090
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'))
+}
 
 // https://viblo.asia/p/webpack-5-babel-plugin-module-resolver-djeZ1EN8ZWz tạo Alias trong webpack
 // https://viblo.asia/p/webpack-5-webpack-resolve-alias-extensions-naQZRL4Q5vx
@@ -80,6 +85,7 @@ function App(): JSX.Element {
   const [token, setToken] = useState("");
 
   useEffect(() => {
+    Reactotron.log('hello rendering world');
     check('android.permission.POST_NOTIFICATIONS').then((result) => {
       switch (result) {
         case RESULTS.UNAVAILABLE:
@@ -99,7 +105,7 @@ function App(): JSX.Element {
         // console.log('The permission is denied and not requestable anymore');
         // break;
         default:
-        // 
+        //
       }
     });
     requestUserPermission();

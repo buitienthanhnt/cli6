@@ -20,4 +20,26 @@ const useCategory = () => {
 	return category;
 }
 
-export { useCategory };
+const usePapersFirebase = () => {
+	const [data, setData] = useState([]);
+
+	useEffect(() => {
+		const onData = database().ref('newpaper/papers').on('value', (snapshot) => {
+			if (snapshot.numChildren()) {
+				let _data = [];
+				snapshot.forEach(item => {
+					_data.push(item.val());
+				})
+				setData(_data);
+			};
+		})
+
+		return () => database().ref('newpaper/papers').off('value', onData);
+	}, []);
+
+	return {
+		data: data
+	}
+}
+
+export { useCategory, usePapersFirebase };

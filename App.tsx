@@ -46,6 +46,7 @@ import linking from './linking';
 import { QueryClient, QueryClientProvider } from 'react-query'  // dùng cho getdata api
 import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
 import AppStore from '@redux/AppStore';
+import remoteConfig from '@react-native-firebase/remote-config';
 const queryClient = new QueryClient()
 
 const Stack = createNativeStackNavigator();
@@ -86,6 +87,10 @@ function App(): JSX.Element {
 
   useEffect(() => {
     Reactotron.log('hello rendering world');
+    remoteConfig().setDefaults({
+      default_image: 'https://firebasestorage.googleapis.com/v0/b/newpaper-25148.appspot.com/o/demo%2FgBYNm4ke2I.png?alt=media&token=24057320-9c26-46cc-b1be-711c7296cc6b',
+    });
+    
     check('android.permission.POST_NOTIFICATIONS').then((result) => {
       switch (result) {
         case RESULTS.UNAVAILABLE:

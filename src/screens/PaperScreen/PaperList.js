@@ -1,7 +1,9 @@
 import react, { Component, useCallback } from "react";
-import { FlatList, StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, LogBox, ScrollView, RefreshControl } from "react-native";
+import { FlatList, StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, LogBox, ScrollView, RefreshControl, Button } from "react-native";
 import Config from "@config/Config";
 import perf from "@react-native-firebase/perf";
+import PaperListFirebase from "./PaperListFirebase";
+import remoteConfig from '@react-native-firebase/remote-config';
 
 class PaperList extends Component {
     constructor(props) { // https://viblo.asia/p/superprops-trong-constructor-cua-react-component-gGJ59eA15X2
@@ -133,7 +135,7 @@ class PaperList extends Component {
                     </ScrollView>
                 </View>
 
-                <FlatList
+                {/* <FlatList
                     data={this.state?.items}
                     refreshing={this.state.refreshing}
                     onRefresh={() => {
@@ -152,14 +154,15 @@ class PaperList extends Component {
                     onEndReached={() => {
                         this.getSourceData();
                     }}
-                ></FlatList>
+                ></FlatList> */}
+                <PaperListFirebase navigation={this.props.navigation}></PaperListFirebase>
 
             </View>
         );
     }
 }
 
-class ProductItem extends Component {
+export class ProductItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -174,7 +177,10 @@ class ProductItem extends Component {
             >
                 <View style={css.pro_item}>
                     <View style={{ width: "40%" }}>
-                        <Image source={{ uri: this.props.data.image_path }} style={{ flex: 1, borderRadius: 6 }}></Image>
+                        <Image 
+                            source={{ uri: this.props.data.image_path || remoteConfig().getValue('default_image').asString() }} 
+                            defaultSource={require('@assets/defaul.png')}
+                            style={{ flex: 1, borderRadius: 6 }}></Image>
                     </View>
                     <View style={css.pro_item_title}>
                         <Text style={{ color: "green", fontSize: 16 }} ellipsizeMode='tail' numberOfLines={2}>{this.props.data.title}</Text>
@@ -188,18 +194,21 @@ class ProductItem extends Component {
     }
 }
 
-class ProductItemHost extends Component {
+export class ProductItemHost extends Component {
     constructor(props) {
         super(props);
     }
-
     render() {
         return (
             <TouchableOpacity onPress={() => {
                 this.props.navigation.navigate("PaperDetail", { data: this.props.data });
             }}>
                 <View style={css.pro_item_host}>
-                    <Image source={{ uri: this.props.data.image_path }} style={{ flex: 1, borderRadius: 6 }} resizeMode="cover"></Image>
+                    <Image
+                        source={{ uri: this.props.data.image_path || remoteConfig().getValue('default_image').asString() }}
+                        style={{ flex: 1, borderRadius: 6 }} resizeMode="cover"
+                        defaultSource={require('@assets/defaul.png')}
+                    ></Image>
                     <Text style={css.pro_item_host_title} ellipsizeMode='tail' numberOfLines={2}>{this.props.data.title}</Text>
                     <View style={{ paddingLeft: 8 }}>
                         <Text ellipsizeMode='tail' numberOfLines={2}>{this.props.data.short_conten}</Text>

@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import react, { useCallback, useEffect, useState } from "react";
 import { Dimensions, Image, ScrollView, RefreshControl, Text, View, FlatList, ActivityIndicator, StyleSheet, Button } from "react-native";
 import Config from "@config/Config";
 
@@ -8,6 +8,7 @@ import WebView from 'react-native-webview';                                 // n
 import Wishlist from "@screens/AccountScreen/Wishlist";
 import perf from "@react-native-firebase/perf";
 import { useFect } from "@hooks/useFect";
+import { usePaperDetailFirebase } from "@hooks/Firebase";
 
 const renderers = {
     iframe: IframeRenderer
@@ -22,23 +23,23 @@ const PaperDetail = ({ navigation, route }) => {
     // use custom hook
     // gan bien detail banfg gia tri bien data(detail = data)
     // const {isLoading, data: detail, error} = useFect(Config.url + Config.api_request.getPaperDetail + (route.params?.paper_id || route.params.data.id));
-
     const [html, setHtml] = useState(route?.params?.data?.conten || '');
-    const [detail, setDetail] = useState(null);
+    // const [detail, setDetail] = useState(null);
+    const { detail } = usePaperDetailFirebase(route.params.data.id)
     const [showWebview, setShowwebview] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        // console.log(route.params);
-        if (route.params.paper_id != undefined) {
-            getDetailPaper(route.params.paper_id);
-        }else{
-            getDetailPaper(route.params.data.id);
-        }
+        // console.log(route.params.data.id);
+        // if (route.params.paper_id != undefined) {
+        //     getDetailPaper(route.params.paper_id);
+        // }else{
+        //     getDetailPaper(route.params.data.id);
+        // }
     }, [route.params]
     );
 
-    const getDetailPaper = async (paper_id = 0) => {
+    const getDetailPaper = useCallback(async (paper_id = 0) => {
         const traceInitScreen = await perf().startTrace('detail_trace');
         traceInitScreen.putMetric("hits", 1);
         if (paper_id) {
@@ -58,7 +59,7 @@ const PaperDetail = ({ navigation, route }) => {
         }
         console.log(traceInitScreen);
         await traceInitScreen.stop()
-    };
+    }, []);
 
     const onRefresh = () => {
         // alert("refresh");
@@ -69,7 +70,7 @@ const PaperDetail = ({ navigation, route }) => {
 
     if (detail) {
         if (showWebview) {
-            return  <WebView source={{ uri: "www.topsy-fashion.nl" }} />
+            return <WebView source={{ uri: "www.topsy-fashion.nl" }} />
         }
         return (
             <ScrollView
@@ -99,12 +100,12 @@ const PaperDetail = ({ navigation, route }) => {
                             }
                         }
                     }}
-                    onPress={(event)=>{return undefined;}}
+                    onPress={(event) => { return undefined; }}
                 />
-                <View style={{height: 1, backgroundColor: "black"}}></View>
+                <View style={{ height: 1, backgroundColor: "black" }}></View>
                 <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
-                <View style={{height: 1, backgroundColor: "black", marginBottom: 10}}></View>
-                <Button title="view in webview" onPress={()=>{
+                <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>
+                <Button title="view in webview" onPress={() => {
                     setShowwebview(true)
                 }}></Button>
             </ScrollView>
@@ -113,7 +114,7 @@ const PaperDetail = ({ navigation, route }) => {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 {/* <ActivityIndicator size="small" color="#0000ff" /> */}
-                <Image source={require("@assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image> 
+                <Image source={require("@assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>
             </View>);
     }
 }
@@ -128,14 +129,14 @@ const LastNews = (props) => {
             const response = await fetch(request_api);
             const _data = await response.json();
             setData(_data?.["items"]);
-        } catch (error) {console.log(error);}
+        } catch (error) { console.log(error); }
     }
     useEffect(() => {
         // console.log(paper_id);
     }, [])
 
     return (
-        <View  style={{paddingBottom: 20}}>
+        <View style={{ paddingBottom: 20 }}>
             <Wishlist navigation={navigation}></Wishlist>
         </View>
     );
@@ -143,8 +144,8 @@ const LastNews = (props) => {
 
 const css = StyleSheet.create({
     container: {
-        flex: 1, 
-        padding: 8, 
+        flex: 1,
+        padding: 8,
         // backgroundColor: "#d6ffc6"
     }
 })

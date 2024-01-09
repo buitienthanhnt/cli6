@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import database from '@react-native-firebase/database';
+import firestore from '@react-native-firebase/firestore';
 
 const useCategory = () => {
 	const [category, setCategory] = useState([]);
@@ -42,4 +43,34 @@ const usePapersFirebase = () => {
 	}
 }
 
-export { useCategory, usePapersFirebase };
+const usePaperDetailFirebase = (paperId) => {
+	const [data, setData] = useState([]);
+
+	const loadData = useCallback(async () => {
+		try {
+			firestore().collection('detailContent').doc(paperId.toString()).get().then((snapshot) => { // doc phải là string, nếu là number có thể lỗi
+				if (snapshot) {
+					setData(snapshot._data);
+				}
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}, [paperId]);
+
+	useEffect(() => {
+		loadData();
+		// firestore().collection('detailContent').doc(paperId.toString()).onSnapshot((documentSnapshot)=>{
+		// 	console.log('________________', documentSnapshot);
+		// 	if (documentSnapshot) {
+		// 		setData(documentSnapshot.data());
+		// 	}
+		// });
+	}, [loadData]);
+
+	return {
+		detail: data
+	}
+}
+
+export { useCategory, usePapersFirebase, usePaperDetailFirebase };

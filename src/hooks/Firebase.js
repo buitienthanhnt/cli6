@@ -25,13 +25,14 @@ const usePapersFirebase = () => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		const onData = database().ref('newpaper/papers').on('value', (snapshot) => {
+		const onData = database().ref('newpaper/papers').orderByKey().on('value', (snapshot) => {
 			if (snapshot.numChildren()) {
 				let _data = [];
 				snapshot.forEach(item => {
 					_data.push(item.val());
 				})
-				setData(_data);
+				// _data.sort((a,b) => b.id - a.id); // sort by desc
+				setData(_data.reverse());
 			};
 		})
 

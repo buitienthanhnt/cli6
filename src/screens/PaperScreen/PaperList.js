@@ -90,7 +90,6 @@ class PaperList extends Component {
             //     this.setState({topRefresh: false});
             // }, 2000);
         }
-
         return (
             <View style={css.container}>
                 <View >
@@ -135,7 +134,7 @@ class PaperList extends Component {
                     </ScrollView>
                 </View>
 
-                {/* <FlatList
+                {/* <FlatList // use online api server
                     data={this.state?.items}
                     refreshing={this.state.refreshing}
                     onRefresh={() => {
@@ -177,8 +176,8 @@ export class ProductItem extends Component {
             >
                 <View style={css.pro_item}>
                     <View style={{ width: "40%" }}>
-                        <Image 
-                            source={{ uri: this.props.data.image_path || remoteConfig().getValue('default_image').asString() }} 
+                        <Image
+                            source={{ uri: this.props.data.image_path || remoteConfig().getValue('default_image').asString() }}
                             defaultSource={require('@assets/defaul.png')}
                             style={{ flex: 1, borderRadius: 6 }}></Image>
                     </View>

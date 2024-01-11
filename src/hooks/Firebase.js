@@ -93,4 +93,25 @@ const useCategoryTop = () => {
 	};
 }
 
-export { useCategory, usePapersFirebase, usePaperDetailFirebase, useCategoryTop };
+const usePaperCategory = (categoryId) => {
+	const [data, setData] = useState([]);
+	useEffect(() => {
+		const onData = database().ref('newpaper/papersCategory/'+categoryId).on('value', (snapshot) => {
+			if (snapshot.numChildren()) {
+				let _data = [];
+				snapshot.forEach(item => {
+					_data.push(item.val());
+				})
+				setData(_data.reverse());
+			};
+		})
+
+		return () => database().ref('newpaper/papersCategory/'+ categoryId).off('value', onData);
+	}, []);
+
+	return {
+		data: data
+	}
+}
+
+export { useCategory, usePapersFirebase, usePaperDetailFirebase, useCategoryTop, usePaperCategory };

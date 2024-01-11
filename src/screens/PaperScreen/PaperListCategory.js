@@ -2,6 +2,7 @@ import react, { Component } from "react";
 import { FlatList, StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, LogBox, ScrollView, ImageBackground } from "react-native";
 
 import Config from "@config/Config";
+import PaperCategoryFirebase from "./PaperCategoryFirebase";
 
 class PaperListCategory extends Component {
     constructor(props) { // https://viblo.asia/p/superprops-trong-constructor-cua-react-component-gGJ59eA15X2
@@ -75,6 +76,13 @@ class PaperListCategory extends Component {
                 </View>);
 
         }
+        return (
+            <View style={css.container}>
+                {this.state.items.length && <PaperCategoryFirebase categoryId={this.state.category_id} navigation={this.props.navigation}></PaperCategoryFirebase>}
+            </View>
+        );
+
+        
         return (
             <View style={css.container}>
                 {this.state.items.length && <FlatList

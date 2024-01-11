@@ -25,8 +25,6 @@ import FsourceForm from '@screens/AccountScreen/components/firebase/FsourceForm'
 //--------------------------------- AccountScreen------------------------------------------//
 
 //--------------------------------- PaperScreen------------------------------------------//
-import Paper from '@screens/PaperScreen/Paper';
-import Detail from '@screens/PaperScreen/Detail';
 import { Sdetail } from '@screens/PaperScreen/Sdetail';
 import WebInApp from '@screens/PaperScreen/WebInApp';
 import PaperList from '@screens/PaperScreen/PaperList';
@@ -172,16 +170,6 @@ export const screens = {
         {
             name: "PaperCategory",
             component: PaperCategory,
-            options: { headerShown: true }
-        },
-        {
-            name: "Paper",
-            component: Paper,
-            options: { headerShown: true }
-        },
-        {
-            name: "Detail",
-            component: Detail,
             options: { headerShown: true }
         },
         {

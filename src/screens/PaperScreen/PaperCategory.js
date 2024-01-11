@@ -29,7 +29,7 @@ class PaperCategory extends Component {
                 // console.log(Config.url + Config.api_request.getPaperCategory + this.props.route.params.category_id + Config.buy_params({ page: paper !== false ? paper : this.state.page }));
                 const data = await fetch(Config.url + Config.api_request.getPaperCategory + this.props.route.params.category_id + Config.buy_params({ page: paper !== false ? paper : this.state.page }));
                 const result = await data.json();
-                console.log(result);
+                // console.log(result);
                 var items = this.state.items;
                 if (result.length) {
                     if (refresh) {

@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, 
 import Config from "@config/Config";
 import perf from "@react-native-firebase/perf";
 import { ProductItem, ProductItemHost } from "./element";
+import CategoryTop from "./CategoryTop";
 
 class PaperList extends Component {
     constructor(props) { // https://viblo.asia/p/superprops-trong-constructor-cua-react-component-gGJ59eA15X2
@@ -10,15 +11,12 @@ class PaperList extends Component {
         this.state = {
             items: [],
             refreshing: false,
-            topRefresh: false,
             page: 1,
-            topCategory: [],
             end: false
         };
     }
 
     componentDidMount() {
-        this.getCategoryTop();
         this.getSourceData();
         // tắt cảnh báo màu vàng trên màn hình dùng: LogBox.
         LogBox.ignoreAllLogs(); // cho tất cả các cảnh báo.
@@ -56,20 +54,6 @@ class PaperList extends Component {
         await listTrace.stop();
     }
 
-    getCategoryTop = async () => {
-        try {
-            const data = await fetch(Config.url + Config.api_request.getCategoryTop);
-            const result = await data.json();
-            this.setState({
-                topCategory: result,
-                topRefresh: false
-            })
-        } catch (error) {
-            console.log('====================================');
-            console.log(error);
-        }
-    }
-
     componentDidUpdate() {
         var items_count = this.state.items.length;
         if (!this.state.refreshing && !this.state.end && (items_count * Dimensions.get("screen").height / 7 < Dimensions.get("screen").height)) {
@@ -78,47 +62,9 @@ class PaperList extends Component {
     }
 
     render() { // https://viblo.asia/p/react-native-lifecycle-gAm5yXY8ldb
-        const height = Dimensions.get("screen").height;
-        const width = Dimensions.get("screen").width;
-        const onRefresh = () => {
-            this.setState({ topRefresh: true });
-            this.getCategoryTop();
-            // setTimeout(() => {
-            //     this.setState({topRefresh: false});
-            // }, 2000);
-        }
         return (
             <View style={css.container}>
-                <View >
-                    <ScrollView
-                        pagingEnabled={true}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal={true}
-                        refreshControl={
-                            <RefreshControl refreshing={this.state.topRefresh} onRefresh={onRefresh} />}
-                    >
-                        {(
-                            () => {
-                                if (this.state.topCategory) {
-                                    return this.state.topCategory && this.state.topCategory.map((item, index) => {
-                                        return (
-                                            <View key={item.id} style={css.title_container}>
-                                                <TouchableOpacity onPress={() => {
-                                                    this.props.navigation.navigate("PaperCategory", { category_id: item.id })
-                                                }}>
-                                                    <View style={{ flexDirection: "row", justifyContent: "center" }}><Text style={{ fontSize: 18, fontWeight: "600" }}>{item.name}</Text></View>
-                                                    <Image source={{ uri: item.image_path }} style={css.top_image} resizeMode="cover" defaultSource={require('../../assets/favicon.png')}></Image>
-                                                </TouchableOpacity>
-                                            </View>
-                                        )
-                                    });
-                                } else {
-                                    return <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>;
-                                }
-                            }
-                        )()}
-                    </ScrollView>
-                </View>
+                <CategoryTop navigation={this.props.navigation}></CategoryTop>
 
                 <FlatList // use online api server
                     data={this.state?.items}
@@ -148,20 +94,6 @@ class PaperList extends Component {
 const css = StyleSheet.create({
     container: {
         flex: 1
-    },
-    title_container: {
-        width: Dimensions.get("screen").width,
-        // height: (Dimensions.get("screen").height / 8)+20
-    },
-    top_title: {
-        fontSize: 18,
-        fontWeight: "700",
-        color: "green"
-    },
-    top_image: {
-        // flex: 1,
-        width: "100%",
-        height: Dimensions.get("screen").height / 6
     },
 });
 

@@ -1294,14 +1294,14 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.10.0):
     - React-Core
-  - react-native-google-maps (1.8.4):
+  - react-native-google-maps (1.9.1):
     - Google-Maps-iOS-Utils (= 4.2.2)
     - GoogleMaps (= 7.4.0)
     - React-Core
   - react-native-image-picker (7.1.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - react-native-maps (1.8.4):
+  - react-native-maps (1.9.1):
     - React-Core
   - react-native-netinfo (11.2.1):
     - React-Core
@@ -1320,7 +1320,8 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-webview (13.6.3):
+  - react-native-webview (13.6.4):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - React-NativeModulesApple (0.72.7):
     - hermes-engine
@@ -1511,7 +1512,7 @@ PODS:
     - RNNotifee/NotifeeCore (= 7.8.2)
   - RNNotifee/NotifeeCore (7.8.2):
     - React-Core
-  - RNPermissions (4.0.1):
+  - RNPermissions (4.0.4):
     - React-Core
   - RNReanimated (3.6.1):
     - RCT-Folly (= 2021.07.22.00)
@@ -1902,16 +1903,16 @@ SPEC CHECKSUMS:
   react-native-date-picker: 90d1d60802a20085125657940b944f2bb4e5c113
   react-native-geolocation: ef66fb798d96284c6043f0b16c15d9d1d4955db4
   react-native-get-random-values: 384787fd76976f5aec9465aff6fa9e9129af1e74
-  react-native-google-maps: 1e3d5bb85a6b9823bf034c4ec68ab096690e24e8
+  react-native-google-maps: 5e3af3d3bd16a9936a44be5be47ced7dbd45029b
   react-native-image-picker: be000cd54f1b1bd71dba9677b36847827f9cc012
-  react-native-maps: e2b78affd8e90c807a87bd042dc6b1af2decbcf1
+  react-native-maps: 4f45622710094c3603b262279c40026750579b1f
   react-native-netinfo: 8a7fd3f7130ef4ad2fb4276d5c9f8d3f28d2df3d
   react-native-pager-view: cf96a223846458cc7e932017636b5c6d8cc2c549
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-slider: 4d4f9b0a0de2f5ebe70b72cd760fdb6df0e267e2
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-webview: 88293a0f23eca8465c0433c023ec632930e644d0
+  react-native-webview: 121397a02eb58554c24d0c3e26acf676ff6a87d2
   React-NativeModulesApple: ac9cea059dfe97cf3a4f00aa2774293bf5a99463
   React-perflogger: 31ea61077185eb1428baf60c0db6e2886f141a5a
   React-RCTActionSheet: 392090a3abc8992eb269ef0eaa561750588fc39d
@@ -1952,7 +1953,7 @@ SPEC CHECKSUMS:
   RNGoogleSignin: aac5c1ec73422109dec1da770247a1e410dcc620
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNNotifee: 8e2d3df3f0e9ce8f5d1fe4c967431138190b6175
-  RNPermissions: d011221caac6d40d9048a4e97f78d6b9984fabcc
+  RNPermissions: 1e37f9abc5679c3c9e344dc01d4562c8a726cd30
   RNReanimated: 8a6a83984cb4d61ebf1065b6137150b6b31ce609
   RNScreens: 1c2444658fbb696a094272d946708167b1f63409
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852

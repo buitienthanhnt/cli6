@@ -4,6 +4,7 @@ import Config from "@config/Config";
 import perf from "@react-native-firebase/perf";
 import PaperListFirebase from "./PaperListFirebase";
 import remoteConfig from '@react-native-firebase/remote-config';
+import CategoryTopFirebase from "./CategoryTopFirebase";
 
 class PaperList extends Component {
     constructor(props) { // https://viblo.asia/p/superprops-trong-constructor-cua-react-component-gGJ59eA15X2
@@ -92,70 +93,8 @@ class PaperList extends Component {
         }
         return (
             <View style={css.container}>
-                <View >
-                    <ScrollView
-                        pagingEnabled={true}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal={true}
-                        refreshControl={
-                            <RefreshControl refreshing={this.state.topRefresh} onRefresh={onRefresh} />}
-                    >
-                        {(
-                            () => {
-                                if (this.state.topCategory) {
-                                    return this.state.topCategory && this.state.topCategory.map((item, index) => {
-                                        return (
-                                            <View key={item.id} style={css.title_container}>
-                                                <TouchableOpacity onPress={() => {
-                                                    this.props.navigation.navigate("PaperListCategory", { category_id: item.id })
-                                                }}>
-                                                    <View style={{ flexDirection: "row", justifyContent: "center" }}><Text style={{ fontSize: 18, fontWeight: "600" }}>{item.name}</Text></View>
-                                                    <Image source={{ uri: item.image_path }} style={css.top_image} resizeMode="cover" defaultSource={require('../../assets/favicon.png')}></Image>
-                                                </TouchableOpacity>
-                                            </View>
-                                        )
-                                    });
-                                } else {
-                                    return <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>;
-                                }
-                            }
-                        )()}
-
-
-                        {/* <View style={css.title_container}>
-                            <View style={{ flexDirection: "row", justifyContent: "center" }}><Text style={{ fontSize: 18, fontWeight: "600" }}>News</Text></View>
-                            <Image source={require("../../assets/hinh-ke-ga-3307-1684226630.jpg")} style={css.top_image} resizeMode="cover"></Image>
-                        </View>
-                        <View style={css.title_container}>
-                            <View style={{ flexDirection: "row", justifyContent: "center" }}><Text style={{ fontSize: 18, fontWeight: "600" }}>Chiến sự</Text></View>
-                            <Image source={require("../../assets/6623ThuydienLaiChau1_1.jpg")} style={css.top_image} resizeMode="cover"></Image>
-
-                        </View> */}
-                    </ScrollView>
-                </View>
-
-                {/* <FlatList // use online api server
-                    data={this.state?.items}
-                    refreshing={this.state.refreshing}
-                    onRefresh={() => {
-                        this.getSourceData(1, true);
-                    }}
-                    keyExtractor={(item) => item.id}
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item, index }) => {
-                        if (index % 5 == 0) {
-                            return <ProductItemHost data={item} navigation={this.props.navigation}></ProductItemHost>
-                        }
-                        return <ProductItem data={item} navigation={this.props.navigation}></ProductItem>;
-                    }}
-                    onEndReachedThreshold={0.1}
-                    onEndReached={() => {
-                        this.getSourceData();
-                    }}
-                ></FlatList> */}
+                <CategoryTopFirebase navigation={this.props.navigation} ></CategoryTopFirebase>
                 <PaperListFirebase navigation={this.props.navigation}></PaperListFirebase>
-
             </View>
         );
     }

@@ -74,4 +74,44 @@ const usePaperDetailFirebase = (paperId) => {
 	}
 }
 
-export { useCategory, usePapersFirebase, usePaperDetailFirebase };
+const useCategoryTop = () => {
+	const [data, setData] = useState([]);
+	useEffect(() => {
+		const onData = database().ref('newpaper/categoryTop').on('value', (snapshot) => {
+			if (snapshot.numChildren()) {
+				snapshot.forEach(item => {
+					setData(item.val());
+				})
+			};
+		})
+
+		return () => database().ref('newpaper/categoryTop').off('value', onData);
+	}, [])
+
+	return {
+		data: data
+	};
+}
+
+const usePaperCategory = (categoryId) => {
+	const [data, setData] = useState([]);
+	useEffect(() => {
+		const onData = database().ref('newpaper/papersCategory/'+categoryId).on('value', (snapshot) => {
+			if (snapshot.numChildren()) {
+				let _data = [];
+				snapshot.forEach(item => {
+					_data.push(item.val());
+				})
+				setData(_data.reverse());
+			};
+		})
+
+		return () => database().ref('newpaper/papersCategory/'+ categoryId).off('value', onData);
+	}, []);
+
+	return {
+		data: data
+	}
+}
+
+export { useCategory, usePapersFirebase, usePaperDetailFirebase, useCategoryTop, usePaperCategory };

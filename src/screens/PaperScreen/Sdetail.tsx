@@ -236,7 +236,7 @@ const StoreItem = (props?: any) => {
                                     Linking.openURL(`myapp://app/WebInApp/${props?.store?.store?.websiteUrl}`) // open webview screen with param: url
                                     // Linking.openURL(`myapp://app/WebInApp/`) // open webview screen with not url
                                     // navigation.goBack(); // go back
-                                    // navigation.navigate("PaperScreen", { screen: "PaperListCategory", params: { category_id: 3 } }) //(khong chay)
+                                    // navigation.navigate("PaperScreen", { screen: "PaperCategory", params: { category_id: 3 } }) //(khong chay)
 
                                 }}>
                                     <Text style={{ color: 'white' }}>Winkel Bekijken</Text>

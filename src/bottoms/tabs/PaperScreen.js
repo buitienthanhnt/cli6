@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { screens } from '@bottoms/screen';
-
+import Config from '@config/Config';
 const Stack = createNativeStackNavigator();
 const PaperScreen = (props) => {
     const back = ()=>{
@@ -8,7 +8,7 @@ const PaperScreen = (props) => {
     }
 
     return (
-        <Stack.Navigator initialRouteName='PaperList'>
+        <Stack.Navigator initialRouteName={Config.useFirebase ? "PaperListFirebase" : "PaperList"}>
             {
                 screens.paperTab.map((item, index)=>{
                     return (

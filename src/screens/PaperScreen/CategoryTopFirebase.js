@@ -1,11 +1,11 @@
 import { useCategoryTop } from '@hooks/Firebase';
-import {useEffect, useState} from 'react';
-import {RefreshControl, ScrollView, TouchableOpacity, View, Image, StyleSheet, Dimensions, Text} from 'react-native';
+import { useEffect, useState } from 'react';
+import { RefreshControl, ScrollView, TouchableOpacity, View, Image, StyleSheet, Dimensions, Text } from 'react-native';
 import remoteConfig from '@react-native-firebase/remote-config';
 
-const CategoryTopFirebase = ({navigation}) => {
+const CategoryTopFirebase = ({ navigation }) => {
     const [topRefresh, setTopRefresh] = useState(false);
-    const {data} = useCategoryTop();
+    const { data } = useCategoryTop();
 
     return (
         <View>
@@ -21,9 +21,9 @@ const CategoryTopFirebase = ({navigation}) => {
                         if (data) {
                             return data && data.map((item, index) => {
                                 return (
-                                    <View key={item.id+"top"} style={css.title_container}>
+                                    <View key={item.id + "top"} style={css.title_container}>
                                         <TouchableOpacity onPress={() => {
-                                            navigation.navigate("PaperListCategory", { category_id: item.id })
+                                            navigation.navigate("PaperCategoryFirebase", { category_id: item.id })
                                         }}>
                                             <View style={{ flexDirection: "row", justifyContent: "center" }}><Text style={{ fontSize: 18, fontWeight: "600" }}>{item.name}</Text></View>
                                             <Image source={{ uri: item.image_path || remoteConfig().getValue('default_image').asString() }} style={css.top_image} resizeMode="cover" defaultSource={require('../../assets/favicon.png')}></Image>

@@ -7,13 +7,10 @@ import Collapsible from 'react-native-collapsible';                    // npm in
 import { useCategory } from "@hooks/Firebase";
 
 const CategoryTree = (props) => {
-    const useFirebase = false;
-
     const [category_id, setCategoryId] = useState(0);
     const [tree, setTree] = useState(null);
     const [refresh, setRefresh] = useState(false);
     const [loading, setLoading] = useState(true);
-
     const categoryTree = useCategory();
 
     const getCategoryTree = useCallback(async () => {
@@ -33,7 +30,7 @@ const CategoryTree = (props) => {
         getCategoryTree();
     }, [category_id])
 
-    if (! (tree || categoryTree)) {
+    if (!(tree || categoryTree)) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 {loading && <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>}
@@ -42,7 +39,7 @@ const CategoryTree = (props) => {
         return (
             <ImageBackground style={css.backGroundView} source={require("../../assets/pexels-brakou-abdelghani-1723637.jpg")}>
                 <FlatList
-                    data={(tree || categoryTree)?.items || []}
+                    data={(Config.useFirebase ? categoryTree : tree)?.items || []}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => {
                         return <CategoryItem data={item} navigation={props.navigation}></CategoryItem>
@@ -63,12 +60,11 @@ const CategoryTree = (props) => {
 const CategoryItem = (props) => {
     const [status, setStatus] = useState(true)
     useEffect(() => { }, [])
-
     return (
         <View style={{ paddingLeft: 6, paddingRight: 6 }}>
             <View style={css.categoryItem}>
                 <TouchableOpacity onPress={() => {
-                    props?.navigation.navigate("PaperScreen", { screen: "PaperListCategory", params: { category_id: props?.data?.id } })
+                    props?.navigation.navigate("PaperScreen", { screen: Config.useFirebase ? "PaperCategoryFirebase" : "PaperCategory", params: { category_id: props?.data?.id } })
                 }} style={{ width: '70%' }}>
                     <Text style={css.categoryItemName}>{props?.data?.name}</Text>
                 </TouchableOpacity>

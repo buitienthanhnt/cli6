@@ -1,11 +1,12 @@
-import react, { useCallback, useEffect, useState } from "react";
-import { Dimensions, Image, ScrollView, RefreshControl, Text, View, StyleSheet, Button } from "react-native";
+import { useEffect, useState } from "react";
+import { Dimensions, Image, ScrollView, Text, View, StyleSheet, Button } from "react-native";
 import Config from "@config/Config";
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';   // npm install @native-html/iframe-plugin
 import RenderHTML from 'react-native-render-html';                          // npm install react-native-render-html
 import WebView from 'react-native-webview';                                 // npm install react-native-webview
 import Wishlist from "@screens/AccountScreen/Wishlist";
-import perf from "@react-native-firebase/perf";
+import { usePaperDetailFirebase } from "@hooks/Firebase";
+import RelatedFirebase from './element/RelatedFirebase';
 
 const renderers = {
     iframe: IframeRenderer
@@ -15,51 +16,10 @@ const customHTMLElementModels = {
     iframe: iframeModel
 };
 
-const PaperDetail = ({ navigation, route }) => {
-    // use custom hook
-    // gan bien detail banfg gia tri bien data(detail = data)
-    // const {isLoading, data: detail, error} = useFect(Config.url + Config.api_request.getPaperDetail + (route.params?.paper_id || route.params.data.id));
-    const [detail, setDetail] = useState(null);
+const PaperDetailFirebase = ({ navigation, route }) => {
+    const { detail } = usePaperDetailFirebase(route.params.data.id)
     const [showWebview, setShowwebview] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
-
-    useEffect(() => {
-        // console.log(route.params.data.id);
-        if (route.params.paper_id != undefined) {
-            getDetailPaper(route.params.paper_id);
-        }else{
-            getDetailPaper(route.params.data.id);
-        }
-    }, [route.params]
-    );
-
-    const getDetailPaper = useCallback(async (paper_id = 0) => {
-        const traceInitScreen = await perf().startTrace('detail_trace');
-        traceInitScreen.putMetric("hits", 1);
-        if (paper_id) {
-            try {
-                setRefreshing(true);
-                const detail = await fetch(Config.url + Config.api_request.getPaperDetail + paper_id);
-                var result = await detail.json();
-                setRefreshing(false);
-                if (result) {
-                    setDetail(result);
-                } else {
-                    navigation.goBack();
-                }
-            } catch (error) {
-                navigation.goBack();
-            }
-        }
-        // console.log(traceInitScreen);
-        await traceInitScreen.stop()
-    }, []);
-
-    const onRefresh = () => {
-        if (route?.params?.data?.id) {
-            getDetailPaper(route.params.data.id);
-        }
-    }
+    useEffect(() => { }, []);
 
     if (detail) {
         if (showWebview) {
@@ -70,7 +30,6 @@ const PaperDetail = ({ navigation, route }) => {
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 style={css.container}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             >
                 <Text style={{ fontSize: 18, fontWeight: "600", color: "green", textDecorationLine: "underline" }}>{detail.title}</Text>
                 {/* <RenderHTML contentWidth={Dimensions.get("screen").width} source={{ html }}></RenderHTML> */}
@@ -112,25 +71,10 @@ const PaperDetail = ({ navigation, route }) => {
     }
 }
 
-const LastNews = (props) => {
-    const { paper_id, navigation } = props;
-    const [data, setData] = useState(['1', "2", "3", "4", "5"]);
-
-    const getRelatedPaper = async () => {
-        try {
-            let request_api = Config.url + Config.api_request.getRelatedPaper + paper_id;
-            const response = await fetch(request_api);
-            const _data = await response.json();
-            setData(_data?.["items"]);
-        } catch (error) { console.log(error); }
-    }
-    useEffect(() => {
-        // console.log(paper_id);
-    }, [])
-
+const LastNews = ({ paper_id, navigation }) => {
     return (
         <View style={{ paddingBottom: 20 }}>
-            <Wishlist navigation={navigation}></Wishlist>
+            <RelatedFirebase navigation={navigation}></RelatedFirebase>
         </View>
     );
 }
@@ -143,4 +87,4 @@ const css = StyleSheet.create({
     }
 })
 
-export default PaperDetail;
+export default PaperDetailFirebase;

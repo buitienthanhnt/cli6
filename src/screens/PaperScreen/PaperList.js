@@ -2,9 +2,7 @@ import react, { Component, useCallback } from "react";
 import { FlatList, StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, LogBox, ScrollView, RefreshControl, Button } from "react-native";
 import Config from "@config/Config";
 import perf from "@react-native-firebase/perf";
-import PaperListFirebase from "./PaperListFirebase";
-import remoteConfig from '@react-native-firebase/remote-config';
-import CategoryTopFirebase from "./CategoryTopFirebase";
+import { ProductItem, ProductItemHost } from "./element";
 
 class PaperList extends Component {
     constructor(props) { // https://viblo.asia/p/superprops-trong-constructor-cua-react-component-gGJ59eA15X2
@@ -69,9 +67,7 @@ class PaperList extends Component {
         } catch (error) {
             console.log('====================================');
             console.log(error);
-            console.log('====================================');
         }
-
     }
 
     componentDidUpdate() {
@@ -93,66 +89,58 @@ class PaperList extends Component {
         }
         return (
             <View style={css.container}>
-                <CategoryTopFirebase navigation={this.props.navigation} ></CategoryTopFirebase>
-                <PaperListFirebase navigation={this.props.navigation}></PaperListFirebase>
+                <View >
+                    <ScrollView
+                        pagingEnabled={true}
+                        showsHorizontalScrollIndicator={false}
+                        horizontal={true}
+                        refreshControl={
+                            <RefreshControl refreshing={this.state.topRefresh} onRefresh={onRefresh} />}
+                    >
+                        {(
+                            () => {
+                                if (this.state.topCategory) {
+                                    return this.state.topCategory && this.state.topCategory.map((item, index) => {
+                                        return (
+                                            <View key={item.id} style={css.title_container}>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.props.navigation.navigate("PaperCategory", { category_id: item.id })
+                                                }}>
+                                                    <View style={{ flexDirection: "row", justifyContent: "center" }}><Text style={{ fontSize: 18, fontWeight: "600" }}>{item.name}</Text></View>
+                                                    <Image source={{ uri: item.image_path }} style={css.top_image} resizeMode="cover" defaultSource={require('../../assets/favicon.png')}></Image>
+                                                </TouchableOpacity>
+                                            </View>
+                                        )
+                                    });
+                                } else {
+                                    return <Image source={require("../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>;
+                                }
+                            }
+                        )()}
+                    </ScrollView>
+                </View>
+
+                <FlatList // use online api server
+                    data={this.state?.items}
+                    refreshing={this.state.refreshing}
+                    onRefresh={() => {
+                        this.getSourceData(1, true);
+                    }}
+                    keyExtractor={(item) => item.id}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item, index }) => {
+                        if (index % 5 == 0) {
+                            return <ProductItemHost data={item} navigation={this.props.navigation}></ProductItemHost>
+                        }
+                        return <ProductItem data={item} navigation={this.props.navigation}></ProductItem>;
+                    }}
+                    onEndReachedThreshold={0.1}
+                    onEndReached={() => {
+                        this.getSourceData();
+                    }}
+                ></FlatList>
             </View>
-        );
-    }
-}
-
-export class ProductItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: {}
-        };
-    }
-    render() {
-        return (
-            <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate("PaperDetail", { data: this.props.data });
-            }}
-            >
-                <View style={css.pro_item}>
-                    <View style={{ width: "40%" }}>
-                        <Image
-                            source={{ uri: this.props.data.image_path || remoteConfig().getValue('default_image').asString() }}
-                            defaultSource={require('@assets/defaul.png')}
-                            style={{ flex: 1, borderRadius: 6 }}></Image>
-                    </View>
-                    <View style={css.pro_item_title}>
-                        <Text style={{ color: "green", fontSize: 16 }} ellipsizeMode='tail' numberOfLines={2}>{this.props.data.title}</Text>
-                        <View style={{ paddingLeft: 5 }}>
-                            <Text ellipsizeMode='tail' numberOfLines={3}>{this.props.data.short_conten ? this.props.data.short_conten : ""}</Text>
-                        </View>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
-
-export class ProductItemHost extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate("PaperDetail", { data: this.props.data });
-            }}>
-                <View style={css.pro_item_host}>
-                    <Image
-                        source={{ uri: this.props.data.image_path || remoteConfig().getValue('default_image').asString() }}
-                        style={{ flex: 1, borderRadius: 6 }} resizeMode="cover"
-                        defaultSource={require('@assets/defaul.png')}
-                    ></Image>
-                    <Text style={css.pro_item_host_title} ellipsizeMode='tail' numberOfLines={2}>{this.props.data.title}</Text>
-                    <View style={{ paddingLeft: 8 }}>
-                        <Text ellipsizeMode='tail' numberOfLines={2}>{this.props.data.short_conten}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
         );
     }
 }
@@ -175,28 +163,6 @@ const css = StyleSheet.create({
         width: "100%",
         height: Dimensions.get("screen").height / 6
     },
-    pro_item: {
-        width: "100%",
-        height: Dimensions.get("screen").height / 7,
-        flexDirection: "row",
-        padding: 5,
-        elevation: 3, //: zindex (works on android)
-    },
-    pro_item_host: {
-        width: "100%",
-        height: Dimensions.get("screen").height / 4, padding: 5
-    },
-    pro_item_host_title: {
-        fontSize: 16,
-        fontStyle: "normal",
-        fontWeight: "600",
-        color: "blue"
-    },
-    pro_item_title: {
-        width: "60%",
-        paddingLeft: 8,
-        paddingRight: 8
-    }
 });
 
 export default PaperList;

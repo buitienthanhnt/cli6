@@ -6,6 +6,7 @@ import RenderHTML from 'react-native-render-html';                          // n
 import WebView from 'react-native-webview';                                 // npm install react-native-webview
 import Wishlist from "@screens/AccountScreen/Wishlist";
 import perf from "@react-native-firebase/perf";
+import Comments from "./element/Comments";
 
 const renderers = {
     iframe: IframeRenderer
@@ -95,6 +96,7 @@ const PaperDetail = ({ navigation, route }) => {
                     }}
                     onPress={(event) => { return undefined; }}
                 />
+                <Comments paperId={detail.id}></Comments>
                 <View style={{ height: 1, backgroundColor: "black" }}></View>
                 <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
                 <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>

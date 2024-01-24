@@ -1,4 +1,4 @@
-import react, { useCallback, useEffect, useState } from "react";
+import react, { useCallback, useEffect, useState, createContext } from "react";
 import { Dimensions, Image, ScrollView, RefreshControl, Text, View, StyleSheet, Button } from "react-native";
 import Config from "@config/Config";
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';   // npm install @native-html/iframe-plugin
@@ -16,6 +16,8 @@ const customHTMLElementModels = {
     iframe: iframeModel
 };
 
+export const PaperDetailContext = createContext();
+
 const PaperDetail = ({ navigation, route }) => {
     // use custom hook
     // gan bien detail banfg gia tri bien data(detail = data)
@@ -28,7 +30,7 @@ const PaperDetail = ({ navigation, route }) => {
         // console.log(route.params.data.id);
         if (route.params.paper_id != undefined) {
             getDetailPaper(route.params.paper_id);
-        }else{
+        } else {
             getDetailPaper(route.params.data.id);
         }
     }, [route.params]
@@ -67,43 +69,46 @@ const PaperDetail = ({ navigation, route }) => {
             return <WebView source={{ uri: "www.topsy-fashion.nl" }} />
         }
         return (
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                style={css.container}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-            >
-                <Text style={{ fontSize: 18, fontWeight: "600", color: "green", textDecorationLine: "underline" }}>{detail.title}</Text>
-                {/* <RenderHTML contentWidth={Dimensions.get("screen").width} source={{ html }}></RenderHTML> */}
-                <RenderHTML
-                    renderers={renderers}
-                    WebView={WebView}
-                    source={{ html: detail?.conten || '' }}
-                    contentWidth={Dimensions.get("screen").width}
-                    customHTMLElementModels={customHTMLElementModels}
-                    defaultWebViewProps={
-                        {
-                            /* Any prop you want to pass to all WebViews */
-                        }
-                    }
-                    renderersProps={{
-                        iframe: {
-                            scalesPageToFit: true,
-                            webViewProps: {
-                                /* Any prop you want to pass to iframe WebViews */
+            <PaperDetailContext.Provider value={{paperId: detail.id}}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    style={css.container}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                >
+                    <Text style={{ fontSize: 18, fontWeight: "600", color: "green", textDecorationLine: "underline" }}>{detail.title}</Text>
+                    {/* <RenderHTML contentWidth={Dimensions.get("screen").width} source={{ html }}></RenderHTML> */}
+                    <RenderHTML
+                        renderers={renderers}
+                        WebView={WebView}
+                        source={{ html: detail?.conten || '' }}
+                        contentWidth={Dimensions.get("screen").width}
+                        customHTMLElementModels={customHTMLElementModels}
+                        defaultWebViewProps={
+                            {
+                                /* Any prop you want to pass to all WebViews */
                             }
                         }
-                    }}
-                    onPress={(event) => { return undefined; }}
-                />
-                <Comments paperId={detail.id}></Comments>
-                <View style={{ height: 1, backgroundColor: "black" }}></View>
-                <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
-                <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>
-                <Button title="view in webview" onPress={() => {
-                    setShowwebview(true)
-                }}></Button>
-            </ScrollView>
+                        renderersProps={{
+                            iframe: {
+                                scalesPageToFit: true,
+                                webViewProps: {
+                                    /* Any prop you want to pass to iframe WebViews */
+                                }
+                            }
+                        }}
+                        onPress={(event) => { return undefined; }}
+                    />
+                    <View style={{ height: 1, backgroundColor: "black" }}></View>
+                    <Comments paperId={detail.id}></Comments>
+                    <View style={{ height: 1, backgroundColor: "black" }}></View>
+                    <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
+                    <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>
+                    <Button title="view in webview" onPress={() => {
+                        setShowwebview(true)
+                    }}></Button>
+                </ScrollView>
+            </PaperDetailContext.Provider>
         );
     } else {
         return (

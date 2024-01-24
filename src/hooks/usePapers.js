@@ -8,8 +8,8 @@ const usePaperList = ()=>{
     }
 }
 
-const useComments = (paperId, parentId)=>{
-    const {data} = useQuery({ queryKey: ['comments', paperId, parentId], queryFn: () => getComments(paperId, parentId) });
+const useComments = (paperId, parentId, page)=>{
+    const {data} = useQuery({ queryKey: ['comments', paperId, parentId, page], queryFn: () => getComments(paperId, parentId, page || 0) });
     return {
         data
     }

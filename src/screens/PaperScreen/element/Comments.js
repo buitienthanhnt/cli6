@@ -13,7 +13,7 @@ const Comments = ({ paperId }) => {
 
     if (!data || data.data.length === 0) { return <CommentForm></CommentForm> }
     return (
-        <View>
+        <View style={{paddingVertical: 10}}>
             <CommentForm></CommentForm>
             <Text style={css.title}>Comment{'                                 '}</Text>
             <CommentsRender comments={data.data} root={true}></CommentsRender>
@@ -93,7 +93,7 @@ CommentItem = ({ comment, root }) => {
                         <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [{ rotateZ: '180deg' }] }} onPress={() => {
                             setShowRep(true);
                         }}>
-                            <Icon name='reply' size={14} color='#821ab2' />
+                            <Icon name='reply' size={16} color='#821ab2' />
                         </TouchableOpacity>
                     )
             )}

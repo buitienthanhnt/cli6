@@ -1,4 +1,4 @@
-import getComments from "@queries/getComments";
+import {getComments} from "@queries/comments";
 import { useQuery } from "react-query";
 
 const usePaperList = ()=>{

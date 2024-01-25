@@ -99,7 +99,7 @@ const PaperDetail = ({ navigation, route }) => {
                         }}
                         onPress={(event) => { return undefined; }}
                     />
-                    <View style={{ height: 1, backgroundColor: "black" }}></View>
+                   
                     <Comments paperId={detail.id}></Comments>
                     <View style={{ height: 1, backgroundColor: "black" }}></View>
                     <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>

@@ -18,6 +18,7 @@ const Config = (path = '', params = null) => {
       getCategoryTree: 'api/getcategorytree',
       getPaperDetail: 'api/getpaperdetail/',
       getPaperComments: 'api/paperComment/',
+      paperAddComment: 'api/paperAddComment/',
       testData: 'api/testJson',
       testPost: 'api/testPost',
       parseUrl: 'api/parseUrl',

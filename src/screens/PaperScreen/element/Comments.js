@@ -53,7 +53,7 @@ const CommentsRender = ({ comments, parentId, root }) => {
 
                 <View style={{gap: 4}}>
                     {comment.map((item, index) => {
-                        return <CommentItem comment={item} root={root} index={index} keyExtractor={index} />
+                        return <CommentItem comment={item} root={root} index={index} key={index} />
                     })}
                 </View>
             </View>

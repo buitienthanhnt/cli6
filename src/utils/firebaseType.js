@@ -7,6 +7,7 @@ const firebaseType = {
 		categoryTop: firebaseRoot+ '/categoryTop',
 		paperByCategory: firebaseRoot + '/papersCategory/',
 		relatedPaper: firebaseRoot+ '/papers',
+		commentPaper: firebaseRoot+ '/comments',
 	},
 	storeData: {
 		paperDetail: 'detailContent',

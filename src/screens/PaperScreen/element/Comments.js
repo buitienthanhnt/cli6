@@ -7,16 +7,17 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {getComments} from "@queries/comments";
 import CommentForm from "./CommentForm";
+import Config from "@config/Config";
 
 const Comments = ({ paperId }) => {
     const { data } = useComments(paperId, 0);
 
-    if (!data || data.data.length === 0) { return <CommentForm></CommentForm> }
+    if (!data || !data.length) { return <CommentForm></CommentForm> }
     return (
         <View style={{paddingVertical: 10}}>
             <CommentForm></CommentForm>
             <Text style={css.title}>Comment{'                                 '}</Text>
-            <CommentsRender comments={data.data} root={true}></CommentsRender>
+            <CommentsRender comments={data} root={true}></CommentsRender>
         </View>
     )
 }
@@ -28,11 +29,11 @@ const CommentsRender = ({ comments, parentId, root }) => {
     const [comment, setComment] = useState(comments || []);
 
     const loadMoreComments = useCallback(async () => {
-        const data = await getComments(paperId, parentId, page + 1);
-        if (data && data.data.length < 4) {
+        const {data} = await getComments(paperId, parentId, page + 1);
+        if (data && data.length < 4) {
             setShowMore(false);
         }
-        setComment([...comment, ...data.data]);
+        setComment([...comment, ...data]);
         setPage(page + 1);
     }, [paperId, page, comment, parentId]);
 
@@ -57,7 +58,7 @@ const CommentsRender = ({ comments, parentId, root }) => {
                     })}
                 </View>
             </View>
-            {comment.length >= 4 && showMore &&
+            {comment.length >= 4 && showMore && !Config.useFirebase &&
                 <TouchableOpacity style={{ ...css.loadMore, }} onPress={loadMoreComments}>
                     <View style={{ ...css.moreBtn, transform: [{ translateX: !root ? -3 : 0 }] }}>
                         <Icon style={{ transform: [{ rotateZ: '90deg' }] }} name='angle-double-right' size={16} color='#821ab2' />

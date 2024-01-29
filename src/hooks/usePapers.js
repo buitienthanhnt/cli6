@@ -42,7 +42,7 @@ const useComments = (paperId, parentId, page) => {
     const addComment = useCallback((paperId, params) => {
         if (useFirebase) {
             let ref = database().ref(firebaseType.realTime.addComments).push();
-            ref.set({ paperId: paperId, ...params });
+            ref.set({ paper_id: paperId, ...params });
             console.log(123123213);
         } else {
             addCommentServer(paperId, params);

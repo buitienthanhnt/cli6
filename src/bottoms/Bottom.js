@@ -32,7 +32,7 @@ const BottomTabs = ({ navigation, route }) => {
                 name: 'PaperScreen',
                 component: PaperScreen,
                 options: {
-                    tabBarLabel: 'Papers',
+                    tabBarLabel: 'News',
                     tabBarIcon: ({ focused, color, size }) => <Icon name={focused ? 'globe' : 'share-alt'} size={26} color={color} />
                 }
             },

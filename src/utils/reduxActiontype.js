@@ -14,6 +14,7 @@ const actionReducer = {
     reUpdateCart: 'UPDATE_CART',
     reLogin: 'LOGIN',
     reLogOut: 'LOGOUT',
+    useFirebase: 'USE_FIREBASE',
 };
 
 export default actionReducer;

@@ -6,6 +6,7 @@ let AppState = {
     cart_data: null,
     message_count: null,
     data: [],
+    useFirebase: false,
 };
 
 let Application = {

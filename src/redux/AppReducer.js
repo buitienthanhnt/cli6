@@ -31,6 +31,10 @@ const Reducer = (state = AppState, action) => {
             return {
                 ...state, user_data: null
             };
+        case actionReducer.useFirebase:
+            return {
+                ...state, useFirebase: action.value
+            };
         default:
     }
     return state;

@@ -8,7 +8,7 @@ const PaperScreen = (props) => {
     }
 
     return (
-        <Stack.Navigator initialRouteName={Config.useFirebase ? "PaperListFirebase" : "PaperList"}>
+        <Stack.Navigator initialRouteName={"PaperHome"}>
             {
                 screens.paperTab.map((item, index)=>{
                     return (

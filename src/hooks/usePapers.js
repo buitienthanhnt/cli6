@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import firebaseType from "@utils/firebaseType";
 import database from '@react-native-firebase/database';
+import { useSelector } from "react-redux";
 
 const usePaperList = () => {
     const papersInFirebase = [];
@@ -13,6 +14,7 @@ const usePaperList = () => {
 }
 
 const useComments = (paperId, parentId, page) => {
+    const { useFirebase } = useSelector((state) => state.defRe);
     const [value, setValue] = useState([]);
 
     useEffect(() => {
@@ -29,7 +31,7 @@ const useComments = (paperId, parentId, page) => {
         return () => database().ref(firebaseType.realTime.commentPaper + "/" + paperId).off('value', onValueChange);
     }, [setValue, paperId])
 
-    if (!Config.useFirebase) {
+    if (!useFirebase) {
         const { data } = useQuery({ queryKey: ['comments', paperId, parentId, page], queryFn: () => getComments(paperId, parentId, page || 0) });
         return {
             data: data?.data || []

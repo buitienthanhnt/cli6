@@ -25,6 +25,7 @@ import FsourceForm from '@screens/AccountScreen/components/firebase/FsourceForm'
 //--------------------------------- AccountScreen------------------------------------------//
 
 //--------------------------------- PaperScreen------------------------------------------//
+import PaperHome from '@screens/PaperScreen/PaperHome';
 import { Sdetail } from '@screens/PaperScreen/Sdetail';
 import WebInApp from '@screens/PaperScreen/WebInApp';
 import PaperList from '@screens/PaperScreen/PaperList';
@@ -157,6 +158,11 @@ export const screens = {
         },
     ],
     paperTab: [
+        {
+            name: "PaperHome",
+            component: PaperHome,
+            options: { headerShown: false }
+        },
         {
             name: "PaperList",
             component: PaperList,

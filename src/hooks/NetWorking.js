@@ -43,9 +43,10 @@ const fechData = (uri, params = {}, method = "GET") => {
 
 // https://github.com/axios/axios
 // GET
-const getAxios = (url, params = {}) => {
+const getAxios = async (url, params = {}) => {
 	console.log(url);
 	let data = axios.get(url, {
+		timeout: 6000, // Set a timeout of 6 seconds
 		params: params
 	}).then((response) => {
 		// console.log(response);
@@ -60,7 +61,7 @@ const getAxios = (url, params = {}) => {
 }
 
 // POST|PUT
-const anyAxios = (url = "", params = {}, method = "POST" || "PUT" || "DELETE") => {
+const anyAxios = async (url = "", params = {}, method = "POST" || "PUT" || "DELETE") => {
 	console.log('anyAxios: ', method, url);
 	let data = axios({
 		method: method,

@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {getComments} from "@queries/comments";
 import CommentForm from "./CommentForm";
 import Config from "@config/Config";
+import { useSelector } from "react-redux";
 
 const Comments = ({ paperId }) => {
     const { data } = useComments(paperId, 0);
@@ -23,6 +24,7 @@ const Comments = ({ paperId }) => {
 }
 
 const CommentsRender = ({ comments, parentId, root }) => {
+    const { useFirebase } = useSelector((state) => state.defRe);
     const { paperId } = useContext(PaperDetailContext);
     const [page, setPage] = useState(0);
     const [showMore, setShowMore] = useState(true);
@@ -58,7 +60,7 @@ const CommentsRender = ({ comments, parentId, root }) => {
                     })}
                 </View>
             </View>
-            {comment.length >= 4 && showMore && !Config.useFirebase &&
+            {comment.length >= 4 && showMore && !useFirebase &&
                 <TouchableOpacity style={{ ...css.loadMore, }} onPress={loadMoreComments}>
                     <View style={{ ...css.moreBtn, transform: [{ translateX: !root ? -3 : 0 }] }}>
                         <Icon style={{ transform: [{ rotateZ: '90deg' }] }} name='angle-double-right' size={16} color='#821ab2' />

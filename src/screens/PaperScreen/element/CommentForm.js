@@ -2,13 +2,16 @@ import { useCallback, useContext, useRef, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { PaperDetailContext } from "../PaperDetail";
 import FormInput from "@elements/FormInput";
-import { addComment } from "@queries/comments";
+import {addCommentServer } from "@queries/comments";
+import { useComments } from "@hooks/usePapers";
 
 const CommentForm = () => {
     const { paperId } = useContext(PaperDetailContext);
     const name = useRef(null);
     const email = useRef(null);
     const content = useRef(null);
+
+    const {addComment} = useComments(paperId);
 
     const onChangeName = useCallback((text) => {
         name.current = text
@@ -43,8 +46,6 @@ const CommentForm = () => {
                     message: content.current,
                     name: name.current,
                     email: email.current
-                }).then((response)=>{
-                    console.log('______', response);
                 })
             }}>
                 <Text style={css.submitLabel}>send</Text>

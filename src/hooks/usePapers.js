@@ -1,6 +1,6 @@
 import Config from "@config/Config";
-import { getComments } from "@queries/comments";
-import { useEffect, useState } from "react";
+import { addCommentServer, getComments } from "@queries/comments";
+import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import firebaseType from "@utils/firebaseType";
 import database from '@react-native-firebase/database';
@@ -17,29 +17,41 @@ const useComments = (paperId, parentId, page) => {
     const { useFirebase } = useSelector((state) => state.defRe);
     const [value, setValue] = useState([]);
 
-    useEffect(() => {
-        const onValueChange = database().ref(firebaseType.realTime.commentPaper + "/" + paperId).on('value', (snapshot) => {
-            if (snapshot.numChildren()) {
-                let _data = [];
-                snapshot.forEach(item => {
-                    _data = item.val();
-                })
-                setValue(_data);
-            };
-        });
+    const commentServer = useCallback(async () => {
+        const { data } = await getComments(paperId, parentId, page || 0);
+        setValue(data || [])
+    }, [paperId, parentId, page, setValue])
 
-        return () => database().ref(firebaseType.realTime.commentPaper + "/" + paperId).off('value', onValueChange);
+    useEffect(() => {
+        if (useFirebase) {
+            const onValueChange = database().ref(firebaseType.realTime.commentPaper + "/" + paperId).on('value', (snapshot) => {
+                if (snapshot.numChildren()) {
+                    let _data = [];
+                    snapshot.forEach(item => {
+                        _data = item.val();
+                    })
+                    setValue(_data);
+                };
+            });
+            return () => database().ref(firebaseType.realTime.commentPaper + "/" + paperId).off('value', onValueChange);
+        } else {
+            commentServer();
+        }
     }, [setValue, paperId])
 
-    if (!useFirebase) {
-        const { data } = useQuery({ queryKey: ['comments', paperId, parentId, page], queryFn: () => getComments(paperId, parentId, page || 0) });
-        return {
-            data: data?.data || []
+    const addComment = useCallback((paperId, params) => {
+        if (useFirebase) {
+            let ref = database().ref(firebaseType.realTime.addComments).push();
+            ref.set({ paperId: paperId, ...params });
+            console.log(123123213);
+        } else {
+            addCommentServer(paperId, params);
         }
-    }
+    }, []);
 
     return {
-        data: value
+        data: value,
+        addComment
     }
 }
 

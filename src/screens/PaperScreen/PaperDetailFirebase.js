@@ -21,6 +21,8 @@ const customHTMLElementModels = {
 const PaperDetailFirebase = ({ navigation, route }) => {
     const { detail } = usePaperDetailFirebase(route.params.data.id)
     const [showWebview, setShowwebview] = useState(false);
+    const [commentParent, setCommentParent] = useState(null);
+    const [commentForm, setCommentForm] = useState(false);
     useEffect(() => { }, []);
 
     if (detail) {
@@ -28,7 +30,7 @@ const PaperDetailFirebase = ({ navigation, route }) => {
             return <WebView source={{ uri: "www.topsy-fashion.nl" }} />
         }
         return (
-            <PaperDetailContext.Provider value={{ paperId: detail.id }}>
+            <PaperDetailContext.Provider value={{ paperId: detail.id, commentForm, setCommentForm, commentParent, setCommentParent }}>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}

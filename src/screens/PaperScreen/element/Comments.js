@@ -93,11 +93,13 @@ CommentItem = ({ comment, root }) => {
                     <FontAwesome5Icon name='user' size={16} color='#4e5ae0' />
                 </TouchableOpacity>
 
+                <View style={{flexDirection: 'row'}}>
                 <Text style={css.userName}>{comment.name ? ' ' + comment.name : ''}: {' '}
-                    <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, }} onPress={openCommentForm}>
+                </Text>
+                <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, }} onPress={openCommentForm}>
                         <Icon name='reply' size={12} color='#f770ff' />
                     </TouchableOpacity>
-                </Text>
+                </View>
             </View>
             <View style={{ paddingLeft: 5 }}>
                 <Text style={css.commentConten} numberOfLines={5}>

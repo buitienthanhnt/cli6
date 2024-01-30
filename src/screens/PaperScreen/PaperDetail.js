@@ -25,6 +25,8 @@ const PaperDetail = ({ navigation, route }) => {
     const [detail, setDetail] = useState(null);
     const [showWebview, setShowwebview] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [commentParent, setCommentParent] = useState(null);
+    const [commentForm, setCommentForm] = useState(false);
 
     useEffect(() => {
         // console.log(route.params.data.id);
@@ -69,7 +71,7 @@ const PaperDetail = ({ navigation, route }) => {
             return <WebView source={{ uri: "www.topsy-fashion.nl" }} />
         }
         return (
-            <PaperDetailContext.Provider value={{paperId: detail.id}}>
+            <PaperDetailContext.Provider value={{paperId: detail.id, commentForm, setCommentForm, commentParent, setCommentParent}}>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}

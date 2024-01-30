@@ -1,24 +1,27 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useComments } from "@hooks/usePapers";
 import { capitalizeFirstLetter } from "@utils/textHelper";
 import { useCallback, useContext, useState } from "react";
 import { PaperDetailContext } from "../PaperDetail";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getComments} from "@queries/comments";
+import { getComments } from "@queries/comments";
 import CommentForm from "./CommentForm";
 import Config from "@config/Config";
 import { useSelector } from "react-redux";
 
 const Comments = ({ paperId }) => {
     const { data } = useComments(paperId, 0);
+    const { commentForm } = useContext(PaperDetailContext);
 
-    if (!data || !data.length) { return <CommentForm></CommentForm> }
+    if (!data || !data.length) { return null; }
     return (
-        <View style={{paddingVertical: 10}}>
-            <CommentForm></CommentForm>
+        <View style={{ paddingVertical: 10 }}>
             <Text style={css.title}>Comment{'                                 '}</Text>
             <CommentsRender comments={data} root={true}></CommentsRender>
+            <Modal visible={commentForm} animationType="slide" transparent={false}>
+                <CommentForm ></CommentForm>
+            </Modal>
         </View>
     )
 }
@@ -28,10 +31,10 @@ const CommentsRender = ({ comments, parentId, root }) => {
     const { paperId } = useContext(PaperDetailContext);
     const [page, setPage] = useState(0);
     const [showMore, setShowMore] = useState(true);
-    const [comment, setComment] = useState(comments || []);
+    const [comment, setComment, setCommentParent] = useState(comments || []);
 
     const loadMoreComments = useCallback(async () => {
-        const {data} = await getComments(paperId, parentId, page + 1);
+        const { data } = await getComments(paperId, parentId, page + 1);
         if (data && data.length < 4) {
             setShowMore(false);
         }
@@ -54,7 +57,7 @@ const CommentsRender = ({ comments, parentId, root }) => {
                     }}
                 ></FlatList> */}
 
-                <View style={{gap: 4}}>
+                <View style={{ gap: 4 }}>
                     {comment.map((item, index) => {
                         return <CommentItem comment={item} root={root} index={index} key={index} />
                     })}
@@ -74,15 +77,29 @@ const CommentsRender = ({ comments, parentId, root }) => {
 CommentItem = ({ comment, root }) => {
     const [childrents] = useState(comment.childrents || []);
     const [showRep, setShowRep] = useState(false);
+    const { setCommentForm, setCommentParent } = useContext(PaperDetailContext);
+
+    const openCommentForm = useCallback(() => {
+        setCommentForm(true);
+        setCommentParent(comment.id)
+    }, [setCommentForm, setCommentParent, comment.id]);
+
     return (
         <View>
-            <TouchableOpacity style={css.row} onPress={() => {
-                setShowRep(false)
-            }}>
-                {!root && <Text style={{ color: '#4e5ae0' }}>--</Text>}
-                <FontAwesome5Icon name='user' size={16} color='#4e5ae0' />
-                <Text style={css.userName}>{comment.name ? ' ' + comment.name : ''}:</Text>
-            </TouchableOpacity>
+            <View style={css.row} >
+                <TouchableOpacity onPress={() => {
+                    setShowRep(false)
+                }} style={{flexDirection: 'row'}}>
+                    {!root && <Text style={{ color: '#4e5ae0' }}>--</Text>}
+                    <FontAwesome5Icon name='user' size={16} color='#4e5ae0' />
+                </TouchableOpacity>
+
+                <Text style={css.userName}>{comment.name ? ' ' + comment.name : ''}: {' '}
+                    <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, }} onPress={openCommentForm}>
+                        <Icon name='reply' size={12} color='#f770ff' />
+                    </TouchableOpacity>
+                </Text>
+            </View>
             <View style={{ paddingLeft: 5 }}>
                 <Text style={css.commentConten} numberOfLines={5}>
                     {comment.content && capitalizeFirstLetter(comment.content)}
@@ -93,11 +110,13 @@ CommentItem = ({ comment, root }) => {
                     (<View style={{ paddingLeft: 15 }}>
                         <CommentsRender comments={childrents} parentId={comment.id} root={false}></CommentsRender>
                     </View>) : (
-                        <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [{ rotateZ: '180deg' }] }} onPress={() => {
-                            setShowRep(true);
-                        }}>
-                            <Icon name='reply' size={16} color='#821ab2' />
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row' }}>
+                            <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [{ rotateZ: '180deg' }] }} onPress={() => {
+                                setShowRep(true);
+                            }}>
+                                <Icon name='reply' size={16} color='#821ab2' />
+                            </TouchableOpacity>
+                        </View>
                     )
             )}
         </View>

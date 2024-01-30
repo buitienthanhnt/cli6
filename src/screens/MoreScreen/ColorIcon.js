@@ -10,7 +10,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';                            // // xem icon https://oblador.github.io/react-native-vector-icons/
 //import { Ionicons } from '@expo/vector-icons';                  // chạy được cả trên web và android. xem icon: https://icons.expo.fyi || install: npm i @expo/vector-icons
 import ColorPickerWheel from 'react-native-wheel-color-picker';   // npm install react-native-wheel-color-picker
-
+import { icons } from "./icons";
 // Ignore log notification by message
 // LogBox.ignoreLogs(['Warning: ...']); // ẩn các lỗi có dạng:
 // https://loading.io/ xem ảnh gif động.
@@ -51,7 +51,9 @@ class FindIcon extends Component {
             size: "28",
             copiedText: "",
             find_icon: false,
-            use_find_icon: 0
+            use_find_icon: 0,
+            searchText: '',
+            searchIcon: [],
         };
     }
 
@@ -59,6 +61,17 @@ class FindIcon extends Component {
         const text = await Clipboard.getString();
         setCopiedText(text);
     };
+
+    componentDidUpdate(nextProps, nextState, nextContext) {
+        if (this.state.searchText.length >= 3 && this.state.searchText !== nextState.searchText) {
+            const searchValue = icons.filter((val) => {
+                return val.includes(this.state.searchText)
+            });
+            if (searchValue.length > 0) {
+                this.setState({ ...this.state, searchIcon: searchValue })
+            }
+        }
+    }
 
     render() {
         return (
@@ -71,12 +84,32 @@ class FindIcon extends Component {
                         value={(this.state.icon_name)}
                         style={css.icon_input_name}
                         onChangeText={(text) => {
-                            this.setState({ icon_name: text });
+                            this.setState({ icon_name: text, searchText: text });
                         }}
                         onFocus={() => {
-                            this.setState({ find_icon: false });
+                            this.setState({ ...this.state, find_icon: false });
                         }}
                     ></TextInput>
+                    {this.state.searchIcon.length > 0 &&
+                        <View style={css.resultView}>
+                            <ScrollView showsVerticalScrollIndicator={false}>
+                                {this.state.searchIcon.map((item, index) => {
+                                    return (
+                                        <TouchableOpacity onPress={() => {
+                                            this.setState({ ...this.state, icon_name: item, searchText: '' });
+                                        }}>
+                                            <Text style={{ fontSize: 16, color: '#ce00ff', lineHeight: 24, textAlign: 'right' }}>{item}</Text>
+                                        </TouchableOpacity>
+                                    )
+                                })}
+                                <TouchableOpacity style={{alignItems: 'flex-end'}} onPress={() => {
+                                    this.setState({ ...this.state, searchIcon: [] })
+                                }}>
+                                    <Icon name='remove' size={24} color='#878787'/>
+                                </TouchableOpacity>
+                            </ScrollView>
+                        </View>
+                    }
                 </View>
                 <View style={css.icon}>
                     <Text style={{ fontSize: 18 }}>icon color:</Text>
@@ -370,7 +403,18 @@ const css = StyleSheet.create({
         flexDirection: "row",
         marginTop: 8,
         justifyContent: "space-between"
-    }
+    },
+    resultView: {
+        position: 'absolute',
+        height: 120,
+        borderWidth: 1,
+        borderColor: '#00cbff',
+        borderRadius: 10,
+        width: '50%',
+        right: Dimensions.get('screen').width / 100 * 40,
+        paddingHorizontal: 8,
+        gap: 2, top: 16
+    },
 });
 
 export default ColorIcon;

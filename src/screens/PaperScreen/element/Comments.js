@@ -7,7 +7,6 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {getComments} from "@queries/comments";
 import CommentForm from "./CommentForm";
-import Config from "@config/Config";
 import { useSelector } from "react-redux";
 
 const Comments = ({ paperId }) => {
@@ -63,7 +62,7 @@ const CommentsRender = ({ comments, parentId, root }) => {
             {comment.length >= 4 && showMore && !useFirebase &&
                 <TouchableOpacity style={{ ...css.loadMore, }} onPress={loadMoreComments}>
                     <View style={{ ...css.moreBtn, transform: [{ translateX: !root ? -3 : 0 }] }}>
-                        <Icon style={{ transform: [{ rotateZ: '90deg' }] }} name='angle-double-right' size={16} color='#821ab2' />
+                        <Icon name='angle-double-down' size={16} color='#821ab2' />
                     </View>
                 </TouchableOpacity>
             }

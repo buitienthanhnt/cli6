@@ -216,7 +216,7 @@ export const screens = {
         {
             name: "PaperDetailFirebase",
             component: PaperDetailFirebase,
-            options: { headerShown: false }
+            options: { headerShown: true }
         },
     ],
     codeTab: [

@@ -96,7 +96,7 @@ CommentItem = ({ comment, root }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text style={css.userName}>{comment.name ? ' ' + comment.name : ''}: {' '}
                     </Text>
-                    <TouchableOpacity style={{ ...css.moreBtn, alignItems: 'baseline' }} onPress={openCommentForm}>
+                    <TouchableOpacity style={{ ...css.moreBtn, alignItems: 'baseline', alignSelf: 'flex-end' }} onPress={openCommentForm}>
                         <Icon name='reply' size={12} color='#f770ff' />
                     </TouchableOpacity>
                 </View>
@@ -162,7 +162,7 @@ const css = StyleSheet.create({
     },
     moreBtn: {
         alignItems: 'flex-end',
-        // alignSelf: 'flex-start'
+        alignSelf: 'flex-start'
     },
 });
 

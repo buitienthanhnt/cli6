@@ -7,6 +7,7 @@ import WebView from 'react-native-webview';                                 // n
 import Wishlist from "@screens/AccountScreen/Wishlist";
 import perf from "@react-native-firebase/perf";
 import Comments from "./element/Comments";
+import DetailLike from "./element/DetailLike";
 
 const renderers = {
     iframe: IframeRenderer
@@ -101,7 +102,7 @@ const PaperDetail = ({ navigation, route }) => {
                         }}
                         onPress={(event) => { return undefined; }}
                     />
-                   
+                    <DetailLike info={detail.info}></DetailLike>
                     <Comments paperId={detail.id}></Comments>
                     <View style={{ height: 1, backgroundColor: "black" }}></View>
                     <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>

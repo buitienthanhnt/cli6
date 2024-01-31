@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { getAxios } from '@hooks/NetWorking';
 import useDispatchState from '@hooks/redux/useDispatchState';
 import Config from '@config/Config';
@@ -7,27 +7,26 @@ import PaperListFirebase from './PaperListFirebase';
 import PaperList from './PaperList';
 import { Alert } from 'react-native';
 
-const PaperHome = ({navigation}) => {
+const PaperHome = ({ navigation }) => {
     const { useFirebase } = useSelector((state) => state.defRe);
     const { actionReducer, updateState } = useDispatchState();
 
-    const checkUseFirebase = async () => {
+    const checkUseFirebase = useCallback(async () => {
         try {
             const data = await getAxios(Config.custom_url() + Config.api_request.getInfo);
             if (!data.success) {
-                Alert.alert('use firebase data because server not response');
-                console.log('use firebase');
+                Alert.alert('server not active!, use data from firebase');
                 updateState(actionReducer.useFirebase, true)
             }
         } catch (error) {
-          Alert.alert('use firebase data because server not response');
+            Alert.alert('server not active!, use data from firebase');
             updateState(actionReducer.useFirebase, true)
         }
-    }
+    }, [actionReducer.useFirebase])
 
     useEffect(() => {
         checkUseFirebase()
-        return ()=>{}
+        return () => { }
     }, []);
 
     if (useFirebase) {

@@ -88,15 +88,15 @@ CommentItem = ({ comment, root }) => {
             <View style={css.row} >
                 <TouchableOpacity onPress={() => {
                     setShowRep(false)
-                }} style={{flexDirection: 'row'}}>
+                }} style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                     {!root && <Text style={{ color: '#4e5ae0' }}>--</Text>}
                     <FontAwesome5Icon name='user' size={16} color='#4e5ae0' />
                 </TouchableOpacity>
 
-                <View style={{flexDirection: 'row'}}>
-                <Text style={css.userName}>{comment.name ? ' ' + comment.name : ''}: {' '}
-                </Text>
-                <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, }} onPress={openCommentForm}>
+                <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                    <Text style={css.userName}>{comment.name ? ' ' + comment.name : ''}: {' '}
+                    </Text>
+                    <TouchableOpacity style={{ ...css.moreBtn, alignItems: 'baseline' }} onPress={openCommentForm}>
                         <Icon name='reply' size={12} color='#f770ff' />
                     </TouchableOpacity>
                 </View>
@@ -162,7 +162,7 @@ const css = StyleSheet.create({
     },
     moreBtn: {
         alignItems: 'flex-end',
-        alignSelf: 'flex-start'
+        // alignSelf: 'flex-start'
     },
 });
 

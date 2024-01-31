@@ -68,8 +68,8 @@ const DemoTest = ({ navigation }) => {
 
     // useSelector: state.authenRe thì sẽ chỉ reRener khi state authenRe này được dispatch
     // còn dispatch vào: ADD_NUMBER sẽ không reRender.
-    const {user_data} = useSelector((state) => state.authenRe);
-    const {address, key} = useSelector(state => state.appRe);
+    const {useFirebase} = useSelector((state) => state.authenRe);
+    const {key} = useSelector(state => state.appRe);
     const dispatch = useDispatch();
 
     const [local, setLocal] = useState(I18n.currentLocale())
@@ -125,44 +125,7 @@ const DemoTest = ({ navigation }) => {
                 <Text>{I18n.t('greeting')} {I18n.currentLocale()}</Text>
                 <Text style={{color: 'violet', fontSize: 16}}>show state{`(test redux)`}:</Text>
             </TouchableOpacity>
-            <Text style={{color: 'green', fontSize: 16, fontWeight: '600'}}>
-                number: , user 
-                name: {user_data?.name}
-            </Text>
-            <Text>{key}</Text>
-            <TouchableOpacity onPress={() => {
-                
-                // gọi vào reducer để cập nhập data
-                // dispatch({
-                //     type: 'ADD_NUMBER',
-                //     value: 20,
-                // })
-
-                // gọi vào reducer để cập nhập data
-                dispatch({
-                    type: 'SET_USER',
-                    value: {id: 12, name: 'tha', street: '21b national'}
-                })
-            }}>
-                <Text style={{color: 'blue'}}>add number</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => {
-                dispatch({
-                    type: 'SUB_NUMBER',
-                })
-            }}>
-                <Text style={{color: 'red'}}>sub number</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => {
-                dispatch({
-                    type: 'SET_KEY',
-                    key: 2222222
-                })
-            }}>
-                <Text style={{color: 'orange'}}>update key</Text>
-            </TouchableOpacity>
+            <Text>useFirebase: {useFirebase ? 'active' : 'inActive'}</Text>
         </View>
     )
 };

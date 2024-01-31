@@ -11,8 +11,9 @@ const perfCollect = async ()=>{
 	perf().setPerformanceCollectionEnabled(true);
 }
 perfCollect();
-
+console.log('start app |-->');
 AppRegistry.registerComponent(appName, () => App);
+console.log('end of process.');
 
 
 

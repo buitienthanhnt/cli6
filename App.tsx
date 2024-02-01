@@ -5,9 +5,10 @@
  * @format
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import {
+  AppState,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -84,13 +85,34 @@ function Section({ children, title }: SectionProps): JSX.Element {
 function App(): JSX.Element {
 
   const [token, setToken] = useState("");
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  // check app state status: active, background
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        console.log('App has come to the foreground!');
+      }
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log('AppState', appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   useEffect(() => {
     Reactotron.log('hello rendering world');
     remoteConfig().setDefaults({
       default_image: 'https://firebasestorage.googleapis.com/v0/b/newpaper-25148.appspot.com/o/demo%2FgBYNm4ke2I.png?alt=media&token=24057320-9c26-46cc-b1be-711c7296cc6b',
     });
-    
+
     check('android.permission.POST_NOTIFICATIONS').then((result) => {
       switch (result) {
         case RESULTS.UNAVAILABLE:

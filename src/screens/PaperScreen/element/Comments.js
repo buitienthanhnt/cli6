@@ -8,19 +8,20 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { getComments } from "@queries/comments";
 import CommentForm from "./CommentForm";
 import { useSelector } from "react-redux";
+import RBSheet from "react-native-raw-bottom-sheet";  // npm i react-native-raw-bottom-sheet
 
 const Comments = ({ paperId }) => {
     const { data } = useComments(paperId, 0);
-    const { commentForm } = useContext(PaperDetailContext);
+    const { refRBSheet } = useContext(PaperDetailContext);
 
     if (!data || !data.length) { return null; }
     return (
         <View style={{ paddingVertical: 10 }}>
             <Text style={css.title}>Comment{'                                 '}</Text>
             <CommentsRender comments={data} root={true}></CommentsRender>
-            <Modal visible={commentForm} animationType="slide" transparent={false}>
+            <RBSheet closeOnDragDown={true} ref={refRBSheet}>
                 <CommentForm ></CommentForm>
-            </Modal>
+            </RBSheet>
         </View>
     )
 }
@@ -76,12 +77,12 @@ const CommentsRender = ({ comments, parentId, root }) => {
 CommentItem = ({ comment, root }) => {
     const [childrents] = useState(comment.childrents || []);
     const [showRep, setShowRep] = useState(false);
-    const { setCommentForm, setCommentParent } = useContext(PaperDetailContext);
+    const { refRBSheet, setCommentParent } = useContext(PaperDetailContext);
 
     const openCommentForm = useCallback(() => {
-        setCommentForm(true);
+        refRBSheet.current.open();
         setCommentParent(comment.id)
-    }, [setCommentForm, setCommentParent, comment.id]);
+    }, [refRBSheet, setCommentParent, comment.id]);
 
     return (
         <View>

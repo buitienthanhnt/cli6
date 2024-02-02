@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, TouchableWithoutFeedback } from "rea
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 const FormInput = ({ label, placeholder, currentValue, onChangeText, numberOfLines }) => {
-    const pTop = useSharedValue(5);
+    const pTop = useSharedValue(20);
     const pos = useSharedValue('absolute');
     const left = useSharedValue(12);
 
@@ -46,7 +46,7 @@ const FormInput = ({ label, placeholder, currentValue, onChangeText, numberOfLin
                 <Animated.Text style={labelTop}>{label}</Animated.Text>
                 <TextInput
                     onFocus={focusInput}
-                    style={{ fontSize: 16, padding: 0 }}
+                    style={{ fontSize: 16, padding: 0, height: 24,}}
                     onChangeText={onChange}
                     multiline={!!numberOfLines}
                     numberOfLines={numberOfLines}
@@ -65,6 +65,8 @@ const css = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         paddingHorizontal: 12,
+        paddingVertical: 10,
+        justifyContent: 'center'
     },
     label: {
         position: 'absolute',

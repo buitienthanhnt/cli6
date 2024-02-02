@@ -6,7 +6,7 @@ import { addCommentServer } from "@queries/comments";
 import { useComments } from "@hooks/usePapers";
 
 const CommentForm = ({ parentId }) => {
-    const { paperId, setCommentForm, commentParent, setCommentParent } = useContext(PaperDetailContext);
+    const { paperId, commentParent } = useContext(PaperDetailContext);
     const name = useRef(null);
     const email = useRef(null);
     const content = useRef(null);
@@ -29,11 +29,11 @@ const CommentForm = ({ parentId }) => {
         <View style={css.container}>
             <Text style={css.title}>Send your comment:</Text>
             <View style={{ flexDirection: 'row', gap: 2 }}>
-                <View style={{ flex: 1, height: 60 }}>
+                <View style={{ flex: 1, height: 50 }}>
                     <FormInput label={'User name'} placeholder={'user name'} onChangeText={onChangeName}></FormInput>
                 </View>
 
-                <View style={{ flex: 1, height: 60 }}>
+                <View style={{ flex: 1, height: 50 }}>
                     <FormInput label={'Email'} placeholder={'user email'} onChangeText={onChangeEmail}></FormInput>
                 </View>
             </View>
@@ -55,13 +55,6 @@ const CommentForm = ({ parentId }) => {
                 <Text style={css.submitLabel}>send</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[css.btn, {backgroundColor: '#ff9b93'}]} onPress={() => {
-                setCommentForm(false)
-                setCommentParent(null);
-            }}>
-                <Text style={css.submitLabel}>cancel</Text>
-            </TouchableOpacity>
-
             {/* <Button title="send" ></Button> */}
         </View>
     )
@@ -72,6 +65,8 @@ const css = StyleSheet.create({
         flex: 1,
         gap: 4,
         paddingBottom: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 10,
         // justifyContent: 'flex-end',
         // marginBottom: 100
     },

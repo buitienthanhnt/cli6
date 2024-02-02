@@ -1,4 +1,4 @@
-import react, { useCallback, useEffect, useState, createContext } from "react";
+import react, { useCallback, useEffect, useState, createContext, useRef } from "react";
 import { Dimensions, Image, ScrollView, RefreshControl, Text, View, StyleSheet, Button } from "react-native";
 import Config from "@config/Config";
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';   // npm install @native-html/iframe-plugin
@@ -27,7 +27,7 @@ const PaperDetail = ({ navigation, route }) => {
     const [showWebview, setShowwebview] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [commentParent, setCommentParent] = useState(null);
-    const [commentForm, setCommentForm] = useState(false);
+    const refRBSheet = useRef();
 
     useEffect(() => {
         // console.log(route.params.data.id);
@@ -72,7 +72,7 @@ const PaperDetail = ({ navigation, route }) => {
             return <WebView source={{ uri: "www.topsy-fashion.nl" }} />
         }
         return (
-            <PaperDetailContext.Provider value={{paperId: detail.id, commentForm, setCommentForm, commentParent, setCommentParent}}>
+            <PaperDetailContext.Provider value={{paperId: detail.id, refRBSheet, commentParent, setCommentParent}}>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}

@@ -44,9 +44,7 @@ const CommentForm = ({ parentId }) => {
 
 
             <TouchableOpacity style={css.btn} onPress={() => {
-                console.log(name.current, email.current, content.current, commentParent);
-                return;
-                
+                // console.log(name.current, email.current, content.current, commentParent);
                 addComment(paperId, {
                     content: content.current,
                     name: name.current,

@@ -19,7 +19,7 @@ const Comments = ({ paperId }) => {
         <View style={{ paddingVertical: 10 }}>
             <Text style={css.title}>Comment{'                                 '}</Text>
             <CommentsRender comments={data} root={true}></CommentsRender>
-            <RBSheet closeOnDragDown={true} ref={refRBSheet} onClose={()=>{
+            <RBSheet animationType="slide" closeOnDragDown={true} ref={refRBSheet} onClose={()=>{
                 setCommentParent(null);
             }}>
                 <CommentForm ></CommentForm>

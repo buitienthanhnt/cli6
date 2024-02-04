@@ -1,4 +1,4 @@
-import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useComments } from "@hooks/usePapers";
 import { capitalizeFirstLetter } from "@utils/textHelper";
 import { useCallback, useContext, useState } from "react";
@@ -12,14 +12,16 @@ import RBSheet from "react-native-raw-bottom-sheet";  // npm i react-native-raw-
 
 const Comments = ({ paperId }) => {
     const { data } = useComments(paperId, 0);
-    const { refRBSheet } = useContext(PaperDetailContext);
+    const { refRBSheet, setCommentParent } = useContext(PaperDetailContext);
 
     if (!data || !data.length) { return null; }
     return (
         <View style={{ paddingVertical: 10 }}>
             <Text style={css.title}>Comment{'                                 '}</Text>
             <CommentsRender comments={data} root={true}></CommentsRender>
-            <RBSheet closeOnDragDown={true} ref={refRBSheet}>
+            <RBSheet closeOnDragDown={true} ref={refRBSheet} onClose={()=>{
+                setCommentParent(null);
+            }}>
                 <CommentForm ></CommentForm>
             </RBSheet>
         </View>
@@ -80,8 +82,8 @@ CommentItem = ({ comment, root }) => {
     const { refRBSheet, setCommentParent } = useContext(PaperDetailContext);
 
     const openCommentForm = useCallback(() => {
-        refRBSheet.current.open();
         setCommentParent(comment.id)
+        refRBSheet.current.open();
     }, [refRBSheet, setCommentParent, comment.id]);
 
     return (

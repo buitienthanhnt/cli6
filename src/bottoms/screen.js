@@ -6,7 +6,7 @@ import Home from "@screens/HomeScreen/Home";
 //--------------------------------- HomeScreen------------------------------------------//
 
 //--------------------------------- MoreScreen------------------------------------------//
-import ColorIcon from '@screens/MoreScreen/ColorIcon';
+import ColorIcon from '@screens/CodeScreen/ColorIcon';
 import { CategoryTree } from '@screens/MoreScreen/CategoryTree';
 import SwipeListViews from '@screens/MoreScreen/SwipeListViews';
 import SwiperComponent from '@screens/MoreScreen/SwiperComponent';
@@ -83,11 +83,6 @@ export const screens = {
             name: "CategoryTree",
             component: CategoryTree,
             options: { headerShown: false }
-        },
-        {
-            name: "ColorIcon",
-            component: ColorIcon,
-            options: { headerShown: Platform.OS == 'ios' }
         },
         {
             name: "SwipeListViews",
@@ -224,6 +219,11 @@ export const screens = {
             name: "Code",
             component: Code,
             options: { headerShown: false }
+        },
+        {
+            name: "ColorIcon",
+            component: ColorIcon,
+            options: { headerShown: Platform.OS == 'ios' }
         },
         {
             name: "PanResponders",

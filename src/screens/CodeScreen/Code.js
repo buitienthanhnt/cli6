@@ -79,7 +79,7 @@ const Code = (props) => {
                     <FontAwesome5Icon name='icons' size={28} color='black'/>
                     <Text style={{ fontSize: 18 }}> Color&Icon </Text>
                     <TouchableOpacity onPress={() => {
-                        props?.navigation.navigate('MoreScreen', {screen: "ColorIcon"});
+                        props?.navigation.navigate('CodeScreen', {screen: "ColorIcon"});
                     }}>
                         <Icon name='arrow-circle-right' size={28} color='black' />
                     </TouchableOpacity>

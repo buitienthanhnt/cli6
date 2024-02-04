@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';                       
 //import { Ionicons } from '@expo/vector-icons';                  // chạy được cả trên web và android. xem icon: https://icons.expo.fyi || install: npm i @expo/vector-icons
 import ColorPickerWheel from 'react-native-wheel-color-picker';   // npm install react-native-wheel-color-picker
 import { icons } from "./icons";
+import {debounce} from 'lodash'
 // Ignore log notification by message
 // LogBox.ignoreLogs(['Warning: ...']); // ẩn các lỗi có dạng:
 // https://loading.io/ xem ảnh gif động.
@@ -52,7 +53,8 @@ class FindIcon extends Component {
             copiedText: "",
             find_icon: false,
             use_find_icon: 0,
-            searchText: '',
+            searchText: 'bug',
+            currrenText: '',
             searchIcon: [],
         };
     }
@@ -73,6 +75,18 @@ class FindIcon extends Component {
         }
     }
 
+    setIcon = debounce((text)=>{
+        this.setState({ icon_name: text, searchText: text });
+    }, 400)
+
+    setColor = debounce((text)=>{
+        this.setState({ ...this.state, color: text });
+    }, 400)
+
+    setSize = debounce((text)=>{
+        this.setState({ ...this.state, size: text });
+    }, 400)
+
     render() {
         return (
             <View style={{ padding: 6 }}>
@@ -81,10 +95,11 @@ class FindIcon extends Component {
                 <View style={css.icon}>
                     <Text style={{ fontSize: 18 }}>icon name:</Text>
                     <TextInput
-                        value={(this.state.icon_name)}
+                        value={(this.state.searchText)}
                         style={css.icon_input_name}
                         onChangeText={(text) => {
-                            this.setState({ icon_name: text, searchText: text });
+                            this.setState({ ...this.state, searchText: text });
+                            this.setIcon(text)
                         }}
                         onFocus={() => {
                             this.setState({ ...this.state, find_icon: false });
@@ -95,7 +110,7 @@ class FindIcon extends Component {
                             <ScrollView showsVerticalScrollIndicator={false}>
                                 {this.state.searchIcon.map((item, index) => {
                                     return (
-                                        <TouchableOpacity onPress={() => {
+                                        <TouchableOpacity key={index+'_icon'} onPress={() => {
                                             this.setState({ ...this.state, icon_name: item, searchText: '' });
                                         }}>
                                             <Text style={{ fontSize: 16, color: '#ce00ff', lineHeight: 24, textAlign: 'right' }}>{item}</Text>
@@ -117,7 +132,7 @@ class FindIcon extends Component {
                         value={this.state.color}
                         style={css.icon_input_size}
                         onChangeText={(text) => {
-                            this.setState({ ...this.state, color: text });
+                            this.setColor(text);
                         }}
                     ></TextInput>
                 </View>
@@ -129,7 +144,7 @@ class FindIcon extends Component {
                         value={this.state.size}
                         style={css.icon_input_size}
                         onChangeText={(text) => {
-                            this.setState({ ...this.state, size: text });
+                            this.setSize(text)
                         }}
                     ></TextInput>
                 </View>

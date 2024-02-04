@@ -8,6 +8,7 @@ import Wishlist from "@screens/AccountScreen/Wishlist";
 import perf from "@react-native-firebase/perf";
 import Comments from "./element/Comments";
 import DetailLike from "./element/DetailLike";
+import { PaperDetailContext } from "./PaperContext";
 
 const renderers = {
     iframe: IframeRenderer
@@ -16,8 +17,6 @@ const renderers = {
 const customHTMLElementModels = {
     iframe: iframeModel
 };
-
-export const PaperDetailContext = createContext();
 
 const PaperDetail = ({ navigation, route }) => {
     // use custom hook

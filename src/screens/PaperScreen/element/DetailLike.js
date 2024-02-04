@@ -4,7 +4,7 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {debounce} from 'lodash'
 import { addLike } from "@queries/paper";
-import { PaperDetailContext } from "../PaperDetail";
+import { PaperDetailContext } from "../PaperContext"
 
 export default class DetailLike extends Component {
     static contextType = PaperDetailContext

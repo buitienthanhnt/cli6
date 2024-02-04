@@ -2,7 +2,7 @@ import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from "react
 import { useComments } from "@hooks/usePapers";
 import { capitalizeFirstLetter } from "@utils/textHelper";
 import { useCallback, useContext, useState } from "react";
-import { PaperDetailContext } from "../PaperDetail";
+import { PaperDetailContext } from "../PaperContext"
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getComments } from "@queries/comments";

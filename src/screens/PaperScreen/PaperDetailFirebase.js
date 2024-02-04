@@ -7,8 +7,8 @@ import WebView from 'react-native-webview';                                 // n
 import Wishlist from "@screens/AccountScreen/Wishlist";
 import { usePaperDetailFirebase } from "@hooks/Firebase";
 import RelatedFirebase from './element/RelatedFirebase';
-import { PaperDetailContext } from "./PaperDetail";
 import Comments from "./element/Comments";
+import { PaperDetailContext } from "./PaperContext";
 
 const renderers = {
     iframe: IframeRenderer

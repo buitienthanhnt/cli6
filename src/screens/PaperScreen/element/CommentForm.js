@@ -1,6 +1,6 @@
 import { useCallback, useContext, useRef, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { PaperDetailContext } from "../PaperDetail";
+import { PaperDetailContext } from "../PaperContext"
 import FormInput from "@elements/FormInput";
 import { addCommentServer } from "@queries/comments";
 import { useComments } from "@hooks/usePapers";

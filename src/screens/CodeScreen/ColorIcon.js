@@ -10,7 +10,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';                            // // xem icon https://oblador.github.io/react-native-vector-icons/
 //import { Ionicons } from '@expo/vector-icons';                  // chạy được cả trên web và android. xem icon: https://icons.expo.fyi || install: npm i @expo/vector-icons
 import ColorPickerWheel from 'react-native-wheel-color-picker';   // npm install react-native-wheel-color-picker
-import { icons } from "../MoreScreen/icons";
+import { icons } from "./icons";
 import {debounce} from 'lodash'
 // Ignore log notification by message
 // LogBox.ignoreLogs(['Warning: ...']); // ẩn các lỗi có dạng:
@@ -110,7 +110,7 @@ class FindIcon extends Component {
                             <ScrollView showsVerticalScrollIndicator={false}>
                                 {this.state.searchIcon.map((item, index) => {
                                     return (
-                                        <TouchableOpacity onPress={() => {
+                                        <TouchableOpacity key={index+'_icon'} onPress={() => {
                                             this.setState({ ...this.state, icon_name: item, searchText: '' });
                                         }}>
                                             <Text style={{ fontSize: 16, color: '#ce00ff', lineHeight: 24, textAlign: 'right' }}>{item}</Text>

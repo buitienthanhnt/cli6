@@ -5,7 +5,7 @@ import { useCallback, useContext, useState } from "react";
 import { PaperDetailContext } from "../PaperContext"
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getComments } from "@queries/comments";
+import { addLike, commentLikeType, getComments } from "@queries/comments";
 import CommentForm from "./CommentForm";
 import { useSelector } from "react-redux";
 import RBSheet from "react-native-raw-bottom-sheet";  // npm i react-native-raw-bottom-sheet
@@ -18,7 +18,7 @@ const Comments = ({ paperId }) => {
         return (
             <View style={{ paddingVertical: 10 }}>
                 <View style={{ flexDirection: 'row', }}>
-                    <Text style={css.title}>Comment{'                                 '} </Text>
+                    <Text style={css.title}>Comment{'...........................'} </Text>
                     <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [], alignSelf: 'flex-end' }} onPress={() => {
                         refRBSheet.current.open();
                     }}>
@@ -38,7 +38,7 @@ const Comments = ({ paperId }) => {
     return (
         <View style={{ paddingVertical: 10 }}>
             <View style={{ flexDirection: 'row' }}>
-                <Text style={css.title}>Comment{'                                 '} </Text>
+                <Text style={css.title}>Comment{'...........................'} </Text>
                 <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [] }} onPress={() => {
                     refRBSheet.current.open();
                 }}>
@@ -106,12 +106,18 @@ const CommentsRender = ({ comments, parentId, root }) => {
 CommentItem = ({ comment, root }) => {
     const [childrents] = useState(comment.childrents || []);
     const [showRep, setShowRep] = useState(false);
+    const [liked, setLiked] = useState(false);
     const { refRBSheet, setCommentParent } = useContext(PaperDetailContext);
 
     const openCommentForm = useCallback(() => {
         setCommentParent(comment.id)
         refRBSheet.current.open();
     }, [refRBSheet, setCommentParent, comment.id]);
+
+    const onPressLike = useCallback(() => {
+        addLike(comment.id, {type: !liked ? commentLikeType.like : commentLikeType.dislike})
+        setLiked(old => !liked);
+    }, [liked])
 
     return (
         <View>
@@ -136,7 +142,7 @@ CommentItem = ({ comment, root }) => {
                     {comment.content && capitalizeFirstLetter(comment.content)}
                 </Text>
             </View>
-            {childrents.length >= 1 && (
+            {childrents.length >= 1 ? (
                 showRep ?
                     (
                         <View style={{ paddingLeft: 15 }}>
@@ -145,6 +151,11 @@ CommentItem = ({ comment, root }) => {
                     ) :
                     (
                         <View style={{ flexDirection: 'row' }}>
+                            <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, flexDirection: 'row' }} onPress={onPressLike}>
+                                <Icon name='thumbs-up' size={14} color={liked ? 'red' : 'blue'} />
+                                <Text> {liked ? (comment.like || 0) +1 : comment.like}</Text>
+                            </TouchableOpacity>
+
                             <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [{ rotateZ: '180deg' }] }} onPress={() => {
                                 setShowRep(true);
                             }}>
@@ -152,6 +163,11 @@ CommentItem = ({ comment, root }) => {
                             </TouchableOpacity>
                         </View>
                     )
+            ) : (
+                <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, flexDirection: 'row' }} onPress={onPressLike}>
+                    <Icon name='thumbs-up' size={14} color={liked ? 'red' : 'blue'} />
+                    <Text> {liked ? (comment.like || 0) +1 : comment.like}</Text>
+                </TouchableOpacity>
             )}
         </View>
     )

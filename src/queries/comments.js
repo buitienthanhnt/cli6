@@ -27,4 +27,20 @@ const addCommentServer = (paperId, params) => {
     return waitData;
 }
 
-export { getComments, addCommentServer };
+export const commentLikeType = {
+    like: "like",
+    dislike: "dislike",
+}
+const addLike = (commentId, params) => {
+    const url = Config.custom_url() + Config.api_request.commentLike + commentId;
+    const waitData = axios.post(url, params).then((response) => {
+        return response.data;
+    }).catch(
+        (error) => {
+            console.log(error);
+        }
+    );
+    return waitData;
+}
+
+export { getComments, addCommentServer, addLike };

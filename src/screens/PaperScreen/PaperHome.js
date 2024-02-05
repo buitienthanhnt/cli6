@@ -12,6 +12,10 @@ const PaperHome = ({ navigation }) => {
     const { actionReducer, updateState } = useDispatchState();
 
     const checkUseFirebase = useCallback(async () => {
+        if (Config.useFirebase && __DEV__) {
+            updateState(actionReducer.useFirebase, true)
+            return;
+        }
         try {
             const data = await getAxios(Config.custom_url() + Config.api_request.getInfo);
             if (!data.success) {

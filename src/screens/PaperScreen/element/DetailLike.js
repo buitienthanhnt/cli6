@@ -17,7 +17,6 @@ export default class DetailLike extends Component {
     }
 
     addAction = debounce(function(type){
-        console.log(this.context);
         if(type === 'like'){
             if (this.state.liked) {
                 addLike(this.context.paperId, {type: 'like', action: 'sub'})

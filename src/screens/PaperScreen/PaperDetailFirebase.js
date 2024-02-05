@@ -9,6 +9,7 @@ import { usePaperDetailFirebase } from "@hooks/Firebase";
 import RelatedFirebase from './element/RelatedFirebase';
 import Comments from "./element/Comments";
 import { PaperDetailContext } from "./PaperContext";
+import DetailLike from "./element/DetailLike";
 
 const renderers = {
     iframe: IframeRenderer
@@ -59,6 +60,7 @@ const PaperDetailFirebase = ({ navigation, route }) => {
                         }}
                         onPress={(event) => { return undefined; }}
                     />
+                    <DetailLike info={detail.info}></DetailLike>
                     <Comments paperId={detail.id}></Comments>
                     <View style={{ height: 1, backgroundColor: "black" }}></View>
                     <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>

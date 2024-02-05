@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useComments } from "@hooks/usePapers";
 import { capitalizeFirstLetter } from "@utils/textHelper";
 import { useCallback, useContext, useState } from "react";
@@ -14,12 +14,39 @@ const Comments = ({ paperId }) => {
     const { data } = useComments(paperId, 0);
     const { refRBSheet, setCommentParent } = useContext(PaperDetailContext);
 
-    if (!data || !data.length) { return null; }
+    if (!data || !data.length) {
+        return (
+            <View style={{ paddingVertical: 10 }}>
+                <View style={{ flexDirection: 'row', }}>
+                    <Text style={css.title}>Comment{'                                 '} </Text>
+                    <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [], alignSelf: 'flex-end' }} onPress={() => {
+                        refRBSheet.current.open();
+                    }}>
+                        <Icon name='reply' size={16} color='#821ab2' />
+                    </TouchableOpacity>
+                </View>
+                <RBSheet animationType="slide" closeOnDragDown={true} ref={refRBSheet} onClose={() => {
+                    setCommentParent(null);
+                }}>
+                    <CommentForm ></CommentForm>
+                </RBSheet>
+            </View>
+        )
+
+    }
+
     return (
         <View style={{ paddingVertical: 10 }}>
-            <Text style={css.title}>Comment{'                                 '}</Text>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={css.title}>Comment{'                                 '} </Text>
+                <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [] }} onPress={() => {
+                    refRBSheet.current.open();
+                }}>
+                    <Icon name='reply' size={16} color='#821ab2' />
+                </TouchableOpacity>
+            </View>
             <CommentsRender comments={data} root={true}></CommentsRender>
-            <RBSheet animationType="slide" closeOnDragDown={true} ref={refRBSheet} onClose={()=>{
+            <RBSheet animationType="slide" closeOnDragDown={true} ref={refRBSheet} onClose={() => {
                 setCommentParent(null);
             }}>
                 <CommentForm ></CommentForm>
@@ -33,7 +60,7 @@ const CommentsRender = ({ comments, parentId, root }) => {
     const { paperId } = useContext(PaperDetailContext);
     const [page, setPage] = useState(0);
     const [showMore, setShowMore] = useState(true);
-    const [comment, setComment, setCommentParent] = useState(comments || []);
+    const [comment, setComment] = useState(comments || []);
 
     const loadMoreComments = useCallback(async () => {
         const { data } = await getComments(paperId, parentId, page + 1);
@@ -111,9 +138,12 @@ CommentItem = ({ comment, root }) => {
             </View>
             {childrents.length >= 1 && (
                 showRep ?
-                    (<View style={{ paddingLeft: 15 }}>
-                        <CommentsRender comments={childrents} parentId={comment.id} root={false}></CommentsRender>
-                    </View>) : (
+                    (
+                        <View style={{ paddingLeft: 15 }}>
+                            <CommentsRender comments={childrents} parentId={comment.id} root={false}></CommentsRender>
+                        </View>
+                    ) :
+                    (
                         <View style={{ flexDirection: 'row' }}>
                             <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [{ rotateZ: '180deg' }] }} onPress={() => {
                                 setShowRep(true);

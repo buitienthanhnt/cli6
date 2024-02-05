@@ -170,7 +170,7 @@ const ListData = (props) => {
                         có thể do đã hết hạn quyền truy cập trong phần rules của database {'\n'}
                         giải pháp là tăng thêm thời gian cấp quyền truy cập cho firebase database{'\n'}
                         vào -\ realtime databases -\Rules tăng .read và .write các chữ số thứ 4 và thứ 5 {'\n'}
-                        từ trái sang lên 1 đơn vị.
+                        từ trái sang lên 1 đơn vị; tương tự với fireStorage data source
                     </Text>
 
                     <TouchableOpacity

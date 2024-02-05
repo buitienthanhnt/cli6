@@ -75,10 +75,6 @@ class FindIcon extends Component {
         }
     }
 
-    setIcon = debounce((text)=>{
-        this.setState({ icon_name: text, searchText: text });
-    }, 400)
-
     setColor = debounce((text)=>{
         this.setState({ ...this.state, color: text });
     }, 400)
@@ -95,11 +91,10 @@ class FindIcon extends Component {
                 <View style={css.icon}>
                     <Text style={{ fontSize: 18 }}>icon name:</Text>
                     <TextInput
-                        value={(this.state.searchText)}
+                        value={(this.state.icon_name)}
                         style={css.icon_input_name}
                         onChangeText={(text) => {
-                            this.setState({ ...this.state, searchText: text });
-                            this.setIcon(text)
+                            this.setState({ ...this.state, searchText: text.toLowerCase(), icon_name: text.toLowerCase() });
                         }}
                         onFocus={() => {
                             this.setState({ ...this.state, find_icon: false });

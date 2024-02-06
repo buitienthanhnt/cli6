@@ -126,7 +126,7 @@ CommentItem = ({ comment, root }) => {
                     setShowRep(false)
                 }} style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                     {!root && <Text style={{ color: '#4e5ae0' }}>--</Text>}
-                    <FontAwesome5Icon name='user' size={16} color='#4e5ae0' />
+                    <FontAwesome5Icon name='user' size={18} color='#ff00f6' />
                 </TouchableOpacity>
 
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
@@ -150,13 +150,18 @@ CommentItem = ({ comment, root }) => {
                         </View>
                     ) :
                     (
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'row',}}>
                             <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, flexDirection: 'row' }} onPress={onPressLike}>
-                                <Icon name='thumbs-up' size={14} color={liked ? 'red' : 'blue'} />
+                                <Icon name='thumbs-up' size={14} color={liked ? 'red' : '#3496ff'} />
                                 <Text> {liked ? (comment.like || 0) +1 : comment.like}</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [{ rotateZ: '180deg' }] }} onPress={() => {
+                            <TouchableOpacity style={{ 
+                                ...css.moreBtn, marginLeft: 8, 
+                                transform: [{ rotateZ: '180deg' }], 
+                                alignSelf: 'flex-end', // for align conten bottom
+                                }} 
+                                onPress={() => {
                                 setShowRep(true);
                             }}>
                                 <Icon name='reply' size={16} color='#821ab2' />
@@ -165,7 +170,7 @@ CommentItem = ({ comment, root }) => {
                     )
             ) : (
                 <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, flexDirection: 'row' }} onPress={onPressLike}>
-                    <Icon name='thumbs-up' size={14} color={liked ? 'red' : 'blue'} />
+                    <Icon name='thumbs-up' size={14} color={liked ? 'red' : '#3496ff'} />
                     <Text> {liked ? (comment.like || 0) +1 : comment.like}</Text>
                 </TouchableOpacity>
             )}

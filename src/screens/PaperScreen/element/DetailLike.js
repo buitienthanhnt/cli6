@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {debounce} from 'lodash'
 import { addLike } from "@queries/paper";
 import { PaperDetailContext } from "../PaperContext"
+import LoadingBtn from "@elements/LoadingBtn";
 
 export default class DetailLike extends Component {
     static contextType = PaperDetailContext
@@ -12,11 +13,14 @@ export default class DetailLike extends Component {
         super(props)
         this.state = {
             liked: false,
-            hearted: false
+            hearted: false,
+            isLoading: false
         }
     }
 
-    addAction = debounce(function(type){
+
+    addAction = debounce(async function(type){
+        this.setState({...this.state, isLoading: true})
         if(type === 'like'){
             if (this.state.liked) {
                 addLike(this.context.paperId, {type: 'like', action: 'sub'})
@@ -41,7 +45,8 @@ export default class DetailLike extends Component {
         const { info } = this.props;
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <TouchableOpacity 
+                <LoadingBtn 
+                    loadingSize={16}
                     onPress={()=>{this.addAction('like')}}
                     style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
                     {this.state.liked ?
@@ -49,9 +54,10 @@ export default class DetailLike extends Component {
                         :
                         <FontAwesome5Icon name='thumbs-up' size={14} color='red' />}
                     <Text> { Number(info?.like) + (this.state.liked ? 1 : 0)}</Text>
-                </TouchableOpacity>
+                </LoadingBtn>
 
-                <TouchableOpacity 
+                <LoadingBtn 
+                    loadingSize={16}
                     onPress={()=>{this.addAction('heart')}}
                     style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text> | {Number(info?.heart) + (this.state.hearted ? 1 : 0)} </Text>
@@ -59,7 +65,7 @@ export default class DetailLike extends Component {
                         <Icon name='heart' size={14} color='red' />
                         :
                         <FontAwesome5Icon name='heart' size={14} color='red' />}
-                </TouchableOpacity>
+                </LoadingBtn>
             </View>
         )
     }

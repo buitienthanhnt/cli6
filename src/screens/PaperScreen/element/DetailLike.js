@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {debounce} from 'lodash'
 import { addLike } from "@queries/paper";
 import { PaperDetailContext } from "../PaperContext"
+import ShareBtn from "@screens/components/ShareBtn";
 
 export default class DetailLike extends Component {
     static contextType = PaperDetailContext
@@ -48,18 +49,22 @@ export default class DetailLike extends Component {
                         <Icon name='thumbs-up' size={14} color='red' />
                         :
                         <FontAwesome5Icon name='thumbs-up' size={14} color='red' />}
-                    <Text> { Number(info?.like) + (this.state.liked ? 1 : 0)}</Text>
+                    <Text> { Number(info?.like || 0) + (this.state.liked ? 1 : 0)}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
                     onPress={()=>{this.addAction('heart')}}
                     style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
-                    <Text> | {Number(info?.heart) + (this.state.hearted ? 1 : 0)} </Text>
+                    <Text> | {Number(info?.heart || 0) + (this.state.hearted ? 1 : 0)} </Text>
                     {this.state.hearted ?
                         <Icon name='heart' size={14} color='red' />
                         :
                         <FontAwesome5Icon name='heart' size={14} color='red' />}
                 </TouchableOpacity>
+                <ShareBtn data={{ 
+                    url: this.context.url,
+                    title: this.context.title
+                 }}></ShareBtn>
             </View>
         )
     }

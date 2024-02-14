@@ -6,6 +6,7 @@ import {debounce} from 'lodash'
 import { addLike } from "@queries/paper";
 import { PaperDetailContext } from "../PaperContext"
 import LoadingBtn from "@elements/LoadingBtn";
+import ShareBtn from "@screens/components/ShareBtn";
 
 export default class DetailLike extends Component {
     static contextType = PaperDetailContext
@@ -45,7 +46,7 @@ export default class DetailLike extends Component {
         const { info } = this.props;
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <LoadingBtn 
+                <LoadingBtn
                     loadingSize={16}
                     onPress={()=>{this.addAction('like')}}
                     style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
@@ -56,16 +57,20 @@ export default class DetailLike extends Component {
                     <Text> { Number(info?.like) + (this.state.liked ? 1 : 0)}</Text>
                 </LoadingBtn>
 
-                <LoadingBtn 
+                <LoadingBtn
                     loadingSize={16}
                     onPress={()=>{this.addAction('heart')}}
                     style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
-                    <Text> | {Number(info?.heart) + (this.state.hearted ? 1 : 0)} </Text>
+                    <Text> | {Number(info?.heart || 0) + (this.state.hearted ? 1 : 0)} </Text>
                     {this.state.hearted ?
                         <Icon name='heart' size={14} color='red' />
                         :
                         <FontAwesome5Icon name='heart' size={14} color='red' />}
                 </LoadingBtn>
+                <ShareBtn data={{
+                    url: this.context.url,
+                    title: this.context.title
+                 }}></ShareBtn>
             </View>
         )
     }

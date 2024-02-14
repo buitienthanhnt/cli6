@@ -71,7 +71,7 @@ const PaperDetail = ({ navigation, route }) => {
             return <WebView source={{ uri: "www.topsy-fashion.nl" }} />
         }
         return (
-            <PaperDetailContext.Provider value={{paperId: detail.id, refRBSheet, commentParent, setCommentParent}}>
+            <PaperDetailContext.Provider value={{paperId: detail.id, url: detail.url, title: detail.title, refRBSheet, commentParent, setCommentParent}}>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}

@@ -115,7 +115,7 @@ CommentItem = ({ comment, root }) => {
     }, [refRBSheet, setCommentParent, comment.id]);
 
     const onPressLike = useCallback(() => {
-        addLike(comment.id, {type: !liked ? commentLikeType.like : commentLikeType.dislike})
+        addLike(comment.id, {type: !liked ? commentLikeType.like : commentLikeType.dislike,})
         setLiked(old => !liked);
     }, [liked])
 

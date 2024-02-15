@@ -30,10 +30,16 @@ const usePapersFirebase = () => {
 			if (snapshot.numChildren()) {
 				let _data = [];
 				snapshot.forEach(item => {
-					_data.push(item.val());
+					const data = item.val();
+						_data.push(data);
+						if (data.id) {
+					}else{
+						_data.push(data[Object.keys(data)[0]]);
+					}
 				})
 				// _data.sort((a,b) => b.id - a.id); // sort by desc
-				setData(_data.reverse());
+				// setData(_data.reverse()); // đảo ngược thứ tự data
+				setData(_data);
 			};
 		})
 
@@ -134,6 +140,6 @@ const useRelatedPaper = ()=>{
 	}
 }
 
-export { 
-	useCategory, usePapersFirebase, usePaperDetailFirebase, 
+export {
+	useCategory, usePapersFirebase, usePaperDetailFirebase,
 	useCategoryTop, usePaperCategory, useRelatedPaper };

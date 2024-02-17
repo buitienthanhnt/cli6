@@ -35,14 +35,17 @@ const ListData = (props) => {
         //         // setSourceData(Object.values(snapshot.toJSON())); // array not key
         //     };
         // })
-        database().ref('/newpaper/category').once('value').then((snapshot)=>{
+        database().ref('/newpaper/category').once('value').then((snapshot) => {
             if (snapshot.numChildren()) {
                 let values = [];
-                snapshot.forEach((item)=>{
+                snapshot.forEach((item) => {
                     values = item;
                 })
                 console.log(values);
             }
+        }).catch((reason) => {
+            console.log('Error: ======>');
+            console.log(reason);
         });
     }, []);
 
@@ -55,7 +58,7 @@ const ListData = (props) => {
                 gap: 2,
                 // borderRadius: 5,
                 // backgroundColor: 'red',
-               
+
             }}>
                 <View style={{
                     backgroundColor: item.active ? 'rgba(0, 241, 0, 0.7)' : 'rgba(225, 0, 0, 0.6)',
@@ -63,10 +66,10 @@ const ListData = (props) => {
                     borderRadius: 8,
                     width: '60%'
                 }}>
-                    <Text style={{fontSize: 18}}>{item.name}</Text>
-                    <Text style={{fontSize: 15}}>{item?.email || ''}</Text>
-                    <Text style={{fontSize: 15, color: 'blue'}}>{item?.phone || ''}</Text>
-                    
+                    <Text style={{ fontSize: 18 }}>{item.name}</Text>
+                    <Text style={{ fontSize: 15 }}>{item?.email || ''}</Text>
+                    <Text style={{ fontSize: 15, color: 'blue' }}>{item?.phone || ''}</Text>
+
                 </View>
 
                 <TouchableOpacity style={{
@@ -132,7 +135,7 @@ const ListData = (props) => {
                 <View style={{ height: '60%' }}>
                     <FlatList
                         style={{
-                          
+
                         }}
                         data={sourceData}
                         keyExtractor={(item, index) => 'key_' + index}
@@ -159,8 +162,8 @@ const ListData = (props) => {
                             borderRadius: 5,
                             width: 120
                         }}
-                        onPress={()=>{
-                            props.navigation.navigate('FsourceForm', {name: 'new source'});
+                        onPress={() => {
+                            props.navigation.navigate('FsourceForm', { name: 'new source' });
                         }}
                     >
                         <Text>add new source</Text>

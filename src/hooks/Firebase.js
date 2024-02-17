@@ -31,9 +31,9 @@ const usePapersFirebase = () => {
 				let _data = [];
 				snapshot.forEach(item => {
 					const data = item.val();
+					if (data.id) {
 						_data.push(data);
-						if (data.id) {
-					}else{
+					} else {
 						_data.push(data[Object.keys(data)[0]]);
 					}
 				})
@@ -103,7 +103,7 @@ const useCategoryTop = () => {
 const usePaperCategory = (categoryId) => {
 	const [data, setData] = useState([]);
 	useEffect(() => {
-		const onData = database().ref(firebaseType.realTime.paperByCategory+categoryId).on('value', (snapshot) => {
+		const onData = database().ref(firebaseType.realTime.paperByCategory + categoryId).on('value', (snapshot) => {
 			if (snapshot.numChildren()) {
 				let _data = [];
 				snapshot.forEach(item => {
@@ -113,7 +113,7 @@ const usePaperCategory = (categoryId) => {
 			};
 		})
 
-		return () => database().ref(firebaseType.realTime.paperByCategory+categoryId).off('value', onData);
+		return () => database().ref(firebaseType.realTime.paperByCategory + categoryId).off('value', onData);
 	}, [categoryId]);
 
 	return {
@@ -121,9 +121,9 @@ const usePaperCategory = (categoryId) => {
 	}
 }
 
-const useRelatedPaper = ()=>{
+const useRelatedPaper = () => {
 	const [data, setData] = useState([]);
-	useEffect(()=>{
+	useEffect(() => {
 		const onData = database().ref(firebaseType.realTime.relatedPaper).orderByKey().limitToLast(6).on('value', (snapshot) => {
 			if (snapshot.numChildren()) {
 				let _data = [];
@@ -142,4 +142,5 @@ const useRelatedPaper = ()=>{
 
 export {
 	useCategory, usePapersFirebase, usePaperDetailFirebase,
-	useCategoryTop, usePaperCategory, useRelatedPaper };
+	useCategoryTop, usePaperCategory, useRelatedPaper
+};

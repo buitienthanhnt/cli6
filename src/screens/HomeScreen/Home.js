@@ -23,8 +23,8 @@ const Home = (props) => {
     // thường dùng trong trường hợp dùng trong thẻ con cần lấy kích thước thẻ cha.
     const onPageLayout = useCallback((event) => {
         const { width, height } = event.nativeEvent.layout;
-        console.log("ON LAYOUT", width, height);
-        setWidth(width)
+        // console.log("ON LAYOUT", width, height);
+        // setWidth(width)
       }, []); 
 
     return (

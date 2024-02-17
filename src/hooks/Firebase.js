@@ -38,8 +38,8 @@ const usePapersFirebase = () => {
 					}
 				})
 				// _data.sort((a,b) => b.id - a.id); // sort by desc
-				// setData(_data.reverse()); // đảo ngược thứ tự data
-				setData(_data);
+				setData(_data.reverse()); // đảo ngược thứ tự data
+				// setData(_data);
 			};
 		})
 

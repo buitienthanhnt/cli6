@@ -131,8 +131,8 @@ const useRelatedPaper = () => {
 					_data.push(item.val());
 				})
 				setData(_data.reverse());
-			};
-		})
+			}
+		});
 		return () => database().ref(firebaseType.realTime.relatedPaper).orderByKey().limitToLast(6).off('value', onData);
 	}, [])
 	return {

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {debounce} from 'lodash'
@@ -42,6 +42,16 @@ export default class DetailLike extends Component {
         }
     }, 400)
 
+    likeCount = function(){
+        const value = Number(this.props.info?.like || 0) + (this.state.liked ? 1 : 0);
+        return value > 0 ? value : '';
+    }
+
+    heartCount = function(){
+        const value = Number(this.props.info?.heart || 0) + (this.state.hearted ? 1 : 0);
+        return value > 0 ? value : '';
+    }
+
     render() {
         const { info } = this.props;
         return (
@@ -54,14 +64,14 @@ export default class DetailLike extends Component {
                         <Icon name='thumbs-up' size={14} color='red' />
                         :
                         <FontAwesome5Icon name='thumbs-up' size={14} color='red' />}
-                    <Text> { Number(info?.like) + (this.state.liked ? 1 : 0)}</Text>
+                    <Text> {this.likeCount()}</Text>
                 </LoadingBtn>
 
                 <LoadingBtn
                     loadingSize={16}
                     onPress={()=>{this.addAction('heart')}}
                     style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
-                    <Text> | {Number(info?.heart || 0) + (this.state.hearted ? 1 : 0)} </Text>
+                    <Text> | {this.heartCount()} </Text>
                     {this.state.hearted ?
                         <Icon name='heart' size={14} color='red' />
                         :

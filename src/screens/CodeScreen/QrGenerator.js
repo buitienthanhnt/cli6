@@ -13,11 +13,9 @@ const QrGenerator = (props) => {
     const [value, setValue] = useState('');
     const [qr, setQr] = useState(null);
 
-    return(<CarolParax></CarolParax>);
-
     return (
         <View style={styles.container}>
-            
+
             <TextInput
                 style={styles.input}
                 onChangeText={(text) => setValue(text)}

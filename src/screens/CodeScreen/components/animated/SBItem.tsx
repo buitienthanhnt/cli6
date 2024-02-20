@@ -14,10 +14,12 @@ interface Props extends AnimateProps<ViewProps> {
   index?: number
   pretty?: boolean
   showIndex?: boolean
-  img?: ImageSourcePropType
+  img?: string
 }
 
 export const SBItem: React.FC<Props> = (props) => {
+  console.log(props.img);
+  
   const { style, showIndex = true, index, pretty, img, testID, ...animatedViewProps } = props;
   const enablePretty = Constants?.expoConfig?.extra?.enablePretty || false;
   const [isPretty, setIsPretty] = React.useState(pretty || enablePretty);

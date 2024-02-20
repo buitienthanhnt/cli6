@@ -9,4 +9,8 @@ const _css = {
     }
 }
 
-export {_css};
+const layoutDimension = {
+    bottomTabHeight: 49
+}
+
+export {_css, layoutDimension};

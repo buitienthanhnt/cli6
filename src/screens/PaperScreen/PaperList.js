@@ -28,10 +28,11 @@ class PaperList extends Component {
         listTrace.putMetric("hits", 1);
         if (!this.state.refreshing) {
             this.setState({ refreshing: true });
-            console.log(Config.url + Config.api_request.getpapers + Config.buy_params({ page: this.state.page }));
             const _url = Config.url + Config.api_request.getpapers + Config.buy_params({ page: paper !== false ? paper : this.state.page });
+            console.log(_url);
             const data = await fetch(_url);
             const result = await data.json();
+            console.log('123123', result);
             var items = this.state.items;
             if (result.data.length) {
                 if (refresh) {

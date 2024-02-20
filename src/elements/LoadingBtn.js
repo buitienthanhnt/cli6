@@ -8,9 +8,8 @@ const LoadingBtn = ({ children, onPress, loadingSize}) => {
 
     const _onPress = async () => {
         setLoadding(true);
-        console.log(1);
         await onPress?.();
-        console.log(12);
+        console.log('LoadingBtn run!');
         setLoadding(false)
     }
 

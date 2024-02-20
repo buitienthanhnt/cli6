@@ -16,16 +16,6 @@ class Carolsel extends Component {
     this.state = {
       activeIndex: 0,
       data: null
-      // carouselItems: [
-      //   {
-      //     title: "I discovered Soviet herita",
-      //     text: "Text 1",
-      //   },
-      //   {
-      //     title: "VietnamSau Ukraina, Nga c",
-      //     text: "Text 2",
-      //   },
-      // ]
     }
   }
 

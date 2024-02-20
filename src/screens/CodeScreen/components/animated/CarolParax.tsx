@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -22,7 +22,11 @@ const colors = [
   "#F1F1F1",
 ];
 
-function CarolParax() {
+type Props = {
+  data: any
+}
+
+const CarolParax: React.FunctionComponent<Props> = ({data}) => {
   const [isVertical, setIsVertical] = React.useState(false);
   const [autoPlay, setAutoPlay] = React.useState(false);
   const [pagingEnabled, setPagingEnabled] = React.useState<boolean>(true);
@@ -64,8 +68,11 @@ function CarolParax() {
           parallaxScrollingScale: 0.9,
           parallaxScrollingOffset: 50,
         }}
-        data={colors}
-        renderItem={({ index }) => <SBItem index={index} />}
+        data={data}
+        renderItem={({ index }) => <SBItem 
+          index={index} 
+          pretty={true} 
+          img={data[index].image_path}/>}
       />
       {!!progressValue && (
         <View
@@ -102,7 +109,7 @@ function CarolParax() {
           })}
         </View>
       )}
-      <SButton
+      {/* <SButton
         onPress={() => setAutoPlay(!autoPlay)}
       >{`${ElementsText.AUTOPLAY}:${autoPlay}`}</SButton>
       <SButton
@@ -125,7 +132,7 @@ function CarolParax() {
         }}
       >
         {`snapEnabled:${snapEnabled}`}
-      </SButton>
+      </SButton> */}
     </View>
   );
 }

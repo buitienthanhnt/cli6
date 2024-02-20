@@ -4,20 +4,22 @@ import type {
   ViewStyle,
   ImageURISource,
   ImageSourcePropType,
+  
 } from "react-native";
 import {
   StyleSheet,
   View,
   ActivityIndicator,
   Text,
+  Image
 } from "react-native";
-import { Image } from 'expo-image';
+// import { Image } from 'expo-image';
 
 interface Props {
   style?: StyleProp<ViewStyle>
   index?: number
   showIndex?: boolean
-  img?: ImageSourcePropType
+  img?: string
 }
 
 export const SBImageItem: React.FC<Props> = ({
@@ -27,28 +29,26 @@ export const SBImageItem: React.FC<Props> = ({
   img
 }) => {
   const index = _index ?? 0;
-  const source = React.useRef<ImageURISource>({
-    uri: `https://picsum.photos/id/${index}/400/300`,
-  }).current;
+  const source = 'https://firebasestorage.googleapis.com/v0/b/newpaper-25148.appspot.com/o/demo%2FltSGfxAXmf.png?alt=media&token=22f75424-fcc8-41bf-8994-0f7c67114d54'
 
   return (
     <View style={[styles.container, style]}>
-      <ActivityIndicator size="small" />
-      <Image cachePolicy={'memory-disk'} key={index} style={styles.image} source={img ?? source} />
+      <Image key={index} style={styles.image} source={{uri: img || source}} />
       {
         showIndex && <Text
           style={{
             position: "absolute",
-            color: "#6E6E6E",
-            fontSize: 40,
-            backgroundColor: "#EAEAEA",
+            color: "#3280ff",
+            fontSize: 24,
             borderRadius: 5,
             overflow: "hidden",
-            paddingHorizontal: 10,
-            paddingTop: 2,
+             // backgroundColor: "#EAEAEA",
+            // paddingHorizontal: 10,
+            // paddingTop: 2,
+            bottom: 10
           }}
         >
-          {index}
+          123
         </Text>
       }
     </View>

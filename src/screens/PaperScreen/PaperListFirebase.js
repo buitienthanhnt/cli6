@@ -28,6 +28,7 @@ const PaperListFirebaseData = ({ navigation }) => {
         <View style={{flex: 1}}>
             <FlatList
                 data={data}
+                extraData={data}
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}

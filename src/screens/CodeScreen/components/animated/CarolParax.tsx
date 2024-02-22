@@ -23,12 +23,13 @@ const colors = [
 ];
 
 type Props = {
-  data: any
+  data: any,
+  hideIndicator: boolean,
+  autoPlay: boolean,
 }
 
-const CarolParax: React.FunctionComponent<Props> = ({data}) => {
+const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPlay}) => {
   const [isVertical, setIsVertical] = React.useState(false);
-  const [autoPlay, setAutoPlay] = React.useState(false);
   const [pagingEnabled, setPagingEnabled] = React.useState<boolean>(true);
   const [snapEnabled, setSnapEnabled] = React.useState<boolean>(true);
   const progressValue = useSharedValue<number>(0);
@@ -41,7 +42,7 @@ const CarolParax: React.FunctionComponent<Props> = ({data}) => {
     : ({
       vertical: false,
       width: PAGE_WIDTH,
-      height: PAGE_WIDTH * 0.6,
+      height: PAGE_WIDTH * 0.5,
     } as const);
 
   return (
@@ -54,6 +55,7 @@ const CarolParax: React.FunctionComponent<Props> = ({data}) => {
         {...baseOptions}
         style={{
            width: PAGE_WIDTH,
+          //  backgroundColor: 'red',
         }}
         loop
         pagingEnabled={pagingEnabled}
@@ -72,9 +74,11 @@ const CarolParax: React.FunctionComponent<Props> = ({data}) => {
         renderItem={({ index }) => <SBItem 
           index={index} 
           pretty={true} 
-          img={data[index].image_path}/>}
+          img={data[index].image_path}
+          title={data[index].title}
+          />}
       />
-      {!!progressValue && (
+      {!!progressValue && !hideIndicator && (
         <View
           style={
             isVertical
@@ -109,6 +113,7 @@ const CarolParax: React.FunctionComponent<Props> = ({data}) => {
           })}
         </View>
       )}
+      
       {/* <SButton
         onPress={() => setAutoPlay(!autoPlay)}
       >{`${ElementsText.AUTOPLAY}:${autoPlay}`}</SButton>

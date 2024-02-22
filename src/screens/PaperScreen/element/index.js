@@ -83,7 +83,8 @@ const css = StyleSheet.create({
     },
     pro_item_host: {
         width: "100%",
-        height: Dimensions.get("screen").height / 4, padding: 5
+        height: Math.floor(Dimensions.get("screen").height / 3.5), 
+        padding: 5
     },
     pro_item_host_title: {
         fontSize: 16,

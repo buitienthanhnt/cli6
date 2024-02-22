@@ -19,14 +19,16 @@ interface Props {
   style?: StyleProp<ViewStyle>
   index?: number
   showIndex?: boolean
-  img?: string
+  img?: string,
+  title?: string,
 }
 
 export const SBImageItem: React.FC<Props> = ({
   style,
   index: _index,
   showIndex = true,
-  img
+  img,
+  title
 }) => {
   const index = _index ?? 0;
   const source = 'https://firebasestorage.googleapis.com/v0/b/newpaper-25148.appspot.com/o/demo%2FltSGfxAXmf.png?alt=media&token=22f75424-fcc8-41bf-8994-0f7c67114d54'
@@ -38,8 +40,8 @@ export const SBImageItem: React.FC<Props> = ({
         showIndex && <Text
           style={{
             position: "absolute",
-            color: "#3280ff",
-            fontSize: 24,
+            color: "#00afef",
+            fontSize: 18,
             borderRadius: 5,
             overflow: "hidden",
              // backgroundColor: "#EAEAEA",
@@ -48,7 +50,7 @@ export const SBImageItem: React.FC<Props> = ({
             bottom: 10
           }}
         >
-          123
+          {title}
         </Text>
       }
     </View>

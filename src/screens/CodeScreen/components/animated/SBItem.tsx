@@ -14,13 +14,12 @@ interface Props extends AnimateProps<ViewProps> {
   index?: number
   pretty?: boolean
   showIndex?: boolean
-  img?: string
+  img?: string,
+  title?: string,
 }
 
 export const SBItem: React.FC<Props> = (props) => {
-  console.log(props.img);
-  
-  const { style, showIndex = true, index, pretty, img, testID, ...animatedViewProps } = props;
+  const { style, showIndex = true, index, pretty, img, title,testID, ...animatedViewProps } = props;
   const enablePretty = Constants?.expoConfig?.extra?.enablePretty || false;
   const [isPretty, setIsPretty] = React.useState(pretty || enablePretty);
   return (
@@ -32,7 +31,7 @@ export const SBItem: React.FC<Props> = (props) => {
       <Animated.View testID={testID} style={{ flex: 1 }} {...animatedViewProps}>
         {isPretty || img
           ? (
-            <SBImageItem style={style} index={index} showIndex={typeof index === "number" && showIndex} img={img} />
+            <SBImageItem style={style} index={index} showIndex={typeof index === "number" && showIndex} img={img} title={title} />
           )
           : (
             <SBTextItem style={style} index={index} />

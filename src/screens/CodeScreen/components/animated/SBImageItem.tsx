@@ -40,7 +40,7 @@ export const SBImageItem: React.FC<Props> = ({
         showIndex && <Text
           style={{
             position: "absolute",
-            color: "#00afef",
+            color: "white",
             fontSize: 18,
             borderRadius: 5,
             overflow: "hidden",

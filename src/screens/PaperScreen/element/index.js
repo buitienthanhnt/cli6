@@ -83,14 +83,15 @@ const css = StyleSheet.create({
     },
     pro_item_host: {
         width: "100%",
-        height: Math.floor(Dimensions.get("screen").height / 3.5), 
+        height: Math.floor(Dimensions.get("screen").height / 3.6), 
         padding: 5
     },
     pro_item_host_title: {
         fontSize: 16,
         fontStyle: "normal",
         fontWeight: "600",
-        color: "blue"
+        color: "blue",
+        marginTop: 4
     },
     pro_item_title: {
         width: "60%",

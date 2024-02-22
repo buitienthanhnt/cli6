@@ -52,7 +52,7 @@ class Carolsel extends Component {
     return (
       this.state.data ?
         <SafeAreaView style={css.area}>
-          <View style={{ paddingLeft: 8, marginBottom: 8 }}>
+          <View style={{marginBottom: 8 }}>
             <Text style={{ color: "#d31bd6", fontSize: 16, fontWeight: 600 }}>Tin liên quan:</Text>
           </View>
           <View style={css.container1}>
@@ -92,7 +92,8 @@ const css = StyleSheet.create({
   container1: {
     flex: 1, flexDirection: 'row',
     justifyContent: 'center',
-    paddingRight: 4
+    paddingRight: 4,
+    // backgroundColor: 'red',
   }
 });
 

@@ -12,6 +12,7 @@ import { PaperDetailContext } from "./PaperContext";
 import CarolParax from "@screens/CodeScreen/components/animated/CarolParax";
 import { layoutDimension } from "@styles/css";
 import { caroll } from "./api/datatest";
+import Carolsel from "@screens/AccountScreen/components/Carolsel";
 
 const renderers = {
     iframe: IframeRenderer
@@ -107,9 +108,8 @@ const PaperDetail = ({ navigation, route }) => {
                     <DetailLike info={detail.info}></DetailLike>
                     <Comments paperId={detail.id}></Comments>
                     <View style={{ height: 1, backgroundColor: "black" }}></View> 
-
-                    <CarolParax data={caroll}></CarolParax>
                     <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
+                    <CarolParax data={caroll}></CarolParax>
                     <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>
                     <Button title="view in webview" onPress={() => {
                         setShowwebview(true)
@@ -144,9 +144,7 @@ const LastNews = (props) => {
     }, [])
 
     return (
-        <View style={{ paddingBottom: 20 }}>
-            <Wishlist navigation={navigation}></Wishlist>
-        </View>
+        <Carolsel navigation={navigation}></Carolsel>
     );
 }
 

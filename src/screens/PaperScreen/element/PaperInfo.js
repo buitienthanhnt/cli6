@@ -11,22 +11,26 @@ export default class PaperInfo extends Component {
     render() {
         const { info } = this.props;
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 4 }}>
                 <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text>{info?.view_count} </Text>
                     <FontAwesome5Icon name='eye' size={12} color='#2ec2ff' />
                 </View>
 
-                <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
+                {!!info?.like &&
+                    <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text> | </Text>
                     <FontAwesome5Icon name='thumbs-up' size={12} color='#ff2290' />
                     <Text> {info?.like}</Text>
                 </View>
+                }
 
-                <View style={{ justifyContent: 'center', flexDirection: 'row'}}>
-                    <Text> | {info?.comment_count} </Text>
-                    <Icon name='comment' size={12} color='tomato' />
-                </View>
+                {!!info?.comment_count &&
+                    <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
+                        <Text> | {info?.comment_count} </Text>
+                        <Icon name='comment' size={12} color='tomato' />
+                    </View>
+                }
             </View>
         )
     }

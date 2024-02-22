@@ -1,11 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, FlatList, TouchableOpacity, Image, ImageBackground, Text, ScrollView } from "react-native";
+import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView } from "react-native";
 
 import PageList from "@config/PageList";
 import { caroll, topSearch } from "../PaperScreen/api/datatest";
 import CarolParax from "../CodeScreen/components/animated/CarolParax";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import PaperInfo from '@screens/PaperScreen/element/PaperInfo';
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+} from "react-native-chart-kit"; // https://github.com/indiespirit/react-native-chart-kit
 
 const Home = (props) => {
     return (
@@ -14,6 +22,7 @@ const Home = (props) => {
             <TopSearch></TopSearch>
             <ProposeList></ProposeList>
             <ImageParacel></ImageParacel>
+            <DemoChart></DemoChart>
             <ListWriter></ListWriter>
         </ScrollView>
     )
@@ -56,6 +65,7 @@ const ListWriter = () => {
                     )
                 }}
                 showsHorizontalScrollIndicator={false}
+                keyExtractor={item=> item.id}
             >
             </FlatList>
         </View>
@@ -78,6 +88,7 @@ const TopSearch = () => {
                 {topSearch.map((item, index) => {
                     return (
                         <TouchableOpacity
+                            index={index}
                             key={index}
                             style={{
                                 backgroundColor: '#bababa',
@@ -110,9 +121,9 @@ const ProposeList = () => {
                         console.log(item.title);
                     }}>
                         <Image width={60} height={60} style={{ borderRadius: 4 }} source={{ uri: item.image_path }}></Image>
-                        <View style={{flex: 1}}>
+                        <View style={{ flex: 1 }}>
                             <Text style={{ fontSize: 14, flex: 1 }}>{item.title}</Text>
-                            <PaperInfo info={{like: 2, view_count: 1, comment_count: 3}}></PaperInfo>
+                            <PaperInfo info={{ like: 2, view_count: 1, comment_count: 3 }}></PaperInfo>
                         </View>
                     </TouchableOpacity>
                 )
@@ -183,6 +194,71 @@ const ImageParacel = () => {
                     setLoad(false);
                 }}
             ></FlatList>
+        </View>
+    )
+}
+
+const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false // optional
+  };
+
+const DemoChart = () => {
+    return (
+        <View style={{paddingHorizontal: 5}}>
+           <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center', paddingLeft: 5 }}>
+                <Text style={{ fontSize: 20, color: '#00afef', fontWeight: '600', }}>Thống kê</Text>
+                <FontAwesome5Icon name='chart-pie' size={16} color='#00afef' />
+            </View>
+            <LineChart
+                data={{
+                    labels: ["January", "February", "March", "April", "May", "June"],
+                    datasets: [
+                        {
+                            data: [
+                                Math.random() * 100,
+                                Math.random() * 100,
+                                Math.random() * 100,
+                                Math.random() * 100,
+                                Math.random() * 100,
+                                Math.random() * 100
+                            ]
+                        }
+                    ]
+                }}
+                width={Dimensions.get("window").width -10} // from react-native
+                height={220}
+                yAxisLabel="$"
+                yAxisSuffix="k"
+                yAxisInterval={1} // optional, defaults to 1
+                chartConfig={{
+                    backgroundColor: "#e26a00",
+                    backgroundGradientFrom: "#ff7cc0", // 82baff
+                    backgroundGradientTo: "#82baff",   // ffa726
+                    decimalPlaces: 2, // optional, defaults to 2dp
+                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    style: {
+                        borderRadius: 16
+                    },
+                    propsForDots: {
+                        r: "6",
+                        strokeWidth: "2",
+                        stroke: "white"
+                    }
+                }}
+                bezier
+                style={{
+                    marginVertical: 8,
+                    borderRadius: 16
+                }}
+            />
         </View>
     )
 }

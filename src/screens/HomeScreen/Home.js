@@ -16,14 +16,37 @@ import {
 } from "react-native-chart-kit";                       // https://github.com/indiespirit/react-native-chart-kit
 import Timeline from 'react-native-timeline-flatlist'  // https://www.npmjs.com/package/react-native-timeline-flatlist
 import TimelineTwo from "./TimelineTwo";
+import Config from "@config/Config";
 
-const Home = (props) => {
+const useInfo = () => {
+    const [data, setData] = useState(null);
+
+    const fecthData = useCallback(async () => {
+       try {
+        const url = Config.custom_url() + Config.api_request.getInfo;
+        const response = await fetch(url);
+        const value = await response.json();
+        setData(value);
+       } catch (error) {
+        console.log('------', error);
+       }
+    }, []);
+
+    useEffect(() => {
+        fecthData();
+    }, [fecthData]);
+    return { data }
+}
+
+const Home = ({navigation}) => {
+    const { data } = useInfo();
+    // console.log('', data.data.hit, data.data.mostPopulator, data.data.mostRecents);
     return (
         <ScrollView style={{ flex: 1, paddingHorizontal: 2, paddingTop: 4, }} showsVerticalScrollIndicator={false}>
-            <TopNew></TopNew>
-            <PopularNews data={caroll}></PopularNews>
-            <TopSearch></TopSearch>
-            <ProposeList></ProposeList>
+            <TopNew hit={data?.data?.hit} navigation={navigation}></TopNew>
+            <PopularNews data={data?.data?.mostRecents} navigation={navigation}></PopularNews>
+            <TopSearch search={data?.data?.search}></TopSearch>
+            <ProposeList most={data?.data?.mostPopulator} navigation={navigation}></ProposeList>
             <TimeLine></TimeLine>
             <ImageParacel></ImageParacel>
             <DemoChart></DemoChart>
@@ -32,14 +55,14 @@ const Home = (props) => {
     )
 }
 
-const PopularNews = ({ data }) => {
+const PopularNews = ({ data, navigation }) => {
     return (
         <View style={{ paddingTop: 5 }}>
             <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 5, alignItems: 'baseline', paddingBottom: 0 }}>
                 <Text style={{ fontSize: 20, color: '#00afef', fontWeight: '600', }} >Phổ biến</Text>
                 <FontAwesome5Icon name='newspaper' size={20} color='#00afef' />
             </View>
-            <CarolParax data={data} hideIndicator={true} autoPlay={false}></CarolParax>
+            <CarolParax data={data} hideIndicator={true} autoPlay={false} navigation={navigation}></CarolParax>
         </View>
     )
 }
@@ -88,7 +111,7 @@ const ListWriter = () => {
     )
 }
 
-const TopSearch = () => {
+const TopSearch = ({search}) => {
     return (
         <View style={{ flex: 1, padding: 5 }}>
             <View style={{ flexDirection: 'row', gap: 8 }}>
@@ -101,7 +124,7 @@ const TopSearch = () => {
                 flexWrap: 'wrap', // để tự động co dãn xuống dòng.
 
             }}>
-                {topSearch.map((item, index) => {
+                {search && search.map((item, index) => {
                     return (
                         <TouchableOpacity
                             index={index}
@@ -112,10 +135,10 @@ const TopSearch = () => {
                                 paddingHorizontal: 4, justifyContent: 'center', marginHorizontal: 4
                             }}
                             onPress={() => {
-                                console.log(item.value);
+                                console.log(item);
                             }}
                         >
-                            <Text style={{ fontSize: 16, }}>{item.value}</Text>
+                            <Text style={{ fontSize: 16, }}>{item}</Text>
                         </TouchableOpacity>
                     )
                 })}
@@ -124,22 +147,22 @@ const TopSearch = () => {
     )
 }
 
-const ProposeList = () => {
+const ProposeList = ({most, navigation}) => {
     return (
         <View style={{ flex: 1, padding: 5, gap: 6 }}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
                 <Text style={{ fontSize: 20, color: '#00afef', fontWeight: '600', }}>Đề xuất</Text>
                 <FontAwesome5Icon name='wifi' size={16} color='#00afef' />
             </View>
-            {caroll.map((item, index) => {
+            {most && most.map((item, index) => {
                 return (
                     <TouchableOpacity style={{ flexDirection: 'row', width: '100%', gap: 6 }} key={index} onPress={() => {
-                        console.log(item.title);
+                        navigation.navigate("PaperDetail", { data: item })
                     }}>
                         <Image width={60} height={60} style={{ borderRadius: 4 }} source={{ uri: item.image_path }}></Image>
                         <View style={{ flex: 1 }}>
-                            <Text style={{ fontSize: 14, flex: 1 }}>{item.title}</Text>
-                            <PaperInfo info={{ like: 2, view_count: 1, comment_count: 3 }}></PaperInfo>
+                            <Text style={{ fontSize: 14, flex: 1 }} numberOfLines={2}>{item.title}</Text>
+                            <PaperInfo info={{ like: item?.info?.like, view_count: item?.info?.view_count, comment_count: item?.info?.comment_count }}></PaperInfo>
                         </View>
                     </TouchableOpacity>
                 )
@@ -278,62 +301,64 @@ const TimeLine = () => {
     ];
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 5, alignItems: 'baseline', paddingBottom: 0 }}>
                 <Text style={{ fontSize: 20, color: '#00afef', fontWeight: '600', }} >Sự Kiện</Text>
                 <FontAwesome5Icon name='assistive-listening-systems' size={20} color='#00afef' />
             </View>
-           <View style={{flex: 1, justifyContent: 'center',}}>
-           <TimelineTwo></TimelineTwo>
-           </View>
+            <View style={{ flex: 1, justifyContent: 'center', }}>
+                <TimelineTwo></TimelineTwo>
+            </View>
         </View>
     )
 }
 
-const TopNew = (props) => {
+const TopNew = ({hit, navigation}) => {
     return (
-        <View style={{ flex: 1, }}>
+        <TouchableOpacity style={{ flex: 1, }} onPress={()=>{
+            navigation.navigate("PaperDetail", { data: hit })
+        }}>
             <Image
                 style={{ borderRadius: 4 }}
                 width={'100%'}
                 height={Dimensions.get('screen').height / 5}
-                source={{ uri: 'https://sohanews.sohacdn.com/160588918557773824/2024/2/22/quy-hoach-tinh-quang-ninh-3-170859382997330062774.jpg' }}></Image>
+                source={{ uri: hit?.image_path }}></Image>
             <Text
                 style={{ flex: 1, paddingHorizontal: 5, fontSize: 16, fontWeight: 600, color: '#84a9ff' }}
                 numberOfLines={2}>
-                Khám phá viễn cảnh 'hóa rồng' của tỉnh giáp Trung Quốc sẽ có nhiều thành phố nhất Việt Nam
+                {hit?.title}
             </Text>
-        </View>)
+        </TouchableOpacity>)
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      padding: 20,
-      paddingTop:65,
-      backgroundColor:'white'
+        flex: 1,
+        padding: 20,
+        paddingTop: 65,
+        backgroundColor: 'white'
     },
     list: {
-      flex: 1,
-      marginTop:20,
+        flex: 1,
+        marginTop: 20,
     },
-    title:{
-      fontSize:16,
-      fontWeight: 'bold'
+    title: {
+        fontSize: 16,
+        fontWeight: 'bold'
     },
-    descriptionContainer:{
-      flexDirection: 'row',
-      paddingRight: 50
+    descriptionContainer: {
+        flexDirection: 'row',
+        paddingRight: 50
     },
-    image:{
-      width: 50,
-      height: 50,
-      borderRadius: 25
+    image: {
+        width: 50,
+        height: 50,
+        borderRadius: 25
     },
     textDescription: {
-      marginLeft: 10,
-      color: 'gray'
+        marginLeft: 10,
+        color: 'gray'
     }
-  });
+});
 
 export default Home;

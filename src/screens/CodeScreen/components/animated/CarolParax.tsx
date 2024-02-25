@@ -11,6 +11,7 @@ import Carousel from "react-native-reanimated-carousel";
 import { SBItem } from "./SBItem";
 import SButton from "./SButton";
 import { ElementsText, window } from "./constants";
+import { useCallback } from "react";
 
 const PAGE_WIDTH = window.width;
 const colors = [
@@ -26,9 +27,10 @@ type Props = {
   data: any,
   hideIndicator: boolean,
   autoPlay: boolean,
+  navigation: any,
 }
 
-const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPlay}) => {
+const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPlay, navigation}) => {
   const [isVertical, setIsVertical] = React.useState(false);
   const [pagingEnabled, setPagingEnabled] = React.useState<boolean>(true);
   const [snapEnabled, setSnapEnabled] = React.useState<boolean>(true);
@@ -44,6 +46,10 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
       width: PAGE_WIDTH,
       height: PAGE_WIDTH * 0.5,
     } as const);
+  
+    const onPress = useCallback((item: any)=>{
+      navigation.navigate("PaperDetail", { data: item })
+    }, [])
 
   return (
     <View
@@ -76,6 +82,11 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
           pretty={true} 
           img={data[index].image_path}
           title={data[index].title}
+          navigation={navigation}
+          onPress={()=>{
+            onPress(data[index])
+          }}
+
           />}
       />
       {!!progressValue && !hideIndicator && (

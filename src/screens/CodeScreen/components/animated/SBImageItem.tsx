@@ -11,7 +11,8 @@ import {
   View,
   ActivityIndicator,
   Text,
-  Image
+  Image,
+  TouchableOpacity
 } from "react-native";
 // import { Image } from 'expo-image';
 
@@ -21,6 +22,8 @@ interface Props {
   showIndex?: boolean
   img?: string,
   title?: string,
+  navigation: any,
+  onPress?: () => void,
 }
 
 export const SBImageItem: React.FC<Props> = ({
@@ -28,13 +31,16 @@ export const SBImageItem: React.FC<Props> = ({
   index: _index,
   showIndex = true,
   img,
-  title
+  title,
+  onPress
 }) => {
   const index = _index ?? 0;
   const source = 'https://firebasestorage.googleapis.com/v0/b/newpaper-25148.appspot.com/o/demo%2FltSGfxAXmf.png?alt=media&token=22f75424-fcc8-41bf-8994-0f7c67114d54'
 
   return (
-    <View style={[styles.container, style]}>
+    <TouchableOpacity style={[styles.container, style]} onPress={()=>{
+      onPress?.()
+    }}>
       <Image key={index} style={styles.image} source={{uri: img || source}} />
       {
         showIndex && <Text
@@ -53,7 +59,7 @@ export const SBImageItem: React.FC<Props> = ({
           {title}
         </Text>
       }
-    </View>
+    </TouchableOpacity>
   );
 };
 

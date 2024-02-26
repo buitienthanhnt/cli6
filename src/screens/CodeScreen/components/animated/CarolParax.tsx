@@ -12,6 +12,7 @@ import { SBItem } from "./SBItem";
 import SButton from "./SButton";
 import { ElementsText, window } from "./constants";
 import { useCallback } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const PAGE_WIDTH = window.width;
 const colors = [
@@ -52,7 +53,7 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
     }, [])
 
   return (
-    <View
+    <GestureHandlerRootView
       style={{
         alignItems: "center",
       }}
@@ -149,7 +150,7 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
       >
         {`snapEnabled:${snapEnabled}`}
       </SButton> */}
-    </View>
+    </GestureHandlerRootView>
   );
 }
 

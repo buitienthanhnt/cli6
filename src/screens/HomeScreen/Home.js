@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet } from "react-native";
+import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, ImageBackground, RefreshControl } from "react-native";
 
 import PageList from "@config/PageList";
 import { caroll, topSearch } from "../PaperScreen/api/datatest";
@@ -17,38 +17,51 @@ import {
 import Timeline from 'react-native-timeline-flatlist'  // https://www.npmjs.com/package/react-native-timeline-flatlist
 import TimelineTwo from "./TimelineTwo";
 import Config from "@config/Config";
+import { refresh } from "@react-native-community/netinfo";
 
 const useInfo = () => {
     const [data, setData] = useState(null);
-
-    const fecthData = useCallback(async () => {
-       try {
-        const url = Config.custom_url() + Config.api_request.getInfo;
-        const response = await fetch(url);
-        const value = await response.json();
-        setData(value);
-       } catch (error) {
-        console.log('------', error);
-       }
+    const fetchData = useCallback(async () => {
+        try {
+            const url = Config.custom_url() + Config.api_request.getInfo;
+            const response = await fetch(url);
+            const value = await response.json();
+            setData(value);
+        } catch (error) {
+            console.log('------', error);
+        }
     }, []);
 
     useEffect(() => {
-        fecthData();
-    }, [fecthData]);
-    return { data }
+        fetchData();
+    }, [fetchData]);
+    return { data, fetchData }
 }
 
-const Home = ({navigation}) => {
-    const { data } = useInfo();
+const Home = ({ navigation }) => {
+    const [refresh, setRefresh] = useState(false);
+    const { data, fetchData } = useInfo();
     // console.log('', data.data.hit, data.data.mostPopulator, data.data.mostRecents);
     return (
-        <ScrollView style={{ flex: 1, paddingHorizontal: 2, paddingTop: 4, }} showsVerticalScrollIndicator={false}>
+        <ScrollView
+            style={{ flex: 1, paddingHorizontal: 2, paddingTop: 4, }}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+                <RefreshControl refreshing={refresh} 
+                    onRefresh={async () => {
+                        setRefresh(true);
+                        await fetchData();
+                        setRefresh(false);
+                    }}
+                />
+            }
+        >
             <TopNew hit={data?.data?.hit} navigation={navigation}></TopNew>
             <PopularNews data={data?.data?.mostRecents} navigation={navigation}></PopularNews>
             <TopSearch search={data?.data?.search}></TopSearch>
             <ProposeList most={data?.data?.mostPopulator} navigation={navigation}></ProposeList>
-            <TimeLine></TimeLine>
-            <ImageParacel></ImageParacel>
+            <TimeLine timeLine={data?.data?.timeLine} navigation={navigation}></TimeLine>
+            <ImageParacel listImages={data?.data.listImages} navigation={navigation}></ImageParacel>
             <DemoChart></DemoChart>
             <ListWriter></ListWriter>
         </ScrollView>
@@ -111,7 +124,7 @@ const ListWriter = () => {
     )
 }
 
-const TopSearch = ({search}) => {
+const TopSearch = ({ search }) => {
     return (
         <View style={{ flex: 1, padding: 5 }}>
             <View style={{ flexDirection: 'row', gap: 8 }}>
@@ -147,7 +160,7 @@ const TopSearch = ({search}) => {
     )
 }
 
-const ProposeList = ({most, navigation}) => {
+const ProposeList = ({ most, navigation }) => {
     return (
         <View style={{ flex: 1, padding: 5, gap: 6 }}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
@@ -171,14 +184,13 @@ const ProposeList = ({most, navigation}) => {
     )
 }
 
-const ImageParacel = () => {
+const ImageParacel = ({ listImages, navigation }) => {
     const [load, setLoad] = useState(false);
-    const [data, setData] = useState(PageList);
     // const [width, setWidth] = useState(null);
 
     useEffect(() => {
         setTimeout(() => {
-            setData({ values: data.values.reverse() });
+            // setData({ values: data.values.reverse() });
         }, 3000);
     }, []);
 
@@ -202,26 +214,28 @@ const ImageParacel = () => {
                 <FontAwesome5Icon name='images' size={16} color='#00afef' />
             </View>
             <FlatList
-                data={data.values.slice(10)}
+                data={listImages}
                 numColumns={2}
                 horizontal={false}
                 keyExtractor={item => item.id}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return (
-                        <TouchableOpacity style={{ flex: 1, padding: 1 }} onPress={() => {
-                            console.log(123);
+                        <TouchableOpacity style={{ flex: 1, }} onPress={() => {
+                            navigation.navigate("PaperDetail", { data: item })
                         }}>
-                            <View style={{ width: "100%", height: 120, }}>
-                                <Image
-                                    style={{ flex: 1 }}
+                            <View style={{ width: "100%", height: 120, padding: 1 }}>
+                                <ImageBackground
+                                    style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 4, paddingLeft: 4 }}
                                     defaultSource={require('../../assets/splash.png')}
                                     resizeMode="cover"
                                     source={{
-                                        uri: item.img_path,
+                                        uri: item.image_path,
                                         // priority: FastImage.priority.normal,
                                     }}
-                                />
+                                >
+                                    <Text style={{ fontSize: 14, color: 'white', fontWeight: 500 }} numberOfLines={2}>{item.title}</Text>
+                                </ImageBackground>
                             </View>
                         </TouchableOpacity>
                     );
@@ -291,15 +305,7 @@ const DemoChart = () => {
     )
 }
 
-const TimeLine = () => {
-    const data = [
-        { time: '09:00', title: 'Event 1', description: 'Event 1 Description' },
-        { time: '10:45', title: 'Event 2', description: 'Event 2 Description' },
-        { time: '12:00', title: 'Event 3', description: 'Event 3 Description' },
-        { time: '14:00', title: 'Event 4', description: 'Event 4 Description' },
-        { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    ];
-
+const TimeLine = ({ timeLine, navigation }) => {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 5, alignItems: 'baseline', paddingBottom: 0 }}>
@@ -307,21 +313,21 @@ const TimeLine = () => {
                 <FontAwesome5Icon name='assistive-listening-systems' size={20} color='#00afef' />
             </View>
             <View style={{ flex: 1, justifyContent: 'center', }}>
-                <TimelineTwo></TimelineTwo>
+                <TimelineTwo timeLine={timeLine} navigation={navigation}></TimelineTwo>
             </View>
         </View>
     )
 }
 
-const TopNew = ({hit, navigation}) => {
+const TopNew = ({ hit, navigation }) => {
     return (
-        <TouchableOpacity style={{ flex: 1, }} onPress={()=>{
+        <TouchableOpacity style={{ flex: 1, }} onPress={() => {
             navigation.navigate("PaperDetail", { data: hit })
         }}>
             <Image
                 style={{ borderRadius: 4 }}
                 width={'100%'}
-                height={Dimensions.get('screen').height / 5}
+                height={Dimensions.get('screen').height / 5 + 20}
                 source={{ uri: hit?.image_path }}></Image>
             <Text
                 style={{ flex: 1, paddingHorizontal: 5, fontSize: 16, fontWeight: 600, color: '#84a9ff' }}

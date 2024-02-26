@@ -32,7 +32,7 @@ class PaperList extends Component {
             console.log(_url);
             const data = await fetch(_url);
             const result = await data.json();
-            console.log('.......', result);
+            // console.log('.......', result);
             var items = this.state.items;
             if (result.data.length) {
                 if (refresh) {

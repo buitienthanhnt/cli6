@@ -12,7 +12,7 @@ import {
     View,
     Image
 } from 'react-native';
-import Timeline from 'react-native-timeline-flatlist'
+import Timeline from 'react-native-timeline-flatlist'  // https://www.npmjs.com/package/react-native-timeline-flatlist
 
 export default class TimelineTwo extends Component {
     constructor(props) {

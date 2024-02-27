@@ -1,8 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, ImageBackground, RefreshControl } from "react-native";
-
-import PageList from "@config/PageList";
-import { caroll, topSearch } from "../PaperScreen/api/datatest";
 import CarolParax from "../CodeScreen/components/animated/CarolParax";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import PaperInfo from '@screens/PaperScreen/element/PaperInfo';
@@ -13,57 +10,57 @@ import {
     ProgressChart,
     ContributionGraph,
     StackedBarChart
-} from "react-native-chart-kit";                       // https://github.com/indiespirit/react-native-chart-kit
-import Timeline from 'react-native-timeline-flatlist'  // https://www.npmjs.com/package/react-native-timeline-flatlist
+} from "react-native-chart-kit";    // https://github.com/indiespirit/react-native-chart-kit 
+//https://blog.logrocket.com/top-8-react-native-chart-libraries-2023/
 import TimelineTwo from "./TimelineTwo";
 import Config from "@config/Config";
-import { refresh } from "@react-native-community/netinfo";
 
 const useInfo = () => {
+    const [loadding, setLoadding] = useState(false);
     const [data, setData] = useState(null);
     const fetchData = useCallback(async () => {
         try {
+            setLoadding(true);
             const url = Config.custom_url() + Config.api_request.getInfo;
             const response = await fetch(url);
             const value = await response.json();
-            setData(value);
+            setData(value?.data);
+            setLoadding(false);
         } catch (error) {
             console.log('------', error);
+            setLoadding(false);
         }
     }, []);
 
     useEffect(() => {
         fetchData();
     }, [fetchData]);
-    return { data, fetchData }
+    return { loadding, data, fetchData }
 }
 
 const Home = ({ navigation }) => {
-    const [refresh, setRefresh] = useState(false);
-    const { data, fetchData } = useInfo();
+    const { loadding, data, fetchData } = useInfo();
     // console.log('', data.data.hit, data.data.mostPopulator, data.data.mostRecents);
     return (
         <ScrollView
             style={{ flex: 1, paddingHorizontal: 2, paddingTop: 4, }}
             showsVerticalScrollIndicator={false}
             refreshControl={
-                <RefreshControl refreshing={refresh} 
+                <RefreshControl refreshing={loadding}
                     onRefresh={async () => {
-                        setRefresh(true);
-                        await fetchData();
-                        setRefresh(false);
+                        fetchData();
                     }}
                 />
             }
         >
-            <TopNew hit={data?.data?.hit} navigation={navigation}></TopNew>
-            <PopularNews data={data?.data?.mostRecents} navigation={navigation}></PopularNews>
-            <TopSearch search={data?.data?.search}></TopSearch>
-            <ProposeList most={data?.data?.mostPopulator} navigation={navigation}></ProposeList>
-            <TimeLine timeLine={data?.data?.timeLine} navigation={navigation}></TimeLine>
-            <ImageParacel listImages={data?.data.listImages} navigation={navigation}></ImageParacel>
-            <DemoChart></DemoChart>
-            <ListWriter></ListWriter>
+            <TopNew hit={data?.hit} navigation={navigation}></TopNew>
+            <PopularNews data={data?.mostRecents} navigation={navigation}></PopularNews>
+            <TopSearch search={data?.search}></TopSearch>
+            <ProposeList most={data?.mostPopulator} navigation={navigation}></ProposeList>
+            <TimeLine timeLine={data?.timeLine} navigation={navigation}></TimeLine>
+            <ImageParacel listImages={data?.listImages} navigation={navigation}></ImageParacel>
+            <DemoChart map={data?.map}></DemoChart>
+            <ListWriter writers={data?.writers} navigation={navigation}></ListWriter>
         </ScrollView>
     )
 }
@@ -80,15 +77,19 @@ const PopularNews = ({ data, navigation }) => {
     )
 }
 
-const ListWriter = () => {
+const ListWriter = ({ writers, navigation }) => {
 
     const renderItem = useCallback(({ item, index }) => {
         return (
             <View>
-                <Image width={40} height={40} style={{ borderRadius: 40 }} source={{ uri: item.img }} keyExtractor={index} resizeMode="cover"></Image>
+                <Image width={40} height={40} style={{ borderRadius: 40 }} source={{ uri: item.image_path }} keyExtractor={index} resizeMode="cover"></Image>
             </View>
         )
     }, [])
+
+    if (!writers) {
+        return null;
+    }
     return (
         <View style={{ width: '100%', padding: 5, alignItems: 'baseline' }}>
             <View style={{ flexDirection: 'row', gap: 8 }}>
@@ -98,24 +99,14 @@ const ListWriter = () => {
 
             <FlatList
                 horizontal={true}
-                data={[
-                    { name: 'a 1', id: 1, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708609866107-1708609867186388771070-0-96-315-600-crop-1708609921962319267918.jpg' },
-                    { name: 'a 2', id: 2, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708601588197-1708601588540176911232.jpg' },
-                    { name: 'a 3', id: 3, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708586416481-1708586417474263407992.jpg' },
-                    { name: 'a 4', id: 4, img: 'https://sohanews.sohacdn.com/zoom/563_352/160588918557773824/2024/2/22/base64-170859501305245802858-463-0-1713-2000-crop-170859510994215803343.jpeg' },
-                    { name: 'a 5', id: 5, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708607370482-1708607370843731064543.jpeg' },
-                    { name: 'a 1', id: 11, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708607370482-1708607370843731064543.jpeg' },
-                    { name: 'a 2', id: 21, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708601588197-1708601588540176911232.jpg' },
-                    { name: 'a 3', id: 31, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708586416481-1708586417474263407992.jpg' },
-                    { name: 'a 4', id: 41, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708570997205-17085709973822036199424-0-70-271-504-crop-1708571023124605747496.png' },
-                    { name: 'a 5', id: 51, img: 'https://sohanews.sohacdn.com/zoom/268_166/160588918557773824/2024/2/22/avatar1708607370482-1708607370843731064543.jpeg' }
-                ]}
+                data={writers}
                 renderItem={renderItem}
                 ItemSeparatorComponent={() => {
                     return (
                         <View style={{ width: 8 }}></View>
                     )
                 }}
+                extraData={writers}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={item => item.id}
             >
@@ -251,7 +242,11 @@ const ImageParacel = ({ listImages, navigation }) => {
     )
 }
 
-const DemoChart = () => {
+const DemoChart = ({ map }) => {
+
+    if (!map) {
+        return (null);
+    }
     return (
         <View style={{ paddingHorizontal: 5 }}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center', paddingLeft: 5 }}>
@@ -259,47 +254,45 @@ const DemoChart = () => {
                 <FontAwesome5Icon name='chart-pie' size={16} color='#00afef' />
             </View>
             <LineChart
-                data={{
-                    labels: ["January", "February", "March", "April", "May", "June"],
-                    datasets: [
-                        {
-                            data: [
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100
-                            ]
-                        }
-                    ]
-                }}
+                {...map}
                 width={Dimensions.get("window").width - 10} // from react-native
                 height={220}
-                yAxisLabel="$"
-                yAxisSuffix="k"
-                yAxisInterval={1} // optional, defaults to 1
                 chartConfig={{
-                    backgroundColor: "#e26a00",
-                    backgroundGradientFrom: "#ff7cc0", // 82baff
-                    backgroundGradientTo: "#82baff",   // ffa726
-                    decimalPlaces: 2, // optional, defaults to 2dp
+                    ...map.chartConfig,
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     style: {
-                        borderRadius: 16
+                        borderRadius: 8
                     },
                     propsForDots: {
-                        r: "4",
+                        r: "2",
                         strokeWidth: "2",
                         stroke: "white"
                     }
+                    // backgroundColor: "#e26a00",
+                    // backgroundGradientFrom: "#ff7cc0", // 82baff
+                    // backgroundGradientTo: "#82baff",   // ffa726
+                    // decimalPlaces: 2, // optional, defaults to 2dp
                 }}
-                bezier
                 style={{
                     marginVertical: 4,
                     borderRadius: 16
                 }}
+                onDataPointClick={({ index, dataset, value, x, y }) => {
+                    console.log('....', index, dataset, value, x, y);
+                }}
+                renderDotContent={({ x, y, index, indexData }) => {
+                    return (
+                        <View style={{ position: 'absolute', left: x + 4, top: y - 4 }}>
+                            <Text style={{ fontSize: 11 }}>{Math.floor(indexData)}</Text>
+                        </View>
+                    )
+                }}
+            // yAxisInterval={1} // số các đường thằng chia ô, defaults to 1
+            // yAxisLabel="$"
+            // yAxisSuffix="k"
+            // hidePointsAtIndex={[1,2]} // ẩn các nút trong mảng này.
+            // bezier={false} // true sẽ làm cong các đường dẫn.
             />
         </View>
     )

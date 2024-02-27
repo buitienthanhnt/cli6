@@ -315,7 +315,7 @@ const DemoChart = ({ map }) => {
                 }}
                 renderDotContent={({ x, y, index, indexData }) => {
                     return (
-                        <View style={{ position: 'absolute', left: x + 4, top: y - 4 }}>
+                        <View key={index} style={{ position: 'absolute', left: x + 4, top: y - 4 }}>
                             <Text style={{ fontSize: 11 }}>{Math.floor(indexData)}</Text>
                         </View>
                     )
@@ -353,8 +353,7 @@ const TopNew = ({ hit, navigation }) => {
             navigation.navigate("PaperDetail", { data: hit })
         }}>
             <Image
-                style={{ borderRadius: 4 }}
-                width={'100%'}
+                style={{ borderRadius: 4, width: '100%' }}
                 height={Dimensions.get('screen').height / 5 + 20}
                 source={{ uri: hit?.image_path }}></Image>
             <Text

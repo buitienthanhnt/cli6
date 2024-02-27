@@ -112,9 +112,11 @@ const ListWriter = ({ writers, navigation }) => {
 
     const renderItem = useCallback(({ item, index }) => {
         return (
-            <View>
+            <TouchableOpacity onPress={()=>{
+                console.log(123);
+            }}>
                 <Image width={40} height={40} style={{ borderRadius: 40 }} source={{ uri: item.image_path }} keyExtractor={index} resizeMode="cover"></Image>
-            </View>
+            </TouchableOpacity>
         )
     }, [])
 

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, ImageBackground, RefreshControl } from "react-native";
+import React, { useCallback, useEffect, useState, useRef } from "react";
+import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, ImageBackground, RefreshControl, Button } from "react-native";
 import CarolParax from "../CodeScreen/components/animated/CarolParax";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import PaperInfo from '@screens/PaperScreen/element/PaperInfo';
@@ -14,6 +14,7 @@ import {
 //https://blog.logrocket.com/top-8-react-native-chart-libraries-2023/
 import TimelineTwo from "./TimelineTwo";
 import Config from "@config/Config";
+import YoutubePlayer from "react-native-youtube-iframe"; // https://lonelycpp.github.io/react-native-youtube-iframe/
 
 const useInfo = () => {
     const [loadding, setLoadding] = useState(false);
@@ -58,11 +59,41 @@ const Home = ({ navigation }) => {
             <TopSearch search={data?.search}></TopSearch>
             <ProposeList most={data?.mostPopulator} navigation={navigation}></ProposeList>
             <TimeLine timeLine={data?.timeLine} navigation={navigation}></TimeLine>
+            <Yvideo video={data?.video}></Yvideo>
             <ImageParacel listImages={data?.listImages} navigation={navigation}></ImageParacel>
             <DemoChart map={data?.map}></DemoChart>
             <ListWriter writers={data?.writers} navigation={navigation}></ListWriter>
         </ScrollView>
     )
+}
+
+const Yvideo = ({ video }) => {
+
+    const onStateChange = useCallback((state) => {
+        if (state === "ended") {
+            setPlaying(false);
+            Alert.alert("video has finished playing!");
+        }
+    }, []);
+    if (!video) {
+        return null;
+    }
+    return (
+        <View style={{ flex: 1, padding: 4 }}>
+            <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+                <Text style={{ fontSize: 20, color: '#00afef', fontWeight: '600', }}>Video nổi bật</Text>
+                <FontAwesome5Icon name='video' size={16} color='#00afef' />
+            </View>
+
+            <View style={{ marginTop: 5 }}>
+                <YoutubePlayer
+                    {...video}
+                    onChangeState={onStateChange}
+                />
+                <Text style={{ fontSize: 16, fontWeight: '500', color: '#b600ff' }}>{video.title}</Text>
+            </View>
+        </View>
+    );
 }
 
 const PopularNews = ({ data, navigation }) => {
@@ -199,7 +230,7 @@ const ImageParacel = ({ listImages, navigation }) => {
     }, []);
 
     return (
-        <View style={{ flex: 8, paddingVertical: 5 }} onLayout={onPageLayout}>
+        <View style={{ flex: 8, }} onLayout={onPageLayout}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center', paddingLeft: 5 }}>
                 <Text style={{ fontSize: 20, color: '#00afef', fontWeight: '600', }}>Ấn tượng</Text>
                 <FontAwesome5Icon name='images' size={16} color='#00afef' />

@@ -37,6 +37,7 @@ export default class TimelineTwo extends Component {
             <View style={styles.container}>
                 {this.renderSelected()}
                 <Timeline
+                    isUsingFlatlist={false} // VirtualizedLists should never be nested inside plain ScrollViews
                     style={styles.list}
                     data={this.props.timeLine}
                     circleSize={14}

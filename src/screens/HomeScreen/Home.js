@@ -239,6 +239,7 @@ const ImageParacel = ({ listImages, navigation }) => {
                 data={listImages}
                 numColumns={2}
                 horizontal={false}
+                scrollEnabled={false}  // VirtualizedLists should never be nested inside plain ScrollViews
                 keyExtractor={item => item.id}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
@@ -330,6 +331,9 @@ const DemoChart = ({ map }) => {
 }
 
 const TimeLine = ({ timeLine, navigation }) => {
+    if (!timeLine) {
+        return null;
+    }
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 5, alignItems: 'baseline', paddingBottom: 0 }}>

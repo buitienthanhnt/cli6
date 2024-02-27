@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -67,8 +67,8 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
         loop
         pagingEnabled={pagingEnabled}
         snapEnabled={snapEnabled}
-        autoPlay={autoPlay}
-        autoPlayInterval={1500}
+        autoPlay={Platform.OS === 'android'}
+        autoPlayInterval={2000}
         onProgressChange={(_, absoluteProgress) =>
           (progressValue.value = absoluteProgress)
         }
@@ -87,7 +87,6 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
           onPress={()=>{
             onPress(data[index])
           }}
-
           />}
       />
       {!!progressValue && !hideIndicator && (

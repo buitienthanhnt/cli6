@@ -63,6 +63,13 @@ const Home = ({ navigation }) => {
             <ImageParacel listImages={data?.listImages} navigation={navigation}></ImageParacel>
             <DemoChart map={data?.map}></DemoChart>
             <ListWriter writers={data?.writers} navigation={navigation}></ListWriter>
+            <Button title="to Process" onPress={()=>{
+                navigation.navigate("ExampleOne")
+            }}></Button>
+            <Text></Text>
+            <Button title="to ExampleTwo" onPress={()=>{
+                navigation.navigate("ExampleTwo")
+            }}></Button>
         </ScrollView>
     )
 }

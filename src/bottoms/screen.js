@@ -3,6 +3,8 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 //--------------------------------- HomeScreen------------------------------------------//
 import Home from "@screens/HomeScreen/Home";
+import ExampleOne from '@screens/HomeScreen/ExampleOne';
+import ExampleTwo from '@screens/HomeScreen/ExampleTwo';
 //--------------------------------- HomeScreen------------------------------------------//
 
 //--------------------------------- MoreScreen------------------------------------------//
@@ -75,6 +77,16 @@ export const screens = {
         {
             name: "Home",
             component: Home,
+            options: { headerShown: false }
+        },
+        {
+            name: "ExampleOne",
+            component: ExampleOne,
+            options: { headerShown: false }
+        },
+        {
+            name: "ExampleTwo",
+            component: ExampleTwo,
             options: { headerShown: false }
         }
     ],

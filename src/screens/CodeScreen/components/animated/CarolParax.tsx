@@ -49,7 +49,7 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
     } as const);
   
     const onPress = useCallback((item: any)=>{
-      navigation.navigate("PaperDetail", { data: item })
+      navigation.navigate('PaperScreen', {screen: 'PaperDetail', params: {paper_id: item.id}})
     }, [])
 
   return (

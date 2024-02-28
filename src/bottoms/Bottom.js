@@ -26,7 +26,8 @@ const BottomTabs = ({ navigation, route }) => {
                     tabBarIcon: ({ focused, color, size }) => {
                         return (<Icon name={"home"} size={26} color={color} />);
                     },
-                }
+                },
+                default: "Home"
             },
             {
                 name: 'PaperScreen',
@@ -34,7 +35,8 @@ const BottomTabs = ({ navigation, route }) => {
                 options: {
                     tabBarLabel: 'News',
                     tabBarIcon: ({ focused, color, size }) => <Icon name={focused ? 'globe' : 'share-alt'} size={26} color={color} />
-                }
+                },
+                default: "PaperHome"
             },
             {
                 name: 'AccountScreen',
@@ -42,7 +44,8 @@ const BottomTabs = ({ navigation, route }) => {
                 options: {
                     tabBarLabel: 'User',
                     tabBarIcon: ({ focused, color, size }) => (<Icon name={"bug"} size={26} color={color} />)
-                }
+                },
+                default: "AccountDetail"
             },
             {
                 name: 'MoreScreen',
@@ -51,7 +54,8 @@ const BottomTabs = ({ navigation, route }) => {
                 options: {
                     tabBarLabel: 'More',
                     tabBarIcon: ({ focused, color, size }) => (<Icon name={"windows"} size={26} color={color} />)
-                }
+                },
+                default: "CategoryTree"
             },
             {
                 name: 'CodeScreen',
@@ -62,7 +66,8 @@ const BottomTabs = ({ navigation, route }) => {
                     tabBarBadge: notifi_count,
                     tabBarShowLabel: false,     // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
                     tabBarIcon: ({ focused, color, size }) => (<Icon name={'code'} size={26} color={color} />)
-                }
+                },
+                default: "Code"
             },
         ];
     }, [notifi_count]);
@@ -85,6 +90,13 @@ const BottomTabs = ({ navigation, route }) => {
                         name={tab.name}
                         component={tab.component}
                         options={tab.options}
+                        listeners={({ navigation }) => ({
+                            tabPress: (e) => {
+                              e.preventDefault();
+                              // Do something with the `navigation` object
+                              navigation.navigate(tab.name, {screen: tab.default});
+                            },
+                          })}
                     />
                 )
             })}

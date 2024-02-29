@@ -16,7 +16,6 @@ interface Props extends AnimateProps<ViewProps> {
   showIndex?: boolean
   img?: string,
   title?: string,
-  navigation: any,
   onPress?: () => void,
 }
 
@@ -33,7 +32,7 @@ export const SBItem: React.FC<Props> = (props) => {
       <Animated.View testID={testID} style={{ flex: 1 }} {...animatedViewProps}>
         {isPretty || img
           ? (
-            <SBImageItem style={style} index={index} navigation={navigation} onPress={onPress} showIndex={typeof index === "number" && showIndex} img={img} title={title} />
+            <SBImageItem style={style} index={index} onPress={onPress} showIndex={typeof index === "number" && showIndex} img={img} title={title} />
           )
           : (
             <SBTextItem style={style} index={index} />

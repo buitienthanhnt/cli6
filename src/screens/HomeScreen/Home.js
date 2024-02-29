@@ -15,6 +15,7 @@ import {
 import TimelineTwo from "./TimelineTwo";
 import Config from "@config/Config";
 import YoutubePlayer from "react-native-youtube-iframe"; // https://lonelycpp.github.io/react-native-youtube-iframe/
+import { openDetail } from "@utils/paper";
 
 const useInfo = () => {
     const [loadding, setLoadding] = useState(false);
@@ -54,15 +55,15 @@ const Home = ({ navigation }) => {
                 />
             }
         >
-            <TopNew hit={data?.hit} navigation={navigation}></TopNew>
-            <PopularNews data={data?.mostRecents} navigation={navigation}></PopularNews>
+            <TopNew hit={data?.hit}></TopNew>
+            <PopularNews data={data?.mostRecents}></PopularNews>
             <TopSearch search={data?.search}></TopSearch>
-            <ProposeList most={data?.mostPopulator} navigation={navigation}></ProposeList>
-            <TimeLine timeLine={data?.timeLine} navigation={navigation}></TimeLine>
+            <ProposeList most={data?.mostPopulator}></ProposeList>
+            <TimeLine timeLine={data?.timeLine}></TimeLine>
             <Yvideo video={data?.video}></Yvideo>
-            <ImageParacel listImages={data?.listImages} navigation={navigation}></ImageParacel>
+            <ImageParacel listImages={data?.listImages}></ImageParacel>
             <DemoChart map={data?.map}></DemoChart>
-            <ListWriter writers={data?.writers} navigation={navigation}></ListWriter>
+            <ListWriter writers={data?.writers}></ListWriter>
             <Button title="to Process" onPress={()=>{
                 navigation.navigate("ExampleOne")
             }}></Button>
@@ -75,6 +76,9 @@ const Home = ({ navigation }) => {
 }
 
 const Yvideo = ({ video }) => {
+    if (!video) {
+        return null;
+    }
 
     const onStateChange = useCallback((state) => {
         if (state === "ended") {
@@ -82,9 +86,7 @@ const Yvideo = ({ video }) => {
             Alert.alert("video has finished playing!");
         }
     }, []);
-    if (!video) {
-        return null;
-    }
+    
     return (
         <View style={{ flex: 1, padding: 4 }}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
@@ -103,19 +105,26 @@ const Yvideo = ({ video }) => {
     );
 }
 
-const PopularNews = ({ data, navigation }) => {
+const PopularNews = ({ data }) => {
+    if (!data) {
+        return null;
+    }
+
     return (
         <View style={{ paddingTop: 5 }}>
             <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 5, alignItems: 'baseline', paddingBottom: 0 }}>
                 <Text style={{ fontSize: 20, color: '#00afef', fontWeight: '600', }} >Phổ biến</Text>
                 <FontAwesome5Icon name='newspaper' size={20} color='#00afef' />
             </View>
-            <CarolParax data={data} hideIndicator={true} autoPlay={false} navigation={navigation}></CarolParax>
+            <CarolParax data={data} hideIndicator={true} autoPlay={false}></CarolParax>
         </View>
     )
 }
 
-const ListWriter = ({ writers, navigation }) => {
+const ListWriter = ({ writers }) => {
+    if (!writers) {
+        return null;
+    }
 
     const renderItem = useCallback(({ item, index }) => {
         return (
@@ -156,6 +165,10 @@ const ListWriter = ({ writers, navigation }) => {
 }
 
 const TopSearch = ({ search }) => {
+    if (!search) {
+        return null;
+    }
+
     return (
         <View style={{ flex: 1, padding: 5 }}>
             <View style={{ flexDirection: 'row', gap: 8 }}>
@@ -191,7 +204,11 @@ const TopSearch = ({ search }) => {
     )
 }
 
-const ProposeList = ({ most, navigation }) => {
+const ProposeList = ({ most}) => {
+    if (!most) {
+        return null;
+    }
+
     return (
         <View style={{ flex: 1, padding: 5, gap: 6 }}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
@@ -201,7 +218,10 @@ const ProposeList = ({ most, navigation }) => {
             {most && most.map((item, index) => {
                 return (
                     <TouchableOpacity style={{ flexDirection: 'row', width: '100%', gap: 6 }} key={index} onPress={() => {
-                        navigation.navigate("PaperDetail", { data: item })
+                        openDetail({
+                            initial: false,
+                            params: item
+                          })
                     }}>
                         <Image width={60} height={60} style={{ borderRadius: 4 }} source={{ uri: item.image_path }}></Image>
                         <View style={{ flex: 1 }}>
@@ -216,9 +236,11 @@ const ProposeList = ({ most, navigation }) => {
 }
 
 const ImageParacel = ({ listImages, navigation }) => {
-    const [load, setLoad] = useState(false);
-    // const [width, setWidth] = useState(null);
+    if (!listImages) {
+        return null;
+    }
 
+    // const [width, setWidth] = useState(null);
     useEffect(() => {
         setTimeout(() => {
             // setData({ values: data.values.reverse() });
@@ -254,7 +276,10 @@ const ImageParacel = ({ listImages, navigation }) => {
                 renderItem={({ item }) => {
                     return (
                         <TouchableOpacity style={{ flex: 1, }} onPress={() => {
-                            navigation.navigate("PaperDetail", { data: item })
+                            openDetail({
+                                initial: false,
+                                params: item
+                              })
                         }}>
                             <View style={{ width: "100%", height: 120, padding: 1 }}>
                                 <ImageBackground
@@ -272,22 +297,16 @@ const ImageParacel = ({ listImages, navigation }) => {
                         </TouchableOpacity>
                     );
                 }}
-                refreshing={load}
-                onRefresh={() => {
-                    setLoad(true);
-                    console.log(123123);
-                    setLoad(false);
-                }}
             ></FlatList>
         </View>
     )
 }
 
 const DemoChart = ({ map }) => {
-
     if (!map) {
         return (null);
     }
+
     return (
         <View style={{ paddingHorizontal: 5 }}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center', paddingLeft: 5 }}>
@@ -343,6 +362,7 @@ const TimeLine = ({ timeLine, navigation }) => {
     if (!timeLine) {
         return null;
     }
+
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 5, alignItems: 'baseline', paddingBottom: 0 }}>
@@ -350,16 +370,23 @@ const TimeLine = ({ timeLine, navigation }) => {
                 <FontAwesome5Icon name='assistive-listening-systems' size={20} color='#00afef' />
             </View>
             <View style={{ flex: 1, justifyContent: 'center', }}>
-                <TimelineTwo timeLine={timeLine} navigation={navigation}></TimelineTwo>
+                <TimelineTwo timeLine={timeLine}></TimelineTwo>
             </View>
         </View>
     )
 }
 
-const TopNew = ({ hit, navigation }) => {
+const TopNew = ({ hit }) => {
+    if (!hit) {
+        return null;
+    }
+
     return (
         <TouchableOpacity style={{ flex: 1, }} onPress={() => {
-            navigation.navigate("PaperDetail", { data: hit })
+            openDetail({
+                initial: false,
+                params: hit
+            })
         }}>
             <Image
                 style={{ borderRadius: 4, width: '100%' }}

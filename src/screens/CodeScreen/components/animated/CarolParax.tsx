@@ -9,10 +9,10 @@ import Animated, {
 import Carousel from "react-native-reanimated-carousel";
 
 import { SBItem } from "./SBItem";
-import SButton from "./SButton";
-import { ElementsText, window } from "./constants";
+import { window } from "./constants";
 import { useCallback } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { openDetail } from "@utils/paper";
 
 const PAGE_WIDTH = window.width;
 const colors = [
@@ -28,13 +28,12 @@ type Props = {
   data: any,
   hideIndicator: boolean,
   autoPlay: boolean,
-  navigation: any,
 }
 
-const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPlay, navigation}) => {
-  const [isVertical, setIsVertical] = React.useState(false);
-  const [pagingEnabled, setPagingEnabled] = React.useState<boolean>(true);
-  const [snapEnabled, setSnapEnabled] = React.useState<boolean>(true);
+const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPlay}) => {
+  const [isVertical] = React.useState(false);
+  const [pagingEnabled] = React.useState<boolean>(true);
+  const [snapEnabled] = React.useState<boolean>(true);
   const progressValue = useSharedValue<number>(0);
   const baseOptions = isVertical
     ? ({
@@ -49,14 +48,10 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
     } as const);
   
     const onPress = useCallback((item: any)=>{
-      navigation.navigate(
-        'PaperScreen', 
-        {
-          screen: 'PaperDetail', 
-          initial: false,
-          params: {paper_id: item.id}
-        }
-      )
+      openDetail({
+        initial: false,
+        params: item
+      })
     }, [])
 
   return (
@@ -90,7 +85,6 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
           pretty={true} 
           img={data[index].image_path}
           title={data[index].title}
-          navigation={navigation}
           onPress={()=>{
             onPress(data[index])
           }}

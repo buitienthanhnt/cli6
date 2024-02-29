@@ -13,6 +13,7 @@ import {
     Image
 } from 'react-native';
 import Timeline from 'react-native-timeline-flatlist'  // https://www.npmjs.com/package/react-native-timeline-flatlist
+import { openDetail } from '@utils/paper';
 
 export default class TimelineTwo extends Component {
     constructor(props) {
@@ -23,7 +24,10 @@ export default class TimelineTwo extends Component {
     }
 
     onEventPress(data) {
-        this.props.navigation.navigate("PaperDetail", { data: data })
+        openDetail({
+            initial: false,
+            params: data
+          })
         this.setState({ selected: data })
     }
 

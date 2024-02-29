@@ -1,10 +1,9 @@
-import react, { useCallback, useEffect, useState, createContext, useRef } from "react";
+import react, { useCallback, useEffect, useState, useRef } from "react";
 import { Dimensions, Image, ScrollView, RefreshControl, Text, View, StyleSheet, Button } from "react-native";
 import Config from "@config/Config";
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';   // npm install @native-html/iframe-plugin
 import RenderHTML from 'react-native-render-html';                          // npm install react-native-render-html
 import WebView from 'react-native-webview';                                 // npm install react-native-webview
-import Wishlist from "@screens/AccountScreen/Wishlist";
 import perf from "@react-native-firebase/perf";
 import Comments from "./element/Comments";
 import DetailLike from "./element/DetailLike";
@@ -34,21 +33,21 @@ const PaperDetail = ({ navigation, route }) => {
 
     useEffect(() => {
         // console.log(route.params.data.id);
-        if (route.params.paper_id != undefined) {
-            getDetailPaper(route.params.paper_id);
+        if (route.params.id != undefined) {
+            getDetailPaper(route.params.id);
         } else {
             getDetailPaper(route.params.data.id);
         }
     }, [route.params]
     );
 
-    const getDetailPaper = useCallback(async (paper_id = 0) => {
+    const getDetailPaper = useCallback(async (id = 0) => {
         const traceInitScreen = await perf().startTrace('detail_trace');
         traceInitScreen.putMetric("hits", 1);
-        if (paper_id) {
+        if (id) {
             try {
                 setRefreshing(true);
-                const detail = await fetch(Config.url + Config.api_request.getPaperDetail + paper_id);
+                const detail = await fetch(Config.url + Config.api_request.getPaperDetail + id);
                 var result = await detail.json();
                 setRefreshing(false);
                 if (result) {
@@ -107,7 +106,7 @@ const PaperDetail = ({ navigation, route }) => {
                     />
                     <DetailLike info={detail.info}></DetailLike>
                     <Comments paperId={detail.id}></Comments>
-                    <View style={{ height: 1, backgroundColor: "black" }}></View> 
+                    <View style={{ height: 1, backgroundColor: "black" }}></View>
                     <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
                     <CarolParax data={caroll}></CarolParax>
                     <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>

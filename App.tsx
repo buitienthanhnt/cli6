@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import {
   AppState,
+  Image,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -156,7 +157,7 @@ function App(): JSX.Element {
     <Provider store={AppStore}>
       <QueryClientProvider client={queryClient} contextSharing={true}>
         {/* linking dùng cho chuyển màn với schema hoặc Linking; ref dùng cho chuyển màn với hook(điều hướng ngoài component)  */}
-        <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>} ref={navigationRef}>
+        <NavigationContainer linking={linking} fallback={<WaitLoading></WaitLoading>} ref={navigationRef}>
           <SafeAreaView>
             <StatusBar backgroundColor="#61dafb" animated={true} networkActivityIndicatorVisible={true} />
           </SafeAreaView>
@@ -167,6 +168,14 @@ function App(): JSX.Element {
       </QueryClientProvider>
     </Provider>
   );
+}
+
+const WaitLoading = ()=>{
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Image source={require("@assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>
+    </View>
+  )
 }
 
 

@@ -22,7 +22,6 @@ interface Props {
   showIndex?: boolean
   img?: string,
   title?: string,
-  navigation: any,
   onPress?: () => void,
 }
 

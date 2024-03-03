@@ -97,6 +97,7 @@ const Yvideo = ({ video }) => {
             <View style={{ marginTop: 5 }}>
                 <YoutubePlayer
                     {...video}
+                    videoId="hJ7Rg1821Q0"
                     onChangeState={onStateChange}
                 />
                 <Text style={{ fontSize: 16, fontWeight: '500', color: '#b600ff' }}>{video.title}</Text>

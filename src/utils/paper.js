@@ -1,5 +1,6 @@
 import { Navigate } from "@hooks/Navigate"
 
 export const openDetail =(params) => {
-    Navigate('PaperScreen', {screen: 'PaperDetail', ...params })
+    // console.log(params);
+    Navigate('PaperDetail', params.params )
 };

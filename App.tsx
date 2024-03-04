@@ -49,6 +49,8 @@ import { QueryClient, QueryClientProvider } from 'react-query'  // dùng cho get
 import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
 import AppStore from '@redux/AppStore';
 import remoteConfig from '@react-native-firebase/remote-config';
+import PaperDetail from '@screens/PaperScreen/PaperDetail';
+import PaperDetailFirebase from '@screens/PaperScreen/PaperDetailFirebase';
 const queryClient = new QueryClient()
 
 const Stack = createNativeStackNavigator();
@@ -81,6 +83,14 @@ function Section({ children, title }: SectionProps): JSX.Element {
       </Text>
     </View>
   );
+}
+
+const HomeDemo = ()=>{
+  return(
+    <View>
+      <Text>HomeDemo...</Text>
+    </View>
+  )
 }
 
 function App(): JSX.Element {
@@ -163,6 +173,9 @@ function App(): JSX.Element {
           </SafeAreaView>
           <Stack.Navigator>
             <Stack.Screen name="BottomTabs" component={BottomTabs} options={{ headerShown: false }} />
+            <Stack.Screen name="HomeDemo" component={HomeDemo} />
+            <Stack.Screen name="PaperDetail" component={PaperDetail} />
+            <Stack.Screen name="PaperDetailFirebase" component={PaperDetailFirebase} />
           </Stack.Navigator>
         </NavigationContainer>
       </QueryClientProvider>

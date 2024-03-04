@@ -31,8 +31,8 @@ import PaperHome from '@screens/PaperScreen/PaperHome';
 import { Sdetail } from '@screens/PaperScreen/Sdetail';
 import WebInApp from '@screens/PaperScreen/WebInApp';
 import PaperList from '@screens/PaperScreen/PaperList';
-import PaperDetail from '@screens/PaperScreen/PaperDetail';
-import PaperDetailFirebase from '@screens/PaperScreen/PaperDetailFirebase';
+// import PaperDetail from '@screens/PaperScreen/PaperDetail';
+// import PaperDetailFirebase from '@screens/PaperScreen/PaperDetailFirebase';
 import PaperCategory from '@screens/PaperScreen/PaperCategory';
 import PaperCategoryFirebase from '@screens/PaperScreen/PaperCategoryFirebase';
 import PaperListFirebase from '@screens/PaperScreen/PaperListFirebase';
@@ -176,11 +176,6 @@ export const screens = {
             options: { headerShown: false }
         },
         {
-            name: "PaperDetail",
-            component: PaperDetail,
-            options: { headerShown: true }
-        },
-        {
             name: "PaperCategory",
             component: PaperCategory,
             options: { headerShown: true }
@@ -219,11 +214,6 @@ export const screens = {
             name: "PaperListFirebase",
             component: PaperListFirebase,
             options: { headerShown: false }
-        },
-        {
-            name: "PaperDetailFirebase",
-            component: PaperDetailFirebase,
-            options: { headerShown: true }
         },
     ],
     codeTab: [

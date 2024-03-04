@@ -65,7 +65,7 @@ const Home = ({ navigation }) => {
             <DemoChart map={data?.map}></DemoChart>
             <ListWriter writers={data?.writers}></ListWriter>
             <Button title="to Process" onPress={()=>{
-                navigation.navigate("ExampleOne")
+                navigation.navigate("HomeDemo")
             }}></Button>
             <Text></Text>
             <Button title="to ExampleTwo" onPress={()=>{

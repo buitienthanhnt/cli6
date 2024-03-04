@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Dimensions, Image, ScrollView, Text, View, StyleSheet, Button } from "react-native";
+import { Dimensions, Image, ScrollView, Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';   // npm install @native-html/iframe-plugin
 import RenderHTML from 'react-native-render-html';                          // npm install react-native-render-html
 import WebView from 'react-native-webview';                                 // npm install react-native-webview
@@ -61,6 +61,11 @@ const PaperDetailFirebase = ({ navigation, route }) => {
                     <View style={{ height: 1, backgroundColor: "black" }}></View>
                     <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
                     <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>
+                    <TouchableOpacity onPress={()=>{
+                        navigation.navigate("HomeDemo")
+                    }}>
+                        <Text>to HomeDemo</Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </PaperDetailContext.Provider>
         );

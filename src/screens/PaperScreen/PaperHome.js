@@ -19,11 +19,11 @@ const PaperHome = ({ navigation }) => {
         try {
             const data = await getAxios(Config.custom_url() + Config.api_request.getInfo);
             if (!data.success) {
-                Alert.alert('server not active!, use data from firebase');
+                Alert.alert('Server response not value!, use data from firebase');
                 updateState(actionReducer.useFirebase, true)
             }
         } catch (error) {
-            Alert.alert('server not active!, use data from firebase');
+            Alert.alert('Server not active!, use data from firebase');
             updateState(actionReducer.useFirebase, true)
         }
     }, [actionReducer.useFirebase])

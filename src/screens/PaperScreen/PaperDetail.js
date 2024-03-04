@@ -13,6 +13,7 @@ import { layoutDimension } from "@styles/css";
 import { caroll } from "./api/datatest";
 import Carolsel from "@screens/AccountScreen/components/Carolsel";
 import PaperTag from "./element/PaperTag";
+import PaperCarousel from "./element/PaperCarousel";
 
 const renderers = {
     iframe: IframeRenderer
@@ -77,6 +78,7 @@ const PaperDetail = ({ navigation, route }) => {
         return (
             <PaperDetailContext.Provider value={{paperId: detail.id, url: detail.url, title: detail.title, refRBSheet, commentParent, setCommentParent}}>
                 <ScrollView
+                    contentContainerStyle={{ paddingBottom: 20 }}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     style={css.container}
@@ -84,6 +86,7 @@ const PaperDetail = ({ navigation, route }) => {
                 >
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "green", textDecorationLine: "underline" }}>{detail.title}</Text>
                     {/* <RenderHTML contentWidth={Dimensions.get("screen").width} source={{ html }}></RenderHTML> */}
+                    <PaperCarousel slider_images={detail.slider_images}></PaperCarousel>
                     <RenderHTML
                         renderers={renderers}
                         WebView={WebView}
@@ -111,11 +114,9 @@ const PaperDetail = ({ navigation, route }) => {
                     <View style={{ height: 1, backgroundColor: "black" }}></View>
                     <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
                     <CarolParax data={caroll}></CarolParax>
-                    <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>
-                    <Button title="view in webview" onPress={() => {
+                    {/* <Button title="view in webview" onPress={() => {
                         setShowwebview(true)
-                    }}></Button>
-                   
+                    }}></Button> */}
                 </ScrollView>
             </PaperDetailContext.Provider>
         );

@@ -9,6 +9,7 @@ import Comments from "./element/Comments";
 import { PaperDetailContext } from "./PaperContext";
 import DetailLike from "./element/DetailLike";
 import PaperTag from "./element/PaperTag";
+import PaperCarousel from "./element/PaperCarousel";
 
 const renderers = {
     iframe: IframeRenderer
@@ -28,12 +29,14 @@ const PaperDetailFirebase = ({ navigation, route }) => {
         return (
             <PaperDetailContext.Provider value={{ paperId: detail.id, refRBSheet, commentParent, setCommentParent }}>
                 <ScrollView
+                    contentContainerStyle={{ paddingBottom: 20 }}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     style={css.container}
                 >
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "green", textDecorationLine: "underline" }}>{detail.title}</Text>
                     {/* <RenderHTML contentWidth={Dimensions.get("screen").width} source={{ html }}></RenderHTML> */}
+                    <PaperCarousel slider_images={detail.slider_images}></PaperCarousel>
                     <RenderHTML
                         renderers={renderers}
                         WebView={WebView}
@@ -60,7 +63,7 @@ const PaperDetailFirebase = ({ navigation, route }) => {
                     <Comments paperId={detail.id}></Comments>
                     <View style={{ height: 1, backgroundColor: "black" }}></View>
                     <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
-                    <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View>
+                    {/* <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View> */}
                 </ScrollView>
             </PaperDetailContext.Provider>
         );

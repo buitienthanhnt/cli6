@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState, } from "react";
 import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, ImageBackground, RefreshControl, Button } from "react-native";
 import CarolParax from "../CodeScreen/components/animated/CarolParax";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -16,6 +16,7 @@ import TimelineTwo from "./TimelineTwo";
 import Config from "@config/Config";
 import YoutubePlayer from "react-native-youtube-iframe"; // https://lonelycpp.github.io/react-native-youtube-iframe/
 import { openDetail } from "@utils/paper";
+import LoadingScreen from "@elements/LoadingScreen";
 
 const useInfo = () => {
     const [loadding, setLoadding] = useState(false);
@@ -42,10 +43,17 @@ const useInfo = () => {
 
 const Home = ({ navigation }) => {
     const { loadding, data, fetchData } = useInfo();
+    const [load, setLoad] = useState(false);
     // console.log('', data.data.hit, data.data.mostPopulator, data.data.mostRecents);
     return (
-        <ScrollView
-            style={{ flex: 1, paddingHorizontal: 2, paddingTop: 4, }}
+        <View style={{flex: 1}}>
+             <LoadingScreen loadding={load}></LoadingScreen>
+ <ScrollView
+            style={{ 
+                flex: 1, 
+                // paddingHorizontal: 2, 
+                // paddingTop: 4, 
+            }}
             showsVerticalScrollIndicator={false}
             refreshControl={
                 <RefreshControl refreshing={loadding}
@@ -68,10 +76,14 @@ const Home = ({ navigation }) => {
                 navigation.navigate("ExampleOne")
             }}></Button>
             <Text></Text>
-            <Button title="to ExampleTwo" onPress={()=>{
-                navigation.navigate("ExampleTwo")
+            <Button title="to load pi" onPress={()=>{
+                // navigation.navigate("ExampleTwo")
+                setLoad(true);
             }}></Button>
+           
         </ScrollView>
+        </View>
+       
     )
 }
 

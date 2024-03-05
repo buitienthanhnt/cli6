@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import {
   AppState,
@@ -16,13 +16,16 @@ import {
   Text,
   useColorScheme,
   View,
+  Linking,
+  Modal,
+  TouchableOpacity
 } from 'react-native';
 
 import { navigationRef } from '@hooks/Navigate'; // để di chuyển qua các màn hình
 import { check, request, requestNotifications, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Reactotron from 'reactotron-react-native' // adb reverse tcp:9090 tcp:9090 (chạy lênh này nếu dùng qua android hay máy ảo android để kíck hoạt reactotron)
 
-if(__DEV__) { // adb reverse tcp:9090 tcp:9090
+if (__DEV__) { // adb reverse tcp:9090 tcp:9090
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'))
 }
 
@@ -49,6 +52,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'  // dùng cho get
 import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
 import AppStore from '@redux/AppStore';
 import remoteConfig from '@react-native-firebase/remote-config';
+import DeviceInfo from 'react-native-device-info';
 const queryClient = new QueryClient()
 
 const Stack = createNativeStackNavigator();
@@ -88,15 +92,45 @@ function App(): JSX.Element {
   const [token, setToken] = useState("");
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const updateApp = useCallback(() => {
+    const url = 'https://google.com'
+    Linking.canOpenURL(url)
+      .then(supported => {
+        if (!supported) {
+        } else {
+          setModalVisible(false);
+          // return Linking.openURL(url);
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
+  }, []);
 
   // check app state status: active, background
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active') {
+        const remoteVersion = remoteConfig().getValue('remote_version').asString();
+        const appVersion = DeviceInfo.getVersion();
+        if (Number(remoteVersion) < Number(appVersion)) {
+          setModalVisible(true);
+        }
+      }
+
       if (
         appState.current.match(/inactive|background/) &&
         nextAppState === 'active'
       ) {
         console.log('App has come to the foreground!');
+        /**
+          Add code to check for the remote app version.
+          Compare it with the local version. If they differ, i.e.,
+          (remote version) !== (local version), then you can show a screen,
+          with some UI asking for the user to update. (You can probably show
+          a button, which on press takes the user directly to the store)
+         */
+
       }
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
@@ -166,11 +200,35 @@ function App(): JSX.Element {
           </Stack.Navigator>
         </NavigationContainer>
       </QueryClientProvider>
+      <Modal visible={modalVisible} transparent={true}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+          <View style={{
+            width: 300,
+            height: 220,
+            backgroundColor: 'rgba(111, 148, 176, 0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 20
+          }}>
+            <TouchableOpacity
+              style={{
+                height: 30,
+                backgroundColor: 'violet',
+                borderRadius: 4,
+                justifyContent: 'center',
+                padding: 5
+              }}
+              onPress={() => { updateApp() }}>
+              <Text>Update app now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </Provider>
   );
 }
 
-const WaitLoading = ()=>{
+const WaitLoading = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Image source={require("@assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>

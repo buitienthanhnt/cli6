@@ -119,7 +119,7 @@ const ListNoti = (props) => {
     };
 
     const openDetail = useCallback((paper_id) => {
-        Navigate('PaperScreen', {screen: 'PaperDetail', params: {paper_id: paper_id} })
+        Navigate('PaperScreen', {screen: 'PaperDetail', initial: false, params: {id: paper_id} })
     }, [])
 
     useEffect(() => {

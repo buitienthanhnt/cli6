@@ -48,10 +48,7 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
     } as const);
   
     const onPress = useCallback((item: any)=>{
-      openDetail({
-        initial: false,
-        params: item
-      })
+      openDetail(item)
     }, [])
 
   return (

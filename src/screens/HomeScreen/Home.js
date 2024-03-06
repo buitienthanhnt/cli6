@@ -194,7 +194,7 @@ const TopSearch = ({ search }) => {
                                 paddingHorizontal: 4, justifyContent: 'center', marginHorizontal: 4
                             }}
                             onPress={() => {
-                                Navigate('PaperScreen', {screen: 'Search', params: {value: item} });
+                                Navigate('PaperScreen', {screen: 'Search', initial: false, params: {value: item} });
                             }}
                         >
                             <Text style={{ fontSize: 16, }}>{item}</Text>
@@ -220,10 +220,7 @@ const ProposeList = ({ most}) => {
             {most && most.map((item, index) => {
                 return (
                     <TouchableOpacity style={{ flexDirection: 'row', width: '100%', gap: 6 }} key={index} onPress={() => {
-                        openDetail({
-                            initial: false,
-                            params: item
-                          })
+                        openDetail(item)
                     }}>
                         <Image width={60} height={60} style={{ borderRadius: 4 }} source={{ uri: item.image_path }}></Image>
                         <View style={{ flex: 1 }}>
@@ -278,10 +275,7 @@ const ImageParacel = ({ listImages, navigation }) => {
                 renderItem={({ item }) => {
                     return (
                         <TouchableOpacity style={{ flex: 1, }} onPress={() => {
-                            openDetail({
-                                initial: false,
-                                params: item
-                              })
+                            openDetail(item)
                         }}>
                             <View style={{ width: "100%", height: 120, padding: 1 }}>
                                 <ImageBackground
@@ -385,10 +379,11 @@ const TopNew = ({ hit }) => {
 
     return (
         <TouchableOpacity style={{ flex: 1, }} onPress={() => {
-            openDetail({
-                initial: false,
-                params: hit
-            })
+            // openDetail({
+            //     initial: false,
+            //     params: hit
+            // })
+            Navigate('PaperDetail', hit);
         }}>
             <Image
                 style={{ borderRadius: 4, width: '100%' }}

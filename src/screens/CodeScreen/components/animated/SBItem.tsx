@@ -20,7 +20,7 @@ interface Props extends AnimateProps<ViewProps> {
 }
 
 export const SBItem: React.FC<Props> = (props) => {
-  const { style, showIndex = true, index, pretty, img, title,testID, navigation, onPress, ...animatedViewProps } = props;
+  const { style, showIndex = true, index, pretty, img, title,testID, onPress, ...animatedViewProps } = props;
   const enablePretty = Constants?.expoConfig?.extra?.enablePretty || false;
   const [isPretty, setIsPretty] = React.useState(pretty || enablePretty);
   return (

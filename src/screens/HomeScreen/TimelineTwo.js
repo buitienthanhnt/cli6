@@ -24,10 +24,7 @@ export default class TimelineTwo extends Component {
     }
 
     onEventPress(data) {
-        openDetail({
-            initial: false,
-            params: data
-          })
+        openDetail(data)
         this.setState({ selected: data })
     }
 

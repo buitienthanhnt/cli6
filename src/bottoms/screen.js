@@ -89,7 +89,12 @@ export const screens = {
             name: "ExampleTwo",
             component: ExampleTwo,
             options: { headerShown: false }
-        }
+        },
+        {
+            name: "PaperDetail",
+            component: PaperDetail,
+            options: { headerShown: true }
+        },
     ],
     moreTab: [
         {

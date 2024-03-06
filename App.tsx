@@ -114,7 +114,7 @@ function App(): JSX.Element {
         const remoteVersion = remoteConfig().getValue('remote_version').asString();
         const appVersion = DeviceInfo.getVersion();
         if (Number(remoteVersion) < Number(appVersion)) {
-          setModalVisible(true);
+          // setModalVisible(true);
         }
       }
 

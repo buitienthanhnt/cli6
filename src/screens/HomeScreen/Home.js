@@ -16,6 +16,7 @@ import TimelineTwo from "./TimelineTwo";
 import Config from "@config/Config";
 import YoutubePlayer from "react-native-youtube-iframe"; // https://lonelycpp.github.io/react-native-youtube-iframe/
 import { openDetail } from "@utils/paper";
+import { Navigate } from "@hooks/Navigate";
 
 const useInfo = () => {
     const [loadding, setLoadding] = useState(false);
@@ -68,9 +69,9 @@ const Home = ({ navigation }) => {
                 navigation.navigate("ExampleOne")
             }}></Button>
             <Text></Text>
-            <Button title="to ExampleTwo" onPress={()=>{
+            {/* <Button title="to ExampleTwo" onPress={()=>{
                 navigation.navigate("ExampleTwo")
-            }}></Button>
+            }}></Button> */}
         </ScrollView>
     )
 }
@@ -193,7 +194,7 @@ const TopSearch = ({ search }) => {
                                 paddingHorizontal: 4, justifyContent: 'center', marginHorizontal: 4
                             }}
                             onPress={() => {
-                                console.log(item);
+                                Navigate('PaperScreen', {screen: 'Search', params: {value: item} });
                             }}
                         >
                             <Text style={{ fontSize: 16, }}>{item}</Text>

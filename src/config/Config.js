@@ -27,6 +27,7 @@ const Config = (path = '', params = null) => {
       parseUrl: 'api/parseUrl',
       registerFcm: 'api/notification/registerFcm',
       uploadImageMb: 'api/mobile/upimage',
+      search: 'api/search',
     },
     googleService: {
       googleMapUrl: 'https://maps.googleapis.com/maps/api/',

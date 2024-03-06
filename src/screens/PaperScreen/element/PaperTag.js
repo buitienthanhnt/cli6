@@ -1,5 +1,6 @@
 import react, { Component, useCallback } from "react";
 import { View, TouchableOpacity, Text, FlatList } from "react-native";
+import { Navigate } from "@hooks/Navigate";
 
 
 class PaperTag extends Component {
@@ -8,7 +9,6 @@ class PaperTag extends Component {
     }
 
     onPressTag = function(item) {
-        console.log(item.value);
     }
 
     renderItem = function({ item, index }) {
@@ -22,7 +22,7 @@ class PaperTag extends Component {
                     marginRight: 6 
                 }}
                 onPress={()=>{
-                    this.onPressTag(item);
+                    Navigate("Search");
                 }}
             >
                 <Text

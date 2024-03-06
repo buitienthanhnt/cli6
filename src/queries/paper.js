@@ -20,3 +20,18 @@ export const addLike = async (paperId, params) => {
         });
     }
 }
+
+export const search = (query) => {
+    const { defRe } = AppStore.getState();
+    if (defRe.useFirebase) {
+        return [];
+    } else {
+        const url = `${Config.custom_url() + Config.api_request.search}?query=${query}`;
+        console.log(url);
+        return axios.get(url).then((response) => {
+            return response.data
+        }).catch((error) => {
+        });
+
+    }
+}

@@ -36,6 +36,7 @@ import PaperDetailFirebase from '@screens/PaperScreen/PaperDetailFirebase';
 import PaperCategory from '@screens/PaperScreen/PaperCategory';
 import PaperCategoryFirebase from '@screens/PaperScreen/PaperCategoryFirebase';
 import PaperListFirebase from '@screens/PaperScreen/PaperListFirebase';
+import Search from '@screens/PaperScreen/Search';
 //--------------------------------- PaperScreen------------------------------------------//
 
 //--------------------------------- CodeScreen------------------------------------------//
@@ -209,6 +210,11 @@ export const screens = {
                     }} />
                 ),
             }
+        },
+        {
+            name: "Search",
+            component: Search,
+            options: { headerShown: true }
         },
         {
             name: "PaperCategoryFirebase",

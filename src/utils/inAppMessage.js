@@ -28,7 +28,7 @@ const redireactUrl = async (_url) => {
 		let paper_data = await fetch(Config.custom_url()+Config.api_request.parseUrl+Config.buy_params({url: value}));
 		let data = await paper_data.json();
 		console.log(data);
-		Linking.openURL(`myapp://app/PaperDetail/${data.id}`);
+		Linking.openURL(`myapp://app/PaperDetail/${data.id}`); // open by cli:  npx uri-scheme open myapp://app/PaperDetail/137 --android
 
 	}
 };

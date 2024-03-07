@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, ImageBackground, RefreshControl, Button } from "react-native";
+import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, ImageBackground, RefreshControl, Button, TextInput } from "react-native";
 import CarolParax from "../CodeScreen/components/animated/CarolParax";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import PaperInfo from '@screens/PaperScreen/element/PaperInfo';
@@ -65,14 +65,45 @@ const Home = ({ navigation }) => {
             <ImageParacel listImages={data?.listImages}></ImageParacel>
             <DemoChart map={data?.map}></DemoChart>
             <ListWriter writers={data?.writers}></ListWriter>
+            <SearchAll></SearchAll>
             <Button title="to Process" onPress={() => {
                 navigation.navigate("ExampleOne")
             }}></Button>
-            <Text></Text>
             {/* <Button title="to ExampleTwo" onPress={()=>{
                 navigation.navigate("ExampleTwo")
             }}></Button> */}
         </ScrollView>
+    )
+}
+
+const SearchAll = () => {
+    return (
+        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10}}>
+            <View
+                style={{
+                    flex: 1,
+                    borderColor: 'blue',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    paddingHorizontal: 10,
+
+                }}
+            >
+                <TextInput
+                    style={{ height: 40, fontSize: 18 }}
+                    placeholder="seach in news"
+                ></TextInput>
+
+            </View>
+            <TouchableOpacity style={{ padding: 10 }} onPress={() => {
+                console.log('====================================');
+                console.log(123);
+                console.log('====================================');
+            }}>
+                <FontAwesome5Icon name='search' size={24} color='#00afef' />
+            </TouchableOpacity>
+        </View>
+
     )
 }
 
@@ -194,7 +225,7 @@ const TopSearch = ({ search }) => {
                                 paddingHorizontal: 4, justifyContent: 'center', marginHorizontal: 4
                             }}
                             onPress={() => {
-                                Navigate('PaperScreen', { screen: 'Search', initial: false, params: { value: item } });
+                                Navigate('Search', { value: item });
                             }}
                         >
                             <Text style={{ fontSize: 16, }}>{item}</Text>

@@ -1,3 +1,4 @@
+import { openDetail } from "@utils/paper";
 import { search } from "@queries/paper";
 import { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
@@ -30,6 +31,7 @@ const Search = ({ route: { params: { value } } }) => {
                             }} 
                             onPress={()=>{
                                 console.log(item.title, item.id);
+                                openDetail(item)
                             }}
                         >
                             <Text style={{ fontSize: 16, width: '100%', }}>{item.title}</Text>

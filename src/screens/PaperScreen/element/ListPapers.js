@@ -1,14 +1,21 @@
+import { openDetail } from "@utils/paper";
 import { useCallback } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
 const ListPaper = ({ values }) => {
 
     const renderItem = useCallback(({ item, index }) => {
         return (
-            <View style={{backgroundColor: '#00ff86', padding: 5}}>
-                <Text>{item.title}</Text>
-
-            </View>
+            <TouchableOpacity 
+                style={{
+                    backgroundColor: 'rgba(0, 236, 0, 0.4)', 
+                    padding: 5, 
+                    borderRadius: 4
+                }}
+                onPress={()=>{openDetail(item)}}
+            >
+                <Text style={{fontSize: 16}}>{item.title}</Text>
+            </TouchableOpacity>
         )
     }, [])
 

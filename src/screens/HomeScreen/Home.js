@@ -65,7 +65,7 @@ const Home = ({ navigation }) => {
             <ImageParacel listImages={data?.listImages}></ImageParacel>
             <DemoChart map={data?.map}></DemoChart>
             <ListWriter writers={data?.writers}></ListWriter>
-            <Button title="to Process" onPress={()=>{
+            <Button title="to Process" onPress={() => {
                 navigation.navigate("ExampleOne")
             }}></Button>
             <Text></Text>
@@ -87,7 +87,7 @@ const Yvideo = ({ video }) => {
             Alert.alert("video has finished playing!");
         }
     }, []);
-    
+
     return (
         <View style={{ flex: 1, padding: 4 }}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
@@ -130,8 +130,8 @@ const ListWriter = ({ writers }) => {
 
     const renderItem = useCallback(({ item, index }) => {
         return (
-            <TouchableOpacity onPress={()=>{
-                console.log(123);
+            <TouchableOpacity onPress={() => {
+                Navigate('PaperByWriter', item);
             }}>
                 <Image width={40} height={40} style={{ borderRadius: 40 }} source={{ uri: item.image_path }} keyExtractor={index} resizeMode="cover"></Image>
             </TouchableOpacity>
@@ -194,7 +194,7 @@ const TopSearch = ({ search }) => {
                                 paddingHorizontal: 4, justifyContent: 'center', marginHorizontal: 4
                             }}
                             onPress={() => {
-                                Navigate('PaperScreen', {screen: 'Search', initial: false, params: {value: item} });
+                                Navigate('PaperScreen', { screen: 'Search', initial: false, params: { value: item } });
                             }}
                         >
                             <Text style={{ fontSize: 16, }}>{item}</Text>
@@ -206,7 +206,7 @@ const TopSearch = ({ search }) => {
     )
 }
 
-const ProposeList = ({ most}) => {
+const ProposeList = ({ most }) => {
     if (!most) {
         return null;
     }

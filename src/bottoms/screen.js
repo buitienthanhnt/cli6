@@ -3,6 +3,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 //--------------------------------- HomeScreen------------------------------------------//
 import Home from "@screens/HomeScreen/Home";
+import PaperByWriter from '@screens/HomeScreen/PaperByWriter';
 import ExampleOne from '@screens/HomeScreen/ExampleOne';
 import ExampleTwo from '@screens/HomeScreen/ExampleTwo';
 //--------------------------------- HomeScreen------------------------------------------//
@@ -93,6 +94,11 @@ export const screens = {
         {
             name: "PaperDetail",
             component: PaperDetail,
+            options: { headerShown: true }
+        },
+        {
+            name: "PaperByWriter",
+            component: PaperByWriter,
             options: { headerShown: true }
         },
     ],

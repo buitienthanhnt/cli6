@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import firebaseType from "@utils/firebaseType";
 import database from '@react-native-firebase/database';
 import { useSelector } from "react-redux";
+import { getPapersByWriter } from "@queries/writer";
 
 const usePaperList = () => {
     const papersInFirebase = [];
@@ -54,4 +55,19 @@ const useComments = (paperId, parentId, page) => {
     }
 }
 
-export { usePaperList, useComments }
+const usePaperByWriter = (writerId) => {
+    const [data, setData] = useState([]);
+
+    const getData = useCallback(() => {
+        getPapersByWriter(writerId).then((response) => {
+            setData(response.data);
+        })
+    }, []);
+
+    useEffect(() => {
+        getData()
+    }, []);
+    return data;
+}
+
+export { usePaperList, useComments, usePaperByWriter }

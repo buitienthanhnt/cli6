@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import remoteConfig from '@react-native-firebase/remote-config';
 import PaperInfo from './PaperInfo';
+import { openDetail } from '@utils/paper';
 
 export class ProductItemHost extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export class ProductItemHost extends Component {
         const { data } = this.props;
         return (
             <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate(this.props.isFirebase ? "PaperDetailFirebase" : "PaperDetail", { data: data });
+                openDetail(data);
             }}>
                 <View style={css.pro_item_host}>
                     <Image
@@ -45,7 +46,7 @@ export class ProductItem extends Component {
         const { data } = this.props;
         return (
             <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate(this.props.isFirebase ? "PaperDetailFirebase" : "PaperDetail", { data: data });
+                openDetail(data);
             }}
             >
                 <View style={css.pro_item}>

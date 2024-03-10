@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
-import { View, FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, ImageBackground, RefreshControl, Button, TextInput } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { View, 
+    FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, 
+    ImageBackground, RefreshControl, Button, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
 import CarolParax from "../CodeScreen/components/animated/CarolParax";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import PaperInfo from '@screens/PaperScreen/element/PaperInfo';
@@ -17,17 +19,38 @@ import Config from "@config/Config";
 import YoutubePlayer from "react-native-youtube-iframe"; // https://lonelycpp.github.io/react-native-youtube-iframe/
 import { openDetail } from "@utils/paper";
 import { Navigate } from "@hooks/Navigate";
+import firebaseType from "@utils/firebaseType";
+import { useSelector } from "react-redux";
+import database from '@react-native-firebase/database';
+import useDispatchState from '@hooks/redux/useDispatchState';
+import { getAxios } from '@hooks/NetWorking';
 
 const useInfo = () => {
+    const { useFirebase } = useSelector((state) => state.defRe);
     const [loadding, setLoadding] = useState(false);
     const [data, setData] = useState(null);
     const fetchData = useCallback(async () => {
         try {
             setLoadding(true);
-            const url = Config.custom_url() + Config.api_request.getInfo;
-            const response = await fetch(url);
-            const value = await response.json();
-            setData(value?.data);
+            if (useFirebase || Config.useFirebase) {
+                const onValueChange = database().ref(firebaseType.realTime.homeInfo).on('value', (snapshot) => {
+                    if (snapshot.numChildren()) {
+                        let _data = [];
+                        snapshot.forEach(item => {
+                            console.log( );
+                            setData(item.val()?.data);
+                            setLoadding(false);
+                        })
+                        // setValue(_data);
+                    };
+                });
+                return () => database().ref(firebaseType.realTime.homeInfo).off('value', onValueChange);
+            }else{
+                const url = Config.custom_url() + Config.api_request.getInfo;
+                const response = await fetch(url);
+                const value = await response.json();
+                setData(value?.data);
+            }
             setLoadding(false);
         } catch (error) {
             console.log('------', error);
@@ -42,6 +65,29 @@ const useInfo = () => {
 }
 
 const Home = ({ navigation }) => {
+    const { actionReducer, updateState } = useDispatchState();
+
+    const checkUseFirebase = useCallback(async () => {
+        if (Config.useFirebase && __DEV__) {
+            updateState(actionReducer.useFirebase, true)
+            return;
+        }
+        try {
+            const data = await getAxios(Config.custom_url() + Config.api_request.getInfo);
+            if (!data.success) {
+                Alert.alert('server not active!, use data from firebase');
+                updateState(actionReducer.useFirebase, true)
+            }
+        } catch (error) {
+            Alert.alert('server not active!, use data from firebase');
+            updateState(actionReducer.useFirebase, true)
+        }
+    }, [actionReducer.useFirebase])
+
+    useEffect(()=>{
+        checkUseFirebase()
+    }, [checkUseFirebase]);
+
     const { loadding, data, fetchData } = useInfo();
     // console.log('', data.data.hit, data.data.mostPopulator, data.data.mostRecents);
     return (
@@ -72,6 +118,7 @@ const Home = ({ navigation }) => {
             {/* <Button title="to ExampleTwo" onPress={()=>{
                 navigation.navigate("ExampleTwo")
             }}></Button> */}
+            
         </ScrollView>
     )
 }
@@ -96,8 +143,8 @@ const SearchAll = () => {
 
             </View>
             <TouchableOpacity style={{ padding: 10 }} onPress={() => {
-                console.log('====================================');
                 console.log(123);
+                Keyboard.dismiss();
                 console.log('====================================');
             }}>
                 <FontAwesome5Icon name='search' size={24} color='#00afef' />

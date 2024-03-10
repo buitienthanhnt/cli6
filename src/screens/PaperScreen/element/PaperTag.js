@@ -22,7 +22,7 @@ class PaperTag extends Component {
                     marginRight: 6 
                 }}
                 onPress={()=>{
-                    Navigate("Search");
+                    Navigate("Search", {value: item.value});
                 }}
             >
                 <Text

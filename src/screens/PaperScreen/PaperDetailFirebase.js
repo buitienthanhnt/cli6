@@ -19,8 +19,8 @@ const customHTMLElementModels = {
     iframe: iframeModel
 };
 
-const PaperDetailFirebase = ({ navigation, route }) => {
-    const { detail } = usePaperDetailFirebase(route.params.data.id)
+const PaperDetailFirebase = ({ navigation, route: {params: {id}} }) => {
+    const { detail } = usePaperDetailFirebase(id)
     const [commentParent, setCommentParent] = useState(null);
     const refRBSheet = useRef();
     useEffect(() => { }, []);
@@ -62,7 +62,7 @@ const PaperDetailFirebase = ({ navigation, route }) => {
                     <PaperTag tags={detail.tags}></PaperTag>
                     <Comments paperId={detail.id}></Comments>
                     <View style={{ height: 1, backgroundColor: "black" }}></View>
-                    <LastNews paper_id={route?.params?.data?.id || 1} navigation={navigation}></LastNews>
+                    <LastNews paper_id={id || 1} navigation={navigation}></LastNews>
                     {/* <View style={{ height: 1, backgroundColor: "black", marginBottom: 10 }}></View> */}
                 </ScrollView>
             </PaperDetailContext.Provider>

@@ -97,6 +97,11 @@ export const screens = {
             options: { headerShown: true }
         },
         {
+            name: "PaperDetailFirebase",
+            component: PaperDetailFirebase,
+            options: { headerShown: true }
+        },
+        {
             name: "PaperByWriter",
             component: PaperByWriter,
             options: { headerShown: true }
@@ -240,6 +245,11 @@ export const screens = {
         {
             name: "PaperDetailFirebase",
             component: PaperDetailFirebase,
+            options: { headerShown: true }
+        },
+        {
+            name: "Search",
+            component: Search,
             options: { headerShown: true }
         },
     ],

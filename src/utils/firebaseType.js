@@ -11,6 +11,7 @@ const firebaseType = {
 		addComments: firebaseRoot+ '/addComments',
 		addLike: firebaseRoot+ '/addLike',
 		addCommentLike: firebaseRoot+ '/addCommentLike',
+		homeInfo: firebaseRoot+'/info'
 	},
 	storeData: {
 		paperDetail: 'detailContent',

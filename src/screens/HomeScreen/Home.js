@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, 
-    FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet, 
-    ImageBackground, RefreshControl, Button, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+    View,
+    FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet,
+    ImageBackground, RefreshControl, Button, TextInput, TouchableWithoutFeedback, Keyboard
+} from "react-native";
 import CarolParax from "../CodeScreen/components/animated/CarolParax";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import PaperInfo from '@screens/PaperScreen/element/PaperInfo';
@@ -17,7 +19,7 @@ import {
 import TimelineTwo from "./TimelineTwo";
 import Config from "@config/Config";
 import YoutubePlayer from "react-native-youtube-iframe"; // https://lonelycpp.github.io/react-native-youtube-iframe/
-import { openDetail } from "@utils/paper";
+import { openDetail, openSearch } from "@utils/paper";
 import { Navigate } from "@hooks/Navigate";
 import firebaseType from "@utils/firebaseType";
 import { useSelector } from "react-redux";
@@ -37,7 +39,7 @@ const useInfo = () => {
                     if (snapshot.numChildren()) {
                         let _data = [];
                         snapshot.forEach(item => {
-                            console.log( );
+                            console.log();
                             setData(item.val()?.data);
                             setLoadding(false);
                         })
@@ -45,7 +47,7 @@ const useInfo = () => {
                     };
                 });
                 return () => database().ref(firebaseType.realTime.homeInfo).off('value', onValueChange);
-            }else{
+            } else {
                 const url = Config.custom_url() + Config.api_request.getInfo;
                 const response = await fetch(url);
                 const value = await response.json();
@@ -84,7 +86,7 @@ const Home = ({ navigation }) => {
         }
     }, [actionReducer.useFirebase])
 
-    useEffect(()=>{
+    useEffect(() => {
         checkUseFirebase()
     }, [checkUseFirebase]);
 
@@ -118,14 +120,15 @@ const Home = ({ navigation }) => {
             {/* <Button title="to ExampleTwo" onPress={()=>{
                 navigation.navigate("ExampleTwo")
             }}></Button> */}
-            
+
         </ScrollView>
     )
 }
 
 const SearchAll = () => {
+    const [search, setSearch] = useState('');
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10 }}>
             <View
                 style={{
                     flex: 1,
@@ -133,19 +136,30 @@ const SearchAll = () => {
                     borderWidth: 1,
                     borderRadius: 10,
                     paddingHorizontal: 10,
+                    flexDirection: 'row'
 
                 }}
             >
+                {search.length >= 3 && <TouchableOpacity style={{ padding: 10 }} onPress={() => {
+                    setSearch('')
+                }}>
+                    <FontAwesome5Icon name='trash-alt' size={20} color='#00afef' />
+                </TouchableOpacity>}
                 <TextInput
-                    style={{ height: 40, fontSize: 18 }}
+                    style={{ height: 40, fontSize: 18, flex: 1 }}
                     placeholder="seach in news"
+                    onChangeText={(text) => {
+                        setSearch(text);
+                    }}
+                    value={search}
                 ></TextInput>
 
             </View>
             <TouchableOpacity style={{ padding: 10 }} onPress={() => {
-                console.log(123);
                 Keyboard.dismiss();
-                console.log('====================================');
+                if (search.length >= 3) {
+                    openSearch({ value: search })
+                }
             }}>
                 <FontAwesome5Icon name='search' size={24} color='#00afef' />
             </TouchableOpacity>

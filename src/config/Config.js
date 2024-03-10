@@ -1,6 +1,6 @@
 const Config = (path = '', params = null) => {
   const Config = {
-    useFirebase: true, // default=false, dev=true
+    useFirebase: false, // default=false, dev=true
     domain: '',
     http: 'http://',
     https: 'https://',

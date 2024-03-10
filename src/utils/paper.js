@@ -9,3 +9,6 @@ export const openDetail = (params) => {
     const { defRe } = AppStore.getState();
     Navigate(defRe.useFirebase ? 'PaperDetailFirebase' : 'PaperDetail', params);
 }
+export const openSearch = (params)=>{
+    Navigate('Search', params);
+}

@@ -1,3 +1,9 @@
 import remoteConfig from '@react-native-firebase/remote-config';
 
-remoteConfig().fetch(1000);
+const fetchConfig = async ()=>{
+    await remoteConfig().fetch(0);
+    console.log('------------------->>>>>>>>');
+    console.log(remoteConfig().getAll());
+}
+
+fetchConfig();

@@ -1,3 +1,4 @@
+import Config from "@config/Config";
 import { Navigate } from "@hooks/Navigate"
 import AppStore from "@redux/AppStore";
 
@@ -7,7 +8,7 @@ export const openDetailNext = (params) => {
 
 export const openDetail = (params) => {
     const { defRe } = AppStore.getState();
-    Navigate(defRe.useFirebase ? 'PaperDetailFirebase' : 'PaperDetail', params);
+    Navigate(defRe.useFirebase || Config.useFirebase ? 'PaperDetailFirebase' : 'PaperDetail', params);
 }
 export const openSearch = (params)=>{
     Navigate('Search', params);

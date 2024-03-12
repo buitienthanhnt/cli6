@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
     View,
     FlatList, TouchableOpacity, Image, Dimensions, Text, ScrollView, StyleSheet,
-    ImageBackground, RefreshControl, Button, TextInput, TouchableWithoutFeedback, Keyboard
+    ImageBackground, RefreshControl, Button, TextInput, TouchableWithoutFeedback, Keyboard, Alert
 } from "react-native";
 import CarolParax from "../CodeScreen/components/animated/CarolParax";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -26,12 +26,17 @@ import { useSelector } from "react-redux";
 import database from '@react-native-firebase/database';
 import useDispatchState from '@hooks/redux/useDispatchState';
 import { getAxios } from '@hooks/NetWorking';
+import remoteConfig from '@react-native-firebase/remote-config';
 
 const useInfo = () => {
     const { useFirebase } = useSelector((state) => state.defRe);
     const [loadding, setLoadding] = useState(false);
     const [data, setData] = useState(null);
     const fetchData = useCallback(async () => {
+        // await remoteConfig().activate();
+        await remoteConfig().fetch(1000);
+        console.log(remoteConfig().getAll());
+
         try {
             setLoadding(true);
             if (useFirebase || Config.useFirebase) {
@@ -39,7 +44,7 @@ const useInfo = () => {
                     if (snapshot.numChildren()) {
                         let _data = [];
                         snapshot.forEach(item => {
-                            console.log();
+                            // console.log('____________', item.val()?.data);
                             setData(item.val()?.data);
                             setLoadding(false);
                         })
@@ -58,7 +63,7 @@ const useInfo = () => {
             console.log('------', error);
             setLoadding(false);
         }
-    }, []);
+    }, [useFirebase]);
 
     useEffect(() => {
         fetchData();
@@ -68,7 +73,6 @@ const useInfo = () => {
 
 const Home = ({ navigation }) => {
     const { actionReducer, updateState } = useDispatchState();
-
     const checkUseFirebase = useCallback(async () => {
         if (Config.useFirebase && __DEV__) {
             updateState(actionReducer.useFirebase, true)
@@ -84,7 +88,7 @@ const Home = ({ navigation }) => {
             Alert.alert('server not active!, use data from firebase');
             updateState(actionReducer.useFirebase, true)
         }
-    }, [actionReducer.useFirebase])
+    }, [])
 
     useEffect(() => {
         checkUseFirebase()

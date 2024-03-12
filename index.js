@@ -3,6 +3,7 @@ import App from './App';
 import { name as appName } from './app.json';
 
 import perf from "@react-native-firebase/perf";
+import '@utils/firebaseServices';
 import '@utils/messaging';
 import '@utils/inAppMessage';
 import '@utils/crashlytics';

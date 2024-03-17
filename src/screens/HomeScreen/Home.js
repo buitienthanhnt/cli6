@@ -33,10 +33,6 @@ const useInfo = () => {
     const [loadding, setLoadding] = useState(false);
     const [data, setData] = useState(null);
     const fetchData = useCallback(async () => {
-        // await remoteConfig().activate();
-        await remoteConfig().fetch(1000);
-        console.log(remoteConfig().getAll());
-
         try {
             setLoadding(true);
             if (useFirebase || Config.useFirebase) {
@@ -44,11 +40,9 @@ const useInfo = () => {
                     if (snapshot.numChildren()) {
                         let _data = [];
                         snapshot.forEach(item => {
-                            // console.log('____________', item.val()?.data);
                             setData(item.val()?.data);
                             setLoadding(false);
                         })
-                        // setValue(_data);
                     };
                 });
                 return () => database().ref(firebaseType.realTime.homeInfo).off('value', onValueChange);
@@ -158,15 +152,16 @@ const SearchAll = () => {
                     value={search}
                 ></TextInput>
 
+                <TouchableOpacity style={{ padding: 10 }} onPress={() => {
+                    Keyboard.dismiss();
+                    if (search.length >= 3) {
+                        openSearch({ value: search })
+                    }
+                }}>
+                    <FontAwesome5Icon name='search' size={24} color='#00afef' />
+                </TouchableOpacity>
+
             </View>
-            <TouchableOpacity style={{ padding: 10 }} onPress={() => {
-                Keyboard.dismiss();
-                if (search.length >= 3) {
-                    openSearch({ value: search })
-                }
-            }}>
-                <FontAwesome5Icon name='search' size={24} color='#00afef' />
-            </TouchableOpacity>
         </View>
 
     )

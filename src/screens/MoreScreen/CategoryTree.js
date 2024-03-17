@@ -64,7 +64,7 @@ const CategoryItem = (props) => {
         <View style={{ paddingLeft: 6, paddingRight: 6 }}>
             <View style={css.categoryItem}>
                 <TouchableOpacity onPress={() => {
-                    props?.navigation.navigate("PaperScreen", { screen: Config.useFirebase ? "PaperCategoryFirebase" : "PaperCategory", params: { category_id: props?.data?.id } })
+                    props?.navigation.navigate(Config.useFirebase ? "PaperCategoryFirebase" : "PaperCategory", { category_id: props?.data?.id })
                 }} style={{ width: '70%' }}>
                     <Text style={css.categoryItemName}>{props?.data?.name}</Text>
                 </TouchableOpacity>

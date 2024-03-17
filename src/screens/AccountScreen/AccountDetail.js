@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"; // gán lại giá trị mà không render lại đối tượng. https://www.w3schools.com/react/react_useref.asp
-import { Button, Image, Text, View, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator, StyleSheet } from "react-native";
+import { Button, Image, Text, View, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator, StyleSheet, Alert } from "react-native";
 
 // import { Ionicons } from '@expo/vector-icons';
 // import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,7 +8,7 @@ import DeviceInfo from 'react-native-device-info';    // npm install --save reac
 import DatePicker from 'react-native-date-picker'
 import { Colors, DateTimePicker, Dialog } from 'react-native-ui-lib';  // npm i react-native-ui-lib // https://wix.github.io/react-native-ui-lib/docs/foundation/colors
 import { useNetInfo } from "@react-native-community/netinfo";
-
+import remoteConfig from '@react-native-firebase/remote-config';
 import { BasicTable, TopTable } from "@screens/components/Table";
 import { BasicSlider } from "@screens/components/Slider";
 import { firebase } from "@react-native-firebase/auth";
@@ -29,7 +29,7 @@ const AccountDetail = (props) => {
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
     const actionSheet = useRef(null);
-    const actionOptions = useMemo(()=>{
+    const actionOptions = useMemo(() => {
         return [
             'Apple map',
             'Google map',
@@ -59,6 +59,13 @@ const AccountDetail = (props) => {
         firebase.auth().onAuthStateChanged(onAuthStateChanged);
     }, []);
 
+    const showRemoteConfig = useCallback(async () => {
+        await remoteConfig().fetch(0);
+        await remoteConfig().fetchAndActivate();
+        console.log('---------->>>', remoteConfig().getValue('main').asString());
+        Alert.alert(JSON.stringify(remoteConfig().getAll()));
+    }, []);
+
     return (
         <ScrollView style={{ paddingHorizontal: 8 }}>
             <Text></Text>
@@ -75,6 +82,9 @@ const AccountDetail = (props) => {
             <Button title="to Wishlist" onPress={() => {
                 props.navigation.navigate("Wishlist");
             }}></Button>
+            <Text></Text>
+
+            <Button title="show remote config" onPress={showRemoteConfig}></Button>
             <Text></Text>
 
             <Button title="to test" onPress={() => {
@@ -206,7 +216,7 @@ const AccountDetail = (props) => {
 
             <Button title="open action sheet" onPress={() => {
                 actionSheet.current.show();
-            }}></Button>    
+            }}></Button>
 
             <BasicTable></BasicTable>
             <TopTable></TopTable>
@@ -216,8 +226,8 @@ const AccountDetail = (props) => {
                 title={'Which one do you like ?'} // https://www.npmjs.com/package/react-native-actionsheet
                 message={'message you input'}
                 options={actionOptions}
-                cancelButtonIndex={actionOptions.length -1}
-                destructiveButtonIndex={actionOptions.length-1}
+                cancelButtonIndex={actionOptions.length - 1}
+                destructiveButtonIndex={actionOptions.length - 1}
                 onPress={(index) => { console.log(index); }}
             />
 

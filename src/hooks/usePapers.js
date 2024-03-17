@@ -6,6 +6,7 @@ import firebaseType from "@utils/firebaseType";
 import database from '@react-native-firebase/database';
 import { useSelector } from "react-redux";
 import { getPapersByWriter } from "@queries/writer";
+import _ from 'lodash';
 
 const usePaperList = () => {
     const papersInFirebase = [];

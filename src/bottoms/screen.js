@@ -119,6 +119,26 @@ export const screens = {
             options: { headerShown: false }
         },
         {
+            name: "PaperDetail",
+            component: PaperDetail,
+            options: { headerShown: true }
+        },
+        {
+            name: "PaperDetailFirebase",
+            component: PaperDetailFirebase,
+            options: { headerShown: true }
+        },
+        {
+            name: "PaperCategory",
+            component: PaperCategory,
+            options: { headerShown: true }
+        },
+        {
+            name: "PaperCategoryFirebase",
+            component: PaperCategoryFirebase,
+            options: { headerShown: true }
+        },
+        {
             name: "SwipeListViews",
             component: SwipeListViews,
             options: { headerShown: true }
@@ -198,13 +218,28 @@ export const screens = {
             options: { headerShown: false }
         },
         {
+            name: "PaperListFirebase",
+            component: PaperListFirebase,
+            options: { headerShown: false }
+        },
+        {
             name: "PaperDetail",
             component: PaperDetail,
             options: { headerShown: true }
         },
         {
+            name: "PaperDetailFirebase",
+            component: PaperDetailFirebase,
+            options: { headerShown: true }
+        },
+        {
             name: "PaperCategory",
             component: PaperCategory,
+            options: { headerShown: true }
+        },
+        {
+            name: "PaperCategoryFirebase",
+            component: PaperCategoryFirebase,
             options: { headerShown: true }
         },
         {
@@ -231,21 +266,6 @@ export const screens = {
                     }} />
                 ),
             }
-        },
-        {
-            name: "PaperCategoryFirebase",
-            component: PaperCategoryFirebase,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperListFirebase",
-            component: PaperListFirebase,
-            options: { headerShown: false }
-        },
-        {
-            name: "PaperDetailFirebase",
-            component: PaperDetailFirebase,
-            options: { headerShown: true }
         },
         {
             name: "Search",

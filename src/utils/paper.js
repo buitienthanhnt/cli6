@@ -11,5 +11,7 @@ export const openDetail = (params) => {
     Navigate(defRe.useFirebase || Config.useFirebase ? 'PaperDetailFirebase' : 'PaperDetail', params);
 }
 export const openSearch = (params)=>{
-    Navigate('Search', params);
+    if (params.value.length >= 3) {
+        Navigate('Search', params);
+    }
 }

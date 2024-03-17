@@ -74,6 +74,40 @@ import Nmap, { Nmap2, Nmap3 } from '@screens/CodeScreen/components/test/Nmap';
 import { Stanstacks } from '@screens/CodeScreen/components/test/Stanstacks';
 //--------------------------------- CodeScreen------------------------------------------//
 
+
+const globalScreen = [
+    {
+        name: "PaperDetail",
+        component: PaperDetail,
+        options: { headerShown: true }
+    },
+    {
+        name: "PaperDetailFirebase",
+        component: PaperDetailFirebase,
+        options: { headerShown: true }
+    },
+    {
+        name: "PaperCategory",
+        component: PaperCategory,
+        options: { headerShown: true }
+    },
+    {
+        name: "PaperCategoryFirebase",
+        component: PaperCategoryFirebase,
+        options: { headerShown: true }
+    },
+    {
+        name: "PaperByWriter",
+        component: PaperByWriter,
+        options: { headerShown: true }
+    },
+    {
+        name: "Search",
+        component: Search,
+        options: { headerShown: true }
+    },
+];
+
 export const screens = {
     homeTab: [
         {
@@ -91,52 +125,13 @@ export const screens = {
             component: ExampleTwo,
             options: { headerShown: false }
         },
-        {
-            name: "PaperDetail",
-            component: PaperDetail,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperDetailFirebase",
-            component: PaperDetailFirebase,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperByWriter",
-            component: PaperByWriter,
-            options: { headerShown: true }
-        },
-        {
-            name: "Search",
-            component: Search,
-            options: { headerShown: true }
-        },
+        ...globalScreen
     ],
     moreTab: [
         {
             name: "CategoryTree",
             component: CategoryTree,
             options: { headerShown: false }
-        },
-        {
-            name: "PaperDetail",
-            component: PaperDetail,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperDetailFirebase",
-            component: PaperDetailFirebase,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperCategory",
-            component: PaperCategory,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperCategoryFirebase",
-            component: PaperCategoryFirebase,
-            options: { headerShown: true }
         },
         {
             name: "SwipeListViews",
@@ -147,7 +142,8 @@ export const screens = {
             name: "SwiperComponent",
             component: SwiperComponent,
             options: { headerShown: true }
-        }
+        },
+        ...globalScreen
     ],
     accountTab: [
         {
@@ -223,26 +219,6 @@ export const screens = {
             options: { headerShown: false }
         },
         {
-            name: "PaperDetail",
-            component: PaperDetail,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperDetailFirebase",
-            component: PaperDetailFirebase,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperCategory",
-            component: PaperCategory,
-            options: { headerShown: true }
-        },
-        {
-            name: "PaperCategoryFirebase",
-            component: PaperCategoryFirebase,
-            options: { headerShown: true }
-        },
-        {
             name: "WebInApp",
             component: WebInApp,
             options: { headerShown: true }
@@ -267,11 +243,7 @@ export const screens = {
                 ),
             }
         },
-        {
-            name: "Search",
-            component: Search,
-            options: { headerShown: true }
-        },
+        ...globalScreen
     ],
     codeTab: [
         {
@@ -469,5 +441,6 @@ export const screens = {
             component: Stanstacks,
             options: { headerShown: true }
         },
+        ...globalScreen
     ]
 }

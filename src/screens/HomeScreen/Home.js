@@ -365,18 +365,19 @@ const ImageParacel = ({ listImages, navigation }) => {
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return (
-                        <TouchableOpacity style={{ flex: 1, }} onPress={() => {
+                        <TouchableOpacity style={{ flex: 1,}} onPress={() => {
                             openDetail(item)
                         }}>
-                            <View style={{ width: "100%", height: 120, padding: 1 }}>
+                            <View style={{ width: "100%", height: 120, padding: 1,}}>
                                 <ImageBackground
-                                    style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 4, paddingLeft: 4 }}
+                                    style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 4, paddingLeft: 4,}}
                                     defaultSource={require('../../assets/splash.png')}
                                     resizeMode="cover"
                                     source={{
                                         uri: item.image_path,
                                         // priority: FastImage.priority.normal,
                                     }}
+                                    borderRadius={4}
                                 >
                                     <Text style={{ fontSize: 14, color: 'white', fontWeight: 500 }} numberOfLines={2}>{item.title}</Text>
                                 </ImageBackground>

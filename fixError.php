@@ -18,6 +18,22 @@
     }
 
     /**
+     * fix for error of module: react-native-sketch-canvas when build
+     * change text: provided -> implementation
+     * @return void
+     */
+    function fixTerilinaSketDraw()
+    {
+        try {
+            $i18n_file = 'node_modules/@terrylinla/react-native-sketch-canvas/android/build.gradle';
+            $i18n_build_old = file_get_contents($i18n_file);
+            file_put_contents($i18n_file, str_replace('provided ', 'implementation ', $i18n_build_old));
+        } catch (\Throwable $th) {
+            echo($th->getMessage()."\n");
+        }
+    }
+
+    /**
      * fix error of show warning text about style decrepted.
      *
      * @return void
@@ -84,6 +100,7 @@
     }
     // =============fix run========================
     fixIn18Module();
+    fixTerilinaSketDraw();
     fixErrorStyleMessage();
     fixCheckAppInstall();
     fixColorAndIcon();

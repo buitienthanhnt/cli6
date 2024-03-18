@@ -60,6 +60,10 @@ const screens = [
         name: 'to Stankstack google',
         component: 'Stanstacks'
     },
+    {
+        name: 'to DemoDraw',
+        component: 'DemoDraw'
+    },
 ];
 
 const DemoTest = ({ navigation }) => {

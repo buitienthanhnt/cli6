@@ -15,7 +15,7 @@ const PaperCarousel = ({ slider_images }) => {
                 style={{
                     width: Dimensions.get('screen').width - 20,
                     height: height,
-                    backgroundColor: 'blue',
+                    // backgroundColor: 'blue',
                     padding: 10,
                     justifyContent: 'flex-end',
                     borderRadius: 10

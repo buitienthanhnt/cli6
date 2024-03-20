@@ -28,6 +28,7 @@ import useDispatchState from '@hooks/redux/useDispatchState';
 import { getAxios } from '@hooks/NetWorking';
 import remoteConfig from '@react-native-firebase/remote-config';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { formatDate } from "@utils/helper";
 
 const useInfo = () => {
     const { useFirebase } = useSelector((state) => state.defRe);
@@ -137,10 +138,10 @@ const Forward = ({ value }) => {
             </View>
             <View style={{ flexDirection: 'row', }}>
                 <View style={{ flexDirection: 'row', flex: 1, gap: 10 }}>
-                    <Image source={{ uri: value.image_path }} style={{ width: 40, height: 40, borderRadius: 20 }}></Image>
+                    <Image source={{ uri: value.writer.image_path }} style={{ width: 40, height: 40, borderRadius: 20 }}></Image>
                     <View style={{ flex: 1 }}>
-                        <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '600' }}>{value.title}</Text>
-                        <Text>{value.created_at}</Text>
+                        <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '600' }}>{value.writer.name}</Text>
+                        <Text>{formatDate(value.created_at, 'vi-VN')}</Text>
                     </View>
                 </View>
                 <TouchableOpacity style={{ alignItems: 'center', paddingHorizontal: 5 }}>

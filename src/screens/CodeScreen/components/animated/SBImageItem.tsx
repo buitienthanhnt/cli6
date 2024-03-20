@@ -40,7 +40,7 @@ export const SBImageItem: React.FC<Props> = ({
     <TouchableOpacity style={[styles.container, style]} onPress={()=>{
       onPress?.()
     }}>
-      <Image key={index} style={styles.image} source={{uri: img || source}} />
+      <Image key={index} style={styles.image} source={{uri: img || source}} defaultSource={{uri: source}} />
       {
         showIndex && <Text
           style={{

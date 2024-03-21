@@ -56,7 +56,7 @@ const useInfo = () => {
             }
             setLoadding(false);
         } catch (error) {
-            console.log('------', error);
+            console.log('---||---', error);
             setLoadding(false);
         }
     }, [useFirebase]);

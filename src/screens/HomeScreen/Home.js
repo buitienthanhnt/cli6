@@ -25,7 +25,7 @@ import firebaseType from "@utils/firebaseType";
 import { useSelector } from "react-redux";
 import database from '@react-native-firebase/database';
 import useDispatchState from '@hooks/redux/useDispatchState';
-import { getAxios } from '@hooks/NetWorking';
+import { getAxios } from '@queries/NetWorking';
 import remoteConfig from '@react-native-firebase/remote-config';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { formatDate } from "@utils/helper";
@@ -76,12 +76,12 @@ const Home = ({ navigation }) => {
         }
         try {
             const data = await getAxios(Config.custom_url() + Config.api_request.getInfo);
-            if (!data.success) {
+            if (data?.data.code < 200 || data?.data.code >= 300) {
                 Alert.alert('server not active!, use data from firebase');
                 updateState(actionReducer.useFirebase, true)
             }
         } catch (error) {
-            Alert.alert('server not active!, use data from firebase');
+            Alert.alert('Đã hết thời gian yêu cầu');
             updateState(actionReducer.useFirebase, true)
         }
     }, [])
@@ -138,10 +138,10 @@ const Forward = ({ value }) => {
             </View>
             <View style={{ flexDirection: 'row', }}>
                 <View style={{ flexDirection: 'row', flex: 1, gap: 10 }}>
-                    <Image source={{ uri: value.writer.image_path }} style={{ width: 40, height: 40, borderRadius: 20 }}></Image>
+                    <Image source={{ uri: value?.writer?.image_path }} style={{ width: 40, height: 40, borderRadius: 20 }}></Image>
                     <View style={{ flex: 1 }}>
-                        <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '600' }}>{value.writer.name}</Text>
-                        <Text>{formatDate(value.created_at, 'vi-VN')}</Text>
+                        <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '600' }}>{value?.writer?.name}</Text>
+                        <Text>{formatDate(value?.created_at, 'vi-VN')}</Text>
                     </View>
                 </View>
                 <TouchableOpacity style={{ alignItems: 'center', paddingHorizontal: 5 }}>
@@ -181,44 +181,42 @@ const Forward = ({ value }) => {
 const SearchAll = () => {
     const [search, setSearch] = useState('');
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10 }}>
-            <View
-                style={{
-                    flex: 1,
-                    borderColor: 'blue',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    paddingHorizontal: 10,
-                    flexDirection: 'row'
-
+        <View
+            style={{
+                flex: 1,
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderRadius: 10,
+                paddingHorizontal: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                margin: 10
+            }}
+        >
+            {search.length >= 3 && <TouchableOpacity style={{ padding: 10 }} onPress={() => {
+                setSearch('')
+            }}>
+                <FontAwesome5Icon name='trash-alt' size={20} color='#00afef' />
+            </TouchableOpacity>}
+            <TextInput
+                style={{ height: 40, fontSize: 18, flex: 1 }}
+                placeholder="seach in news"
+                onChangeText={(text) => {
+                    setSearch(text);
                 }}
-            >
-                {search.length >= 3 && <TouchableOpacity style={{ padding: 10 }} onPress={() => {
-                    setSearch('')
-                }}>
-                    <FontAwesome5Icon name='trash-alt' size={20} color='#00afef' />
-                </TouchableOpacity>}
-                <TextInput
-                    style={{ height: 40, fontSize: 18, flex: 1 }}
-                    placeholder="seach in news"
-                    onChangeText={(text) => {
-                        setSearch(text);
-                    }}
-                    value={search}
-                ></TextInput>
+                value={search}
+            ></TextInput>
 
-                <TouchableOpacity style={{ padding: 10 }} onPress={() => {
-                    Keyboard.dismiss();
-                    if (search.length >= 3) {
-                        openSearch({ value: search })
-                    }
-                }}>
-                    <FontAwesome5Icon name='search' size={24} color='#00afef' />
-                </TouchableOpacity>
+            <TouchableOpacity style={{ padding: 10 }} onPress={() => {
+                Keyboard.dismiss();
+                if (search.length >= 3) {
+                    openSearch({ value: search })
+                }
+            }}>
+                <FontAwesome5Icon name='search' size={24} color='#00afef' />
+            </TouchableOpacity>
 
-            </View>
         </View>
-
     )
 }
 

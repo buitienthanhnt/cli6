@@ -4,7 +4,7 @@ import { Button, Text, View, Image, TouchableOpacity, StyleSheet, FlatList } fro
 import axios from 'react-native-axios';
 import Config from "@config/Config";
 
-import { fechData, getAxios, anyAxios } from "@hooks/NetWorking";
+import { fechData, getAxios, anyAxios } from "@queries/NetWorking";
 import * as RootNavigation from "@hooks/Navigate";
 import { useNavigation } from '@react-navigation/native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';

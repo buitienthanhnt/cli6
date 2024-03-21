@@ -27,13 +27,7 @@ export const search = async (query) => {
         return [];
     } else {
         const url = `${Config.custom_url() + Config.api_request.search}?query=${query}`;
-        console.log(url);
-        const response = await axios.get(url).then((response) => {
-            return response.data
-        }).catch((error) => {
-        });
-
-        return response;
-
+        const response = await axios.get(url);
+        return response.data;
     }
 }

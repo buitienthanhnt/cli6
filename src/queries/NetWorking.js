@@ -44,20 +44,16 @@ const fechData = (uri, params = {}, method = "GET") => {
 // https://github.com/axios/axios
 // GET
 const getAxios = async (url, params = {}) => {
-	console.log(url);
-	let data = axios.get(url, {
-		timeout: 6000, // Set a timeout of 6 seconds
-		params: params
-	}).then((response) => {
-		// console.log(response);
-		return response.data;
-	}).catch((error) => {
-		console.log("error message ===>: ", error.message);
-		return null;
-	}).finally(() => {
 
-	});
-	return data;
+	try {
+		const data = await axios.get(url, {
+			timeout: 8000, // Set a timeout of 8 seconds
+			params: params
+		});
+		return data;
+	} catch (error) {
+		return null;
+	}
 }
 
 // POST|PUT

@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native';
 
-import { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
+import { SketchCanvas } from '@terrylinla/react-native-sketch-canvas'; // https://github.com/terrylinla/react-native-sketch-canvas#readme
 
 export default class DemoDraw extends Component {
   render() {

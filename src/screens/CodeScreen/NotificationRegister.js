@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Tooltip } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Config from "@config/Config";
-import { anyAxios } from "@hooks/NetWorking";
+import { anyAxios } from "@queries/NetWorking";
 import DeviceInfo from 'react-native-device-info';    // npm install --save react-native-device-info  && react-native link react-native-device-info
 import { withExpoSnack } from 'nativewind';
 import { styled, useColorScheme } from "nativewind";

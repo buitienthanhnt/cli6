@@ -1,7 +1,9 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native';
-import Animated, { ReduceMotion } from 'react-native-reanimated';
+import Animated, { ReduceMotion, withDecay } from 'react-native-reanimated';
 import { useSharedValue, useAnimatedStyle, withSpring, withTiming, Easing, withRepeat, withDelay } from 'react-native-reanimated';
+  // https://reactnavigation.org/docs/stack-navigator/
+  // https://reactnavigation.org/docs/stack-navigator/#transparent-modals
 
 const ExAnimated1 = () => {
   const width = useSharedValue(120);
@@ -99,48 +101,48 @@ function ExAnimated3() {
   );
 }
 
-const ExAnimated4 = (props)=>{
+const ExAnimated4 = (props) => {
   const width = 210;
   const height = 120;
   const topY = useSharedValue(-120);
   const [show, setShow] = useState(false);
-  useEffect(()=>{
-    
+  useEffect(() => {
+
   }, [])
-  return(
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-      {show && (<Animated.View 
+  return (
+    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+      {show && (<Animated.View
         style={{
-          width: width, 
-          height: height, 
+          width: width,
+          height: height,
           backgroundColor: 'rgba(0, 207, 101, 0.4)',
           position: 'absolute',
-          transform: [{translateY: topY}],
+          transform: [{ translateY: topY }],
           borderRadius: 10,
           padding: 10,
-          left: (Dimensions.get('screen').width/2 - width/2),
+          left: (Dimensions.get('screen').width / 2 - width / 2),
           zIndex: 1
         }}
       >
-        <Text style={{fontSize: 16, fontWeight: 500}}>{props?.message || 'Not message'}</Text>
+        <Text style={{ fontSize: 16, fontWeight: 500 }}>{props?.message || 'Not message'}</Text>
       </Animated.View>)}
 
-      <Button title='show messsage' onPress={()=>{
+      <Button title='show messsage' onPress={() => {
         setShow(true);
-        topY.value = withTiming(-60, {duration: 1420, easing: Easing.elastic(2), reduceMotion: ReduceMotion.System})
-        setTimeout(()=>{
+        topY.value = withTiming(-60, { duration: 1420, easing: Easing.elastic(2), reduceMotion: ReduceMotion.System })
+        setTimeout(() => {
           setShow(false);
           topY.value = -height;
         }, 3000);
       }}></Button>
       <Text></Text>
-      <View style={{backgroundColor: 'violet', width: 120, height: 220}}>
+      <View style={{ backgroundColor: 'violet', width: 120, height: 220 }}>
       </View>
     </View>
   );
 }
 
-const ExAnimated5 = (props)=>{
+const ExAnimated5 = (props) => {
   const DURATION = 1000;
   const DELAY = 500;
 
@@ -150,6 +152,7 @@ const ExAnimated5 = (props)=>{
   const opacity1 = useSharedValue(0);
   const opacity2 = useSharedValue(0);
   const opacity3 = useSharedValue(0);
+  const top = useSharedValue(Dimensions.get('screen').height);
 
   // prettier-ignore
   const show = () => {
@@ -165,30 +168,53 @@ const ExAnimated5 = (props)=>{
     setShown(!isShown);
   };
 
+  useEffect(() => {
+    top.value = withTiming(0, {
+      duration: 2000,
+      easing: Easing.inOut(Easing.ease),
+    })
+  }, [])
+
   return (
-    <View style={styles.container}>
-      <View style={styles.text1}>
-        <Animated.Text style={{ ...styles.label, opacity: opacity1 }}>
-          {text[0]}
-        </Animated.Text>
-        <Animated.Text style={{ ...styles.label, opacity: opacity2 }}>
-          {text[1]}
-        </Animated.Text>
-        <Animated.Text style={{ ...styles.label, opacity: opacity3 }}>
-          {text[2]}
-        </Animated.Text>
+    <Animated.View style={[styles.container, { top: top }]}>
+      <View style={[
+        {
+          backgroundColor: 'white',
+          marginTop: 160,
+          flex: 1,
+          borderTopStartRadius: 30,
+          borderTopEndRadius: 30,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }]}>
+        <View style={styles.text1}>
+          <Animated.Text style={{ ...styles.label, opacity: opacity1 }}>
+            {text[0]}
+          </Animated.Text>
+          <Animated.Text style={{ ...styles.label, opacity: opacity2 }}>
+            {text[1]}
+          </Animated.Text>
+          <Animated.Text style={{ ...styles.label, opacity: opacity3 }}>
+            {text[2]}
+          </Animated.Text>
+        </View>
+        <Button title={isShown ? 'Hide' : 'Show'} onPress={show} />
+        <Button title={'back'} onPress={() => { props.navigation.goBack() }} />
+        <Text>{top.value}</Text>
       </View>
-      <Button title={isShown ? 'Hide' : 'Show'} onPress={show} />
-    </View>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.0)'
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // height: '100%',
+    // borderTopStartRadius: 30,
+    // borderTopEndRadius: 30
   },
   box: {
     height: 80,

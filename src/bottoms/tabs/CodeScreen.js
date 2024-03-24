@@ -4,7 +4,7 @@ import { screens } from '@bottoms/screen';
 const Stack = createNativeStackNavigator();
 const CodeScreen = ()=>{
     return(
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{gestureEnabled: true,}}>
            {
                 screens.codeTab.map((item, index)=>{
                     return (

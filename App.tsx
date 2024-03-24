@@ -53,6 +53,8 @@ import { Provider } from 'react-redux'; // npm install react-redux --save :tạo
 import AppStore from '@redux/AppStore';
 import remoteConfig from '@react-native-firebase/remote-config';
 import DeviceInfo from 'react-native-device-info';
+// import { ExAnimated5 } from '@screens/CodeScreen/components/animated/ExAnimated1';
+
 const queryClient = new QueryClient()
 
 const Stack = createNativeStackNavigator();
@@ -197,6 +199,11 @@ function App(): JSX.Element {
           </SafeAreaView>
           <Stack.Navigator>
             <Stack.Screen name="BottomTabs" component={BottomTabs} options={{ headerShown: false }} />
+            {/* <Stack.Screen 
+              name="ExAnimated5" 
+              component={ExAnimated5} 
+              options={{ presentation: 'transparentModal' }}
+            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </QueryClientProvider>

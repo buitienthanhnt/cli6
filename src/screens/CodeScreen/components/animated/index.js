@@ -67,7 +67,7 @@ const ExAnimated = ({ navigation }) => {
     }, []);
 
     return (
-        <View style={{ flex: 1, padding: 10 }}>
+        <View style={{ flex: 1, padding: 10,}}>
             <FlatList
                 data={screens}
                 numColumns={2}
@@ -101,7 +101,7 @@ const Item = ({ navigation, item, index }) => {
     }, []);
 
     const redirectView = useCallback((viewName) => {
-        navigation.navigate(viewName);
+        navigation.navigate(viewName, {navigation: navigation});
     }, [navigation]);
 
     const randomValue = useCallback((max) => {

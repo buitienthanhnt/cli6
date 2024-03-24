@@ -121,6 +121,10 @@ const Home = ({ navigation }) => {
             {/* <Button title="to ExampleTwo" onPress={()=>{
                 navigation.navigate("ExampleTwo")
             }}></Button> */}
+            <Text></Text>
+            <Button title="to screen modal" onPress={() => {
+                navigation.navigate('ExAnimated5')
+            }}></Button>
 
         </ScrollView>
     )
@@ -416,12 +420,16 @@ const ImageParacel = ({ listImages, navigation }) => {
                 scrollEnabled={false}  // VirtualizedLists should never be nested inside plain ScrollViews
                 keyExtractor={item => item.id}
                 showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => {
+                renderItem={({ item, index }) => {
+                    let height = 145;
+                    if (index === listImages.length - 1 && index % 2 == 0) {
+                        height = Math.ceil(Dimensions.get('screen').height / 5 + 20)
+                    }
                     return (
                         <TouchableOpacity style={{ flex: 1, }} onPress={() => {
                             openDetail(item)
                         }}>
-                            <View style={{ width: "100%", height: 120, padding: 1, }}>
+                            <View style={{ width: "100%", height: height, padding: 1, }}>
                                 <ImageBackground
                                     style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 4, paddingLeft: 4, }}
                                     defaultSource={require('../../assets/splash.png')}
@@ -532,10 +540,10 @@ const TopNew = ({ hit }) => {
         }}>
             <Image
                 style={{ borderRadius: 4, width: '100%' }}
-                height={Dimensions.get('screen').height / 5 + 20}
+                height={Dimensions.get('screen').height / 5 + 30}
                 source={{ uri: hit?.image_path }}></Image>
             <Text
-                style={{ flex: 1, paddingHorizontal: 5, fontSize: 16, fontWeight: 600, color: '#84a9ff' }}
+                style={{ flex: 1, paddingHorizontal: 8, fontSize: 18, fontWeight: 600, color: '#84a9ff', marginTop: 2, }}
                 numberOfLines={2}>
                 {hit?.title}
             </Text>

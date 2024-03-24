@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Button, Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native';
 import Animated, { ReduceMotion, withDecay } from 'react-native-reanimated';
 import { useSharedValue, useAnimatedStyle, withSpring, withTiming, Easing, withRepeat, withDelay } from 'react-native-reanimated';
-  // https://reactnavigation.org/docs/stack-navigator/
-  // https://reactnavigation.org/docs/stack-navigator/#transparent-modals
+// https://reactnavigation.org/docs/stack-navigator/
+// https://reactnavigation.org/docs/stack-navigator/#transparent-modals
 
 const ExAnimated1 = () => {
   const width = useSharedValue(120);
@@ -170,23 +170,38 @@ const ExAnimated5 = (props) => {
 
   useEffect(() => {
     top.value = withTiming(0, {
-      duration: 2000,
+      duration: 1000,
       easing: Easing.inOut(Easing.ease),
     })
   }, [])
 
+  const onClose = useCallback(() => {
+    top.value = withTiming(Dimensions.get('screen').height, {
+      duration: 1000,
+      easing: Easing.inOut(Easing.ease),
+    })
+    setTimeout(() => {
+      props.navigation.goBack()
+    }, 1000)
+  }, [])
+
   return (
     <Animated.View style={[styles.container, { top: top }]}>
+      <TouchableOpacity style={{ height: 160, }} onPress={onClose}></TouchableOpacity>
       <View style={[
         {
           backgroundColor: 'white',
-          marginTop: 160,
           flex: 1,
           borderTopStartRadius: 30,
           borderTopEndRadius: 30,
-          justifyContent: 'center',
-          alignItems: 'center'
+          // justifyContent: 'center',
+          // alignItems: 'center'
         }]}>
+        <View style={{ alignItems: 'flex-end', paddingRight: 15, paddingTop: 15 }}>
+          <TouchableOpacity style={{ padding: 5 }} onPress={onClose}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>X</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.text1}>
           <Animated.Text style={{ ...styles.label, opacity: opacity1 }}>
             {text[0]}
@@ -199,8 +214,6 @@ const ExAnimated5 = (props) => {
           </Animated.Text>
         </View>
         <Button title={isShown ? 'Hide' : 'Show'} onPress={show} />
-        <Button title={'back'} onPress={() => { props.navigation.goBack() }} />
-        <Text>{top.value}</Text>
       </View>
     </Animated.View>
   );

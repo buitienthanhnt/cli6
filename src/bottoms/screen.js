@@ -400,7 +400,7 @@ export const screens = {
         {
             name: "ExAnimated5",
             component: ExAnimated5,
-            options: { headerShown: false, presentation: 'transparentModal' }
+            options: { headerShown: false, presentation: 'transparentModal', gestureEnabled: true, animationEnabled: true }
         },
         {
             name: "Demopromies",

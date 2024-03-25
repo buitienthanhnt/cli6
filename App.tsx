@@ -54,7 +54,6 @@ import AppStore from '@redux/AppStore';
 import remoteConfig from '@react-native-firebase/remote-config';
 import DeviceInfo from 'react-native-device-info';
 import { ExAnimated5 } from '@screens/CodeScreen/components/animated/ExAnimated1';
-// import { ExAnimated5 } from '@screens/CodeScreen/components/animated/ExAnimated1';
 
 const queryClient = new QueryClient()
 

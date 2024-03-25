@@ -6,7 +6,7 @@ import  messaging from "@react-native-firebase/messaging";
 export const requestUserPermission = async ()=>{
 	const authStatus = await messaging().requestPermission();
 	const enable = authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-	if (enable) {
+		if (enable) {
 		getFcmToken();
 	}
 }
@@ -22,7 +22,7 @@ export const getFcmToken = async ()=>{
 			}
 			
 		} catch (error) {
-			console.log("can not get token");
+			console.log("can not get token", error);
 			
 		}
 	}

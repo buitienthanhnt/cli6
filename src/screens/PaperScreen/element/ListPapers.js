@@ -6,15 +6,15 @@ const ListPaper = ({ values }) => {
 
     const renderItem = useCallback(({ item, index }) => {
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={{
-                    backgroundColor: 'rgba(0, 236, 0, 0.4)', 
-                    padding: 5, 
+                    backgroundColor: 'rgba(0, 236, 0, 0.4)',
+                    padding: 5,
                     borderRadius: 4
                 }}
-                onPress={()=>{openDetail(item)}}
+                onPress={() => { openDetail(item) }}
             >
-                <Text style={{fontSize: 16}}>{item.title}</Text>
+                <Text style={{ fontSize: 16 }}>{item.title}</Text>
             </TouchableOpacity>
         )
     }, [])
@@ -27,6 +27,13 @@ const ListPaper = ({ values }) => {
                 keyExtractor={item => item.id}
                 renderItem={renderItem}
                 extraData={values}
+                ListEmptyComponent={() => {
+                    return (
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 16, fontWeight: '600', color: '#951cff' }}>Không có kết quả phù hợp!</Text>
+                        </View>
+                    )
+                }}
             >
             </FlatList>
         </View>

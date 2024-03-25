@@ -33,14 +33,14 @@ class Carolsel extends Component {
     this.loadData();
   };
 
-  _renderItem({ item, index}) {
+  _renderItem({ item, index }) {
     return (
       <TouchableOpacity style={css.item} activeOpacity={1} // không làm mờ khi nhấn vào.
-        onPress={() => { 
+        onPress={() => {
           this.props.navigation.push("PaperDetail", { data: item }); // dùng push để  chuyển hướng trong cùng trang với props thay đổi.  
         }}
       >
-        <View style={{paddingLeft: 8}}>
+        <View style={{ paddingLeft: 8 }}>
           <Text style={{ fontSize: 18, fontWeight: "bold", color: "#5877f4" }}>{item.title}</Text>
         </View>
         <Image source={{ uri: item.image_path }} style={{ flex: 1 }}></Image>
@@ -52,7 +52,7 @@ class Carolsel extends Component {
     return (
       this.state.data ?
         <SafeAreaView style={css.area}>
-          <View style={{marginBottom: 8 }}>
+          <View style={{ marginBottom: 8 }}>
             <Text style={{ color: "#d31bd6", fontSize: 16, fontWeight: 600 }}>Tin liên quan:</Text>
           </View>
           <View style={css.container1}>
@@ -66,7 +66,9 @@ class Carolsel extends Component {
               onSnapToItem={index => this.setState({ activeIndex: index })} />
           </View>
         </SafeAreaView> :
-        <View style={{ flexDirection: "row", justifyContent: "center" }}><Image source={require("../../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image></View>
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <Image source={require("../../../assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>
+        </View>
     );
   }
 }

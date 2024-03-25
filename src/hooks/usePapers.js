@@ -57,18 +57,22 @@ const useComments = (paperId, parentId, page) => {
 }
 
 const usePaperByWriter = (writerId) => {
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
+    // const getData = useCallback(() => {
+    //     getPapersByWriter(writerId).then((response) => {
+    //         setData(response.data);
+    //     })
+    // }, []);
+    // useEffect(() => {
+    //     getData()
+    // }, []);
+    // return data;
 
-    const getData = useCallback(() => {
-        getPapersByWriter(writerId).then((response) => {
-            setData(response.data);
-        })
-    }, []);
-
-    useEffect(() => {
-        getData()
-    }, []);
-    return data;
+    const response = useQuery({
+        queryKey: ['getPapersByWriter', writerId],
+        queryFn: () => getPapersByWriter(writerId)
+    });
+    return response;
 }
 
 export { usePaperList, useComments, usePaperByWriter }

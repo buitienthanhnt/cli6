@@ -4,7 +4,6 @@ import DeviceInfo from 'react-native-device-info';
 import { anyAxios } from "@queries/NetWorking";
 
 const registerNotification = async () => {
-    console.log(22222222);
     const token = await AsyncStorage.getItem("fcmToken");
     let uniqueId = await DeviceInfo.getUniqueId().then((uniqueId) => {
         return uniqueId;

@@ -10,6 +10,7 @@ import { withExpoSnack } from 'nativewind';
 import { styled, useColorScheme } from "nativewind";
 import { Navigate } from "@hooks/Navigate";
 import { connect } from "react-redux";
+import useNotification, {useRegisterFcm} from "@hooks/useNotification";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -20,6 +21,12 @@ const NotificationRegister = (props) => {
     const [deviceId, setDeviceid] = useState("");
     const { colorScheme, toggleColorScheme, setColorScheme } = useColorScheme();
 
+    const {
+        mutate: registerNotification,
+        isLoading,
+        isSuccess,
+    } = useRegisterFcm();
+
     const getFcmtoken = async () => {
         const token = await AsyncStorage.getItem("fcmToken")
         if (token) {
@@ -28,18 +35,18 @@ const NotificationRegister = (props) => {
         return token;
     }
 
-    const registerNotification = async () => {
-        const token = await AsyncStorage.getItem("fcmToken");
-        if (token) {
-            let url = Config.custom_url() + Config.api_request.registerFcm;
-            const response = await anyAxios(url, {
-                fcmToken: token,
-                deviceId: deviceId,
-                active: true
-            }, "POST");
-            console.log(response);
-        }
-    }
+    // const registerNotification = async () => {
+    //     const token = await AsyncStorage.getItem("fcmToken");
+    //     if (token) {
+    //         let url = Config.custom_url() + Config.api_request.registerFcm;
+    //         const response = await anyAxios(url, {
+    //             fcmToken: token,
+    //             deviceId: deviceId,
+    //             active: true
+    //         }, "POST");
+    //         console.log(response);
+    //     }
+    // }
 
     const implementDevice = async () => {
         let uniqueId = await DeviceInfo.getUniqueId().then((uniqueId) => {
@@ -90,12 +97,12 @@ const NotificationRegister = (props) => {
 
             <TouchableOpacity style={{ alignItems: 'center', backgroundColor: 'rgba(53, 102, 142, 0.4)', borderRadius: 6, padding: 6, }} onPress={registerNotification}>
                 <Icon name='plane' size={36} color='black' />
-                <Text>recived notification for device</Text>
+                {isLoading ? <Text>loadding... </Text> : <Text>recived notification for device</Text>}
             </TouchableOpacity>
 
             <View style={{ height: 2, backgroundColor: 'black', marginVertical: 4 }}></View>
 
-            <ListNoti g_data = {props.g_data}></ListNoti>
+            <ListNoti g_data={props.g_data}></ListNoti>
         </View>
     )
 }
@@ -105,7 +112,7 @@ const ListNoti = (props) => {
 
     const getNoti = async () => {
         let noti = await AsyncStorage.getItem('listNotifi');
-        setData(JSON.parse(noti));
+        setData(JSON.parse(noti).reverse());
     }
 
     const deleteItem = async (index) => {
@@ -119,7 +126,7 @@ const ListNoti = (props) => {
     };
 
     const openDetail = useCallback((paper_id) => {
-        Navigate('PaperScreen', {screen: 'PaperDetail', initial: false, params: {id: paper_id} })
+        Navigate('PaperScreen', { screen: 'PaperDetail', initial: false, params: { id: paper_id } })
     }, [])
 
     useEffect(() => {
@@ -127,15 +134,17 @@ const ListNoti = (props) => {
     }, []);
 
     return (
-        <StyledView style={{ paddingBottom: 10 }}>
+        <StyledView style={{ flex: 1, paddingBottom: 10 }}>
             <StyledText className="dark:text-white text-white" style={{ textAlign: 'center', fontSize: 20, fontWeight: '500' }}>list notification: {props.g_data.number}g</StyledText>
             <FlatList
                 data={data}
+                extraData={data}
                 keyExtractor={(item) => item.messageId}
+                showsVerticalScrollIndicator={false}
                 renderItem={({ item, index }) => {
                     return (
-                        <View style={{ flexDirection: 'row', marginVertical: 4}}>
-                            <TouchableOpacity style={{flexDirection: 'row', flex: 1,}} onPress={()=>{
+                        <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                            <TouchableOpacity style={{ flexDirection: 'row', flex: 1, }} onPress={() => {
                                 openDetail(item?.data?.id);
                             }}>
                                 <Image
@@ -144,7 +153,7 @@ const ListNoti = (props) => {
                                     style={{ borderRadius: 20, }}>
                                 </Image>
 
-                                <View style={{ marginLeft: 10, flex: 1}}>
+                                <View style={{ marginLeft: 10, flex: 1 }}>
                                     <Text numberOfLines={2}
                                         style={{ color: 'rgba(125, 0, 203, 0.5)', fontSize: 16, fontWeight: '500', }}
                                     >
@@ -169,7 +178,7 @@ const ListNoti = (props) => {
                     )
                 }}
                 refreshing={false}
-                onRefresh={()=>{
+                onRefresh={() => {
                     getNoti();
                 }}
             ></FlatList>
@@ -177,23 +186,23 @@ const ListNoti = (props) => {
     );
 }
 export default withExpoSnack(connect(
-	state => {
-		return {g_data: state.numberRe}
-	},
-	dispatch =>{
-		return{
-			add_value: (value)=>{
-				dispatch({
-					type: 'ADD_NUMBER',
-					value: value,
-				})
-			},
-			sub_value: ()=>{
-				dispatch({
-					type: 'SUB_NUMBER',
-				})
-			},
-		}
-	}
+    state => {
+        return { g_data: state.numberRe }
+    },
+    dispatch => {
+        return {
+            add_value: (value) => {
+                dispatch({
+                    type: 'ADD_NUMBER',
+                    value: value,
+                })
+            },
+            sub_value: () => {
+                dispatch({
+                    type: 'SUB_NUMBER',
+                })
+            },
+        }
+    }
 )(NotificationRegister));
 // export default withExpoSnack(NotificationRegister);

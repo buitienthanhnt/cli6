@@ -76,7 +76,7 @@ const Home = ({ navigation }) => {
         }
         try {
             const data = await getAxios(Config.custom_url() + Config.api_request.getInfo);
-            if (data?.data.code < 200 || data?.data.code >= 300) {
+            if (data?.data.code < 200 || data?.data.code >= 300 || !data) {
                 Alert.alert('server not active!, use data from firebase');
                 updateState(actionReducer.useFirebase, true)
             }
@@ -122,9 +122,9 @@ const Home = ({ navigation }) => {
                 navigation.navigate("ExampleTwo")
             }}></Button> */}
             <Text></Text>
-            <Button title="to screen modal" onPress={() => {
+            {/* <Button title="to screen modal" onPress={() => {
                 navigation.navigate('ExAnimated5')
-            }}></Button>
+            }}></Button> */}
 
         </ScrollView>
     )

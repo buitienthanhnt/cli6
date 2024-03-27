@@ -20,11 +20,15 @@ import {
   Modal,
   TouchableOpacity
 } from 'react-native';
-
+import Config from "react-native-config";
 import { navigationRef } from '@hooks/Navigate'; // để di chuyển qua các màn hình
 import { check, request, requestNotifications, PERMISSIONS, RESULTS } from 'react-native-permissions';
-import Reactotron from 'reactotron-react-native' // adb reverse tcp:9090 tcp:9090 (chạy lênh này nếu dùng qua android hay máy ảo android để kíck hoạt reactotron)
 
+// adb reverse tcp:9090 tcp:9090 (chạy lênh này nếu dùng qua android hay máy ảo android để kíck hoạt reactotron)
+import Reactotron from 'reactotron-react-native'
+
+// react-native-onesignal: lưu ý chỉ chạy trên máy thật(máy ảo sẽ không đăng ký được subrier) // https://documentation.onesignal.com/docs/react-native-sdk-setup
+import { LogLevel, OneSignal } from 'react-native-onesignal';
 if (__DEV__) { // adb reverse tcp:9090 tcp:9090
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'))
 }
@@ -95,6 +99,23 @@ function App(): JSX.Element {
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(()=>{ // đăng ký cho OneSignal active in rootComponent
+    OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+
+    // OneSignal Initialization
+    OneSignal.initialize(Config.ONESIGNAL_APP_ID || '');
+  
+    // requestPermission will show the native iOS or Android notification permission prompt.
+    // We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+    OneSignal.Notifications.requestPermission(true);
+  
+    // Method for listening for notification clicks
+    OneSignal.Notifications.addEventListener('click', (event) => {
+      console.log('OneSignal: notification clicked:', event);
+    });
+  
+  }, []);
 
   const updateApp = useCallback(() => {
     const url = 'https://google.com'

@@ -16,7 +16,6 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 const NotificationRegister = (props) => {
-    console.log('render: NotificationRegister');
     const [fcmtoken, setFcmtoken] = useState("");
     const [deviceId, setDeviceid] = useState("");
     const { colorScheme, toggleColorScheme, setColorScheme } = useColorScheme();

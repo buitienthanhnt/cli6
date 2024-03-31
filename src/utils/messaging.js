@@ -1,6 +1,6 @@
 import messaging from "@react-native-firebase/messaging"; // lưu ý cần bật tính năng firebase push notification trên firebase. test in: https://testfcm.com/
 import { Linking } from 'react-native';
-import notifee, {AndroidStyle, EventType} from '@notifee/react-native'; // https://notifee.app/react-native/docs/installation
+import notifee, { AndroidStyle, EventType } from '@notifee/react-native'; // https://notifee.app/react-native/docs/installation
 import remoteConfig from '@react-native-firebase/remote-config';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import analytics from '@react-native-firebase/analytics';
@@ -14,14 +14,16 @@ messaging().setBackgroundMessageHandler(async message => {
 	addListNoti(message);
 });
 
-const addListNoti = async (message)=>{
+const addListNoti = async (message) => {
 	console.log('addListNoti++++');
 	listNoti = [];
 	let listNotiData = await AsyncStorage.getItem('listNotifi');
 	if (listNotiData) {
 		listNoti = JSON.parse(listNotiData);
 	}
-	listNoti.push(message);
+	if (message.ttl && message.sentTime) {
+		listNoti.push(message);
+	}
 	AsyncStorage.setItem('listNotifi', JSON.stringify(listNoti));
 };
 
@@ -30,13 +32,13 @@ messaging().onMessage((message) => {
 	addListNoti(message);
 	// setdefault(Một ví dụ về điều này là không có mạng hoặc bạn chưa tìm nạp chúng trong mã của riêng bạn.)
 	remoteConfig()
-      .setDefaults({
-        show_message: true,
-      })
-      .then((response) => {
-        console.log('Default values set.', response);
-      });
-	  
+		.setDefaults({
+			show_message: true,
+		})
+		.then((response) => {
+			console.log('Default values set.', response);
+		});
+
 	const show_message = remoteConfig().getValue('show_message'); // get remote config firebase setting
 	if (show_message) {
 		console.log(message);
@@ -76,10 +78,10 @@ notifee.onBackgroundEvent(async event => {
 	if (event.type == EventType.PRESS) {
 		Linking.openURL(`myapp://app/${event.detail.notification.data.screen}`);
 	}
-});	
+});
 
 // khi có tin nhắn tới trong app
-notifee.onForegroundEvent((event)=>{
+notifee.onForegroundEvent((event) => {
 	// hành động khi mở tin nhắn
 	if (event.type == EventType.PRESS) {
 		Linking.openURL(`myapp://app/${event.detail.notification.data.screen}`);
@@ -98,7 +100,7 @@ async function onDisplayNotification(message) {
 	});
 
 	// Display a notification
-	const {data, notification} = message;
+	const { data, notification } = message;
 	await notifee.displayNotification({
 		title: notification.title,
 		body: notification.body,

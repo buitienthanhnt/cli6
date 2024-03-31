@@ -111,7 +111,9 @@ const ListNoti = (props) => {
 
     const getNoti = async () => {
         let noti = await AsyncStorage.getItem('listNotifi');
-        setData(JSON.parse(noti).reverse());
+        const values = JSON.parse(noti).reverse();
+        console.log(values);
+        setData(values);
     }
 
     const deleteItem = async (index) => {

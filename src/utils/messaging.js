@@ -112,7 +112,7 @@ async function onDisplayNotification(message) {
 			pressAction: {
 				id: 'default',
 			},
-			style: { type: AndroidStyle.BIGPICTURE, picture: notification.android.imageUrl } // hình ảnh trên android
+			style: { type: AndroidStyle.BIGPICTURE, picture: notification?.android?.imageUrl || 'https://images.viblo.asia/avatar/a5d3b76b-3102-40f8-a42f-d257c385e5d5.jpg' }// hình ảnh trên android
 		},
 		data: data
 	});

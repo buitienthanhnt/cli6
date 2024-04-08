@@ -21,9 +21,10 @@ const ExAnimated1 = () => {
   const renderItem = useCallback(({ item, index }) => {
     return (
       <View style={{
-        width: Dimensions.get('screen').width - 40,
+        width: Dimensions.get('screen').width - 50,
         height: 140,
         backgroundColor: 'green',
+        borderRadius: 8
         //  marginRight: 20
       }}>
         <Text>{item}</Text>
@@ -32,7 +33,7 @@ const ExAnimated1 = () => {
   }, [])
 
   return (
-    <View>
+    <View style={{ paddingHorizontal: 10 }}>
       <Animated.View
         style={{
           width,
@@ -59,8 +60,33 @@ const ExAnimated1 = () => {
           )
         }}
         showsHorizontalScrollIndicator={false}
-        snapToInterval={Dimensions.get('screen').width -20}
+        snapToInterval={Dimensions.get('screen').width -30}
+        decelerationRate="fast" // cần có để kết hợp với: pagingEnabled={true} & snapToInterval trên ios(không sẽ lỗi paging)
       ></FlatList>
+
+      {/* <ScrollView
+        pagingEnabled={true}
+        horizontal={true}
+        snapToInterval={Dimensions.get('screen').width - 30}
+        disableScrollViewPanResponder={false}
+        decelerationRate="fast"
+      >
+        {data.map((item, index) => {
+          return (
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{
+                width: Dimensions.get('screen').width - 50,
+                height: 140,
+                backgroundColor: 'green',
+                borderRadius: 8
+              }}>
+                <Text>{item}</Text>
+              </View>
+              {index !== data.length-1 && <View style={{ width: 20 }}></View>}
+            </View>
+          )
+        })}
+      </ScrollView> */}
     </View>
 
   );

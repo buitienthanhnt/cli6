@@ -32,3 +32,15 @@ replace these functions with the below lines
     }, 
 -->
 <!-- =========================================================================================== -->
+
+<!-- ==================================Ubuntu: java update from 11 to 17==========================
+
+The javac executable is not part of the openjdk-*-jdk packages. To install it, you need to install the openjdk-17-jdk-headless package:
+
+sudo apt install openjdk-17-jdk-headless
+
+To manage the active version, don't forget about the update-alternatives command:
+
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+============================================================================================ -->

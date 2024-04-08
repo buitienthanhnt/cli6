@@ -10,7 +10,7 @@ import { withExpoSnack } from 'nativewind';
 import { styled, useColorScheme } from "nativewind";
 import { Navigate } from "@hooks/Navigate";
 import { connect } from "react-redux";
-import useNotification, {useRegisterFcm} from "@hooks/useNotification";
+import useNotification, { useRegisterFcm } from "@hooks/useNotification";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -140,7 +140,7 @@ const ListNoti = (props) => {
             <FlatList
                 data={data}
                 extraData={data}
-                keyExtractor={(item) => item.messageId}
+                keyExtractor={(item, index) => item?.messageId + "-" + index}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item, index }) => {
                     return (

@@ -114,7 +114,6 @@ function App(): JSX.Element {
     OneSignal.Notifications.addEventListener('click', (event) => {
       console.log('OneSignal: notification clicked:', event);
     });
-  
   }, []);
 
   const updateApp = useCallback(() => {

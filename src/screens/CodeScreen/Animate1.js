@@ -17,16 +17,11 @@ export default function Animate1() {
     }
   };
 
-  useEffect(()=>{
-    console.log('___________');
-  }, [value]);
-
-
   return (
     <View style={styles.container}>
       <Text>----{value}----</Text>
       <Animated.View style={{ ...styles.box, width, height }} />
-      <Button onPress={handlePress} title="Click me" />
+      <Button onPress={handlePress} title="Click me 2" />
       <Button title='reset' onPress={() => {
         if (width.value - 50 > 0) {
           width.value = withSpring(width.value - 25);

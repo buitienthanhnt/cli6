@@ -73,6 +73,7 @@ class PaperList extends Component {
                     onRefresh={() => {
                         this.getSourceData(1, true);
                     }}
+                    decelerationRate={'normal'} // speed of scroll page: normal || fast(nên chọn: normal để mượt hơn)
                     keyExtractor={(item) => item.id}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Button, Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native';
+import { Button, Text, TouchableOpacity, View, StyleSheet, Dimensions, ScrollView, FlatList } from 'react-native';
 import Animated, { ReduceMotion, withDecay } from 'react-native-reanimated';
 import { useSharedValue, useAnimatedStyle, withSpring, withTiming, Easing, withRepeat, withDelay } from 'react-native-reanimated';
 // https://reactnavigation.org/docs/stack-navigator/
@@ -16,18 +16,53 @@ const ExAnimated1 = () => {
     left.value = withSpring(left.value + 20);
   };
 
+  const data = [1, 2, 3, 4, 5, 6]
+
+  const renderItem = useCallback(({ item, index }) => {
+    return (
+      <View style={{
+        width: Dimensions.get('screen').width - 40,
+        height: 140,
+        backgroundColor: 'green',
+        //  marginRight: 20
+      }}>
+        <Text>{item}</Text>
+      </View>
+    )
+  }, [])
+
   return (
-    <Animated.View
-      style={{
-        width,
-        height: height,
-        backgroundColor: 'violet',
-        left: left,
-        top: 20
-      }}
-    >
-      <Button onPress={handlePress} title="Click me" />
-    </Animated.View>
+    <View>
+      <Animated.View
+        style={{
+          width,
+          height: height,
+          backgroundColor: 'violet',
+          left: left,
+          top: 20
+        }}
+      >
+        <Button onPress={handlePress} title="Click me 1" />
+      </Animated.View>
+
+      <FlatList
+        contentContainerStyle={{
+          marginTop: 60
+        }}
+        data={data}
+        renderItem={renderItem}
+        horizontal={true}
+        pagingEnabled={true}
+        ItemSeparatorComponent={()=>{
+          return(
+            <View style={{width: 20}}></View>
+          )
+        }}
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={Dimensions.get('screen').width -20}
+      ></FlatList>
+    </View>
+
   );
 }
 

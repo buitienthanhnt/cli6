@@ -47,6 +47,7 @@ class CategoryTop extends Component {
                     pagingEnabled={true}
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
+                    // decelerationRate={0.5}
                     refreshControl={
                         <RefreshControl refreshing={this.state.topRefresh} onRefresh={onRefresh} />}
                 >

@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
-import { Image } from "react-native-elements";
+// import { Image } from "react-native-elements"; // dùng này bị lỗi nháy ảnh khi chuyển trjang thái.
+import FastImage from 'react-native-fast-image';
 
 const LoadingBtn = ({ children, onPress, loadingSize, loadding, style }) => {
     const _onPress = () => {
@@ -12,10 +13,10 @@ const LoadingBtn = ({ children, onPress, loadingSize, loadding, style }) => {
             {(children)}
             {loadding &&
                 <View style={css.loadding}>
-                    <Image
+                    <FastImage
                         source={require("@assets/Rolling-1s-200px.gif")}
                         style={{ width: loadingSize || 24, height: loadingSize || 24 }}>
-                    </Image>
+                    </FastImage>
                 </View>
             }
         </TouchableOpacity>

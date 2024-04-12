@@ -1,15 +1,19 @@
-import React, {useRef} from 'react';
-import {Animated, View, StyleSheet, PanResponder, Text} from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, View, StyleSheet, PanResponder, Text } from 'react-native';
 
 const PanResponders = () => {
+
   const pan = useRef(new Animated.ValueXY()).current;
+
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}]),
+      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
       onPanResponderRelease: () => {
+        // pan.extractOffset();
+
         Animated.spring(pan, {
-          toValue: {x: 0, y: 0},
+          toValue: { x: 0, y: 0 },
           useNativeDriver: true,
         }).start();
       },
@@ -21,9 +25,10 @@ const PanResponders = () => {
       <Text style={styles.titleText}>Drag & Release this box!</Text>
       <Animated.View
         style={{
-          transform: [{translateX: pan.x}, {translateY: pan.y}],
+          transform: [{ translateX: pan.x }, { translateY: pan.y }],
         }}
-        {...panResponder.panHandlers}>
+        {...panResponder.panHandlers}
+      >
         <View style={styles.box} />
       </Animated.View>
     </View>

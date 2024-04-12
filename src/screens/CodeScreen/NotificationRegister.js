@@ -3,14 +3,12 @@ import { Clipboard, View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatLi
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Tooltip } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Config from "@config/Config";
-import { anyAxios } from "@queries/NetWorking";
 import DeviceInfo from 'react-native-device-info';    // npm install --save react-native-device-info  && react-native link react-native-device-info
 import { withExpoSnack } from 'nativewind';
 import { styled, useColorScheme } from "nativewind";
 import { Navigate } from "@hooks/Navigate";
 import { connect } from "react-redux";
-import useNotification, { useRegisterFcm } from "@hooks/useNotification";
+import { useRegisterFcm } from "@hooks/useNotification";
 import LoadingBtn from "@elements/LoadingBtn";
 
 const StyledView = styled(View);
@@ -128,7 +126,7 @@ const ListNoti = (props) => {
     const getNoti = async () => {
         let noti = await AsyncStorage.getItem('listNotifi');
         const values = JSON.parse(noti).reverse();
-        console.log(values);
+        // console.log(values);
         setData(values);
     }
 

@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Button, Text, TouchableOpacity, View, StyleSheet, Dimensions, ScrollView, FlatList } from 'react-native';
+import { Button, Text, TouchableOpacity, View, StyleSheet, Dimensions, FlatList } from 'react-native';
 import Animated, { ReduceMotion, withDecay } from 'react-native-reanimated';
 import { useSharedValue, useAnimatedStyle, withSpring, withTiming, Easing, withRepeat, withDelay } from 'react-native-reanimated';
+import Carousel from '@elements/Carousel';
 // https://reactnavigation.org/docs/stack-navigator/
 // https://reactnavigation.org/docs/stack-navigator/#transparent-modals
 
@@ -15,22 +16,6 @@ const ExAnimated1 = () => {
     height.value = withSpring(height.value + 50);
     left.value = withSpring(left.value + 20);
   };
-
-  const data = [1, 2, 3, 4, 5, 6]
-
-  const renderItem = useCallback(({ item, index }) => {
-    return (
-      <View style={{
-        width: Dimensions.get('screen').width - 50,
-        height: 140,
-        backgroundColor: 'green',
-        borderRadius: 8
-        //  marginRight: 20
-      }}>
-        <Text>{item}</Text>
-      </View>
-    )
-  }, [])
 
   return (
     <View style={{ paddingHorizontal: 10 }}>
@@ -46,47 +31,7 @@ const ExAnimated1 = () => {
         <Button onPress={handlePress} title="Click me 1" />
       </Animated.View>
 
-      <FlatList
-        contentContainerStyle={{
-          marginTop: 60
-        }}
-        data={data}
-        renderItem={renderItem}
-        horizontal={true}
-        pagingEnabled={true}
-        ItemSeparatorComponent={()=>{
-          return(
-            <View style={{width: 20}}></View>
-          )
-        }}
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={Dimensions.get('screen').width -30}
-        decelerationRate="fast" // cần có để kết hợp với: pagingEnabled={true} & snapToInterval trên ios(không sẽ lỗi paging)
-      ></FlatList>
-
-      {/* <ScrollView
-        pagingEnabled={true}
-        horizontal={true}
-        snapToInterval={Dimensions.get('screen').width - 30}
-        disableScrollViewPanResponder={false}
-        decelerationRate="fast"
-      >
-        {data.map((item, index) => {
-          return (
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{
-                width: Dimensions.get('screen').width - 50,
-                height: 140,
-                backgroundColor: 'green',
-                borderRadius: 8
-              }}>
-                <Text>{item}</Text>
-              </View>
-              {index !== data.length-1 && <View style={{ width: 20 }}></View>}
-            </View>
-          )
-        })}
-      </ScrollView> */}
+      <Carousel data={[1, 2, 3, 4, 5, 6]}></Carousel>
     </View>
 
   );

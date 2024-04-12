@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useQuery, useMutation } from "react-query";
+import { useMutation } from "react-query";
 import { registerNotification } from '@queries/notification';
 const useNotification = () => {
 	const [count, setCount] = useState(0);

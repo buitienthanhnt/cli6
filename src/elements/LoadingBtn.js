@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
-// import { Image } from "react-native-elements"; // dùng này bị lỗi nháy ảnh khi chuyển trjang thái.
+// import { Image } from "react-native-elements"; // dùng này bị lỗi nháy ảnh khi chuyển trang thái.
 import FastImage from 'react-native-fast-image';
 
 const LoadingBtn = ({ children, onPress, loadingSize, loadding, style }) => {
@@ -29,7 +29,6 @@ const css = StyleSheet.create({
     btn: {
         justifyContent: 'center',
         flexDirection: 'row',
-        alignItems: 'baseline',
         alignItems: 'center',
         borderWidth: 1,
         padding: 10,

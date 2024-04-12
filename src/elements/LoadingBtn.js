@@ -1,25 +1,42 @@
-import { useState } from "react";
+import React from "react";
+import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { Image } from "react-native-elements";
 
-const { TouchableOpacity } = require("react-native")
-
-const LoadingBtn = ({ children, onPress, loadingSize}) => {
-    const [loadding, setLoadding] = useState(false);
-
-    const _onPress = async () => {
-        setLoadding(true);
-        await onPress?.();
-        console.log('LoadingBtn run!');
-        setLoadding(false)
+const LoadingBtn = ({ children, onPress, loadingSize, loadding, style }) => {
+    const _onPress = () => {
+        onPress?.();
     }
 
     return (
-        <TouchableOpacity style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline', alignItems: 'center' }} onPress={_onPress}>
-            {loadding ?
-                (<Image source={require("@assets/Rolling-1s-200px.gif")} style={{ width: loadingSize || 24, height: loadingSize|| 24 }}></Image>)
-                : (children)}
+        <TouchableOpacity style={[css.btn, style, loadding ? { opacity: 0.5 } : {}]} onPress={_onPress} disabled={loadding}>
+            {(children)}
+            {loadding &&
+                <View style={css.loadding}>
+                    <Image
+                        source={require("@assets/Rolling-1s-200px.gif")}
+                        style={{ width: loadingSize || 24, height: loadingSize || 24 }}>
+                    </Image>
+                </View>
+            }
         </TouchableOpacity>
     )
 }
 
 export default LoadingBtn;
+
+const css = StyleSheet.create({
+    btn: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'baseline',
+        alignItems: 'center',
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 8,
+        minWidth: 10,
+        alignSelf: 'flex-start', // fit conten for btn.
+    },
+    loadding: {
+        position: 'absolute'
+    }
+})

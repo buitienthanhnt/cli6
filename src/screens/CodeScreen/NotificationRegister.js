@@ -11,6 +11,7 @@ import { styled, useColorScheme } from "nativewind";
 import { Navigate } from "@hooks/Navigate";
 import { connect } from "react-redux";
 import useNotification, { useRegisterFcm } from "@hooks/useNotification";
+import LoadingBtn from "@elements/LoadingBtn";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -18,7 +19,15 @@ const StyledText = styled(Text);
 const NotificationRegister = (props) => {
     const [fcmtoken, setFcmtoken] = useState("");
     const [deviceId, setDeviceid] = useState("");
+    const [loading, setLoading] = useState(false);
     const { colorScheme, toggleColorScheme, setColorScheme } = useColorScheme();
+
+    const onLoading = useCallback(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000)
+    }, [])
 
     const {
         mutate: registerNotification,
@@ -100,6 +109,13 @@ const NotificationRegister = (props) => {
             </TouchableOpacity>
 
             <View style={{ height: 2, backgroundColor: 'black', marginVertical: 4 }}></View>
+
+            <LoadingBtn
+                loadding={loading}
+                style={{ borderColor: 'violet', backgroundColor: 'rgba(32, 141, 211, 0.7)' }}
+                onPress={onLoading}>
+                <Text style={{ fontSize: 16, fontWeight: '600' }}>test loaddingBtn</Text>
+            </LoadingBtn>
 
             <ListNoti g_data={props.g_data}></ListNoti>
         </View>

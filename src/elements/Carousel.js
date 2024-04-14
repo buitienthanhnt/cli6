@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
 import { View, FlatList, Dimensions, Text } from "react-native";
+// https://viblo.asia/p/react-native-tim-hieu-ve-panresponder-3Q75wxk2KWb
+// https://viblo.asia/p/huong-dan-cai-dat-tailwindcss-cho-project-react-native-expo-GrLZDobBKk0
 
 const Carousel = (props) => {
     const renderItem = useCallback(({ item, index }) => {

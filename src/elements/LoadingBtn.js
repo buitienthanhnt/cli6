@@ -30,7 +30,7 @@ const css = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
+        // borderWidth: 1,
         padding: 10,
         borderRadius: 8,
         minWidth: 10,

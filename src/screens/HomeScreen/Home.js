@@ -138,8 +138,14 @@ const ListCarousel = ({ data }) => {
         return null;
     }
     return (
-        <View style={{ padding: 5 }}>
-            <Carousel data={data} onPress={openDetail} itemStyle={{height: 160}}></Carousel>
+        <View style={{ flex: 1, padding: 4, paddingBottom: 20 }}>
+            <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center', marginBottom: 5 }}>
+                <Text style={{ fontSize: 20, color: '#00afef', fontWeight: '600', }}>Thể loại</Text>
+                <FontAwesome5Icon name='compass' size={16} color='#00afef' />
+            </View>
+            <View>
+                <Carousel data={data} onPress={openDetail} itemStyle={{ height: 160 }}></Carousel>
+            </View>
         </View>
     )
 }
@@ -545,23 +551,34 @@ const TopNew = ({ hit }) => {
     }
 
     return (
-        <TouchableOpacity style={{ flex: 1, }} onPress={() => {
+        <View style={{ flex: 1, }} onPress={() => {
             // openDetail({
             //     initial: false,
             //     params: hit
             // })
             Navigate('PaperDetail', hit);
         }}>
-            <Image
-                style={{ borderRadius: 4, width: '100%' }}
-                height={Dimensions.get('screen').height / 5 + 30}
-                source={{ uri: hit?.image_path }}></Image>
-            <Text
-                style={{ flex: 1, paddingHorizontal: 8, fontSize: 18, fontWeight: 600, color: '#84a9ff', marginTop: 2, }}
-                numberOfLines={2}>
-                {hit?.title}
-            </Text>
-        </TouchableOpacity>)
+            <TouchableOpacity>
+                <Image
+                    style={{ borderRadius: 4, width: '100%' }}
+                    height={Dimensions.get('screen').height / 5 + 30}
+                    source={{ uri: hit?.image_path }}></Image>
+                <View className={'px-2 py-[5px] absolute'}
+                    style={{ bottom: 10, left: 10, borderRadius: 8, backgroundColor: 'rgba(136, 188, 255, 0.8)', }}>
+                    <Text className={'text-base italic font-bold text-[#e900ff]'}>newest</Text>
+                </View>
+            </TouchableOpacity>
+            <View style={{ marginTop: 2, paddingHorizontal: 4, }}>
+                <Text
+                    style={{ flex: 1, fontSize: 18, fontWeight: 600, color: '#84a9ff', }}
+                    numberOfLines={2}>
+                    {hit?.title}
+                </Text>
+                <Text className={'text-base font-medium'} style={{ paddingLeft: 4, }} numberOfLines={2}>
+                    {hit.short_conten}
+                </Text>
+            </View>
+        </View>)
 }
 
 const styles = StyleSheet.create({

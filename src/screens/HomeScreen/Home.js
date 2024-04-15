@@ -139,7 +139,7 @@ const ListCarousel = ({ data }) => {
     }
     return (
         <View style={{ padding: 5 }}>
-            <Carousel data={data} onPress={openDetail}></Carousel>
+            <Carousel data={data} onPress={openDetail} itemStyle={{height: 160}}></Carousel>
         </View>
     )
 }

@@ -44,7 +44,7 @@ const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator, autoPl
     : ({
       vertical: false,
       width: PAGE_WIDTH,
-      height: PAGE_WIDTH * 0.5,
+      height: PAGE_WIDTH * 0.6,
     } as const);
   
     const onPress = useCallback((item: any)=>{

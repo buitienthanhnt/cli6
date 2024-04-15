@@ -108,18 +108,18 @@ const NotificationRegister = (props) => {
 
             <View style={{ height: 2, backgroundColor: 'black', marginVertical: 4 }}></View>
 
-            <View className={'h-10 bg-regal-blue items-center justify-center rounded my-5'}>
+            {/* <View className={'h-10 bg-regal-blue items-center justify-center rounded my-5'}>
                 <Text className={'text-white'}>test tailwindcss</Text>
-            </View>
+            </View> */}
 
-            <View className={'w-40'}>
+            {/* <View className={'w-40'}>
                 <LoadingBtn
                     loadding={loading}
                     style={{ backgroundColor: 'rgba(32, 141, 211, 0.7)', width: '100%' }}
                     onPress={onLoading}>
                     <Text style={{ fontSize: 16, fontWeight: '600' }}>test loaddingBtn</Text>
                 </LoadingBtn>
-            </View>
+            </View> */}
 
             <ListNoti g_data={props.g_data}></ListNoti>
         </View>
@@ -135,7 +135,7 @@ const ListNoti = (props) => {
 
     return (
         <StyledView style={{ flex: 1, paddingBottom: 10 }}>
-            <StyledText className="dark:text-white text-white" style={{ textAlign: 'center', fontSize: 20, fontWeight: '500' }}>list notification: {props.g_data.number}g</StyledText>
+            <StyledText className="dark:text-white text-white" style={{ textAlign: 'center', fontSize: 20, fontWeight: '500' }}>List notification: {props.g_data.number}g</StyledText>
             <FlatList
                 data={data}
                 extraData={data}

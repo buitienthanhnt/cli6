@@ -48,6 +48,18 @@ const ExAnimated1 = () => {
         <Text>1231011</Text>
         <Text>12311123</Text>
       </ExtraConten>
+      <ExtraConten title={'View conten'} contenStyle={{ backgroundColor: 'violet', borderRadius: 10, padding: 8 }}>
+        <Text>123</Text>
+        <Text>1234</Text>
+        <Text>12345</Text>
+        <Text>12356</Text>
+        <Text>12367</Text>
+        <Text>12378</Text>
+        <Text>12389</Text>
+        <Text>123910</Text>
+        <Text>1231011</Text>
+        <Text>12311123</Text>
+      </ExtraConten>
     </View>
 
   );

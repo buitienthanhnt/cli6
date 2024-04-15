@@ -13,7 +13,7 @@ const ExtraConten = ({ children, title, contenStyle }) => {
 	}));
 
 	const rotateView = useCallback(() => {
-		rotate.value = withSpring(rotate.value == '90deg' ? '0deg' : '90deg', {}, ()=>{
+		rotate.value = withTiming(rotate.value == '90deg' ? '0deg' : '90deg', {duration: 300,}, ()=>{
 			// runOnJS(setShowConten)(!showConten)
 		});
 		setShowConten(!showConten)
@@ -38,7 +38,7 @@ const ExtraConten = ({ children, title, contenStyle }) => {
 
 const css = StyleSheet.create({
 	container: {
-		paddingVertical: 15
+		// paddingVertical: 15
 	},
 	icon: {
 		width: 40,

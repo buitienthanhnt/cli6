@@ -58,12 +58,11 @@ export const useListNoti = () => {
 		setData(value)
 	}, [data]);
 
-	const getNoti = useCallback(() => {
+	const getNoti = useCallback(
 		async () => {
 			const notifi = await getNotifi();
 			setData(notifi);
-		}
-	}, [])
+		}, [])
 
 	useEffect(() => {
 		getNoti()

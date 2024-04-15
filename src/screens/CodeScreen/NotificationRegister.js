@@ -8,7 +8,7 @@ import { withExpoSnack } from 'nativewind';
 import { styled, useColorScheme } from "nativewind";
 import { Navigate } from "@hooks/Navigate";
 import { connect } from "react-redux";
-import { useRegisterFcm } from "@hooks/useNotification";
+import { useRegisterFcm, useListNoti } from "@hooks/useNotification";
 import LoadingBtn from "@elements/LoadingBtn";
 
 const StyledView = styled(View);
@@ -108,12 +108,18 @@ const NotificationRegister = (props) => {
 
             <View style={{ height: 2, backgroundColor: 'black', marginVertical: 4 }}></View>
 
-            <LoadingBtn
-                loadding={loading}
-                style={{ borderColor: 'violet', backgroundColor: 'rgba(32, 141, 211, 0.7)' }}
-                onPress={onLoading}>
-                <Text style={{ fontSize: 16, fontWeight: '600' }}>test loaddingBtn</Text>
-            </LoadingBtn>
+            {/* <View className={'h-10 bg-regal-blue items-center justify-center rounded my-5'}>
+                <Text className={'text-white'}>test tailwindcss</Text>
+            </View> */}
+
+            {/* <View className={'w-40'}>
+                <LoadingBtn
+                    loadding={loading}
+                    style={{ backgroundColor: 'rgba(32, 141, 211, 0.7)', width: '100%' }}
+                    onPress={onLoading}>
+                    <Text style={{ fontSize: 16, fontWeight: '600' }}>test loaddingBtn</Text>
+                </LoadingBtn>
+            </View> */}
 
             <ListNoti g_data={props.g_data}></ListNoti>
         </View>
@@ -121,36 +127,15 @@ const NotificationRegister = (props) => {
 }
 
 const ListNoti = (props) => {
-    const [data, setData] = useState([]);
-
-    const getNoti = async () => {
-        let noti = await AsyncStorage.getItem('listNotifi');
-        const values = JSON.parse(noti).reverse();
-        // console.log(values);
-        setData(values);
-    }
-
-    const deleteItem = async (index) => {
-        let noti = await AsyncStorage.getItem('listNotifi');
-        if (noti) {
-            noti = JSON.parse(noti);
-            noti.splice(index, 1);
-            await AsyncStorage.setItem('listNotifi', JSON.stringify(noti));
-            getNoti();
-        }
-    };
+    const { data, deleteItem } = useListNoti();
 
     const openDetail = useCallback((paper_id) => {
         Navigate('PaperScreen', { screen: 'PaperDetail', initial: false, params: { id: paper_id } })
     }, [])
 
-    useEffect(() => {
-        getNoti();
-    }, []);
-
     return (
         <StyledView style={{ flex: 1, paddingBottom: 10 }}>
-            <StyledText className="dark:text-white text-white" style={{ textAlign: 'center', fontSize: 20, fontWeight: '500' }}>list notification: {props.g_data.number}g</StyledText>
+            <StyledText className="dark:text-white text-white" style={{ textAlign: 'center', fontSize: 20, fontWeight: '500' }}>List notification: {props.g_data.number}g</StyledText>
             <FlatList
                 data={data}
                 extraData={data}

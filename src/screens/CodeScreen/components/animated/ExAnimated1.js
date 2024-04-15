@@ -3,6 +3,8 @@ import { Button, Text, TouchableOpacity, View, StyleSheet, Dimensions, FlatList 
 import Animated, { ReduceMotion, withDecay } from 'react-native-reanimated';
 import { useSharedValue, useAnimatedStyle, withSpring, withTiming, Easing, withRepeat, withDelay } from 'react-native-reanimated';
 import Carousel from '@elements/Carousel';
+import ExtraConten from '@elements/ExtraConten';
+import testList from '@assets/data/testList';
 // https://reactnavigation.org/docs/stack-navigator/
 // https://reactnavigation.org/docs/stack-navigator/#transparent-modals
 
@@ -31,7 +33,21 @@ const ExAnimated1 = () => {
         <Button onPress={handlePress} title="Click me 1" />
       </Animated.View>
 
-      <Carousel data={[1, 2, 3, 4, 5, 6]}></Carousel>
+      <Carousel data={testList} onPress={()=>{
+        console.log(123123);
+      }}></Carousel>
+      <ExtraConten title={'View conten'} contenStyle={{ backgroundColor: 'violet', borderRadius: 10, padding: 8 }}>
+        <Text>123</Text>
+        <Text>1234</Text>
+        <Text>12345</Text>
+        <Text>12356</Text>
+        <Text>12367</Text>
+        <Text>12378</Text>
+        <Text>12389</Text>
+        <Text>123910</Text>
+        <Text>1231011</Text>
+        <Text>12311123</Text>
+      </ExtraConten>
     </View>
 
   );

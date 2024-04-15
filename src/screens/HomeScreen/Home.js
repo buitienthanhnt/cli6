@@ -29,6 +29,7 @@ import { getAxios } from '@queries/NetWorking';
 import remoteConfig from '@react-native-firebase/remote-config';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { formatDate } from "@utils/helper";
+import Carousel from "@elements/Carousel";
 
 const useInfo = () => {
     const { useFirebase } = useSelector((state) => state.defRe);
@@ -115,6 +116,8 @@ const Home = ({ navigation }) => {
             <DemoChart map={data?.map}></DemoChart>
             <ListWriter writers={data?.writers}></ListWriter>
             <SearchAll></SearchAll>
+            <ListCarousel data={data?.mostRecents}></ListCarousel>
+
             <Button title="to Process" onPress={() => {
                 navigation.navigate("ExampleOne")
             }}></Button>
@@ -127,6 +130,17 @@ const Home = ({ navigation }) => {
             }}></Button> */}
 
         </ScrollView>
+    )
+}
+
+const ListCarousel = ({ data }) => {
+    if (!data) {
+        return null;
+    }
+    return (
+        <View style={{ padding: 5 }}>
+            <Carousel data={data} onPress={openDetail} itemStyle={{height: 160}}></Carousel>
+        </View>
     )
 }
 

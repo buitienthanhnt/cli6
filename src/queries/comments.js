@@ -2,7 +2,7 @@ import AppStore from "@redux/AppStore";
 import Config from "@config/Config";
 import axios from "axios";
 import database from '@react-native-firebase/database';
-import firebaseType from "@utils/firebaseType";
+import firebaseType from "@constants/firebaseType";
 
 const getComments = async (paperId, parentId, page) => {
     const url = Config.custom_url() + Config.api_request.getPaperComments + paperId + '?limit=4' + '&p=' + page + (parentId ? '&parent_id=' + parentId : '');
@@ -30,10 +30,6 @@ const addCommentServer = (paperId, params) => {
     return waitData;
 }
 
-export const commentLikeType = {
-    like: "like",
-    dislike: "dislike",
-}
 const addLike = (commentId, params) => {
     const { defRe } = AppStore.getState();
 

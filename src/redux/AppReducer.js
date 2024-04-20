@@ -1,5 +1,5 @@
 import { AppState, Application } from "./AppState";
-import actionReducer from "@utils/reduxActiontype";
+import actionReducer from "@constants/actionReducer";
 
 const Reducer = (state = AppState, action) => {
     let newTaskList = state.data;

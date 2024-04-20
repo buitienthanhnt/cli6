@@ -1,11 +1,12 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from "react-native";
 import { useComments } from "@hooks/usePapers";
 import { capitalizeFirstLetter } from "@utils/textHelper";
 import { useCallback, useContext, useState } from "react";
 import { PaperDetailContext } from "../PaperContext"
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { addLike, commentLikeType, getComments } from "@queries/comments";
+import { addLike, getComments } from "@queries/comments";
+import {commentLikeType} from '@constants/commentLikeType';
 import CommentForm from "./CommentForm";
 import { useSelector } from "react-redux";
 import RBSheet from "react-native-raw-bottom-sheet";  // npm i react-native-raw-bottom-sheet
@@ -25,9 +26,23 @@ const Comments = ({ paperId }) => {
                         <Icon name='reply' size={16} color='#821ab2' />
                     </TouchableOpacity>
                 </View>
-                <RBSheet animationType="slide" closeOnDragDown={true} ref={refRBSheet} onClose={() => {
-                    setCommentParent(null);
-                }}>
+                <RBSheet
+                    height={300}
+                    animationType="slide"
+                    customStyles={{
+                        container: {
+                            borderRadius: 10,
+                            // backgroundColor: 'rgba(136, 238, 192, 0.4)',
+                        },
+                        wrapper: {
+                            // backgroundColor: 'transparent'
+                        }
+                    }}
+                    closeOnDragDown={true}
+                    ref={refRBSheet}
+                    onClose={() => {
+                        setCommentParent(null);
+                    }}>
                     <CommentForm ></CommentForm>
                 </RBSheet>
             </View>
@@ -115,7 +130,7 @@ CommentItem = ({ comment, root }) => {
     }, [refRBSheet, setCommentParent, comment.id]);
 
     const onPressLike = useCallback(() => {
-        addLike(comment.id, {type: !liked ? commentLikeType.like : commentLikeType.dislike,})
+        addLike(comment.id, { type: !liked ? commentLikeType.like : commentLikeType.dislike, })
         setLiked(old => !liked);
     }, [liked])
 
@@ -150,20 +165,20 @@ CommentItem = ({ comment, root }) => {
                         </View>
                     ) :
                     (
-                        <View style={{ flexDirection: 'row',}}>
+                        <View style={{ flexDirection: 'row', }}>
                             <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, flexDirection: 'row' }} onPress={onPressLike}>
                                 <Icon name='thumbs-up' size={14} color={liked ? 'red' : '#3496ff'} />
-                                <Text> {liked ? (comment.like || 0) +1 : comment.like}</Text>
+                                <Text> {liked ? (comment.like || 0) + 1 : comment.like}</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={{ 
-                                ...css.moreBtn, marginLeft: 8, 
-                                transform: [{ rotateZ: '180deg' }], 
+                            <TouchableOpacity style={{
+                                ...css.moreBtn, marginLeft: 8,
+                                transform: [{ rotateZ: '180deg' }],
                                 alignSelf: 'flex-end', // for align conten bottom
-                                }} 
+                            }}
                                 onPress={() => {
-                                setShowRep(true);
-                            }}>
+                                    setShowRep(true);
+                                }}>
                                 <Icon name='reply' size={16} color='#821ab2' />
                             </TouchableOpacity>
                         </View>
@@ -171,7 +186,7 @@ CommentItem = ({ comment, root }) => {
             ) : (
                 <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, flexDirection: 'row' }} onPress={onPressLike}>
                     <Icon name='thumbs-up' size={14} color={liked ? 'red' : '#3496ff'} />
-                    <Text> {liked ? (comment.like || 0) +1 : comment.like}</Text>
+                    <Text> {liked ? (comment.like || 0) + 1 : comment.like}</Text>
                 </TouchableOpacity>
             )}
         </View>

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import actionReducer from '@utils/reduxActiontype';
+import actionReducer from '@constants/actionReducer';
 
 const useDispatchState = ()=>{
     const dispatch = useDispatch();

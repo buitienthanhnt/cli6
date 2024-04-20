@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
-import firebaseType from "@utils/firebaseType";
+import firebaseType from "@constants/firebaseType";
 
 const useCategory = () => {
 	const [category, setCategory] = useState([]);

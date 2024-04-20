@@ -2,7 +2,7 @@ import Config from "@config/Config"
 import axios from "axios";
 import AppStore from "@redux/AppStore";
 import database from '@react-native-firebase/database';
-import firebaseType from "@utils/firebaseType";
+import firebaseType from "@constants/firebaseType";
 
 export const addLike = async (paperId, params) => {
     const { defRe } = AppStore.getState();

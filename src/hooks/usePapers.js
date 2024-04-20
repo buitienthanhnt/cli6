@@ -2,7 +2,7 @@ import Config from "@config/Config";
 import { addCommentServer, getComments } from "@queries/comments";
 import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import firebaseType from "@utils/firebaseType";
+import firebaseType from "@constants/firebaseType";
 import database from '@react-native-firebase/database';
 import { useSelector } from "react-redux";
 import { getPapersByWriter } from "@queries/writer";

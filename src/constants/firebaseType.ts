@@ -16,9 +16,7 @@ const firebaseType = {
 	storeData: {
 		paperDetail: 'detailContent',
 	},
-	storage: {
-
-	},
+	storage: {},
 }
 
 export default firebaseType;

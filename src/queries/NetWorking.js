@@ -1,6 +1,8 @@
 // https://reactnative.dev/docs/network
 
 import axios from 'axios';   // https://github.com/axios/axios
+import { HeaderKey } from '@constants/enum';
+import Config from '@config/Config'
 
 // fetch
 // nên dùng với get, không nên dùng với POST hay PUT vì:
@@ -74,4 +76,15 @@ const anyAxios = async (url = "", params = {}, method = "POST" || "PUT" || "DELE
 	return data;
 }
 
+const apiWithAuth = (url = '', params = {}, method = "POST" || "PUT" || "DELETE") => {
+	const instance = axios.create({
+		baseURL: url,
+		timeout: 4000,
+		headers: {
+			'X-Custom-Header': 'foobar',
+			[HeaderKey.Authorization]: Config.token
+		}
+	});
+	return instance;
+}
 export { fechData, getAxios, anyAxios }

@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { StyleSheet, Text, TextInput, View, TouchableWithoutFeedback } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
-const FormInput = ({ label, placeholder, currentValue, onChangeText, numberOfLines }) => {
+const FormInput = ({ label, placeholder, currentValue, onChangeText, numberOfLines, inputStyle }) => {
     const pTop = useSharedValue(20);
     const pos = useSharedValue('absolute');
     const left = useSharedValue(12);
@@ -33,23 +33,24 @@ const FormInput = ({ label, placeholder, currentValue, onChangeText, numberOfLin
         }
     }, [value]);
 
-    const onChange = useCallback((text)=>{
+    const onChange = useCallback((text) => {
         setValue(text);
         onChangeText?.(text);
     }, []);
 
     return (
-        <TouchableWithoutFeedback onPress={()=>{
+        <TouchableWithoutFeedback onPress={() => {
             outFocusInput()
         }}>
             <View style={css.viewInput}>
                 <Animated.Text style={labelTop}>{label}</Animated.Text>
                 <TextInput
                     onFocus={focusInput}
-                    style={{ fontSize: 16, padding: 0, height: 24,}}
+                    style={[{ fontSize: 16, padding: 0, height: 24, }, inputStyle]}
                     onChangeText={onChange}
                     multiline={!!numberOfLines}
                     numberOfLines={numberOfLines}
+                    // placeholder={placeholder}
                 ></TextInput>
             </View>
         </TouchableWithoutFeedback>

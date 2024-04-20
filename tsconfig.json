@@ -16,6 +16,7 @@
       "@elements/*": ["./src/elements/*"],
       "@styles/*":   ["./src/styles/*"],
       "@queries/*":  ["./src/queries/*"],
+      "@constants/*":  ["./src/constants/*"],
     }
   }
 }

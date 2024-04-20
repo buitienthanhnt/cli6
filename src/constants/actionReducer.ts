@@ -1,4 +1,4 @@
-const actionReducer = {
+const actionReducerType = {
     setLang: 'SET_LANG',
     setKey: 'SET_KEY',
     setUser: 'SET_USER',
@@ -17,4 +17,4 @@ const actionReducer = {
     useFirebase: 'USE_FIREBASE',
 };
 
-export default actionReducer;
+export default actionReducerType;

@@ -21,7 +21,7 @@ import Config from "@config/Config";
 import YoutubePlayer from "react-native-youtube-iframe"; // https://lonelycpp.github.io/react-native-youtube-iframe/
 import { openDetail, openSearch } from "@utils/paper";
 import { Navigate } from "@hooks/Navigate";
-import firebaseType from "@utils/firebaseType";
+import firebaseType from "@constants/firebaseType";
 import { useSelector } from "react-redux";
 import database from '@react-native-firebase/database';
 import useDispatchState from '@hooks/redux/useDispatchState';
@@ -165,7 +165,7 @@ const Forward = ({ value }) => {
                     <Image source={{ uri: value?.writer?.image_path }} style={{ width: 40, height: 40, borderRadius: 20 }}></Image>
                     <View style={{ flex: 1 }}>
                         <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '600' }}>{value?.writer?.name}</Text>
-                        <Text>{formatDate(value?.created_at, 'vi-VN')}</Text>
+                        {value?.created_at && <Text>{formatDate(value.created_at, 'vi-VN')}</Text>}
                     </View>
                 </View>
                 <TouchableOpacity style={{ alignItems: 'center', paddingHorizontal: 5 }}>

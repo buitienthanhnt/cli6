@@ -1,9 +1,9 @@
-import { useCallback, useContext, useRef, useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useCallback, useContext, useRef, TouchableWithoutFeedback, Keyboard } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { PaperDetailContext } from "../PaperContext"
 import FormInput from "@elements/FormInput";
-import { addCommentServer } from "@queries/comments";
 import { useComments } from "@hooks/usePapers";
+import LoadingBtn from '@elements/LoadingBtn';
 
 const CommentForm = ({ parentId }) => {
     const { paperId, commentParent } = useContext(PaperDetailContext);
@@ -26,7 +26,8 @@ const CommentForm = ({ parentId }) => {
     }, []);
 
     return (
-        <View style={css.container}>
+
+        <View style={css.container} >
             <Text style={css.title}>Send your comment:</Text>
             <View style={{ flexDirection: 'row', gap: 2 }}>
                 <View style={{ flex: 1, height: 50 }}>
@@ -37,13 +38,17 @@ const CommentForm = ({ parentId }) => {
                     <FormInput label={'Email'} placeholder={'user email'} onChangeText={onChangeEmail}></FormInput>
                 </View>
             </View>
-
-            <View style={{ height: 80 }}>
-                <FormInput label={'Content'} placeholder={'Content'} onChangeText={onChangeContent} numberOfLines={4}></FormInput>
-            </View>
-
-
-            <TouchableOpacity style={css.btn} onPress={() => {
+                <View style={{ height: 90, }}>
+                    <FormInput
+                        label={'Content'}
+                        placeholder={'Content'}
+                        onChangeText={onChangeContent}
+                        numberOfLines={4}
+                        inputStyle={{ flex: 1, }}
+                    >
+                    </FormInput>
+                </View>
+            <LoadingBtn style={css.btn} onPress={() => {
                 // console.log(name.current, email.current, content.current, commentParent);
                 addComment(paperId, {
                     content: content.current,
@@ -52,32 +57,36 @@ const CommentForm = ({ parentId }) => {
                     parent_id: commentParent
                 })
             }}>
-                <Text style={css.submitLabel}>send</Text>
-            </TouchableOpacity>
-
-            {/* <Button title="send" ></Button> */}
+                <Text style={css.submitLabel}>Send</Text>
+            </LoadingBtn>
         </View>
+
     )
 }
 
 const css = StyleSheet.create({
     container: {
         flex: 1,
-        gap: 4,
-        paddingBottom: 10,
+        gap: 8,
         paddingVertical: 20,
         paddingHorizontal: 10,
-        // justifyContent: 'flex-end',
-        // marginBottom: 100
+        borderRadius: 10,
     },
     btn: {
-        height: 40, justifyContent: 'center', alignItems: 'center', backgroundColor: '#62d9ff', borderRadius: 10
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(164, 149, 219, 1)',
+        borderRadius: 10,
+        width: '100%'
     },
     submitLabel: {
         fontSize: 18, fontWeight: 'bold', color: 'white'
     },
     title: {
-        textDecorationLine: 'underline', color: '#cd62ff', fontSize: 16
+        textDecorationLine: 'underline',
+        color: '#cd62ff',
+        fontSize: 16,
     }
 })
 

@@ -23,7 +23,8 @@ module.exports = {
 						 '@netWork':  './src/netWork',
 						 '@elements': './src/elements',
 						 '@styles':   './src/styles',
-						 '@queries':  './src/queries',
+						 '@queries':  './src/queries', // constants
+						 '@constants':  './src/constants',
 						},
 					},
 				],

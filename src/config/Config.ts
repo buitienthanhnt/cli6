@@ -1,6 +1,6 @@
 const Config = (path = '', params = null) => {
   const Config = {
-    useFirebase:  false, // default=false, dev=true
+    useFirebase:  true, // default=false, dev=true
     domain: '',
     http: 'http://',
     https: 'https://',
@@ -10,6 +10,7 @@ const Config = (path = '', params = null) => {
     // ip: "192.168.1.214/",                 // 192.168.1.214       (m6800)
     // ip: '192.168.100.156/',               // 192.168.100.156        (jm-destop)
     uri: "laravel1/public/index.php/",       // laravel1/public/index.php
+    token: 'tha_nan_demo_request_token',
     api_request: {
       getInfo: 'api/info',
       getpapers: 'api/getpapers/',
@@ -39,7 +40,7 @@ const Config = (path = '', params = null) => {
       reponseJson: 'json',
       responseXml: 'xml',
     },
-    buy_params: function (params) {
+    buy_params: function (params: any): string {
       // this không dùng được trong: arrow function vì bản thân this lúc đó sẽ la windown.
       // nên để dùng this thì cần dùng: function để khai báo, qua đó nó sẽ kế thừa ngữ cảnh object cha
       var values = '?';
@@ -48,22 +49,13 @@ const Config = (path = '', params = null) => {
       }
       return values.slice(0, values.lastIndexOf('&')); // loại bỏ dấu:: "&" ở vị trí cuối cùng.
     },
-    custom_url: function () {
+    custom_url: function (): string {
       return this.domain ? this.domain : this.http + this.ip + this.uri;
     },
-    public_url: function () {
+    public_url: function (): string {
       return this.http + this.ip + this.main + 'public/';
     },
   };
-
-  let url = '';
-
-  if (Config.domain) {
-    url = Config.domain;
-  } else {
-    url = Config.http + Config.ip + Config.uri;
-  }
-  Config['url'] = url;
   return Config;
 };
 

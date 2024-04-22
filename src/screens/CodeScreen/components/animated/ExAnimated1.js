@@ -1,7 +1,23 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Button, Text, TouchableOpacity, View, StyleSheet, Dimensions, FlatList } from 'react-native';
-import Animated, { ReduceMotion, withDecay } from 'react-native-reanimated';
-import { useSharedValue, useAnimatedStyle, withSpring, withTiming, Easing, withRepeat, withDelay } from 'react-native-reanimated';
+import {useCallback, useEffect, useState} from 'react';
+import {
+  Button,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+} from 'react-native';
+import Animated, {ReduceMotion, withDecay} from 'react-native-reanimated';
+import {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+  Easing,
+  withRepeat,
+  withDelay,
+} from 'react-native-reanimated';
 import Carousel from '@elements/Carousel';
 import ExtraConten from '@elements/ExtraConten';
 import testList from '@assets/data/testList';
@@ -20,23 +36,27 @@ const ExAnimated1 = () => {
   };
 
   return (
-    <View style={{ paddingHorizontal: 10 }}>
+    <View style={{paddingHorizontal: 10}}>
       <Animated.View
         style={{
           width,
           height: height,
           backgroundColor: 'violet',
           left: left,
-          top: 20
-        }}
-      >
+          top: 20,
+        }}>
         <Button onPress={handlePress} title="Click me 1" />
       </Animated.View>
 
-      <Carousel data={testList} onPress={()=>{
-        console.log(123123);
-      }}></Carousel>
-      <ExtraConten title={'View conten'} contenStyle={{ backgroundColor: 'violet', borderRadius: 10, padding: 8 }}>
+      <Carousel
+        data={testList}
+        onPress={() => {
+          console.log(123123);
+        }}
+      />
+      <ExtraConten
+        title={'View conten'}
+        contenStyle={{backgroundColor: 'violet', borderRadius: 10, padding: 8}}>
         <Text>123</Text>
         <Text>1234</Text>
         <Text>12345</Text>
@@ -48,7 +68,9 @@ const ExAnimated1 = () => {
         <Text>1231011</Text>
         <Text>12311123</Text>
       </ExtraConten>
-      <ExtraConten title={'View conten'} contenStyle={{ backgroundColor: 'violet', borderRadius: 10, padding: 8 }}>
+      <ExtraConten
+        title={'View conten'}
+        contenStyle={{backgroundColor: 'violet', borderRadius: 10, padding: 8}}>
         <Text>123</Text>
         <Text>1234</Text>
         <Text>12345</Text>
@@ -61,34 +83,38 @@ const ExAnimated1 = () => {
         <Text>12311123</Text>
       </ExtraConten>
     </View>
-
   );
-}
+};
 
 const ExAnimated2 = () => {
   const translateX = useSharedValue(0);
 
   const animatedStyles = useAnimatedStyle(() => ({
-    transform: [{ translateX: withSpring(translateX.value * 2) }],
+    transform: [{translateX: withSpring(translateX.value * 2)}],
   }));
 
   return (
     <View>
       <Animated.View
-        style={[{
-          width: 60, height: 60, backgroundColor: 'violet',
-        }, animatedStyles]}
-      >
-      </Animated.View>
+        style={[
+          {
+            width: 60,
+            height: 60,
+            backgroundColor: 'violet',
+          },
+          animatedStyles,
+        ]}
+      />
 
-      <TouchableOpacity onPress={() => {
-        translateX.value = withSpring(translateX.value + 30)
-      }}>
+      <TouchableOpacity
+        onPress={() => {
+          translateX.value = withSpring(translateX.value + 30);
+        }}>
         <Text>on click</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 const duration = 2000;
 
@@ -97,10 +123,10 @@ function ExAnimated3() {
   const linear = useSharedValue(200);
 
   const animatedDefault = useAnimatedStyle(() => ({
-    transform: [{ translateX: defaultAnim.value }],
+    transform: [{translateX: defaultAnim.value}],
   }));
   const animatedChanged = useAnimatedStyle(() => ({
-    transform: [{ translateX: linear.value }],
+    transform: [{translateX: linear.value}],
   }));
 
   useEffect(() => {
@@ -111,7 +137,7 @@ function ExAnimated3() {
         easing: Easing.linear,
       }),
       -1,
-      true
+      true,
     );
     defaultAnim.value = withRepeat(
       // highlight-next-line
@@ -119,9 +145,9 @@ function ExAnimated3() {
         duration,
       }),
       -1,
-      true
+      true,
     );
-  }, []);
+  }, [defaultAnim, linear]);
 
   return (
     <View style={styles.container}>
@@ -135,48 +161,55 @@ function ExAnimated3() {
   );
 }
 
-const ExAnimated4 = (props) => {
+const ExAnimated4 = props => {
   const width = 210;
   const height = 120;
   const topY = useSharedValue(-120);
   const [show, setShow] = useState(false);
-  useEffect(() => {
-
-  }, [])
+  useEffect(() => {}, []);
   return (
-    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-      {show && (<Animated.View
-        style={{
-          width: width,
-          height: height,
-          backgroundColor: 'rgba(0, 207, 101, 0.4)',
-          position: 'absolute',
-          transform: [{ translateY: topY }],
-          borderRadius: 10,
-          padding: 10,
-          left: (Dimensions.get('screen').width / 2 - width / 2),
-          zIndex: 1
-        }}
-      >
-        <Text style={{ fontSize: 16, fontWeight: 500 }}>{props?.message || 'Not message'}</Text>
-      </Animated.View>)}
+    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      {show && (
+        <Animated.View
+          style={{
+            width: width,
+            height: height,
+            backgroundColor: 'rgba(0, 207, 101, 0.4)',
+            position: 'absolute',
+            transform: [{translateY: topY}],
+            borderRadius: 10,
+            padding: 10,
+            left: Dimensions.get('screen').width / 2 - width / 2,
+            zIndex: 1,
+          }}>
+          <Text style={{fontSize: 16, fontWeight: 500}}>
+            {props?.message || 'Not message'}
+          </Text>
+        </Animated.View>
+      )}
 
-      <Button title='show messsage' onPress={() => {
-        setShow(true);
-        topY.value = withTiming(-60, { duration: 1420, easing: Easing.elastic(2), reduceMotion: ReduceMotion.System })
-        setTimeout(() => {
-          setShow(false);
-          topY.value = -height;
-        }, 3000);
-      }}></Button>
-      <Text></Text>
-      <View style={{ backgroundColor: 'violet', width: 120, height: 220 }}>
-      </View>
+      <Button
+        title="show messsage"
+        onPress={() => {
+          setShow(true);
+          topY.value = withTiming(-60, {
+            duration: 1420,
+            easing: Easing.elastic(2),
+            reduceMotion: ReduceMotion.System,
+          });
+          setTimeout(() => {
+            setShow(false);
+            topY.value = -height;
+          }, 3000);
+        }}
+      />
+      <Text />
+      <View style={{backgroundColor: 'violet', width: 120, height: 220}} />
     </View>
   );
-}
+};
 
-const ExAnimated5 = (props) => {
+const ExAnimated5 = props => {
   const DURATION = 1000;
   const DELAY = 500;
 
@@ -206,44 +239,47 @@ const ExAnimated5 = (props) => {
     top.value = withTiming(0, {
       duration: 1000,
       easing: Easing.inOut(Easing.ease),
-    })
-  }, [])
+    });
+  }, [top]);
 
   const onClose = useCallback(() => {
     top.value = withTiming(Dimensions.get('screen').height, {
       duration: 1000,
       easing: Easing.inOut(Easing.ease),
-    })
+    });
     setTimeout(() => {
-      props.navigation.goBack()
-    }, 1000)
-  }, [])
+      props.navigation.goBack();
+    }, 1000);
+  }, [props.navigation, top]);
 
   return (
-    <Animated.View style={[styles.container, { top: top }]}>
-      <TouchableOpacity style={{ height: 160, }} onPress={onClose}></TouchableOpacity>
-      <View style={[
-        {
-          backgroundColor: 'white',
-          flex: 1,
-          borderTopStartRadius: 30,
-          borderTopEndRadius: 30,
-          // justifyContent: 'center',
-          // alignItems: 'center'
-        }]}>
-        <View style={{ alignItems: 'flex-end', paddingRight: 15, paddingTop: 15 }}>
-          <TouchableOpacity style={{ padding: 5 }} onPress={onClose}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>X</Text>
+    <Animated.View style={[styles.container, {top: top}]}>
+      <TouchableOpacity style={{height: 160}} onPress={onClose} />
+      <View
+        style={[
+          {
+            backgroundColor: 'white',
+            flex: 1,
+            borderTopStartRadius: 30,
+            borderTopEndRadius: 30,
+            // justifyContent: 'center',
+            // alignItems: 'center'
+          },
+        ]}>
+        <View
+          style={{alignItems: 'flex-end', paddingRight: 15, paddingTop: 15}}>
+          <TouchableOpacity style={{padding: 5}} onPress={onClose}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>X</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.text1}>
-          <Animated.Text style={{ ...styles.label, opacity: opacity1 }}>
+          <Animated.Text style={{...styles.label, opacity: opacity1}}>
             {text[0]}
           </Animated.Text>
-          <Animated.Text style={{ ...styles.label, opacity: opacity2 }}>
+          <Animated.Text style={{...styles.label, opacity: opacity2}}>
             {text[1]}
           </Animated.Text>
-          <Animated.Text style={{ ...styles.label, opacity: opacity3 }}>
+          <Animated.Text style={{...styles.label, opacity: opacity3}}>
             {text[2]}
           </Animated.Text>
         </View>
@@ -251,12 +287,12 @@ const ExAnimated5 = (props) => {
       </View>
     </Animated.View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.0)'
+    backgroundColor: 'rgba(255, 255, 255, 0.0)',
     // alignItems: 'center',
     // justifyContent: 'center',
     // height: '100%',
@@ -303,12 +339,10 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export { ExAnimated1, ExAnimated2, ExAnimated3, ExAnimated4, ExAnimated5 };
+export {ExAnimated1, ExAnimated2, ExAnimated3, ExAnimated4, ExAnimated5};
 // =========================================================
 // useSharedValue: là 1 hook để tham chiếu giá trị cho hiệu ứng(đây là yêu cầu bắt buộc cho việc lưu và cập nhập giá trị thuộc tính.)
 // withSpring: là 1 dạng hiệu ứng để chi phối giá trị cập nhập.
-
 
 // https://www.w3schools.com/css/css3_2dtransforms.asp
 // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX

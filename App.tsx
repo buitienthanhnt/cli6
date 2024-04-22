@@ -5,32 +5,30 @@
  * @format
  */
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import type { PropsWithChildren } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   AppState,
   Image,
   SafeAreaView,
   StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
   View,
   Linking,
   Modal,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import Config from "react-native-config";
-import { navigationRef } from '@hooks/Navigate'; // để di chuyển qua các màn hình
-import { check, request, requestNotifications, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import Config from 'react-native-config';
+import {navigationRef} from '@hooks/Navigate'; // để di chuyển qua các màn hình
+import {check, request, RESULTS} from 'react-native-permissions';
 
 // adb reverse tcp:9090 tcp:9090 (chạy lênh này nếu dùng qua android hay máy ảo android để kíck hoạt reactotron)
-import Reactotron from 'reactotron-react-native'
+import Reactotron from 'reactotron-react-native';
 
 // react-native-onesignal: lưu ý chỉ chạy trên máy thật(máy ảo sẽ không đăng ký được subrier) // https://documentation.onesignal.com/docs/react-native-sdk-setup
-import { LogLevel, OneSignal } from 'react-native-onesignal';
-if (__DEV__) { // adb reverse tcp:9090 tcp:9090
-  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'))
+import {LogLevel, OneSignal} from 'react-native-onesignal';
+if (__DEV__) {
+  // adb reverse tcp:9090 tcp:9090
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
 }
 
 // https://viblo.asia/p/webpack-5-babel-plugin-module-resolver-djeZ1EN8ZWz tạo Alias trong webpack
@@ -39,86 +37,46 @@ if (__DEV__) { // adb reverse tcp:9090 tcp:9090
 
 // import Icon from 'react-native-vector-icons/FontAwesome';  // npm install react-native-vector-icons --save && thêm: apply from: "../../node_modules/react-native-vector-icons/fonts.gradle" vào: android/app/build.gradle
 // import Icon from 'react-native-vector-icons/Ionicons';
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabs from '@bottoms/Bottom';
-import { requestUserPermission } from '@utils/notificationHelper';
+import {requestUserPermission} from '@utils/notificationHelper';
 import linking from './linking';
-import { QueryClient, QueryClientProvider } from 'react-query'  // dùng cho getdata api
-import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
+import {QueryClient, QueryClientProvider} from 'react-query'; // dùng cho getdata api
+import {Provider} from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
 import AppStore from '@redux/AppStore';
 import remoteConfig from '@react-native-firebase/remote-config';
 import DeviceInfo from 'react-native-device-info';
-import { ExAnimated5 } from '@screens/CodeScreen/components/animated/ExAnimated1';
+import {ExAnimated5} from '@screens/CodeScreen/components/animated/ExAnimated1';
 import Login from '@screens/AccountScreen/Login';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 const Stack = createNativeStackNavigator();
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({ children, title }: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
 function App(): JSX.Element {
-
-  const [token, setToken] = useState("");
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(()=>{ // đăng ký cho OneSignal active in rootComponent
+  useEffect(() => {
+    // đăng ký cho OneSignal active in rootComponent
     OneSignal.Debug.setLogLevel(LogLevel.Verbose);
 
     // OneSignal Initialization
     OneSignal.initialize(Config.ONESIGNAL_APP_ID || '');
-  
+
     // requestPermission will show the native iOS or Android notification permission prompt.
     // We recommend removing the following code and instead using an In-App Message to prompt for notification permission
     OneSignal.Notifications.requestPermission(true);
-  
+
     // Method for listening for notification clicks
-    OneSignal.Notifications.addEventListener('click', (event) => {
+    OneSignal.Notifications.addEventListener('click', event => {
       console.log('OneSignal: notification clicked:', event);
     });
   }, []);
 
   const updateApp = useCallback(() => {
-    const url = 'https://google.com'
+    const url = 'https://google.com';
     Linking.canOpenURL(url)
       .then(supported => {
         if (!supported) {
@@ -134,7 +92,9 @@ function App(): JSX.Element {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
       if (nextAppState === 'active') {
-        const remoteVersion = remoteConfig().getValue('remote_version').asString();
+        const remoteVersion = remoteConfig()
+          .getValue('remote_version')
+          .asString();
         const appVersion = DeviceInfo.getVersion();
         if (Number(remoteVersion) < Number(appVersion)) {
           // setModalVisible(true);
@@ -153,7 +113,6 @@ function App(): JSX.Element {
           with some UI asking for the user to update. (You can probably show
           a button, which on press takes the user directly to the store)
          */
-
       }
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
@@ -168,14 +127,17 @@ function App(): JSX.Element {
   useEffect(() => {
     Reactotron.log('hello rendering world');
     remoteConfig().setDefaults({
-      default_image: 'https://firebasestorage.googleapis.com/v0/b/newpaper-25148.appspot.com/o/demo%2FgBYNm4ke2I.png?alt=media&token=24057320-9c26-46cc-b1be-711c7296cc6b',
+      default_image:
+        'https://firebasestorage.googleapis.com/v0/b/newpaper-25148.appspot.com/o/demo%2FgBYNm4ke2I.png?alt=media&token=24057320-9c26-46cc-b1be-711c7296cc6b',
     });
 
-    check('android.permission.POST_NOTIFICATIONS').then((result) => {
+    check('android.permission.POST_NOTIFICATIONS').then(result => {
       switch (result) {
         case RESULTS.UNAVAILABLE:
           // console.log('This feature is not available (on this device / in this context)');
-          request('android.permission.POST_NOTIFICATIONS').then((result) => { })
+          request('android.permission.POST_NOTIFICATIONS').then(result => {
+            console.log(result);
+          });
           break;
         case RESULTS.DENIED:
         // console.log('The permission has not been requested / is denied but requestable');
@@ -194,64 +156,64 @@ function App(): JSX.Element {
       }
     });
     requestUserPermission();
-    getFcmToken();
   }, []);
-
-  const getFcmToken = async () => {
-    const token = await AsyncStorage.getItem("fcmToken");
-    console.log("token in app: ", token);
-    if (token) {
-      setToken(token);
-    }
-  };
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   return (
     <Provider store={AppStore}>
       <QueryClientProvider client={queryClient} contextSharing={true}>
         {/* linking dùng cho chuyển màn với schema hoặc Linking; ref dùng cho chuyển màn với hook(điều hướng ngoài component)  */}
-        <NavigationContainer linking={linking} fallback={<WaitLoading></WaitLoading>} ref={navigationRef}>
+        <NavigationContainer
+          linking={linking}
+          fallback={<WaitLoading />}
+          ref={navigationRef}>
           <SafeAreaView>
-            <StatusBar backgroundColor="#61dafb" animated={true} networkActivityIndicatorVisible={true} />
+            <StatusBar
+              backgroundColor="#61dafb"
+              animated={true}
+              networkActivityIndicatorVisible={true}
+            />
           </SafeAreaView>
           <Stack.Navigator>
-            <Stack.Screen name="BottomTabs" component={BottomTabs} options={{ headerShown: false }} />
-            <Stack.Screen 
-              name="ExAnimated5" 
-              component={ExAnimated5} 
-              options={{ presentation: 'transparentModal', headerShown: false }}
+            <Stack.Screen
+              name="BottomTabs"
+              component={BottomTabs}
+              options={{headerShown: false}}
             />
-             <Stack.Screen 
-              name="Login" 
-              component={Login} 
-              options={{headerShown: true, presentation: 'modal' }}
+            <Stack.Screen
+              name="ExAnimated5"
+              component={ExAnimated5}
+              options={{presentation: 'transparentModal', headerShown: false}}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{headerShown: false, presentation: 'transparentModal'}}
             />
           </Stack.Navigator>
         </NavigationContainer>
       </QueryClientProvider>
       <Modal visible={modalVisible} transparent={true}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-          <View style={{
-            width: 300,
-            height: 220,
-            backgroundColor: 'rgba(111, 148, 176, 0.5)',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 20
-          }}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View
+            style={{
+              width: 300,
+              height: 220,
+              backgroundColor: 'rgba(111, 148, 176, 0.5)',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 20,
+            }}>
             <TouchableOpacity
               style={{
                 height: 30,
                 backgroundColor: 'violet',
                 borderRadius: 4,
                 justifyContent: 'center',
-                padding: 5
+                padding: 5,
               }}
-              onPress={() => { updateApp() }}>
+              onPress={() => {
+                updateApp();
+              }}>
               <Text>Update app now</Text>
             </TouchableOpacity>
           </View>
@@ -263,30 +225,13 @@ function App(): JSX.Element {
 
 const WaitLoading = () => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Image source={require("@assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Image
+        source={require('@assets/Ripple-1s-200px.gif')}
+        style={{width: 60, height: 60}}
+      />
     </View>
-  )
-}
-
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  );
+};
 
 export default App;

@@ -59,7 +59,7 @@ const BottomTabs = ({ navigation, route }) => {
                 tabBarOptions: { showLabel: false },
                 options: {
                     tabBarLabel: 'code',
-                    tabBarBadge: notifi_count,
+                    tabBarBadge: notifi_count,  // biểu tượng số thông báo trên bottomTab
                     tabBarShowLabel: false,     // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
                     tabBarIcon: ({ focused, color, size }) => (<Icon name={'code'} size={26} color={color} />)
                 }
@@ -70,7 +70,7 @@ const BottomTabs = ({ navigation, route }) => {
     return (
         <Tab.Navigator screenOptions={
             ({ route }) => ({
-                tabBarActiveTintColor: '#669ddd', // màu icon mặc định là xanh, dùng như này sẽ là màu cà chua.
+                tabBarActiveTintColor: '#669ddd', // màu icon mặc định là xanh, dùng như này: 'red' sẽ là màu đỏ.
                 tabBarInactiveTintColor: 'gray',  // gray cũng là màu mặc định luôn.
                 headerShown: false                // ẩn phần tiêu đề bên trên của: Tab.Navigator
             })

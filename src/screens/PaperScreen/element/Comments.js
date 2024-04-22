@@ -10,10 +10,16 @@ import {commentLikeType} from '@constants/commentLikeType';
 import CommentForm from "./CommentForm";
 import { useSelector } from "react-redux";
 import RBSheet from "react-native-raw-bottom-sheet";  // npm i react-native-raw-bottom-sheet
+import { Navigate } from "@hooks/Navigate";
 
 const Comments = ({ paperId }) => {
     const { data } = useComments(paperId, 0);
+    // hook get state of redux store state.
+    const { user_data } = useSelector((state) => state.authenRe);
     const { refRBSheet, setCommentParent } = useContext(PaperDetailContext);
+    const onSuccess = useCallback(()=>{
+        refRBSheet.current.open();
+    }, [])
 
     if (!data || !data.length) {
         return (
@@ -21,6 +27,10 @@ const Comments = ({ paperId }) => {
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={css.title}>Comment{'...........................'} </Text>
                     <TouchableOpacity style={{ ...css.moreBtn, marginLeft: 8, transform: [], alignSelf: 'flex-end' }} onPress={() => {
+                        if(!user_data){
+                            Navigate('Login', {onSuccess: onSuccess})
+                            return;
+                        }
                         refRBSheet.current.open();
                     }}>
                         <Icon name='reply' size={16} color='#821ab2' />

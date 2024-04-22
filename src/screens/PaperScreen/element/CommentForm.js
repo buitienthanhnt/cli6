@@ -4,12 +4,14 @@ import { PaperDetailContext } from "../PaperContext"
 import FormInput from "@elements/FormInput";
 import { useComments } from "@hooks/usePapers";
 import LoadingBtn from '@elements/LoadingBtn';
+import { useSelector } from "react-redux";
 
 const CommentForm = ({ parentId }) => {
     const { paperId, commentParent } = useContext(PaperDetailContext);
     const name = useRef(null);
     const email = useRef(null);
     const content = useRef(null);
+    const { user_data } = useSelector((state) => state.authenRe);
 
     const { addComment } = useComments(paperId);
 
@@ -29,25 +31,33 @@ const CommentForm = ({ parentId }) => {
 
         <View style={css.container} >
             <Text style={css.title}>Send your comment:</Text>
-            <View style={{ flexDirection: 'row', gap: 2 }}>
-                <View style={{ flex: 1, height: 50 }}>
-                    <FormInput label={'User name'} placeholder={'user name'} onChangeText={onChangeName}></FormInput>
+            {user_data ? (
+                <View>
+                    {user_data.name && <Text style={css.userInfo}>{user_data.name}</Text>}
+                    <Text style={css.userInfo}>{user_data.email}</Text>
                 </View>
+            ) : (
+                <View style={{ flexDirection: 'row', gap: 2 }}>
+                    <View style={{ flex: 1, height: 50 }}>
+                        <FormInput label={'User name'} placeholder={'user name'} onChangeText={onChangeName}></FormInput>
+                    </View>
 
-                <View style={{ flex: 1, height: 50 }}>
-                    <FormInput label={'Email'} placeholder={'user email'} onChangeText={onChangeEmail}></FormInput>
+                    <View style={{ flex: 1, height: 50 }}>
+                        <FormInput label={'Email'} placeholder={'user email'} onChangeText={onChangeEmail}></FormInput>
+                    </View>
                 </View>
+            )}
+
+            <View style={{ height: 90, }}>
+                <FormInput
+                    label={'Content'}
+                    placeholder={'Content'}
+                    onChangeText={onChangeContent}
+                    numberOfLines={4}
+                    inputStyle={{ flex: 1, }}
+                >
+                </FormInput>
             </View>
-                <View style={{ height: 90, }}>
-                    <FormInput
-                        label={'Content'}
-                        placeholder={'Content'}
-                        onChangeText={onChangeContent}
-                        numberOfLines={4}
-                        inputStyle={{ flex: 1, }}
-                    >
-                    </FormInput>
-                </View>
             <LoadingBtn style={css.btn} onPress={() => {
                 // console.log(name.current, email.current, content.current, commentParent);
                 addComment(paperId, {
@@ -59,7 +69,7 @@ const CommentForm = ({ parentId }) => {
             }}>
                 <Text style={css.submitLabel}>Send</Text>
             </LoadingBtn>
-        </View>
+        </View >
 
     )
 }
@@ -87,6 +97,11 @@ const css = StyleSheet.create({
         textDecorationLine: 'underline',
         color: '#cd62ff',
         fontSize: 16,
+    },
+    userInfo: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: 'rgba(171, 142, 255, 1)'
     }
 })
 

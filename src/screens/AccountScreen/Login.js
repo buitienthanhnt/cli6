@@ -1,19 +1,21 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Button, Dimensions, Image, Text, TextInput, View, TouchableOpacity, ImageBackground } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Keyboard } from "react-native";
 import crashlytics from '@react-native-firebase/crashlytics';
-import auth, { GoogleAuthProvider, firebase} from '@react-native-firebase/auth';  // https://rnfirebase.io/reference/auth/user
+import auth, { GoogleAuthProvider, firebase } from '@react-native-firebase/auth';  // https://rnfirebase.io/reference/auth/user
 import { GoogleSignin } from '@react-native-google-signin/google-signin';          // yarn add @react-native-google-signin/google-signin
 import { Alert } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import useDispatchState from '@hooks/redux/useDispatchState';
+import { useSelector } from "react-redux";
+
 // https://codingpr.com/react-firebase-auth-tutorial/
 // https://codingpr.com/react-firebase-password-reset-feature/
 
 GoogleSignin.configure({
     webClientId: '515691323092-skujhelipo5161lqdtoif44qa759q3ha.apps.googleusercontent.com',
-  });
+});
 
 const Login = (props) => {
-
     const [value, setValue] = useState(0);
     const [error, setError] = useState(false);
     const [fullName, setFullName] = useState({ name: 'name', familyName: 'family' });
@@ -21,6 +23,9 @@ const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState(null);
+
+    const { user_data } = useSelector((state) => state.authenRe);
+    const { actionReducer, updateState } = useDispatchState();
 
     // Set an initializing state whilst Firebase connects
     const [user, setUser] = useState();
@@ -32,11 +37,11 @@ const Login = (props) => {
         }
     }
 
-    const updateEmail = ()=>{
+    const updateEmail = () => {
         const authen = auth().currentUser;
-        authen.updateEmail('thanh.bui@jmango360.com').then(()=>{
+        authen.updateEmail('thanh.bui@jmango360.com').then(() => {
 
-        }).catch((error)=>{
+        }).catch((error) => {
             console.log(error);
         });
     }
@@ -72,7 +77,7 @@ const Login = (props) => {
     //     };
     // }, [value]);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(message);
         if (message) {
             setTimeout(() => {
@@ -81,17 +86,26 @@ const Login = (props) => {
         }
     }, [message]);
 
+    useEffect(() => {
+        console.log('______', user_data)
+        if (user_data) {
+            return () => {
+                props.route.params.onSuccess()
+            }
+        }
+    }, [user_data])
+
     if (user) {
         console.log(user);
         return (
-            <View style={{padding: 12}}>
+            <View style={{ padding: 12 }}>
                 <Text>Logined</Text>
-                <Text style={{fontSize: 18, fontWeight: 'bold'}}>user: {user.email}</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>user: {user.email}</Text>
                 <Text></Text>
-                <TouchableOpacity style={{backgroundColor: 'rgba(119, 193, 145, 0.8)', borderRadius: 18, height: 36, justifyContent: "center", alignItems: 'center'}} onPress={()=>{
+                <TouchableOpacity style={{ backgroundColor: 'rgba(119, 193, 145, 0.8)', borderRadius: 18, height: 36, justifyContent: "center", alignItems: 'center' }} onPress={() => {
                     auth()
-                    .signOut()
-                    .then(() => console.log('User signed out!'));
+                        .signOut()
+                        .then(() => console.log('User signed out!'));
                 }}>
                     <Text>LogOut</Text>
                 </TouchableOpacity>
@@ -105,10 +119,10 @@ const Login = (props) => {
         await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
         // Get the users ID token
         const { idToken } = await GoogleSignin.signIn();
-      
+
         // Create a Google credential with the token
         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      
+
         // Sign-in the user with the credential
         return auth().signInWithCredential(googleCredential);
     }
@@ -124,158 +138,195 @@ const Login = (props) => {
                 type: 'success',
                 value: 'sended email to change password, Please change and login with new password'
             });
-        }else{
+        } else {
             setError(true);
         }
     }
 
-    const verifyPhoneNumber = ()=>{
+    const verifyPhoneNumber = () => {
         firebase.auth().verifyPhoneNumber('+1 650-555-3434', 60).on('state_changed', (phoneAuthSnapshot) => {
             console.log(phoneAuthSnapshot);
             console.log('+1 650-555-3434');
             console.log('Snapshot state: ', phoneAuthSnapshot.state);
-        //    return Promise.reject(
-        //       new Error('Code not sent!')
-        //     );
+            //    return Promise.reject(
+            //       new Error('Code not sent!')
+            //     );
         },)
-        .catch((error) => {
-        console.error(error.message);
-        });
+            .catch((error) => {
+                console.error(error.message);
+            });
     };
 
-    const signInPhone = ()=>{
-        return auth().signInWithPhoneNumber('+84702032201').then((result)=>{
+    const signInPhone = () => {
+        return auth().signInWithPhoneNumber('+84702032201').then((result) => {
             console.log('11111', result);
         });
     }
 
+    const onLogin = useCallback(() => {
+
+        if (!email || !password) {
+            setMessage({
+                type: 'error',
+                value: 'email & password is required!',
+            });
+        }
+        else {
+            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+            if (reg.test(email) === false) {
+                console.log("Email is Not Correct");
+                return false;
+            }
+            updateState(actionReducer.setUser, {
+                email: email,
+                password: password
+            })
+            props.navigation.goBack();
+            return;
+            // use google firebase
+            auth()
+                .signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    console.log('User account created & signed in!');
+                })
+                .catch(error => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        console.log('That email address is already in use!');
+                    }
+
+                    if (error.code === 'auth/invalid-email') {
+                        console.log('That email address is invalid!');
+                    }
+
+                    console.error(error);
+                });
+        }
+    }, [email, password])
+
     return (
-        <ImageBackground style={{flex: 1, padding: 20 }} source={require("../../assets/pexels-brakou-abdelghani-1723637.jpg")}>
-            {message && <Text style={{color: message.type === 'success' ? 'green' : 'red'}}>{message.value}</Text>}
-            {error && <Text style={{color: 'red'}}>email is required!</Text>}
-            <TextInput style={{ borderWidth: 1, borderRadius: 10, borderColor: 'rgba(0, 174, 215, 0.7)', paddingLeft: 10 }} 
-            placeholder="input email"
-            placeholderTextColor={'rgba(0, 174, 215, 0.7)'}
-                onChangeText={(value) => {
-                    setEmail(value);
-                }}
-            ></TextInput>
-            <View style={{ height: 12 }}></View>
-            <TextInput style={{ borderWidth: 1, borderRadius: 10, borderColor: 'rgba(0, 174, 215, 0.7)', paddingLeft: 10 }} 
-            placeholder="input password" secureTextEntry={true}
-            placeholderTextColor={'rgba(0, 174, 215, 0.7)'}
-                onChangeText={(value) => {
-                    setPassword(value);
-                }}
-            ></TextInput>
-            <View style={{ height: 12 }}></View>
-            <TouchableOpacity 
-                style={{ backgroundColor: 'rgba(119, 193, 145, 0.8)', borderRadius: 18, height: 36, 
-                    justifyContent: "center", alignItems: 'center' }}
-                onPress={() => {
-                    if (!email || !password) {
-                        setMessage({
-                            type: 'error',
-                            value: 'email & password is required!',
-                        });
-                    }
-                    else {
-                        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-                        if (reg.test(email) === false) {
-                            console.log("Email is Not Correct");
-                            return false;
+        <TouchableWithoutFeedback
+            style={{ backgroundColor: 'red' }}
+            onPress={() => {
+                Keyboard.dismiss();
+            }}>
+            <ImageBackground style={{ flex: 1, padding: 20 }} source={require("../../assets/pexels-brakou-abdelghani-1723637.jpg")}>
+                {message && <Text style={{ color: message.type === 'success' ? 'green' : 'red' }}>{message.value}</Text>}
+                {error && <Text style={{ color: 'red' }}>email is required!</Text>}
+                <TextInput
+                    style={{
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderColor: 'rgba(0, 174, 215, 0.7)',
+                        padding: 10
+                    }}
+                    placeholder="input email"
+                    placeholderTextColor={'rgba(0, 174, 215, 0.7)'}
+                    onChangeText={(value) => {
+                        setEmail(value);
+                    }}
+                ></TextInput>
+                <TextInput
+                    className={'mt-3'}
+                    style={{
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderColor: 'rgba(0, 174, 215, 0.7)',
+                        padding: 10,
+                    }}
+                    placeholder="input password" secureTextEntry={true}
+                    placeholderTextColor={'rgba(0, 174, 215, 0.7)'}
+                    onChangeText={(value) => {
+                        setPassword(value);
+                    }}
+                ></TextInput>
+                <TouchableOpacity
+                    className={'mt-3'}
+                    style={{
+                        backgroundColor: 'rgba(119, 193, 145, 0.8)', borderRadius: 18, height: 36,
+                        justifyContent: "center", alignItems: 'center'
+                    }}
+                    onPress={onLogin}
+                >
+                    <Text style={{ fontSize: 16 }}>Login</Text>
+                </TouchableOpacity >
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10, marginTop: 10 }}>
+                    <TouchableOpacity style={{
+                        flex: 1, backgroundColor: 'rgba(255, 255, 255, 1.0)',
+                        borderRadius: 18, height: 36, shadowColor: '#52006A',
+                        elevation: 20,
+                        justifyContent: "center", alignItems: 'center'
+                    }} onPress={
+                        () => onGoogleButtonPress().then(() => {
+                            console.log('Signed in with Google!');
+                            console.log(auth().currentUser);
+                        })
+                    }>
+                        <Text style={{ color: 'tomato' }}><Icon name='google' size={18} color='tomato' />  google</Text>
+                    </TouchableOpacity>
+                    <Text></Text>
+
+                    <TouchableOpacity style={{
+                        flex: 1, backgroundColor: 'rgba(0, 174, 215, 0.7)', borderRadius: 18, height: 36,
+                        justifyContent: "center", alignItems: 'center'
+                    }} onPress={
+                        () => {
+                            console.log('forgot password');
+                            passwordReset();
                         }
-                        auth()
-                            .signInWithEmailAndPassword(email, password)
-                            .then(() => {
-                                console.log('User account created & signed in!');
-                            })
-                            .catch(error => {
-                                if (error.code === 'auth/email-already-in-use') {
-                                    console.log('That email address is already in use!');
-                                }
+                    }>
+                        <Text>forgot password e</Text>
+                    </TouchableOpacity>
+                </View>
 
-                                if (error.code === 'auth/invalid-email') {
-                                    console.log('That email address is invalid!');
-                                }
-
-                                console.error(error);
-                            });
-                    }
-                    console.log(user, password);
-                }}
-            >
-                <Text style={{ fontSize: 16 }}>Login</Text>
-            </TouchableOpacity >
-            <Text></Text>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 10}}>
-                <TouchableOpacity style={{flex: 1, backgroundColor: 'rgba(255, 255, 255, 1.0)', 
-                borderRadius: 18, height: 36, shadowColor: '#52006A',
-                elevation: 20,
-                        justifyContent: "center", alignItems: 'center' }} onPress={
-                            () => onGoogleButtonPress().then(() => {
-                                console.log('Signed in with Google!');
-                                console.log(auth().currentUser);
-                            })
-                        }>
-                    <Text style={{color: 'tomato'}}><Icon name='google' size={18} color='tomato' />  google</Text>
-                </TouchableOpacity>
-                <Text></Text>
-
-                <TouchableOpacity style={{flex: 1, backgroundColor: 'rgba(0, 174, 215, 0.7)', borderRadius: 18, height: 36, 
-                        justifyContent: "center", alignItems: 'center' }} onPress={
-                            () =>{
-                                console.log('forgot password');
-                                passwordReset();
-                            }
-                        }>
-                    <Text>forgot password e</Text>
-                </TouchableOpacity>
-            </View>
-
-           <View style={{flex: 1, justifyContent: 'flex-end'}}>
-            <TouchableOpacity style={{backgroundColor: 'rgba(119, 193, 145, 0.8) ', borderRadius: 18, height: 36, 
-                            justifyContent: "center", alignItems: 'center' , shadowColor: 'white',
-                            elevation: 20,}} onPress={
-                                () =>{
-                                    verifyPhoneNumber();
-                                }
-                            }>
+                <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                    <TouchableOpacity style={{
+                        backgroundColor: 'rgba(119, 193, 145, 0.8) ', borderRadius: 18, height: 36,
+                        justifyContent: "center", alignItems: 'center', shadowColor: 'white',
+                        elevation: 20,
+                    }} onPress={
+                        () => {
+                            verifyPhoneNumber();
+                        }
+                    }>
                         <Text>verify phoneNumber</Text>
-                </TouchableOpacity>
+                    </TouchableOpacity>
 
-                <Text></Text>
-                <TouchableOpacity style={{backgroundColor: 'rgba(119, 193, 145, 0.8)', borderRadius: 18, height: 36, 
-                            justifyContent: "center", alignItems: 'center' }} onPress={
-                                () =>{
-                                    signInPhone();
-                                }
-                            }>
+                    <Text></Text>
+                    <TouchableOpacity style={{
+                        backgroundColor: 'rgba(119, 193, 145, 0.8)', borderRadius: 18, height: 36,
+                        justifyContent: "center", alignItems: 'center'
+                    }} onPress={
+                        () => {
+                            signInPhone();
+                        }
+                    }>
                         <Text>signIn by phoneNumber</Text>
-                </TouchableOpacity>
-           </View>
+                    </TouchableOpacity>
+                </View>
 
-            {/* <Image
+                {/* <Image
                 // source={require("../../assets/trail-5yOnGsKUNGw-unsplash.jpg")}
                 style={{ width: Dimensions.get('screen').width, height: Dimensions.get('screen').height, resizeMode: 'cover' }}
                 defaultSource={require("../../assets/trail-5yOnGsKUNGw-unsplash.jpg")}
             ></Image> */}
-            {/* <Text>
+                {/* <Text>
                 login screen 1
             </Text> */}
 
-            {/* <Button title="add value" onPress={() => {
+                {/* <Button title="add value" onPress={() => {
                 setValue(value + 1);
             }}></Button> */}
 
-            {/* <Text></Text> */}
+                {/* <Text></Text> */}
 
-            {/* <Button title="call crashlytics" onPress={()=>{
+                {/* <Button title="call crashlytics" onPress={()=>{
                 console.log('crashlytics');
                 crashlytics().crash();
             }}></Button> */}
 
-            {/* <Text>{value}</Text>
+                {/* <Text>{value}</Text>
             <Button title="change title" onPress={() => {
                 // setTitle({value: "aaaaaa"});
                 setFullName({ name: 'TrungHC', familyName: 'HCT' });
@@ -285,8 +336,8 @@ const Login = (props) => {
 
             <Text>{fullName.name}</Text>
             <Text>{fullName.familyName}</Text> */}
-
-        </ImageBackground>
+            </ImageBackground>
+        </TouchableWithoutFeedback>
     )
 }
 

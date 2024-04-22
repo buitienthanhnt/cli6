@@ -58,6 +58,7 @@ import AppStore from '@redux/AppStore';
 import remoteConfig from '@react-native-firebase/remote-config';
 import DeviceInfo from 'react-native-device-info';
 import { ExAnimated5 } from '@screens/CodeScreen/components/animated/ExAnimated1';
+import Login from '@screens/AccountScreen/Login';
 
 const queryClient = new QueryClient()
 
@@ -222,7 +223,12 @@ function App(): JSX.Element {
             <Stack.Screen 
               name="ExAnimated5" 
               component={ExAnimated5} 
-              options={{ presentation: 'transparentModal',headerShown: false }}
+              options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+             <Stack.Screen 
+              name="Login" 
+              component={Login} 
+              options={{headerShown: true, presentation: 'modal' }}
             />
           </Stack.Navigator>
         </NavigationContainer>

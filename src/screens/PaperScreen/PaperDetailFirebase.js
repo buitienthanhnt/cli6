@@ -10,6 +10,7 @@ import { PaperDetailContext } from "./PaperContext";
 import DetailLike from "./element/DetailLike";
 import PaperTag from "./element/PaperTag";
 import PaperCarousel from "./element/PaperCarousel";
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const renderers = {
     iframe: IframeRenderer
@@ -19,11 +20,21 @@ const customHTMLElementModels = {
     iframe: iframeModel
 };
 
-const PaperDetailFirebase = ({ navigation, route: {params: {id}} }) => {
+const PaperDetailFirebase = ({ navigation, route: { params: { id } } }) => {
     const { detail } = usePaperDetailFirebase(id)
     const [commentParent, setCommentParent] = useState(null);
     const refRBSheet = useRef();
-    useEffect(() => { }, []);
+
+    useEffect(() => {
+        // navigation.setOptions({
+        //     headerTitle: 'Nội dung chi tiết',
+        //     headerLeft: () => (
+        //         <FontAwesome5Icon name={'chevron-left'} size={22} color='black' onPress={() => {
+        //             navigation.goBack()
+        //         }} />
+        //     ),
+        // })
+    }, []);
 
     if (detail) {
         return (

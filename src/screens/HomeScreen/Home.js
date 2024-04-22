@@ -125,9 +125,12 @@ const Home = ({ navigation }) => {
                 navigation.navigate("ExampleTwo")
             }}></Button> */}
             <Text></Text>
-            {/* <Button title="to screen modal" onPress={() => {
+            <Button title="to screen modal" onPress={() => {
                 navigation.navigate('ExAnimated5')
-            }}></Button> */}
+            }}></Button>
+            <Button title="to Login" onPress={() => {
+                navigation.navigate('Login')
+            }}></Button>
 
         </ScrollView>
     )

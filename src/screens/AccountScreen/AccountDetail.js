@@ -13,6 +13,9 @@ import { BasicTable, TopTable } from "@screens/components/Table";
 import { BasicSlider } from "@screens/components/Slider";
 import { firebase } from "@react-native-firebase/auth";
 import ActionSheet from 'react-native-actionsheet'     // https://www.npmjs.com/package/react-native-actionsheet
+import LoadingBtn from "@elements/LoadingBtn";
+import useDispatchState from '@hooks/redux/useDispatchState';
+import { useSelector } from "react-redux";
 
 // useRef doc::    https://react.dev/reference/react/useRef#i-cant-get-a-ref-to-a-custom-component
 
@@ -38,6 +41,8 @@ const AccountDetail = (props) => {
             'Cancel'
         ];
     }, [])
+    const { user_data } = useSelector((state) => state.authenRe);
+    const { actionReducer, updateState } = useDispatchState();
     // const { width, height } = Dimensions.get("screen");
     // DeviceInfo.getAndroidId().then((androidId) => {console.log(androidId);}); // https://www.npmjs.com/package/react-native-device-info#getandroidid
     DeviceInfo.getUniqueId().then((uniqueId) => {
@@ -65,6 +70,10 @@ const AccountDetail = (props) => {
         console.log('---------->>>', remoteConfig().getValue('main').asString());
         Alert.alert(JSON.stringify(remoteConfig().getAll()));
     }, []);
+
+    const logout = useCallback(() => {
+        updateState(actionReducer.setUser, null)
+    }, [])
 
     return (
         <ScrollView style={{ paddingHorizontal: 8 }}>
@@ -102,11 +111,25 @@ const AccountDetail = (props) => {
             }}></Button>}
             <Text></Text>
 
-            {firebase.auth().currentUser && <Button title="to userDetail" onPress={() => {
-                console.log(user);
-                props.navigation.navigate("UserDetail");
-            }}></Button>
+            {firebase.auth().currentUser &&
+                <Button title="to userDetail" onPress={() => {
+                    console.log(user);
+                    props.navigation.navigate("UserDetail");
+                }}></Button>
             }
+
+            <View clasName={''}>
+                <Text>
+                    userEmail: {user_data?.email || ''}
+                </Text>
+            </View>
+
+            <LoadingBtn
+                style={css.logoutBtn}
+                onPress={logout}
+            >
+                <Text>Logout</Text>
+            </LoadingBtn>
 
             {/* <Text></Text>
             <Button title="log user" onPress={()=>{
@@ -235,4 +258,11 @@ const AccountDetail = (props) => {
     )
 }
 
-export default AccountDetail;       
+export default AccountDetail;
+
+const css = StyleSheet.create({
+    logoutBtn: {
+        backgroundColor: 'violet',
+        paddingHorizontal: 20
+    }
+})

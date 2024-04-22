@@ -80,12 +80,26 @@ const globalScreen = [
     {
         name: "PaperDetail",
         component: PaperDetail,
-        options: { headerShown: true }
+        options: {
+            headerShown: true,
+            headerTitle: 'Nội dung chi tiết',
+            headerBackTitleVisible: false,
+        },
     },
     {
         name: "PaperDetailFirebase",
         component: PaperDetailFirebase,
-        options: { headerShown: true }
+        options: ({ route, navigation }) => {
+            return {
+                headerShown: true,
+                headerTitle: 'Nội dung chi tiết',
+                headerLeft: () => (
+                    <FontAwesome5Icon name={'chevron-left'} size={22} color='black' onPress={() => {
+                        navigation.goBack()
+                    }} />
+                ),
+            }
+        },
     },
     {
         name: "PaperCategory",

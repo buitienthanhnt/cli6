@@ -37,7 +37,7 @@ const screens = [
         component: 'DemoMemo'
     },
     {
-        name: 'to DemoUseCallBack',
+        name: 'UseCallBack & stanstack',
         component: 'DemoUseCallBack'
     },
     {

@@ -65,6 +65,29 @@ const PaperDetailFirebase = ({ navigation, route: { params: { id } } }) => {
                                 webViewProps: {
                                     /* Any prop you want to pass to iframe WebViews */
                                 }
+                            },
+                            img: {
+                                enableExperimentalPercentWidth: true
+                            }
+                        }}
+                        baseStyle={{
+                            paddingBottom: 0
+                        }}
+                        tagsStyles={{
+                            body: {
+                                // whiteSpace: 'normal',
+                                // color: 'gray'
+                            },
+                            a: {
+                                color: 'green'
+                            },
+                            div: {
+                                // backgroundColor: 'red',
+                                // height: 0
+                            },
+                            img: {
+                                // width: '100%',
+                                position: 'relative'
                             }
                         }}
                         onPress={(event) => { return undefined; }}

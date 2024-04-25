@@ -15,6 +15,7 @@ const PaperListFirebase = ({ navigation }) => {
 
 const PaperListFirebaseData = ({ navigation }) => {
     const { data } = usePapersFirebase();
+
     const renderItem = useCallback(({ item, index }) => {
         if (index % 5 == 0) {
             return <ProductItemHost data={item} isFirebase={true} navigation={navigation}></ProductItemHost>

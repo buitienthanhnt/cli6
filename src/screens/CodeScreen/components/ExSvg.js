@@ -81,6 +81,8 @@ import Svg, {
                     fill="yellow"
                 />
             </Svg>
+
+            
             {/*<Call stroke='red'></Call>*/}
         </View>
       );

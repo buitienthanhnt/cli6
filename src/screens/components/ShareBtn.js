@@ -103,7 +103,7 @@ class ShareBtn extends Component {
     render() {
         return (
             <TouchableOpacity
-                style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+                style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingLeft: 5 }}
                 onPress={() => { this.onShare() }}
             >
                 <Text> | </Text>

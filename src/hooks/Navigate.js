@@ -3,6 +3,7 @@ import { Linking } from 'react-native';
 
 export const navigationRef = createNavigationContainerRef();
 
+// Doc: Điều hướng mà không cần hỗ trợ điều hướng
 // https://reactnavigation.org/docs/navigating-without-navigation-prop/
 export function Navigate(name, params) {
   if (navigationRef.isReady()) {

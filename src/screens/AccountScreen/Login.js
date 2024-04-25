@@ -104,7 +104,6 @@ const Login = props => {
   // }, [value]);
 
   useEffect(() => {
-    console.log(message);
     if (message) {
       setTimeout(() => {
         setMessage(null);
@@ -113,7 +112,6 @@ const Login = props => {
   }, [message]);
 
   useEffect(() => {
-    console.log('______', user_data);
     if (user_data) {
       return () => {
         props.route.params.onSuccess();

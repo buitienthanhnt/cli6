@@ -59,7 +59,7 @@ export default class DetailLike extends Component {
                 <LoadingBtn
                     loadingSize={16}
                     onPress={()=>{this.addAction('like')}}
-                    style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
+                    style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline', padding: 5, }}>
                     {this.state.liked ?
                         <Icon name='thumbs-up' size={14} color='red' />
                         :
@@ -70,14 +70,15 @@ export default class DetailLike extends Component {
                 <LoadingBtn
                     loadingSize={16}
                     onPress={()=>{this.addAction('heart')}}
-                    style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline' }}>
+                    style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'baseline', padding: 5 }}>
                     <Text> | {this.heartCount()} </Text>
                     {this.state.hearted ?
                         <Icon name='heart' size={14} color='red' />
                         :
                         <FontAwesome5Icon name='heart' size={14} color='red' />}
                 </LoadingBtn>
-                <ShareBtn data={{
+                <ShareBtn 
+                data={{
                     url: this.context.url,
                     title: this.context.title
                  }}></ShareBtn>

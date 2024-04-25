@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Button,
   Text,
@@ -8,7 +8,7 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
-import Animated, {ReduceMotion, withDecay} from 'react-native-reanimated';
+import Animated, { ReduceMotion, withDecay, withSequence } from 'react-native-reanimated';
 import {
   useSharedValue,
   useAnimatedStyle,
@@ -36,7 +36,7 @@ const ExAnimated1 = () => {
   };
 
   return (
-    <View style={{paddingHorizontal: 10}}>
+    <View style={{ paddingHorizontal: 10 }}>
       <Animated.View
         style={{
           width,
@@ -56,7 +56,7 @@ const ExAnimated1 = () => {
       />
       <ExtraConten
         title={'View conten'}
-        contenStyle={{backgroundColor: 'violet', borderRadius: 10, padding: 8}}>
+        contenStyle={{ backgroundColor: 'violet', borderRadius: 10, padding: 8 }}>
         <Text>123</Text>
         <Text>1234</Text>
         <Text>12345</Text>
@@ -70,7 +70,7 @@ const ExAnimated1 = () => {
       </ExtraConten>
       <ExtraConten
         title={'View conten'}
-        contenStyle={{backgroundColor: 'violet', borderRadius: 10, padding: 8}}>
+        contenStyle={{ backgroundColor: 'violet', borderRadius: 10, padding: 8 }}>
         <Text>123</Text>
         <Text>1234</Text>
         <Text>12345</Text>
@@ -90,8 +90,42 @@ const ExAnimated2 = () => {
   const translateX = useSharedValue(0);
 
   const animatedStyles = useAnimatedStyle(() => ({
-    transform: [{translateX: withSpring(translateX.value * 2)}],
+    transform: [{ translateX: withSpring(translateX.value * 2) }],
   }));
+
+  const tranX = useSharedValue(0);
+  const tranY = useSharedValue(0);
+
+  const trinhTu = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: tranX.value },
+        { translateY: tranY.value },
+      ],
+      width: 60,
+      height: 60,
+    }
+  })
+
+  const dao = useSharedValue(0);
+  useEffect(() => {
+    dao.value = withRepeat(
+      withTiming(100, { duration: 2000 }), // 1 hoạt ảnh cần lặp lại.
+      4,   // số lần lặp lạil (-1 sẽ là vô tận)
+      true //Hoạt ảnh có nên: chạy ngược lạil(vd x x= 0->dần->100 sau đó sẽ từ từ 100->dần->0) với mỗi lần lặp lại khác hay không. Mặc định là false.
+    )
+
+    tranX.value = withSequence(
+      withTiming(tranX.value + 100, { duration: 1000 }), // giá trị không cộng dồn mà tham chiếu so với giá trị ban đầu.
+      withDelay(1000, withTiming(tranX.value - 50, { duration: 1000 })),  // giá trị không cộng dồn mà tham chiếu so với giá trị ban đầu.
+      withDelay(1000, withTiming(tranX.value + 60, { duration: 1000 }))  // giá trị không cộng dồn mà tham chiếu so với giá trị ban đầu.
+    )
+
+    tranY.value = withSequence(
+      withDelay(1000, withTiming(tranY.value + 50, { duration: 1000 })),  // giá trị không cộng dồn mà tham chiếu so với giá trị ban đầu.
+      withDelay(1000, withTiming(tranY.value, { duration: 1000 }))// ,  // giá trị không cộng dồn mà tham chiếu so với giá trị ban đầu.
+    )
+  }, [])
 
   return (
     <View>
@@ -112,6 +146,16 @@ const ExAnimated2 = () => {
         }}>
         <Text>on click</Text>
       </TouchableOpacity>
+
+      <Animated.View style={{
+        transform: [
+          { translateX: dao }
+        ],
+        width: 60, height: 60, backgroundColor: 'green'
+      }}>
+      </Animated.View>
+      <Animated.Image style={trinhTu} source={require('@assets/icons8-image-100.png')}></Animated.Image>
+
     </View>
   );
 };
@@ -123,10 +167,10 @@ function ExAnimated3() {
   const linear = useSharedValue(200);
 
   const animatedDefault = useAnimatedStyle(() => ({
-    transform: [{translateX: defaultAnim.value}],
+    transform: [{ translateX: defaultAnim.value }],
   }));
   const animatedChanged = useAnimatedStyle(() => ({
-    transform: [{translateX: linear.value}],
+    transform: [{ translateX: linear.value }],
   }));
 
   useEffect(() => {
@@ -166,9 +210,9 @@ const ExAnimated4 = props => {
   const height = 120;
   const topY = useSharedValue(-120);
   const [show, setShow] = useState(false);
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   return (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       {show && (
         <Animated.View
           style={{
@@ -176,13 +220,13 @@ const ExAnimated4 = props => {
             height: height,
             backgroundColor: 'rgba(0, 207, 101, 0.4)',
             position: 'absolute',
-            transform: [{translateY: topY}],
+            transform: [{ translateY: topY }],
             borderRadius: 10,
             padding: 10,
             left: Dimensions.get('screen').width / 2 - width / 2,
             zIndex: 1,
           }}>
-          <Text style={{fontSize: 16, fontWeight: 500}}>
+          <Text style={{ fontSize: 16, fontWeight: 500 }}>
             {props?.message || 'Not message'}
           </Text>
         </Animated.View>
@@ -204,7 +248,7 @@ const ExAnimated4 = props => {
         }}
       />
       <Text />
-      <View style={{backgroundColor: 'violet', width: 120, height: 220}} />
+      <View style={{ backgroundColor: 'violet', width: 120, height: 220 }} />
     </View>
   );
 };
@@ -253,8 +297,8 @@ const ExAnimated5 = props => {
   }, [props.navigation, top]);
 
   return (
-    <Animated.View style={[styles.container, {top: top}]}>
-      <TouchableOpacity style={{height: 160}} onPress={onClose} />
+    <Animated.View style={[styles.container, { top: top }]}>
+      <TouchableOpacity style={{ height: 160 }} onPress={onClose} />
       <View
         style={[
           {
@@ -267,19 +311,19 @@ const ExAnimated5 = props => {
           },
         ]}>
         <View
-          style={{alignItems: 'flex-end', paddingRight: 15, paddingTop: 15}}>
-          <TouchableOpacity style={{padding: 5}} onPress={onClose}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>X</Text>
+          style={{ alignItems: 'flex-end', paddingRight: 15, paddingTop: 15 }}>
+          <TouchableOpacity style={{ padding: 5 }} onPress={onClose}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>X</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.text1}>
-          <Animated.Text style={{...styles.label, opacity: opacity1}}>
+          <Animated.Text style={{ ...styles.label, opacity: opacity1 }}>
             {text[0]}
           </Animated.Text>
-          <Animated.Text style={{...styles.label, opacity: opacity2}}>
+          <Animated.Text style={{ ...styles.label, opacity: opacity2 }}>
             {text[1]}
           </Animated.Text>
-          <Animated.Text style={{...styles.label, opacity: opacity3}}>
+          <Animated.Text style={{ ...styles.label, opacity: opacity3 }}>
             {text[2]}
           </Animated.Text>
         </View>
@@ -339,7 +383,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export {ExAnimated1, ExAnimated2, ExAnimated3, ExAnimated4, ExAnimated5};
+export { ExAnimated1, ExAnimated2, ExAnimated3, ExAnimated4, ExAnimated5 };
 // =========================================================
 // useSharedValue: là 1 hook để tham chiếu giá trị cho hiệu ứng(đây là yêu cầu bắt buộc cho việc lưu và cập nhập giá trị thuộc tính.)
 // withSpring: là 1 dạng hiệu ứng để chi phối giá trị cập nhập.

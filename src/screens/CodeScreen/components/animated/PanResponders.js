@@ -1,45 +1,89 @@
-import React, { useRef } from 'react';
-import { Animated, View, StyleSheet, PanResponder, Text } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, StyleSheet, PanResponder, Text, Button } from 'react-native';
+import Animated, { ReduceMotion, runOnJS, useAnimatedStyle, useSharedValue, withDecay, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+const END_POSITION = 200;
 
 const PanResponders = () => {
+  const [lastX, setLastX] = useState(0);
+  const [lastY, setLastY] = useState(0);
+  const [color, setColor] = useState('green')
 
-  const pan = useRef(new Animated.ValueXY()).current;
+  const w = useSharedValue(60);
+  const h = useSharedValue(60);
+  const tranX = useSharedValue(0);
+  const tranY = useSharedValue(0);
+  const radius = useSharedValue(0);
+  const rotate = useSharedValue(0);
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
-      onPanResponderRelease: () => {
-        // pan.extractOffset();
+  const panGesture = Gesture.Pan()
+    .onTouchesDown((e) => {
+      // doi mau
+      runOnJS(setColor)('violet')
 
-        Animated.spring(pan, {
-          toValue: { x: 0, y: 0 },
-          useNativeDriver: true,
-        }).start();
-      },
-    }),
-  ).current;
+      // bo vien
+      radius.value = 8
+
+      // thu nho
+      w.value = withTiming(55, {duration: 200})
+      h.value = withTiming(55, {duration: 200})
+
+      // xoay
+      // rotate.value = withRepeat(
+      //   withTiming(1, { duration: 1000 }),
+      //   3,
+      //   true
+      // )
+    })
+    .onUpdate((e) => {
+      // console.log(e.translationX);
+      tranX.value = lastX + e.translationX;
+      tranY.value = lastY + e.translationY;
+    })
+    .onEnd((e) => {
+      runOnJS(setLastX)(lastX + e.translationX)
+      runOnJS(setLastY)(lastY + e.translationY)
+    }).onTouchesUp(() => {
+      runOnJS(setColor)('green') // doi lai mau
+      radius.value = 0; // het bo vien
+      // rotate.value = 0
+      w.value = withTiming(60, {duration: 200})
+      h.value = withTiming(60, {duration: 200})
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: tranX.value },
+      { translateY: tranY.value },
+      { rotateZ: `${rotate.value * 360}deg` }
+    ],
+    width: w.value,
+    height: h.value,
+    backgroundColor: color,
+    borderRadius: radius.value
+  }));
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleText}>Drag & Release this box!</Text>
-      <Animated.View
-        style={{
-          transform: [{ translateX: pan.x }, { translateY: pan.y }],
-        }}
-        {...panResponder.panHandlers}
-      >
-        <View style={styles.box} />
-      </Animated.View>
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureDetector gesture={panGesture}>
+        <Animated.View style={animatedStyle} />
+      </GestureDetector>
+
+      <Button title='show x' onPress={() => {
+        console.log('====================================');
+        console.log(position.value);
+      }}></Button>
+    </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   titleText: {
     fontSize: 14,

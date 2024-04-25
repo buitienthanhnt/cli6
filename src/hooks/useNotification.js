@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { registerNotification } from '@queries/notification';
 
 const getNotifi = async () => {
-	let noti = await AsyncStorage.getItem('listNotifi');
+	const noti = await AsyncStorage.getItem('listNotifi');
 	return JSON.parse(noti).reverse();
 }
 

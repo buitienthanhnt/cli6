@@ -23,7 +23,7 @@ export class ProductItemHost extends Component {
                     <Text style={css.pro_item_host_title} ellipsizeMode='tail' numberOfLines={2}>
                         {data.title}
                     </Text>
-                    <View style={{ paddingLeft: 8 }}>
+                    <View style={{ paddingLeft: 8, marginBottom: 4 }}>
                         <Text ellipsizeMode='tail' numberOfLines={2}>
                             {data.short_conten}
                         </Text>
@@ -66,7 +66,9 @@ export class ProductItem extends Component {
                                 {data?.short_conten}
                             </Text>
                         </View>
+                        <View style={{flex: 1, justifyContent: 'flex-end'}}>
                         {data?.info && <PaperInfo info={data.info}></PaperInfo>}
+                        </View>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -84,7 +86,7 @@ const css = StyleSheet.create({
     },
     pro_item_host: {
         width: "100%",
-        height: Math.floor(Dimensions.get("screen").height / 3.6), 
+        height: Math.floor(Dimensions.get("screen").height / 3.5), 
         padding: 5
     },
     pro_item_host_title: {
@@ -97,6 +99,6 @@ const css = StyleSheet.create({
     pro_item_title: {
         width: "60%",
         paddingLeft: 8,
-        paddingRight: 8
+        paddingRight: 8,
     }
 });

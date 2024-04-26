@@ -3,6 +3,7 @@ import { View, StyleSheet, PanResponder, Text, Button } from 'react-native';
 import Animated, { ReduceMotion, runOnJS, useAnimatedStyle, useSharedValue, withDecay, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { check, request, openSettings, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 const END_POSITION = 200;
 
@@ -70,7 +71,7 @@ const PanResponders = () => {
   ).onEnd((e) => {
     // 
     runOnJS(setShow)(false);
-    runOnJS(setOnX)(onX+ e.translationX)
+    runOnJS(setOnX)(onX + e.translationX)
   })
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -97,18 +98,50 @@ const PanResponders = () => {
       }}></Button>
 
       <GestureDetector gesture={showCom}>
-        <View style={{ width: '100%', height: 40, backgroundColor: 'rgba(123, 186, 235, 1)' }}>
+        <View style={{ width: '100%', height: 40, backgroundColor: 'rgba(123, 186, 235, 1)', transform: [{ scaleY: 1.2 }] }}>
           <Animated.View style={{
             position: 'absolute',
             transform: [
               { translateY: -20 },
-              { translateX: dX }
+              { translateX: dX },
             ]
           }}>
             {show && <Text>active text</Text>}
           </Animated.View>
         </View>
       </GestureDetector>
+
+      <Button title='request Per' onPress={() => {
+        check(PERMISSIONS.IOS.MEDIA_LIBRARY)
+          .then((result) => {
+            switch (result) {
+              case RESULTS.UNAVAILABLE:
+                console.log('This feature is not available (on this device / in this context)');
+                break;
+              case RESULTS.DENIED:
+                console.log('The permission has not been requested / is denied but requestable');
+                break;
+              case RESULTS.LIMITED:
+                console.log('The permission is limited: some actions are possible');
+                break;
+              case RESULTS.GRANTED:
+                console.log('The permission is granted');
+                break;
+              case RESULTS.BLOCKED:
+                console.log('The permission is denied and not requestable anymore');
+                break;
+            }
+          })
+          .catch((error) => {
+            // …
+          });
+
+        request(PERMISSIONS.IOS.MEDIA_LIBRARY).then((result) => {
+          console.log('---->', result);
+        });
+
+        openSettings().catch(() => console.warn('cannot open settings'));
+      }}></Button>
 
     </GestureHandlerRootView>
   );

@@ -31,3 +31,11 @@ cd android && ./gradlew clean && ./gradlew :app:bundleRelease
 
 BUILD FAILED in 2m 16s
 info Run CLI with --verbose flag for more details.
+
+# animation
+# pan-gesture-handler
+# navigation
+# tanstack-query
+
+// redux? 
+* https://viblo.asia/p/nhung-dieu-can-biet-ve-promise-javascript-bJzKmJwEZ9N

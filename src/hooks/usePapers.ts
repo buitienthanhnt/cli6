@@ -5,7 +5,6 @@ import firebaseType from '@constants/firebaseType';
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import {useSelector} from 'react-redux';
 import {getPapersByWriter} from '@queries/writer';
-import DataSnapshot = FirebaseDatabaseTypes.DataSnapshot;
 
 const useComments = (paperId: number, parentId: number, page: any) => {
   const {useFirebase} = useSelector((state: any) => state.defRe);
@@ -23,9 +22,9 @@ const useComments = (paperId: number, parentId: number, page: any) => {
         .on('value', snapshot => {
           if (snapshot.numChildren()) {
             let _data: any = [];
-            snapshot.forEach((item: DataSnapshot) => {
+            snapshot.forEach((item: FirebaseDatabaseTypes.DataSnapshot) => {
               _data = item.val();
-              return true;
+              return undefined;
             });
             setValue(_data);
           }

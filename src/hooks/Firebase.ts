@@ -2,7 +2,6 @@ import {useCallback, useEffect, useState} from 'react';
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 import firebaseType from '@constants/firebaseType';
-import DataSnapshot = FirebaseDatabaseTypes.DataSnapshot;
 
 const useCategory = () => {
   const [category, setCategory] = useState([]);
@@ -15,9 +14,9 @@ const useCategory = () => {
           return;
         }
         let _data: any = [];
-        snapshot.forEach((item: DataSnapshot) => {
+        snapshot.forEach((item: FirebaseDatabaseTypes.DataSnapshot) => {
           _data = item.val();
-          return true;
+          return undefined;
         });
         setCategory(_data);
       });
@@ -40,14 +39,14 @@ const usePapersFirebase = () => {
       .on('value', snapshot => {
         if (snapshot.numChildren()) {
           let _data: any = [];
-          snapshot.forEach((item: DataSnapshot) => {
+          snapshot.forEach((item: FirebaseDatabaseTypes.DataSnapshot) => {
             const data = item.val();
             if (data.id) {
               _data.push(data);
             } else {
               _data.push(data[Object.keys(data)[0]]);
             }
-            return true;
+            return undefined;
           });
           // _data.sort((a,b) => b.id - a.id); // sort by desc
           setData(_data.reverse()); // đảo ngược thứ tự data
@@ -106,9 +105,9 @@ const useCategoryTop = () => {
       .ref(firebaseType.realTime.categoryTop)
       .on('value', snapshot => {
         if (snapshot.numChildren()) {
-          snapshot.forEach((item: DataSnapshot) => {
+          snapshot.forEach((item: FirebaseDatabaseTypes.DataSnapshot) => {
             setData(item.val());
-            return true;
+            return undefined;
           });
         }
       });
@@ -130,9 +129,9 @@ const usePaperCategory = (categoryId: string) => {
       .on('value', snapshot => {
         if (snapshot.numChildren()) {
           let _data: any = [];
-          snapshot.forEach((item: DataSnapshot) => {
+          snapshot.forEach((item: FirebaseDatabaseTypes.DataSnapshot) => {
             _data.push(item.val());
-            return true;
+            return undefined;
           });
           setData(_data.reverse());
         }
@@ -159,9 +158,9 @@ const useRelatedPaper = () => {
       .on('value', snapshot => {
         if (snapshot.numChildren()) {
           let _data: any = [];
-          snapshot.forEach((item: DataSnapshot) => {
+          snapshot.forEach((item: FirebaseDatabaseTypes.DataSnapshot) => {
             _data.push(item.val());
-            return true;
+            return undefined;
           });
           setData(_data.reverse());
         }

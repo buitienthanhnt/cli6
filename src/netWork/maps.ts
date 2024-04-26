@@ -1,47 +1,58 @@
-import { googleMapUrl } from "@utils/maps";
-import Config from "@config/Config";
+import {googleMapUrl} from '@utils/maps';
+import Config from '@config/Config';
 // https://developers.google.com/maps/documentation/places/web-service/details
 
-const getPlaceDetail = async (placeId) => {
-	const paramUrl = Config.buy_params({
-		place_id: placeId,
-		key: Config.googleService.geoMapApiKey
-	});
+const getPlaceDetail = async (placeId: string) => {
+  const paramUrl = Config.buy_params({
+    place_id: placeId,
+    key: Config.googleService.geoMapApiKey,
+  });
 
-	// hoặc có thể dùng: api/geocode(https://developers.google.com/maps/documentation/geocoding/requests-geocoding)
-	// để lấy detail.
-	const url = googleMapUrl + Config.googleService.placeDetail + Config.googleService.reponseJson + paramUrl;
-	const response = await fetch(url);
-	const data = await response.json();
-	return data;
-}
+  // hoặc có thể dùng: api/geocode(https://developers.google.com/maps/documentation/geocoding/requests-geocoding)
+  // để lấy detail.
+  const url =
+    googleMapUrl +
+    Config.googleService.placeDetail +
+    Config.googleService.reponseJson +
+    paramUrl;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
 
-const getPlaceSearch = (searchText)=>{
-	const paramUrl = Config.buy_params({
-		input: searchText,
-		radius: 500,
-		key: Config.googleService.geoMapApiKey
-	});
-	const url = googleMapUrl + Config.googleService.placeSearch + Config.googleService.reponseJson;
-	return fetch(url+paramUrl);
-}
+const getPlaceSearch = (searchText: string) => {
+  const paramUrl = Config.buy_params({
+    input: searchText,
+    radius: 500,
+    key: Config.googleService.geoMapApiKey,
+  });
+  const url =
+    googleMapUrl +
+    Config.googleService.placeSearch +
+    Config.googleService.reponseJson;
+  return fetch(url + paramUrl);
+};
 
-const getCoordSearch = async (from, to)=>{
-	if (!from || !to) {
-		return null;
-	}
-	const paramUrl = Config.buy_params({
-		origin: `${from.lat},${from.lng}`,
-		destination: `${to.lat},${to.lng}`,
-		key: Config.googleService.geoMapApiKey,
-	});
-	const url = googleMapUrl + Config.googleService.placeDirections + Config.googleService.reponseJson + paramUrl;
-	const response = await fetch(url);
-	const data = await response.json();
-	return data;
-}
+const getCoordSearch = async (from: any, to: any) => {
+  if (!from || !to) {
+    return null;
+  }
+  const paramUrl = Config.buy_params({
+    origin: `${from.lat},${from.lng}`,
+    destination: `${to.lat},${to.lng}`,
+    key: Config.googleService.geoMapApiKey,
+  });
+  const url =
+    googleMapUrl +
+    Config.googleService.placeDirections +
+    Config.googleService.reponseJson +
+    paramUrl;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
 
-export { getPlaceDetail, getPlaceSearch, getCoordSearch }
+export {getPlaceDetail, getPlaceSearch, getCoordSearch};
 
 // place detail: =============================
 // {

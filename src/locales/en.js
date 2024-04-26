@@ -1,3 +1,3 @@
 export default {
-	greeting: 'Hi 123123!'
+  greeting: 'Hi 123123!',
 };

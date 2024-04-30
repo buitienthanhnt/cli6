@@ -1,5 +1,5 @@
-import {createNavigationContainerRef} from '@react-navigation/native';
-import {Linking} from 'react-native';
+import { createNavigationContainerRef } from '@react-navigation/native';
+import { Linking } from 'react-native';
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -9,6 +9,12 @@ export function Navigate(name: string, params: any) {
   if (navigationRef.isReady()) {
     // @ts-ignore
     navigationRef.navigate(name, params);
+    // console.log(navigationRef.getCurrentRoute()?.name);
+    return {
+      dimiss: function () {
+        navigationRef.goBack();
+      }
+    }
   }
 }
 

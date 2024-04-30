@@ -28,7 +28,7 @@ class PaperList extends Component {
         listTrace.putMetric("hits", 1);
         if (!this.state.refreshing) {
             this.setState({ refreshing: true });
-            const _url = Config.url + Config.api_request.getpapers + Config.buy_params({ page: paper !== false ? paper : this.state.page });
+            const _url = Config.custom_url() + Config.api_request.getpapers + Config.buy_params({ page: paper !== false ? paper : this.state.page });
             console.log(_url);
             const data = await fetch(_url);
             const result = await data.json();

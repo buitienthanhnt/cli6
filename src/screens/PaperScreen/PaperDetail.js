@@ -50,7 +50,7 @@ const PaperDetail = ({navigation, route}) => {
         try {
           setRefreshing(true);
           const detail = await fetch(
-            Config.url + Config.api_request.getPaperDetail + id,
+            Config.custom_url() + Config.api_request.getPaperDetail + id,
           );
           var result = await detail.json();
           setRefreshing(false);

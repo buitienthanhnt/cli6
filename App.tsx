@@ -49,6 +49,7 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import DeviceInfo from 'react-native-device-info';
 import {ExAnimated5} from '@screens/CodeScreen/components/animated/ExAnimated1';
 import Login from '@screens/AccountScreen/Login';
+import LoadingX from '@screens/CodeScreen/components/animated/LoadingX';
 
 const queryClient = new QueryClient();
 
@@ -188,6 +189,15 @@ function App(): JSX.Element {
               name="Login"
               component={Login}
               options={{headerShown: false, presentation: 'transparentModal'}}
+            />
+             <Stack.Screen
+              name="LoadingX"
+              component={LoadingX}
+              options={{
+                headerShown: false, 
+                presentation: 'transparentModal',
+                animationTypeForReplace: 'push'
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

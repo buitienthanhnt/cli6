@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import Animated, { ReduceMotion, withDecay, withSequence } from 'react-native-reanimated';
 import {
@@ -21,6 +22,8 @@ import {
 import Carousel from '@elements/Carousel';
 import ExtraConten from '@elements/ExtraConten';
 import testList from '@assets/data/testList';
+import { Navigate } from '@hooks/Navigate';
+import useNavigate from '@hooks/useNavagate';
 // https://reactnavigation.org/docs/stack-navigator/
 // https://reactnavigation.org/docs/stack-navigator/#transparent-modals
 
@@ -210,7 +213,14 @@ const ExAnimated4 = props => {
   const height = 120;
   const topY = useSharedValue(-120);
   const [show, setShow] = useState(false);
-  useEffect(() => { }, []);
+  const [count, setCount] = useState(0);
+  const {open, close} = useNavigate({name: 'LoadingX'})
+  useEffect(() => { 
+    // khi mở screen modal thì không làm mất đi trạng thái của screen đang hiển thị trước đó.
+    // setInterval(() => {
+    //   setCount((count) => count+1)
+    // }, 1000);
+  }, []);
   return (
     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       {show && (
@@ -249,6 +259,23 @@ const ExAnimated4 = props => {
       />
       <Text />
       <View style={{ backgroundColor: 'violet', width: 120, height: 220 }} />
+
+      <TouchableOpacity className={'bg-red p-4 my-2 rounded'} onPress={()=>{
+        // const {dimiss} = Navigate('LoadingX')
+        open();
+        setTimeout(()=>{
+          // dimiss();
+          close();
+        }, 3000)
+      }}>
+        <Text>show loading</Text>
+      </TouchableOpacity>
+
+      <Text>{count} {props?.route?.name}</Text>
+
+      {/* <View>
+        <ActivityIndicator color={'red'} size={'small'}></ActivityIndicator>
+      </View> */}
     </View>
   );
 };

@@ -51,7 +51,7 @@ const useInfo = () => {
                 return () => database().ref(firebaseType.realTime.homeInfo).off('value', onValueChange);
             } else {
                 const url = Config.custom_url() + Config.api_request.getInfo;
-                const response = await fetch(url);
+                const response = await fetcfetchDatah(url);
                 const value = await response.json();
                 setData(value?.data);
             }

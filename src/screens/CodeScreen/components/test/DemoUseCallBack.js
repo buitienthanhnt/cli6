@@ -98,7 +98,7 @@ const DemoUseCallBack = () => {
         initialPageParam: 1,
         // ...options,
         getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-            console.log(lastPage.page);
+            // console.log(lastPage.page);
             if (lastPage.data.length) {
                 return lastPage.page + 1;
                 // return {nextP: lastPage.page + 1}; // giá trị trả về này sẽ được dùng cho param của hàm gọi tiếp theo: queryFn

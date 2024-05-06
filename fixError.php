@@ -1,4 +1,16 @@
 <?php
+    // $log = function () {echo("log the message \n");};
+    // $lever1 = function ($fn) {
+    //     $index = 0;
+    //     return function () use($index, $fn) {
+    //         $index+=1;
+    //         echo("index of value: ". $index."\n");
+    //         return $fn();
+    //     };
+    // };
+    // $run = $lever1($log);
+    // $run();$run();$run();
+    // exit();
 
     /**
      * fix error of module: In18 

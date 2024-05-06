@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         'regal-blue': '#243c5a',
         'red': '#ff0000',
-        'blur': 'rgba(176, 187, 255, 0.3)',
+        'blur': 'rgba(104, 177, 234, 0.6)',
       },
     },
   },

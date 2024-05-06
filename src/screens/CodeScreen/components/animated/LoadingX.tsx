@@ -13,7 +13,7 @@ const LoadingX: FunctionComponent<Navigation> = ({navigation}) => {
 			style={{justifyContent: 'center', alignItems: 'center',top: top}}>
 			<ActivityIndicator 
 				color={'green'} 
-				// size={'large'}
+				size={'large'}
 			></ActivityIndicator>
 		</Animated.View>
 	)

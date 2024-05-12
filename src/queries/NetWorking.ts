@@ -62,6 +62,7 @@ const getAxios = async (url: string, params = {}) => {
     });
     return data;
   } catch (error) {
+    // console.log('', error)
     return null;
   }
 };

@@ -35,7 +35,7 @@ const DemoMemo = () => {
       <Button
         title={'call resresh token'}
         onPress={() => {
-          rApi.setRefreshToken();
+          // rApi.setRefreshToken();
         }}
       />
     </View>

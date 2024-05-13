@@ -1,15 +1,15 @@
 const Config = () => {
   const Config = {
-    useFirebase: false, // default=false, dev=true
+    useFirebase: true, // default=false, dev=true
     domain: '',
     http: 'http://',
     https: 'https://',
     main: 'laravel1/',
     // ip: "192.168.99.103/",                 // 192.168.99.103       (4700-home) || 192.168.99.100 (6800-home)
     // ip: '192.168.102.24/',                 // 192.168.102.24       (m4700-mochi)
-    ip: '192.168.102.40/',                    // 192.168.102.40       (m6800)
-    // ip: '192.168.100.156/',                // 192.168.100.156        (jm-destop)
-    uri: 'laravel1/public/index.php/',        // laravel1/public/index.php
+    // ip: '192.168.102.40/',                    // 192.168.102.40       (m6800)
+    ip: '192.168.100.156/', // 192.168.100.156        (jm-destop)
+    uri: 'laravel1/public/index.php/', // laravel1/public/index.php
     token: 'tha_nan_demo_request_token',
     api_request: {
       getInfo: 'api/info',
@@ -49,8 +49,8 @@ const Config = () => {
       }
       return values.slice(0, values.lastIndexOf('&')); // loại bỏ dấu:: "&" ở vị trí cuối cùng.
     },
-    custom_url: function (): string {
-      return this.domain ? this.domain : this.http + this.ip + this.uri;
+    custom_url: function (path = ''): string {
+      return this.domain ? this.domain : this.http + this.ip + this.uri + path;
     },
     public_url: function (): string {
       return this.http + this.ip + this.main + 'public/';

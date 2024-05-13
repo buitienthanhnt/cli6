@@ -197,9 +197,8 @@ const DemoUseCallBack = () => {
       <Button
         title={'test new axios'}
         onPress={() => {
-          // rApi.callRequest();
-          // console.log(123123);
-          rApi.setRefreshToken();
+          console.log(123123);
+          rApi.callRequest();
         }}
       />
     </View>

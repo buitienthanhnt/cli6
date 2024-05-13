@@ -44,3 +44,16 @@ To manage the active version, don't forget about the update-alternatives command
 sudo update-alternatives --config java
 sudo update-alternatives --config javac
 ============================================================================================ -->
+when run: npx react-native start.
+error: listen EADDRINUSE: address already in use :::8081 
+301
+
+I hit this on my laptop running win8. this worked.
+open cmd as 'Administrator':
+run:
+
+C:\Windows\System32>taskkill /F /IM node.exe
+
+SUCCESS: The process "node.exe" with PID 11008 has been terminated.
+
+================================================================================================

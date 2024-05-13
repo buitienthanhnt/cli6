@@ -23,6 +23,7 @@ class rApi {
         return response.data;
       },
       error => {
+        // console.log('____', error.config);
         if (error.response.status === 401) {
           console.log('401 eror please refresh token.', this.isTokenExpired);
           if (!this.isTokenExpired) {
@@ -30,7 +31,7 @@ class rApi {
             this.reFreshTokenProcess = this.awReFreshToken();
           }
           // return Promise.resolve(error.config);
-          return this.callRequest();
+          return this.callRequest(error.config);
         }
       },
     );
@@ -52,14 +53,21 @@ class rApi {
     });
   }
 
-  async processRequest() {
-    console.log('begin processRequest with token', this.token);
-    this.cAxios.defaults.headers.Authorization = this.token;
-    const data = await this.cAxios.get('/getUserTokenData');
-    return data;
+  async processRequest(config) {
+    try {
+      console.log('begin processRequest with token', this.token);
+      this.cAxios.defaults.headers.Authorization = this.token;
+      if (config?.headers?.Authorization) {
+        config.headers.Authorization = this.token;
+      }
+      const data = await this.cAxios(config);
+      return data;
+    } catch (e) {
+      console.log('?????__??', e);
+    }
   }
 
-  async callRequest() {
+  async callRequest(config) {
     console.log('------> callRequest');
     if (this.isTokenExpired) {
       try {
@@ -74,7 +82,8 @@ class rApi {
       }
     }
 
-    const data = await this.processRequest();
+    const data = await this.processRequest(config);
+    console.log('>>>>>>>>>>>>>>>>', data);
     return data;
   }
 }

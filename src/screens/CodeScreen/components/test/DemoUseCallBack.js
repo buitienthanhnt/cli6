@@ -198,7 +198,10 @@ const DemoUseCallBack = () => {
         title={'test new axios'}
         onPress={() => {
           console.log(123123);
-          rApi.callRequest();
+          rApi.callRequest({
+            method: 'get',
+            url: '/getUserTokenData',
+          });
         }}
       />
     </View>

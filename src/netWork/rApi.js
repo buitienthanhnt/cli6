@@ -2,15 +2,14 @@ import axios from 'axios';
 import Config from '@config/Config';
 import AppStore from '@redux/AppStore';
 import actionReducerType from '@constants/actionReducer';
-import {err} from 'react-native-svg';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
 class rApi {
   static instance = null;
   constructor() {
-    this.token = this.initToken();
     this.isTokenExpired = false;
     this.reFreshTokenProcess = null;
+    console.log('...... init rApi !!!');
     this.cAxios = axios.create({
       baseURL: Config.custom_url(),
       timeout: 8000,
@@ -59,7 +58,8 @@ class rApi {
   async processRequest(config) {
     try {
       console.log('begin processRequest with token:', this.token);
-      this.cAxios.defaults.headers.Authorization = this.token;
+      this.cAxios.defaults.headers.Authorization =
+        this.token || this.initToken();
       if (config?.headers?.Authorization) {
         config.headers.Authorization = this.token;
       }
@@ -114,6 +114,7 @@ class rApi {
 
   initToken() {
     const {authenRe} = AppStore.getState();
+    this.token = authenRe?.token;
     return authenRe.token;
   }
 

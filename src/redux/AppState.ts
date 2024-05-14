@@ -7,8 +7,8 @@ let AppState = {
   message_count: 0,
   data: [],
   useFirebase: false,
-  token: 'tha_nan_demo_init_token',
-  refreshToken: 'tha_nan_demo_init_refresh_token',
+  token: null,
+  refreshToken: null,
 };
 
 let Application = {

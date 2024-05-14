@@ -190,13 +190,13 @@ function App(): JSX.Element {
               component={Login}
               options={{headerShown: false, presentation: 'transparentModal'}}
             />
-             <Stack.Screen
+            <Stack.Screen
               name="LoadingX"
               component={LoadingX}
               options={{
-                headerShown: false, 
+                headerShown: false,
                 presentation: 'transparentModal',
-                animationTypeForReplace: 'push'
+                animationTypeForReplace: 'push',
               }}
             />
           </Stack.Navigator>

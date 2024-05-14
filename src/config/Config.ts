@@ -11,6 +11,7 @@ const Config = () => {
     ip: '192.168.100.156/', // 192.168.100.156        (jm-destop)
     uri: 'laravel1/public/index.php/', // laravel1/public/index.php
     token: 'tha_nan_demo_request_token',
+    api_key: 'laravel1.com',
     api_request: {
       getInfo: 'api/info',
       getpapers: 'api/getpapers/',
@@ -30,6 +31,7 @@ const Config = () => {
       uploadImageMb: 'api/mobile/upimage/',
       search: 'api/search/',
       byWriter: 'api/byWriter/',
+      getToken: '/getUserToken',
     },
     googleService: {
       googleMapUrl: 'https://maps.googleapis.com/maps/api/',

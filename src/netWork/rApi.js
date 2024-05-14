@@ -82,6 +82,10 @@ class rApi {
         this.isTokenExpired = false;
       } catch (e) {
         console.log('?????????', e);
+        // throw new Error('Parameter is not a number!');
+        return await new Promise((resolve, reject) => {
+          reject(e);
+        });
       }
     }
     // const data = await this.processRequest(config);

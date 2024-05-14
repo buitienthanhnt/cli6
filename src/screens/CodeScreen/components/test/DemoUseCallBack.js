@@ -38,10 +38,16 @@ const DemoUseCallBack = () => {
   };
 
   // auto query by hook.
-  // const { isLoading, error, data, isSuccess } = useQuery({
-  //     queryKey: ['repoAuto'], // 1 array of key and depend (sẽ tự động gọi lại nếu key hoặc depend thay đổi)
-  //     queryFn: () => callApi(1)
-  // })
+  const {isLoading, error, data, isSuccess} = useQuery({
+    queryKey: ['getUserTokenData'], // 1 array of key and depend (sẽ tự động gọi lại nếu key hoặc depend thay đổi)
+    queryFn: () =>
+      rApi.callRequest({
+        method: 'get',
+        url: '/getUserTokenData',
+      }),
+  });
+
+    console.log('++++++++++++', error);
 
   // query with action
   const {
@@ -151,6 +157,22 @@ const DemoUseCallBack = () => {
     );
   }
 
+  // if (isLoading) {
+  //   return (
+  //     <View>
+  //       <Text>calling get token data...</Text>
+  //     </View>
+  //   );
+  // }
+
+  if (error) {
+    return (
+      <View>
+        <Text style={{color: 'red'}}>error____</Text>
+      </View>
+    );
+  }
+
   return (
     <View>
       <Text>DemoUseCallBack</Text>
@@ -239,6 +261,12 @@ const DemoUseCallBack = () => {
           rApi.dispathRefreshToken('ppppppppp');
         }}
       />
+
+      {data && (
+        <View>
+          <Text>{JSON.stringify(data)}</Text>
+        </View>
+      )}
 
       {userData && (
         <View>

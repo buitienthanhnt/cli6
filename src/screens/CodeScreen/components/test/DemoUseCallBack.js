@@ -37,17 +37,25 @@ const DemoUseCallBack = () => {
     console.log(data);
   };
 
+  const getUserData = useCallback(() => {
+    return rApi
+      .callRequest({
+        method: 'get',
+        url: '/getUserTokenData',
+      })
+      .then(res => res.data)
+      .catch(e => {
+        throw e;
+      });
+  }, []);
+
   // auto query by hook.
   const {isLoading, error, data, isSuccess} = useQuery({
     queryKey: ['getUserTokenData'], // 1 array of key and depend (sẽ tự động gọi lại nếu key hoặc depend thay đổi)
-    queryFn: () =>
-      rApi.callRequest({
-        method: 'get',
-        url: '/getUserTokenData',
-      }),
+    queryFn: getUserData,
   });
 
-    console.log('++++++++++++', error);
+  console.log('++++++++++++', error);
 
   // query with action
   const {
@@ -157,13 +165,13 @@ const DemoUseCallBack = () => {
     );
   }
 
-  // if (isLoading) {
-  //   return (
-  //     <View>
-  //       <Text>calling get token data...</Text>
-  //     </View>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <View>
+        <Text>calling get token data...</Text>
+      </View>
+    );
+  }
 
   if (error) {
     return (
@@ -218,14 +226,14 @@ const DemoUseCallBack = () => {
 
       <Text />
       <Button
-        title={'test new axios'}
+        title={'call api test refresh token'}
         onPress={async () => {
           const datas = await rApi.callRequest({
             method: 'get',
             url: '/getUserTokenData',
           });
-          datas && setUserData(datas.value);
-          console.log('<<<<<<<<<<<<+', datas.value);
+          // datas && setUserData(datas.value);
+          console.log('<<<<<<<<<<<<+', datas);
         }}
       />
       <Text />
@@ -261,12 +269,6 @@ const DemoUseCallBack = () => {
           rApi.dispathRefreshToken('ppppppppp');
         }}
       />
-
-      {data && (
-        <View>
-          <Text>{JSON.stringify(data)}</Text>
-        </View>
-      )}
 
       {userData && (
         <View>

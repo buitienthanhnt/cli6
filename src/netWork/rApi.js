@@ -2,6 +2,7 @@ import axios from 'axios';
 import Config from '@config/Config';
 import AppStore from '@redux/AppStore';
 import actionReducerType from '@constants/actionReducer';
+import {err} from 'react-native-svg';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
 class rApi {
@@ -82,10 +83,11 @@ class rApi {
         this.isTokenExpired = false;
       } catch (e) {
         console.log('?????????', e);
-        // throw new Error('Parameter is not a number!');
-        return await new Promise((resolve, reject) => {
-          reject(e);
-        });
+        throw new Error('Parameter is not a number!');
+        // return await new Promise((resolve, reject) => {
+        //   // resolve(e);
+        //   reject(e);
+        // });
       }
     }
     // const data = await this.processRequest(config);

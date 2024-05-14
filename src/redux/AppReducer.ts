@@ -71,6 +71,10 @@ const AuthenReducer = (state = AppState, action: any) => {
       return {...state, user_data: action.value};
     case actionReducer.clearUser:
       return {...state, user_data: null};
+    case actionReducer.setToken:
+      return {...state, token: action.value};
+    case actionReducer.setRefreshToken:
+      return {...state, refreshToken: action.value};
     default:
   }
   return state;

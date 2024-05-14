@@ -148,18 +148,18 @@ const Home = ({navigation}) => {
                 navigation.navigate("ExampleTwo")
             }}></Button> */}
       <Text />
-      <Button
-        title="to screen modal"
-        onPress={() => {
-          navigation.navigate('ExAnimated5');
-        }}
-      />
-      <Button
-        title="to Login"
-        onPress={() => {
-          navigation.navigate('Login');
-        }}
-      />
+      {/*<Button*/}
+      {/*  title="to screen modal"*/}
+      {/*  onPress={() => {*/}
+      {/*    navigation.navigate('ExAnimated5');*/}
+      {/*  }}*/}
+      {/*/>*/}
+      {/*<Button*/}
+      {/*  title="to Login"*/}
+      {/*  onPress={() => {*/}
+      {/*    navigation.navigate('Login');*/}
+      {/*  }}*/}
+      {/*/>*/}
     </ScrollView>
   );
 };

@@ -14,6 +14,7 @@ import rApi from '@netWork/rApi';
 const DemoUseCallBack = () => {
   const [val, setVal] = useState([]);
   const [text, setText] = useState('');
+  const [userData, setUserData] = useState(null);
 
   const callApi = useCallback(pageParam => {
     console.log(pageParam, `https://reqres.in/api/users?page=${pageParam}`);
@@ -196,14 +197,56 @@ const DemoUseCallBack = () => {
       <Text />
       <Button
         title={'test new axios'}
-        onPress={() => {
-          console.log(123123);
-          rApi.callRequest({
+        onPress={async () => {
+          const datas = await rApi.callRequest({
             method: 'get',
             url: '/getUserTokenData',
           });
+          datas && setUserData(datas.value);
+          console.log('<<<<<<<<<<<<+', datas.value);
         }}
       />
+      <Text />
+      <Button
+        title={'log token'}
+        onPress={() => {
+          const token = rApi.initToken();
+          console.log(token);
+        }}
+      />
+
+      <Text />
+      <Button
+        title={'log refresh token'}
+        onPress={() => {
+          const initRefreshToken = rApi.initRefreshToken();
+          console.log(initRefreshToken);
+        }}
+      />
+
+      <Text />
+      <Button
+        title={'set token'}
+        onPress={() => {
+          rApi.dispathToken();
+        }}
+      />
+
+      <Text />
+      <Button
+        title={'set refresh token'}
+        onPress={() => {
+          rApi.dispathRefreshToken('ppppppppp');
+        }}
+      />
+
+      {userData && (
+        <View>
+          <Text>id: {userData.id}</Text>
+          <Text>name: {userData.name}</Text>
+          <Text>email: {userData.email}</Text>
+        </View>
+      )}
     </View>
   );
 };

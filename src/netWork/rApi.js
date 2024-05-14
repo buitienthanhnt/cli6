@@ -1,12 +1,13 @@
 import axios from 'axios';
 import Config from '@config/Config';
+import AppStore from '@redux/AppStore';
+import actionReducerType from '@constants/actionReducer';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
 class rApi {
   static instance = null;
   constructor() {
-    this.token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOnsibmFtZSI6ImRlbW8iLCJpZCI6OCwiZW1haWwiOiJkZW1vQGdtYWlsLmNvbSJ9LCJpYXQiOjE3MTU1ODIyMzYsIm5iZiI6MCwiZXhwIjoxNzE1NTgyMjk2fQ.KzrE8mpmbdiaEkKMqgSchlFmf_p01HpOZ_bMhSISMMY';
+    this.token = this.initToken();
     this.isTokenExpired = false;
     this.reFreshTokenProcess = null;
     this.cAxios = axios.create({
@@ -23,7 +24,6 @@ class rApi {
         return response.data;
       },
       error => {
-        // console.log('____', error.config);
         if (error.response.status === 401) {
           console.log('401 eror please refresh token.', this.isTokenExpired);
           if (!this.isTokenExpired) {
@@ -31,8 +31,10 @@ class rApi {
             this.reFreshTokenProcess = this.awReFreshToken();
           }
           // return Promise.resolve(error.config);
+          console.log('gọi lại fn lỗi token-->');
           return this.callRequest(error.config);
         }
+        return Promise.reject(error);
       },
     );
   }
@@ -48,43 +50,70 @@ class rApi {
     console.log('-----> chạy vào refresh token awReFreshToken');
     return axios.get(Config.custom_url('refreshUserToken'), {
       params: {
-        refresh_token: 'tha_refresh_token_key',
+        refresh_token: this.initRefreshToken(),
       },
     });
   }
 
   async processRequest(config) {
     try {
-      console.log('begin processRequest with token', this.token);
+      console.log('begin processRequest with token:', this.token);
       this.cAxios.defaults.headers.Authorization = this.token;
       if (config?.headers?.Authorization) {
         config.headers.Authorization = this.token;
       }
-      const data = await this.cAxios(config);
-      return data;
+      return await this.cAxios(config);
     } catch (e) {
       console.log('?????__??', e);
     }
   }
 
   async callRequest(config) {
-    console.log('------> callRequest');
+    console.log('------> start callRequest');
     if (this.isTokenExpired) {
       try {
-        console.log('-----> this.reFreshToken: ');
+        console.log('-----> await reFreshToken');
         const reToken = this.reFreshTokenProcess;
         const newData = await reToken;
-        console.log('..............', newData.data?.token?.value);
         this.token = newData.data?.token?.value;
+        console.log('newToken..........:', this.token);
+        this.dispathToken();
+        this.dispathRefreshToken(newData.data?.refresh_token?.value);
         this.isTokenExpired = false;
       } catch (e) {
         console.log('?????????', e);
       }
     }
+    // const data = await this.processRequest(config);
+    // return data;
 
-    const data = await this.processRequest(config);
-    console.log('>>>>>>>>>>>>>>>>', data);
-    return data;
+    // return 1 promies.
+    return await this.processRequest(config);
+  }
+  dispathToken(token) {
+    // force set value for reduxState
+    AppStore.dispatch({
+      type: actionReducerType.setToken,
+      value: token || this.token,
+    });
+  }
+
+  dispathRefreshToken(refreshToken) {
+    // force set value for reduxState
+    AppStore.dispatch({
+      type: actionReducerType.setRefreshToken,
+      value: refreshToken,
+    });
+  }
+
+  initToken() {
+    const {authenRe} = AppStore.getState();
+    return authenRe.token;
+  }
+
+  initRefreshToken() {
+    const {authenRe} = AppStore.getState();
+    return authenRe.refreshToken;
   }
 }
 

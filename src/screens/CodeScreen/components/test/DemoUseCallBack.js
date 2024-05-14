@@ -37,16 +37,17 @@ const DemoUseCallBack = () => {
     console.log(data);
   };
 
-  const getUserData = useCallback(() => {
-    return rApi
-      .callRequest({
-        method: 'get',
-        url: '/getUserTokenData',
-      })
-      .then(res => res.data)
-      .catch(e => {
-        throw e;
-      });
+  const getUserData = useCallback(async () => {
+    const {error, data} = await rApi.callRequest({
+      method: 'get',
+      url: '/getUserTokenData',
+    });
+    if (data) {
+      return data;
+    }
+    if (error) {
+      throw new Error(error.message);
+    }
   }, []);
 
   // auto query by hook.
@@ -54,8 +55,6 @@ const DemoUseCallBack = () => {
     queryKey: ['getUserTokenData'], // 1 array of key and depend (sẽ tự động gọi lại nếu key hoặc depend thay đổi)
     queryFn: getUserData,
   });
-
-  console.log('++++++++++++', error);
 
   // query with action
   const {
@@ -172,7 +171,6 @@ const DemoUseCallBack = () => {
       </View>
     );
   }
-
   if (error) {
     return (
       <View>
@@ -232,7 +230,7 @@ const DemoUseCallBack = () => {
             method: 'get',
             url: '/getUserTokenData',
           });
-          // datas && setUserData(datas.value);
+          datas && setUserData(datas.value.iss);
           console.log('<<<<<<<<<<<<+', datas);
         }}
       />

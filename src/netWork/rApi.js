@@ -10,7 +10,7 @@ class rApi {
   constructor() {
     this.isTokenExpired = false;
     this.reFreshTokenProcess = null;
-    console.log('...... init rApi !!!');
+    this.getTokenProcess = null;
     this.cAxios = axios.create({
       baseURL: Config.custom_url(),
       timeout: 8000,
@@ -111,10 +111,16 @@ class rApi {
         this.isTokenExpired = false;
       } catch (error) {
         if (error?.response?.status === 402) {
-          console.log('khong refresh token duoc thi lay token moi --->');
+          console.log('refresh token bị lỗi, gọi getToken mới --->');
           try {
-            const newTokenData = await this.awGetToken();
+            if (!this.getTokenProcess) {
+              const awaitTokenProcess = this.awGetToken();
+              this.getTokenProcess = awaitTokenProcess;
+            }
+            console.log('-----> await getToken');
+            const newTokenData = await this.getTokenProcess;
             if (newTokenData.data) {
+              this.getTokenProcess = null;
               this.token = newTokenData.data?.token?.value;
               this.dispathToken();
               this.dispathRefreshToken(newTokenData.data?.refresh_token?.value);
@@ -143,7 +149,7 @@ class rApi {
       type: actionReducerType.setToken,
       value: token || this.token,
     });
-    await AsyncStorage.setItem('token', this.token);
+    await AsyncStorage.setItem('token', token || this.token);
   }
 
   async dispathRefreshToken(refreshToken) {

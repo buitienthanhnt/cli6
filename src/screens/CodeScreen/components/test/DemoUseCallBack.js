@@ -10,7 +10,7 @@ import {
 import {debounce} from 'lodash';
 import {useQuery, useMutation, useInfiniteQuery} from 'react-query';
 import rApi from '@netWork/rApi';
-import {AsyncStorage} from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DemoUseCallBack = () => {
   const [val, setVal] = useState([]);
@@ -240,7 +240,7 @@ const DemoUseCallBack = () => {
         title={'log token'}
         onPress={async () => {
           const t = await AsyncStorage.getItem('token');
-          console.log('11111', t);
+          console.log('token: ', t);
         }}
       />
 
@@ -250,7 +250,7 @@ const DemoUseCallBack = () => {
         onPress={async () => {
           // const initRefreshToken = rApi.initRefreshToken();
           const t = await AsyncStorage.getItem('refresh_token');
-          console.log('2222', t);
+          console.log('refresh_token: ', t);
         }}
       />
 

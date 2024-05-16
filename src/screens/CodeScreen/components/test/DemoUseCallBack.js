@@ -10,6 +10,7 @@ import {
 import {debounce} from 'lodash';
 import {useQuery, useMutation, useInfiniteQuery} from 'react-query';
 import rApi from '@netWork/rApi';
+import {AsyncStorage} from '@react-native-async-storage/async-storage';
 
 const DemoUseCallBack = () => {
   const [val, setVal] = useState([]);
@@ -237,18 +238,19 @@ const DemoUseCallBack = () => {
       <Text />
       <Button
         title={'log token'}
-        onPress={() => {
-          const token = rApi.initToken();
-          console.log(token);
+        onPress={async () => {
+          const t = await AsyncStorage.getItem('token');
+          console.log('11111', t);
         }}
       />
 
       <Text />
       <Button
         title={'log refresh token'}
-        onPress={() => {
-          const initRefreshToken = rApi.initRefreshToken();
-          console.log(initRefreshToken);
+        onPress={async () => {
+          // const initRefreshToken = rApi.initRefreshToken();
+          const t = await AsyncStorage.getItem('refresh_token');
+          console.log('2222', t);
         }}
       />
 

@@ -12,6 +12,7 @@ import axios from 'axios';
 import Config from '@config/Config';
 import DeConfig from 'react-native-config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import rApi from '@netWork/rApi';
 
 const perfCollect = async () => {
   perf().setPerformanceCollectionEnabled(true);
@@ -46,6 +47,7 @@ const initApp = async () => {
     type: actionReducerType.setToken,
     value: token,
   });
+  rApi.reSetCaxiosAu(token);
 };
 console.log('start app |-->');
 initApp();

@@ -71,6 +71,7 @@ const usePaperByWriter = (writerId: number) => {
   const response = useQuery({
     queryKey: ['getPapersByWriter', writerId],
     queryFn: () => getPapersByWriter(writerId),
+    retry: false,
   });
   return response;
 };

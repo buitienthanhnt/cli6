@@ -95,6 +95,7 @@ class rApi {
       return await this.cAxios(config);
     } catch (e) {
       console.log('?__processRequest__?', e);
+      throw new Error(e);
     }
   }
 

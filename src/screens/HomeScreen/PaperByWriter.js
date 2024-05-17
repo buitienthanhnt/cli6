@@ -5,12 +5,12 @@ import { usePaperByWriter } from "@hooks/usePapers";
 
 const PaperByWriter = ({ route: { params: { id, name } } }) => {
     const { isLoading, data, isError, error } = usePaperByWriter(id);
-    if (isError){
-        console.log('???   ', error?.response);
-        return  <View style={{flex: 1}}>
-            <Text style={{color: 'red'}}>error for load paper by writer</Text>
+    if (isError) {
+        return <View style={{ flex: 1, alignItems: 'center', padding: 16 }}>
+            <Text style={{ color: 'red' }}>{error?.data?.message}</Text>
         </View>
     }
+
     return (
         <View style={{ flex: 1, padding: 5 }}>
             <Text style={{ fontSize: 18, color: '#db1cff' }}>Tác giả: <Text style={{ color: 'blue' }}>{name}</Text></Text>

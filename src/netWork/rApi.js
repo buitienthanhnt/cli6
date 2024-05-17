@@ -36,21 +36,9 @@ class rApi {
           console.log('gọi lại fn lỗi token-->');
           return this.callRequest(error.config);
         }
-
-        // if (error.response.status === 402) {
-        //   console.log(
-        //     '402 refreshToken error please get token.',
-        //     this.isTokenExpired,
-        //   );
-        //   if (!this.isTokenExpired) {
-        //     this.isTokenExpired = true;
-        //     this.reFreshTokenProcess = this.awGetToken();
-        //   }
-        //   console.log('gọi lại fn lỗi token-->');
-        //   return this.callRequest(error.config);
-        // }
-
-        return Promise.reject(error);
+        // return Promise.reject(error);
+        // return loi cho request
+        return Promise.reject(error.response);
       },
     );
   }
@@ -95,7 +83,9 @@ class rApi {
       return await this.cAxios(config);
     } catch (e) {
       console.log('?__processRequest__?', e);
-      throw new Error(e);
+      // return loi tu interceoptor cho request
+      return Promise.reject(e)
+      // throw new Error(e);
     }
   }
 

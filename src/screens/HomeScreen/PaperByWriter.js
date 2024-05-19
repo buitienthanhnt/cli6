@@ -14,13 +14,14 @@ const PaperByWriter = ({ route: { params: { id, name } } }) => {
     return (
         <View style={{ flex: 1, padding: 5 }}>
             <Text style={{ fontSize: 18, color: '#db1cff' }}>Tác giả: <Text style={{ color: 'blue' }}>{name}</Text></Text>
+            <View style={{height: 1, backgroundColor: 'black', marginBottom: 10, marginTop: 4}}></View>
             {
                 isLoading ? (
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Image source={require("@assets/Ripple-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>
                     </View>
                 ) : (
-                    data?.papers && <ListPaper values={Object.values(data?.papers)}></ListPaper>
+                   <ListPaper values={Object.values(data?.papers)}></ListPaper>
                 )
             }
         </View>

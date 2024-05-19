@@ -276,7 +276,7 @@ const css = StyleSheet.create({
     // alignSelf: 'flex-start'
   },
   userName: {
-    color: '#007cff',
+    color: '#4ac72e',
     fontSize: 16,
     fontWeight: '600',
   },

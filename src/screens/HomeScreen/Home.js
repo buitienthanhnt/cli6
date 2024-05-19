@@ -98,7 +98,7 @@ const Home = ({navigation}) => {
       const data = await getAxios(
         Config.custom_url() + Config.api_request.getInfo,
       );
-      if (data?.data.code < 200 || data?.data.code >= 300 || !data) {
+      if (data?.code < 200 || data?.code >= 300 || !data) {
         Alert.alert('server not active!, use data from firebase');
         updateState(actionReducer.useFirebase, true);
       }

@@ -61,10 +61,8 @@ class rApi {
 
   async awReFreshToken() {
     console.log('-----> chạy vào refresh token awReFreshToken');
-    return axios.get(Config.custom_url('refreshUserToken'), {
-      params: {
+    return axios.post(Config.custom_url('refreshUserToken'), {
         refresh_token: this.initRefreshToken(),
-      },
     });
   }
 

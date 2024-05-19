@@ -50,7 +50,7 @@ const initApp = async () => {
   rApi.reSetCaxiosAu(token);
 };
 console.log('start app |-->');
-initApp();
+// initApp();
 AppRegistry.registerComponent(appName, () => App);
 console.log('end of process.');
 // =============================== //

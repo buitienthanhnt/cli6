@@ -5,6 +5,7 @@ import firebaseType from '@constants/firebaseType';
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import {useSelector} from 'react-redux';
 import {getPapersByWriter} from '@queries/writer';
+import homeInfo from '@queries/info';
 
 const useComments = (paperId: number, parentId: number, page: any) => {
   const {useFirebase} = useSelector((state: any) => state.defRe);
@@ -76,4 +77,13 @@ const usePaperByWriter = (writerId: number) => {
   return response;
 };
 
-export {useComments, usePaperByWriter};
+const useHomeInfo = ()=>{
+  const response = useQuery({
+    queryKey: ['useHomeInfo'],
+    queryFn: homeInfo,
+    retry: 2,
+  });
+  return response;
+}
+
+export {useComments, usePaperByWriter, useHomeInfo};

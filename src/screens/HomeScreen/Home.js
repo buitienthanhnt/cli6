@@ -42,6 +42,7 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {formatDate} from '@utils/helper';
 import Carousel from '@elements/Carousel';
+import {useHomeInfo} from '@hooks/usePapers';
 
 const useInfo = () => {
   const {useFirebase} = useSelector(state => state.defRe);
@@ -111,17 +112,16 @@ const Home = ({navigation}) => {
     checkUseFirebase();
   }, []);
 
-  const {loadding, data, fetchData} = useInfo();
-  // console.log('', data.data.hit, data.data.mostPopulator, data.data.mostRecents);
+  const {isLoading, data, isError, error} = useHomeInfo();
   return (
     <ScrollView
       style={{flex: 1, paddingHorizontal: 2, paddingTop: 4}}
       showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
-          refreshing={loadding}
+          refreshing={isLoading}
           onRefresh={async () => {
-            fetchData();
+            // fetchData();
           }}
         />
       }>

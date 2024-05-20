@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Text,
   TextInput,
@@ -11,17 +11,19 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import auth, {GoogleAuthProvider, firebase} from '@react-native-firebase/auth'; // https://rnfirebase.io/reference/auth/user
-import {GoogleSignin} from '@react-native-google-signin/google-signin'; // yarn add @react-native-google-signin/google-signin
+import auth, { GoogleAuthProvider, firebase } from '@react-native-firebase/auth'; // https://rnfirebase.io/reference/auth/user
+import { GoogleSignin } from '@react-native-google-signin/google-signin'; // yarn add @react-native-google-signin/google-signin
 import Icon from 'react-native-vector-icons/FontAwesome';
 import useDispatchState from '@hooks/redux/useDispatchState';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Animated, {
   Easing,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import useLogin from '@hooks/useLogin';
+import rApi from '@netWork/rApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // https://codingpr.com/react-firebase-auth-tutorial/
 // https://codingpr.com/react-firebase-password-reset-feature/
@@ -33,27 +35,27 @@ GoogleSignin.configure({
 
 const Login = props => {
   const top = useSharedValue(Dimensions.get('screen').height);
-  const [value, setValue] = useState(0);
+  const { actionReducer, updateState } = useDispatchState();
   const [error, setError] = useState(false);
-  const [fullName, setFullName] = useState({
-    name: 'name',
-    familyName: 'family',
-  });
-  const [title, setTitle] = useState({value: 'useEffect() i a Hooks'});
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
 
-  const {mutate, isLoading} = useLogin(
-    {email: email, password: password},
-    () => {
-      console.log('___________login success');
+  const { mutate, isLoading, isSuccess } = useLogin(
+    { email: email, password: password },
+    (result) => {
+      console.log('___________login success', result);
+      updateState(actionReducer.setUser, result.userData);
+      updateState(actionReducer.setToken, result.token.value);
+      updateState(actionReducer.setRefreshToken, result.refresh_token.value);
+      rApi.reSetCaxiosAu(result.token.value);
+      AsyncStorage.setItem('token', result.token.value);
+      AsyncStorage.setItem('refresh_token', result.refresh_token.value);
+      onClose();
     },
   );
 
-  const {user_data} = useSelector(state => state.authenRe);
-  const {actionReducer, updateState} = useDispatchState();
-
+  const { user_data } = useSelector(state => state.authenRe);
   // Set an initializing state whilst Firebase connects
   const [user, setUser] = useState();
 
@@ -76,7 +78,7 @@ const Login = props => {
     const authen = auth().currentUser;
     authen
       .updateEmail('thanh.bui@jmango360.com')
-      .then(() => {})
+      .then(() => { })
       .catch(error => {
         console.log(error);
       });
@@ -130,9 +132,9 @@ const Login = props => {
   if (user) {
     console.log(user);
     return (
-      <View style={{padding: 12}}>
+      <View style={{ padding: 12 }}>
         <Text>Logined</Text>
-        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
           user: {user.email}
         </Text>
         <Text />
@@ -158,9 +160,9 @@ const Login = props => {
   // open windown login by google account.
   async function onGoogleButtonPress() {
     // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
     // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
+    const { idToken } = await GoogleSignin.signIn();
 
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
@@ -263,12 +265,12 @@ const Login = props => {
   }, [actionReducer.setUser, email, onClose, password, updateState]);
 
   return (
-    <Animated.View style={{top: top, flex: 1}}>
+    <Animated.View style={{ top: top, flex: 1 }}>
       <KeyboardAvoidingView
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <TouchableOpacity
-          style={{height: (Dimensions.get('screen').width * 3) / 5}}
+          style={{ height: (Dimensions.get('screen').width * 3) / 5 }}
           onPress={onClose}
         />
         <TouchableWithoutFeedback
@@ -290,11 +292,11 @@ const Login = props => {
             source={require('../../assets/pexels-brakou-abdelghani-1723637.jpg')}>
             {message && (
               <Text
-                style={{color: message.type === 'success' ? 'green' : 'red'}}>
+                style={{ color: message.type === 'success' ? 'green' : 'red' }}>
                 {message.value}
               </Text>
             )}
-            {error && <Text style={{color: 'red'}}>email is required!</Text>}
+            {error && <Text style={{ color: 'red' }}>email is required!</Text>}
             <TextInput
               style={{
                 borderWidth: 1,
@@ -333,7 +335,7 @@ const Login = props => {
                 alignItems: 'center',
               }}
               onPress={mutate}>
-              <Text style={{fontSize: 16}}>
+              <Text style={{ fontSize: 16 }}>
                 {isLoading ? 'loading...' : 'Login'}
               </Text>
             </TouchableOpacity>
@@ -362,7 +364,7 @@ const Login = props => {
                     console.log(auth().currentUser);
                   })
                 }>
-                <Text style={{color: 'tomato'}}>
+                <Text style={{ color: 'tomato' }}>
                   <Icon name="google" size={18} color="tomato" /> google
                 </Text>
               </TouchableOpacity>
@@ -385,9 +387,9 @@ const Login = props => {
               </TouchableOpacity>
             </View>
 
-            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <TouchableOpacity
                   style={{
                     backgroundColor: 'rgba(119, 193, 145, 0.8) ',

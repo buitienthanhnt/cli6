@@ -23,6 +23,7 @@ import {caroll} from './api/datatest';
 import Carolsel from '@screens/AccountScreen/components/Carolsel';
 import PaperTag from './element/PaperTag';
 import PaperCarousel from './element/PaperCarousel';
+import rApi from '@netWork/rApi';
 
 const renderers = {
   iframe: IframeRenderer,
@@ -49,10 +50,10 @@ const PaperDetail = ({navigation, route}) => {
       if (id) {
         try {
           setRefreshing(true);
-          const detail = await fetch(
-            Config.custom_url() + Config.api_request.getPaperDetail + id,
-          );
-          var result = await detail.json();
+          const result = await rApi.callRequest({
+            method: 'GET',
+            url: Config.api_request.getPaperDetail + id
+          })
           setRefreshing(false);
           if (result) {
             setDetail(result);
@@ -63,7 +64,6 @@ const PaperDetail = ({navigation, route}) => {
           navigation.goBack();
         }
       }
-      // console.log(traceInitScreen);
       await traceInitScreen.stop();
     },
     [navigation],

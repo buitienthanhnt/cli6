@@ -120,15 +120,15 @@ const CommentsRender = ({comments, parentId, root}) => {
       <View style={css.content}>
         {!root && <View style={css.lineConten} />}
         {/* <FlatList
-                    data={comment}
-                    keyExtractor={(item, index) => index + "_" + item.id}
-                    renderItem={({ item, index }) => {
-                        return <CommentItem comment={item} root={root} index={index} />
-                    }}
-                    ItemSeparatorComponent={() => {
-                        return (<View style={{ height: 8 }}></View>)
-                    }}
-                ></FlatList> */}
+            data={comment}
+            keyExtractor={(item, index) => index + "_" + item.id}
+            renderItem={({ item, index }) => {
+                return <CommentItem comment={item} root={root} index={index} />
+            }}
+            ItemSeparatorComponent={() => {
+                return (<View style={{ height: 8 }}></View>)
+            }}
+         ></FlatList> */}
 
         <View style={{gap: 4}}>
           {comment.map((item, index) => {

@@ -21,6 +21,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import useLogin from '@hooks/useLogin';
 
 // https://codingpr.com/react-firebase-auth-tutorial/
 // https://codingpr.com/react-firebase-password-reset-feature/
@@ -42,6 +43,13 @@ const Login = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
+
+  const {mutate, isLoading} = useLogin(
+    {email: email, password: password},
+    () => {
+      console.log('___________login success');
+    },
+  );
 
   const {user_data} = useSelector(state => state.authenRe);
   const {actionReducer, updateState} = useDispatchState();
@@ -324,8 +332,10 @@ const Login = props => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={onLogin}>
-              <Text style={{fontSize: 16}}>Login</Text>
+              onPress={mutate}>
+              <Text style={{fontSize: 16}}>
+                {isLoading ? 'loading...' : 'Login'}
+              </Text>
             </TouchableOpacity>
 
             <View

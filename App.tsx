@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   AppState,
   Image,
@@ -17,14 +17,14 @@ import {
   Modal,
   TouchableOpacity,
 } from 'react-native';
-import { navigationRef } from '@hooks/Navigate'; // để di chuyển qua các màn hình
-import { check, request, RESULTS } from 'react-native-permissions';
+import {navigationRef} from '@hooks/Navigate'; // để di chuyển qua các màn hình
+import {check, request, RESULTS} from 'react-native-permissions';
 
 // adb reverse tcp:9090 tcp:9090 (chạy lênh này nếu dùng qua android hay máy ảo android để kíck hoạt reactotron)
 import Reactotron from 'reactotron-react-native';
 
 // react-native-onesignal: lưu ý chỉ chạy trên máy thật(máy ảo sẽ không đăng ký được subrier) // https://documentation.onesignal.com/docs/react-native-sdk-setup
-import { LogLevel, OneSignal } from 'react-native-onesignal';
+import {LogLevel, OneSignal} from 'react-native-onesignal';
 if (__DEV__) {
   // adb reverse tcp:9090 tcp:9090
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
@@ -36,17 +36,17 @@ if (__DEV__) {
 
 // import Icon from 'react-native-vector-icons/FontAwesome';  // npm install react-native-vector-icons --save && thêm: apply from: "../../node_modules/react-native-vector-icons/fonts.gradle" vào: android/app/build.gradle
 // import Icon from 'react-native-vector-icons/Ionicons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabs from '@bottoms/Bottom';
-import { requestUserPermission } from '@utils/notificationHelper';
+import {requestUserPermission} from '@utils/notificationHelper';
 import linking from './linking';
-import { QueryClient, QueryClientProvider } from 'react-query'; // dùng cho getdata api
-import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
+import {QueryClient, QueryClientProvider} from 'react-query'; // dùng cho getdata api
+import {Provider} from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
 import AppStore from '@redux/AppStore';
 import remoteConfig from '@react-native-firebase/remote-config';
 import DeviceInfo from 'react-native-device-info';
-import { ExAnimated5 } from '@screens/CodeScreen/components/animated/ExAnimated1';
+import {ExAnimated5} from '@screens/CodeScreen/components/animated/ExAnimated1';
 import Login from '@screens/AccountScreen/Login';
 import LoadingX from '@screens/CodeScreen/components/animated/LoadingX';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -59,47 +59,47 @@ import rApi from '@netWork/rApi';
 const queryClient = new QueryClient();
 
 const Stack = createNativeStackNavigator();
+
+const initRoot = async (setInit: (value: boolean) => void) => {
+  let token = await AsyncStorage.getItem('token');
+  let refresh_token = await AsyncStorage.getItem('refresh_token');
+  if (refresh_token && token) {
+  } else {
+    try {
+      const {data} = await axios.get(Config.api_request.getToken, {
+        baseURL: Config.custom_url(),
+        params: {
+          api_key: DeConfig.API_KEY || Config.api_key,
+        },
+      });
+      if (data) {
+        token = data.token.value;
+        refresh_token = data.refresh_token.value;
+        await AsyncStorage.setItem('token', token || '');
+        await AsyncStorage.setItem('refresh_token', refresh_token || '');
+      }
+    } catch (e) {}
+  }
+  AppStore.dispatch({
+    type: actionReducerType.setRefreshToken,
+    value: refresh_token,
+  });
+  AppStore.dispatch({
+    type: actionReducerType.setToken,
+    value: token,
+  });
+  // @ts-ignore
+  rApi.reSetCaxiosAu(token);
+  setInit(true);
+};
 function App(): JSX.Element {
   const appState = useRef(AppState.currentState);
   const [init, setInit] = useState(false);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const initRoot = async () => {
-    let token = await AsyncStorage.getItem('token');
-    let refresh_token = await AsyncStorage.getItem('refresh_token');
-    if (refresh_token && token) {
-    } else {
-      try {
-        const { data } = await axios.get(Config.api_request.getToken, {
-          baseURL: Config.custom_url(),
-          params: {
-            api_key: DeConfig.API_KEY || Config.api_key,
-          },
-        });
-        if (data) {
-          token = data.token.value;
-          refresh_token = data.refresh_token.value;
-          await AsyncStorage.setItem('token', token || '');
-          await AsyncStorage.setItem('refresh_token', refresh_token || '');
-        }
-      } catch (e) { }
-    }
-    AppStore.dispatch({
-      type: actionReducerType.setRefreshToken,
-      value: refresh_token,
-    });
-    AppStore.dispatch({
-      type: actionReducerType.setToken,
-      value: token,
-    });
-    // @ts-ignore
-    rApi.reSetCaxiosAu(token);
-    setInit(true);
-  }
-
   useEffect(() => {
-    initRoot();
+    initRoot(setInit);
     // đăng ký cho OneSignal active in rootComponent
     OneSignal.Debug.setLogLevel(LogLevel.Verbose);
 
@@ -200,11 +200,7 @@ function App(): JSX.Element {
   }, []);
 
   if (!init) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>loading...</Text>
-      </View>
-    )
+    return <WaitLoading />;
   }
 
   return (
@@ -226,17 +222,17 @@ function App(): JSX.Element {
             <Stack.Screen
               name="BottomTabs"
               component={BottomTabs}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="ExAnimated5"
               component={ExAnimated5}
-              options={{ presentation: 'transparentModal', headerShown: false }}
+              options={{presentation: 'transparentModal', headerShown: false}}
             />
             <Stack.Screen
               name="Login"
               component={Login}
-              options={{ headerShown: false, presentation: 'transparentModal' }}
+              options={{headerShown: false, presentation: 'transparentModal'}}
             />
             <Stack.Screen
               name="LoadingX"
@@ -251,7 +247,7 @@ function App(): JSX.Element {
         </NavigationContainer>
       </QueryClientProvider>
       <Modal visible={modalVisible} transparent={true}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <View
             style={{
               width: 300,
@@ -283,10 +279,10 @@ function App(): JSX.Element {
 
 const WaitLoading = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Image
         source={require('@assets/Ripple-1s-200px.gif')}
-        style={{ width: 60, height: 60 }}
+        style={{width: 60, height: 60}}
       />
     </View>
   );

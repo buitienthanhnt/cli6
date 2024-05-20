@@ -33,7 +33,7 @@ class rApi {
             this.reFreshTokenProcess = this.awReFreshToken();
           }
           // return Promise.resolve(error.config);
-          console.log('gọi lại fn lỗi token-->');
+          console.log('gọi lại fn lỗi token expire -->');
           return this.callRequest(error.config);
         }
         // return Promise.reject(error);
@@ -62,7 +62,7 @@ class rApi {
   async awReFreshToken() {
     console.log('-----> chạy vào refresh token awReFreshToken');
     return axios.post(Config.custom_url('refreshUserToken'), {
-        refresh_token: this.initRefreshToken(),
+      refresh_token: this.initRefreshToken(),
     });
   }
 
@@ -82,7 +82,7 @@ class rApi {
     } catch (e) {
       console.log('?__processRequest__?', e);
       // return loi tu interceoptor cho request
-      return Promise.reject(e)
+      return Promise.reject(e);
       // throw new Error(e);
     }
   }

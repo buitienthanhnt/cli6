@@ -29,90 +29,17 @@ import {
 } from 'react-native-chart-kit'; // https://github.com/indiespirit/react-native-chart-kit
 //https://blog.logrocket.com/top-8-react-native-chart-libraries-2023/
 import TimelineTwo from './TimelineTwo';
-import Config from '@config/Config';
 import YoutubePlayer from 'react-native-youtube-iframe'; // https://lonelycpp.github.io/react-native-youtube-iframe/
 import {openDetail, openSearch} from '@utils/paper';
 import {Navigate} from '@hooks/Navigate';
-import firebaseType from '@constants/firebaseType';
-import {useSelector} from 'react-redux';
-import database from '@react-native-firebase/database';
-import useDispatchState from '@hooks/redux/useDispatchState';
-import {getAxios} from '@queries/NetWorking';
-import remoteConfig from '@react-native-firebase/remote-config';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {formatDate} from '@utils/helper';
 import Carousel from '@elements/Carousel';
 import {useHomeInfo} from '@hooks/usePapers';
 
-const useInfo = () => {
-  const {useFirebase} = useSelector(state => state.defRe);
-  const [loadding, setLoadding] = useState(false);
-  const [data, setData] = useState(null);
-  const fetchData = useCallback(async () => {
-    try {
-      setLoadding(true);
-      if (useFirebase || Config.useFirebase) {
-        const onValueChange = database()
-          .ref(firebaseType.realTime.homeInfo)
-          .on('value', snapshot => {
-            if (snapshot.numChildren()) {
-              let _data = [];
-              snapshot.forEach(item => {
-                setData(item.val()?.data);
-                setLoadding(false);
-              });
-            }
-          });
-        return () =>
-          database()
-            .ref(firebaseType.realTime.homeInfo)
-            .off('value', onValueChange);
-      } else {
-        const url = Config.custom_url() + Config.api_request.getInfo;
-        const response = await fetch(url);
-        const value = await response.json();
-        setData(value?.data);
-      }
-      setLoadding(false);
-    } catch (error) {
-      console.log('---||---', error);
-      setLoadding(false);
-    }
-  }, [useFirebase]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-  return {loadding, data, fetchData};
-};
-
 const Home = ({navigation}) => {
-  const {actionReducer, updateState} = useDispatchState();
-
-  const checkUseFirebase = useCallback(async () => {
-    if (Config.useFirebase && __DEV__) {
-      updateState(actionReducer.useFirebase, true);
-      return;
-    }
-    try {
-      const data = await getAxios(
-        Config.custom_url() + Config.api_request.getInfo,
-      );
-      if (data?.code < 200 || data?.code >= 300 || !data) {
-        Alert.alert('server not active!, use data from firebase');
-        updateState(actionReducer.useFirebase, true);
-      }
-    } catch (error) {
-      Alert.alert('Đã hết thời gian yêu cầu');
-      updateState(actionReducer.useFirebase, true);
-    }
-  }, [actionReducer.useFirebase, updateState]);
-
-  useEffect(() => {
-    checkUseFirebase();
-  }, []);
-
   const {isLoading, data, isError, error} = useHomeInfo();
+
   return (
     <ScrollView
       style={{flex: 1, paddingHorizontal: 2, paddingTop: 4}}

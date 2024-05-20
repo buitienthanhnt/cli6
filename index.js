@@ -6,51 +6,13 @@ import perf from '@react-native-firebase/perf';
 import '@utils/messaging';
 import '@utils/inAppMessage';
 import '@utils/crashlytics';
-import AppStore from '@redux/AppStore';
-import actionReducerType from '@constants/actionReducer';
-import axios from 'axios';
-import Config from '@config/Config';
-import DeConfig from 'react-native-config';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import rApi from '@netWork/rApi';
 
 const perfCollect = async () => {
   perf().setPerformanceCollectionEnabled(true);
 };
 perfCollect();
 
-const initApp = async () => {
-  let token = await AsyncStorage.getItem('token');
-  let refresh_token = await AsyncStorage.getItem('refresh_token');
-  if (refresh_token && token) {
-  } else {
-    try {
-      const {data} = await axios.get(Config.api_request.getToken, {
-        baseURL: Config.custom_url(),
-        params: {
-          api_key: DeConfig.API_KEY || Config.api_key,
-        },
-      });
-      if (data) {
-        token = data.token.value;
-        refresh_token = data.refresh_token.value;
-        await AsyncStorage.setItem('token', token);
-        await AsyncStorage.setItem('refresh_token', refresh_token);
-      }
-    } catch (e) {}
-  }
-  AppStore.dispatch({
-    type: actionReducerType.setRefreshToken,
-    value: refresh_token,
-  });
-  AppStore.dispatch({
-    type: actionReducerType.setToken,
-    value: token,
-  });
-  rApi.reSetCaxiosAu(token);
-};
 console.log('start app |-->');
-// initApp();
 AppRegistry.registerComponent(appName, () => App);
 console.log('end of process.');
 // =============================== //

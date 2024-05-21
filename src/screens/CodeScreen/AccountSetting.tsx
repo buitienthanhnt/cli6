@@ -12,14 +12,15 @@ const AccountSetting = () => {
   const {mutate, isLoading} = useLogout();
 
   useEffect(() => {
-    if (!user_data) {
-      Navigate('Login', {});
-    }
+    // if (!user_data) {
+    //   Navigate('Login', {});
+    // }
   }, [user_data]);
+
   if (!user_data) {
     return (
       <TouchableOpacity
-        style={{flex: 1, padding: 16, alignItems: 'center'}}
+        style={{padding: 16, alignItems: 'center'}}
         onPress={() => {
           Navigate('Login', {});
         }}>

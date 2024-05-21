@@ -78,7 +78,7 @@ const AccountDetail = props => {
 
   const logout = useCallback(() => {
     updateState(actionReducer.setUser, null);
-  }, []);
+  }, [actionReducer.setUser, updateState]);
 
   return (
     <ScrollView style={{paddingHorizontal: 8}}>
@@ -96,9 +96,7 @@ const AccountDetail = props => {
         <Text>
           Connected?: {netInfo.isConnected ? 'conneted' : 'not connected'}
         </Text>
-          <Text>
-              Ip: {netInfo?.details?.ipAddress}
-          </Text>
+        <Text>Ip: {netInfo?.details?.ipAddress}</Text>
       </View>
 
       <Button

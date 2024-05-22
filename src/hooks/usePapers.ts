@@ -124,6 +124,7 @@ const usePaperDetail = (id: number) => {
   const fn = useQuery({
     queryKey: ['usePaperDetail', id],
     queryFn: () => getDetail(id),
+    cacheTime: 1000 * 60 * 15,
   });
   return {...fn};
 };

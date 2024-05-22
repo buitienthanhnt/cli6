@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import Config from '@config/Config';
+import rApi from '@netWork/rApi';
 
 //   npm install --save react-native-snap-carousel ||(type Typescript) npm install --save @types/react-native-snap-carousel
 import Carousel from 'react-native-snap-carousel'; // https://www.npmjs.com/package/react-native-snap-carousel#example
@@ -22,12 +23,9 @@ class Carolsel extends Component {
   }
 
   loadData = async () => {
-    let result = null;
-    let request = Config.custom_url() + Config.api_request.getRelatedPaper;
-    const response = await fetch(request);
-    result = await response.json();
+    const {data} = await rApi.callRequest(Config.api_request.getRelatedPaper);
     this.setState({
-      data: result.data,
+      data: data,
     });
   };
 

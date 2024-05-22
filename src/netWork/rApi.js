@@ -68,13 +68,11 @@ class rApi {
 
   async processRequest(config) {
     try {
-      console.log(
-        'begin processRequest with token:',
-        this.token,
-        config?.headers,
-      );
-      // this.cAxios.defaults.headers.Authorization =
-      //   this.token || this.initToken();
+      // console.log(
+      //   'begin processRequest with token:',
+      //   this.token,
+      //   config?.headers,
+      // );
       if (config?.headers && config.headers?.Authorization !== this.token) {
         config.headers.Authorization = this.token;
       }
@@ -125,10 +123,6 @@ class rApi {
           console.log('?__refreshToken__?', error, error.response.status);
           throw new Error('refreshToken error!');
         }
-        // return await new Promise((resolve, reject) => {
-        //   // resolve(e);
-        //   reject(e);
-        // });
       }
     }
     // return 1 promies.

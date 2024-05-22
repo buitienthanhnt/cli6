@@ -1,40 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {
-  View,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  Text,
-  ScrollView,
-  StyleSheet,
-  ImageBackground,
-  RefreshControl,
-  Button,
-  TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Alert,
-} from 'react-native';
-import CarolParax from '../CodeScreen/components/animated/CarolParax';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import PaperInfo from '@screens/PaperScreen/element/PaperInfo';
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from 'react-native-chart-kit'; // https://github.com/indiespirit/react-native-chart-kit
-//https://blog.logrocket.com/top-8-react-native-chart-libraries-2023/
-import TimelineTwo from './TimelineTwo';
-import YoutubePlayer from 'react-native-youtube-iframe'; // https://lonelycpp.github.io/react-native-youtube-iframe/
-import {openDetail, openSearch} from '@utils/paper';
-import {Navigate} from '@hooks/Navigate';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {formatDate} from '@utils/helper';
-import Carousel from '@elements/Carousel';
+import {Text, ScrollView, RefreshControl, Button} from 'react-native';
 import {useHomeInfo} from '@hooks/usePapers';
 import {
   ListCarousel,
@@ -52,19 +16,14 @@ import {
 } from '@screens/HomeScreen/components';
 
 const Home = ({navigation}) => {
-  const {isLoading, data, isError, error} = useHomeInfo();
+  const {isLoading, data, isError, error, refetch} = useHomeInfo();
 
   return (
     <ScrollView
       style={{flex: 1, paddingHorizontal: 2, paddingTop: 4}}
       showsVerticalScrollIndicator={false}
       refreshControl={
-        <RefreshControl
-          refreshing={isLoading}
-          onRefresh={async () => {
-            // fetchData();
-          }}
-        />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} />
       }>
       <TopNew hit={data?.hit} />
       <PopularNews data={data?.mostRecents} />
@@ -89,18 +48,6 @@ const Home = ({navigation}) => {
                 navigation.navigate("ExampleTwo")
             }}></Button> */}
       <Text />
-      {/*<Button*/}
-      {/*  title="to screen modal"*/}
-      {/*  onPress={() => {*/}
-      {/*    navigation.navigate('ExAnimated5');*/}
-      {/*  }}*/}
-      {/*/>*/}
-      {/*<Button*/}
-      {/*  title="to Login"*/}
-      {/*  onPress={() => {*/}
-      {/*    navigation.navigate('Login');*/}
-      {/*  }}*/}
-      {/*/>*/}
     </ScrollView>
   );
 };

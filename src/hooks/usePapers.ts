@@ -9,13 +9,23 @@ import homeInfo from '@queries/info';
 import Config from '@config/Config';
 import useDispatchState from '@hooks/redux/useDispatchState';
 import {Alert} from 'react-native';
+import {getDetail} from '@queries/paper';
+import rApi from '@netWork/rApi';
 
 const useComments = (paperId: number, parentId: number, page: any) => {
   const {useFirebase} = useSelector((state: any) => state.defRe);
   const [value, setValue] = useState([]);
 
   const commentServer = useCallback(async () => {
-    const {data} = await getComments(paperId, parentId, page || 0);
+    // @ts-ignore
+    const {data} = await rApi.callRequest({
+      method: 'GET',
+      url: Config.api_request.getPaperComments + paperId,
+      params: {
+        p: page,
+        parentId: parentId,
+      },
+    }); //getComments(paperId, parentId, page || 0);
     setValue(data || []);
   }, [paperId, parentId, page, setValue]);
 
@@ -110,4 +120,12 @@ const useHomeInfo = () => {
   };
 };
 
-export {useComments, usePaperByWriter, useHomeInfo};
+const usePaperDetail = (id: number) => {
+  const fn = useQuery({
+    queryKey: ['usePaperDetail', id],
+    queryFn: () => getDetail(id),
+  });
+  return {...fn};
+};
+
+export {useComments, usePaperByWriter, useHomeInfo, usePaperDetail};

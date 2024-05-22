@@ -6,9 +6,9 @@ const Config = () => {
     https: 'https://',
     main: 'laravel1/',
     // ip: "192.168.99.103/",                 // 192.168.99.103       (4700-home) || 192.168.99.100 (6800-home)
-    ip: '192.168.102.25/',                 // 192.168.102.25       (m4700-mochi)
+    // ip: '192.168.102.25/',                 // 192.168.102.25       (m4700-mochi)
     // ip: '192.168.102.40/', // 192.168.102.40       (m6800)
-    // ip: '192.168.100.156/', // 192.168.100.156        (jm-destop)
+    ip: '192.168.100.156/', // 192.168.100.156        (jm-destop)
     uri: 'laravel1/public/index.php/', // laravel1/public/index.php
     token: 'tha_nan_demo_request_token',
     api_key: 'laravel1.com',

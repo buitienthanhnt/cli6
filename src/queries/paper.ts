@@ -3,6 +3,7 @@ import axios from 'axios';
 import AppStore from '@redux/AppStore';
 import database from '@react-native-firebase/database';
 import firebaseType from '@constants/firebaseType';
+import rApi from '@netWork/rApi';
 
 export const addLike = async (paperId: number, params?: any): Promise<any> => {
   const {defRe} = AppStore.getState();
@@ -30,10 +31,21 @@ export const search = async (query: string) => {
   if (defRe.useFirebase) {
     return [];
   } else {
-    const url = `${
-      Config.custom_url() + Config.api_request.search
-    }?query=${query}`;
-    const response = await axios.get(url);
-    return response.data;
+    // @ts-ignore
+    const response = await rApi.callRequest({
+      method: 'GET',
+      url: Config.api_request.search,
+      params: {query: query},
+    });
+    return response;
   }
+};
+
+export const getDetail = async (id: number) => {
+  // @ts-ignore
+  const result = await rApi.callRequest({
+    method: 'GET',
+    url: Config.api_request.getPaperDetail + id,
+  });
+  return result;
 };

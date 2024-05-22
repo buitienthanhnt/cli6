@@ -61,6 +61,25 @@ const queryClient = new QueryClient();
 
 const Stack = createNativeStackNavigator();
 
+const initUserData = async () => {
+  try {
+    // @ts-ignore
+    const result = await rApi.callRequest({
+      method: 'GET',
+      url: Config.api_request.userInfo
+    });
+
+    if (result?.userData) {
+      AppStore.dispatch({
+        type: actionReducerType.setUser,
+        value: result.userData
+      })
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const initRoot = async (setInit: (value: boolean) => void) => {
   let token = await AsyncStorage.getItem('token');
   let refresh_token = await AsyncStorage.getItem('refresh_token');
@@ -92,22 +111,7 @@ const initRoot = async (setInit: (value: boolean) => void) => {
   // @ts-ignore
   rApi.reSetCaxiosAu(token);
   setInit(true);
-  try {
-    // @ts-ignore
-    const result = await rApi.callRequest({
-      method: 'GET',
-      url: Config.api_request.userInfo
-    });
-
-    if (result?.userData) {
-      AppStore.dispatch({
-        type: actionReducerType.setUser,
-        value: result.userData
-      })
-    }
-  } catch (error) {
-    console.log(error)
-  }
+  // initUserData()
 };
 
 function App(): JSX.Element {

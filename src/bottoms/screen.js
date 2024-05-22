@@ -32,6 +32,7 @@ import PaperHome from '@screens/PaperScreen/PaperHome';
 import {Sdetail} from '@screens/PaperScreen/Sdetail';
 import WebInApp from '@screens/PaperScreen/WebInApp';
 import PaperList from '@screens/PaperScreen/PaperList';
+import PaperListFunc from '@screens/PaperScreen/PaperListFunc';
 import PaperDetail from '@screens/PaperScreen/PaperDetail';
 import PaperDetailFirebase from '@screens/PaperScreen/PaperDetailFirebase';
 import PaperCategory from '@screens/PaperScreen/PaperCategory';
@@ -244,6 +245,11 @@ export const screens = {
     {
       name: 'PaperList',
       component: PaperList,
+      options: {headerShown: false},
+    },
+    {
+      name: 'PaperListFunc',
+      component: PaperListFunc,
       options: {headerShown: false},
     },
     {

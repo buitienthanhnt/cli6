@@ -1,24 +1,24 @@
-import {addCommentServer, getComments} from '@queries/comments';
-import {useCallback, useEffect, useState} from 'react';
-import {useQuery} from 'react-query';
+import { addCommentServer, getComments } from '@queries/comments';
+import { useCallback, useEffect, useState } from 'react';
+import { useQuery, useInfiniteQuery } from 'react-query';
 import firebaseType from '@constants/firebaseType';
-import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
-import {useSelector} from 'react-redux';
-import {getPapersByWriter} from '@queries/writer';
+import database, { FirebaseDatabaseTypes } from '@react-native-firebase/database';
+import { useSelector } from 'react-redux';
+import { getPapersByWriter } from '@queries/writer';
 import homeInfo from '@queries/info';
 import Config from '@config/Config';
 import useDispatchState from '@hooks/redux/useDispatchState';
-import {Alert} from 'react-native';
-import {getDetail} from '@queries/paper';
+import { Alert } from 'react-native';
+import { getDetail, getList } from '@queries/paper';
 import rApi from '@netWork/rApi';
 
 const useComments = (paperId: number, parentId: number, page: any) => {
-  const {useFirebase} = useSelector((state: any) => state.defRe);
+  const { useFirebase } = useSelector((state: any) => state.defRe);
   const [value, setValue] = useState([]);
 
   const commentServer = useCallback(async () => {
     // @ts-ignore
-    const {data} = await rApi.callRequest({
+    const { data } = await rApi.callRequest({
       method: 'GET',
       url: Config.api_request.getPaperComments + paperId,
       params: {
@@ -56,7 +56,7 @@ const useComments = (paperId: number, parentId: number, page: any) => {
     (paperId: number, params: any) => {
       if (useFirebase) {
         let ref = database().ref(firebaseType.realTime.addComments).push();
-        ref.set({paper_id: paperId, ...params});
+        ref.set({ paper_id: paperId, ...params });
       } else {
         addCommentServer(paperId, params);
       }
@@ -82,8 +82,8 @@ const usePaperByWriter = (writerId: number) => {
 const useHomeInfo = () => {
   const [data, setData] = useState(null);
   // @ts-ignore
-  const {useFirebase} = useSelector(state => state.defRe);
-  const {actionReducer, updateState} = useDispatchState();
+  const { useFirebase } = useSelector(state => state.defRe);
+  const { actionReducer, updateState } = useDispatchState();
 
   const response = useQuery({
     queryKey: ['useHomeInfo'],
@@ -126,7 +126,33 @@ const usePaperDetail = (id: number) => {
     queryFn: () => getDetail(id),
     cacheTime: 1000 * 60 * 15,
   });
-  return {...fn};
+  return { ...fn };
 };
 
-export {useComments, usePaperByWriter, useHomeInfo, usePaperDetail};
+const usePaperList = () => {
+  const fn = useInfiniteQuery({
+    queryKey: 'usePaperList',
+    queryFn: ({ pageParam = 1 }) => getList(pageParam),
+    initialPageParam: 1,
+    // ...options,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+      if (lastPage.current_page < lastPage.last_page) {
+        return lastPage.current_page + 1;
+      }
+      // if (lastPage.data.length) {
+      //   return lastPage.page + 1;
+      //   // return {nextP: lastPage.page + 1}; // giá trị trả về này sẽ được dùng cho param của hàm gọi tiếp theo: queryFn
+      // }
+      return false;
+    },
+    getPreviousPageParam: (
+      firstPage,
+      allPages,
+      firstPageParam,
+      allPageParams,
+    ) => firstPage.current_page,
+  });
+  return { ...fn };
+}
+
+export { useComments, usePaperByWriter, useHomeInfo, usePaperDetail, usePaperList };

@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux';
 import PaperListFirebase from './PaperListFirebase';
-import PaperList from './PaperList';
+import PaperListFunc from './PaperListFunc';
 
 const PaperHome = ({navigation}) => {
   const {useFirebase} = useSelector(state => state.defRe);
@@ -8,7 +8,7 @@ const PaperHome = ({navigation}) => {
   if (useFirebase) {
     return <PaperListFirebase navigation={navigation} />;
   }
-  return <PaperList navigation={navigation} />;
+  return <PaperListFunc navigation={navigation} />;
 };
 
 export default PaperHome;

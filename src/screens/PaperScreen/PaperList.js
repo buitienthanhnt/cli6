@@ -1,4 +1,4 @@
-import react, {Component, useCallback} from 'react';
+import react, { Component, useCallback } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Config from '@config/Config';
 import perf from '@react-native-firebase/perf';
-import {ProductItem, ProductItemHost} from './element';
+import { ProductItem, ProductItemHost } from './element';
 import CategoryTop from './CategoryTop';
 import rApi from '@netWork/rApi';
 
@@ -41,11 +41,11 @@ class PaperList extends Component {
     const listTrace = await perf().startTrace('paper_list_trace');
     listTrace.putMetric('hits', 1);
     if (!this.state.refreshing) {
-      this.setState({refreshing: true});
+      this.setState({ refreshing: true });
       const data = await rApi.callRequest({
         method: 'GET',
         url: Config.api_request.getpapers,
-        params: {page: paper !== false ? paper : this.state.page},
+        params: { page: paper !== false ? paper : this.state.page },
       });
       var items = this.state.items;
       if (data.data.length) {
@@ -75,7 +75,7 @@ class PaperList extends Component {
       !this.state.refreshing &&
       !this.state.end &&
       (items_count * Dimensions.get('screen').height) / 7 <
-        Dimensions.get('screen').height
+      Dimensions.get('screen').height
     ) {
       this.getSourceData();
     }
@@ -97,7 +97,7 @@ class PaperList extends Component {
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             if (index % 5 == 0) {
               return (
                 <ProductItemHost

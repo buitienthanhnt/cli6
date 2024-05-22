@@ -6,11 +6,11 @@ import firebaseType from '@constants/firebaseType';
 import rApi from '@netWork/rApi';
 
 export const addLike = async (paperId: number, params?: any): Promise<any> => {
-  const {defRe} = AppStore.getState();
+  const { defRe } = AppStore.getState();
 
   if (defRe.useFirebase) {
     let ref = database().ref(firebaseType.realTime.addLike).push();
-    ref.set({paper_id: paperId, ...params});
+    ref.set({ paper_id: paperId, ...params });
     return;
   } else {
     const url = Config.custom_url() + Config.api_request.paperAddLike + paperId;
@@ -27,7 +27,7 @@ export const addLike = async (paperId: number, params?: any): Promise<any> => {
 };
 
 export const search = async (query: string) => {
-  const {defRe} = AppStore.getState();
+  const { defRe } = AppStore.getState();
   if (defRe.useFirebase) {
     return [];
   } else {
@@ -35,7 +35,7 @@ export const search = async (query: string) => {
     const response = await rApi.callRequest({
       method: 'GET',
       url: Config.api_request.search,
-      params: {query: query},
+      params: { query: query },
     });
     return response;
   }
@@ -49,3 +49,13 @@ export const getDetail = async (id: number) => {
   });
   return result;
 };
+
+export const getList = async (p: number) => {
+  // @ts-ignore
+  const data = await rApi.callRequest({
+    method: 'GET',
+    url: Config.api_request.getpapers,
+    params: { page: p },
+  });
+  return data;
+}

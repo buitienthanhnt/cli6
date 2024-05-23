@@ -17,3 +17,6 @@ https://viblo.asia/p/nang-cao-kien-thuc-css-tu-50-bai-viet-hang-dau-trong-nam-20
 https://viblo.asia/p/10-kieu-loading-animations-chi-bang-css-maGK7Apxlj2
 
 download svg icon: https://www.svgrepo.com/vectors/location/ || https://www.svgrepo.com/
+
+# style={{borderTopLeftRadius: 0, borderTopRightRadius: 0}}
+# src/components/product/QuickAdd.tsx

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useState, useRef, useCallback} from 'react';
 import {
   Dimensions,
   Image,
@@ -7,8 +7,8 @@ import {
   Text,
   View,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
-import Config from '@config/Config';
 import IframeRenderer, {iframeModel} from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
 import RenderHTML from 'react-native-render-html'; // npm install react-native-render-html
 import WebView from 'react-native-webview'; // npm install react-native-webview
@@ -23,7 +23,9 @@ import Carolsel from '@screens/AccountScreen/components/Carolsel';
 import PaperTag from './element/PaperTag';
 import PaperCarousel from './element/PaperCarousel';
 import {usePaperDetail} from '@hooks/usePapers';
-import rApi from '@netWork/rApi';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
+import {openDetail} from '@utils/paper';
+import {debounce} from 'lodash';
 
 const renderers = {
   iframe: IframeRenderer,
@@ -34,7 +36,8 @@ const customHTMLElementModels = {
 };
 
 const PaperDetail = ({navigation, route}) => {
-  // use custom hook
+  const before = useRef(0);
+  const [sug, setSug] = useState(false);
   const [showWebview, setShowwebview] = useState(false);
   const [commentParent, setCommentParent] = useState(null);
   const refRBSheet = useRef();
@@ -43,6 +46,9 @@ const PaperDetail = ({navigation, route}) => {
     route?.params?.id || route?.params?.data?.id,
   );
 
+  const setBe = debounce(val => {
+    before.current = val;
+  }, 600);
   if (data) {
     if (showWebview) {
       return <WebView source={{uri: 'www.topsy-fashion.nl'}} />;
@@ -57,7 +63,34 @@ const PaperDetail = ({navigation, route}) => {
           commentParent,
           setCommentParent,
         }}>
+        <Suggest opa={sug} datas={[]} />
         <ScrollView
+          onScroll={e => {
+            setBe(e.nativeEvent.contentOffset.y);
+            if (!sug && e.nativeEvent.contentOffset.y - before.current > 90) {
+              setSug(true);
+              navigation.getParent()?.setOptions({
+                tabBarStyle: {
+                  display: 'none',
+                },
+                tabBarVisible: false,
+              });
+              navigation.setOptions({
+                headerShown: false,
+              });
+            }
+            if (sug && before.current - e.nativeEvent.contentOffset.y > 90) {
+              setSug(false);
+              navigation.getParent()?.setOptions({
+                tabBarStyle: {
+                  display: 'flex',
+                },
+              });
+              navigation.setOptions({
+                headerShown: true,
+              });
+            }
+          }}
           contentContainerStyle={{paddingBottom: 20}}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
@@ -96,6 +129,7 @@ const PaperDetail = ({navigation, route}) => {
               },
             }}
             onPress={event => {
+              console.log('&&&&', before.current);
               return undefined;
             }}
           />
@@ -108,6 +142,7 @@ const PaperDetail = ({navigation, route}) => {
             navigation={navigation}
           />
           <CarolParax data={caroll} />
+
           {/* <Button title="view in webview" onPress={() => {
                         setShowwebview(true)
                     }}></Button> */}
@@ -125,6 +160,75 @@ const PaperDetail = ({navigation, route}) => {
       </View>
     );
   }
+};
+
+const Suggest = ({opa, datas}) => {
+  return (
+    <Animated.View
+      style={[
+        {
+          flex: 1,
+          gap: 2,
+          position: 'absolute',
+          height: 90,
+          width: '100%',
+          paddingHorizontal: 4,
+          top: 0,
+          left: 0,
+          zIndex: 999,
+        },
+      ]}>
+      {caroll.slice(0, 2).map((item, key) => {
+        return <SugItem index={key} item={item} opa={opa} />;
+      })}
+    </Animated.View>
+  );
+};
+
+const SugItem = ({item, index, opa}) => {
+  const aniStyle = useAnimatedStyle(() => {
+    return {
+      flex: 1,
+      opacity: withTiming(opa ? 1 : 0, {
+        duration: (opa ? index + 1 : 1 / (index + 1)) * 1000,
+      }),
+    };
+  });
+  return (
+    <Animated.View style={[aniStyle]}>
+      <TouchableOpacity
+        style={{flex: 1, flexDirection: 'row', gap: 2}}
+        onPress={() => {
+          openDetail(item);
+        }}>
+        <Image
+          source={{uri: item.image_path}}
+          style={{
+            padding: 4,
+            width: 80,
+            borderRadius: 5,
+          }}
+        />
+        <View
+          style={{
+            flex: 1,
+            borderRadius: 5,
+            paddingHorizontal: 5,
+            backgroundColor: 'rgba(31, 10, 28, 0.1)',
+          }}>
+          <Text
+            style={{
+              fontWeight: '500',
+              fontSize: 16,
+              color: '#9300ff',
+            }}
+            numberOfLines={2}>
+            {item.title}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
+  );
 };
 
 const LastNews = props => {

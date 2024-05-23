@@ -12,8 +12,7 @@ const CommentForm = ({ parentId }) => {
     const email = useRef(null);
     const content = useRef(null);
     const { user_data } = useSelector((state) => state.authenRe);
-
-    const { addComment } = useComments(paperId);
+    const { addComment, isLoading } = useComments(paperId);
 
     const onChangeName = useCallback((text) => {
         name.current = text
@@ -28,7 +27,6 @@ const CommentForm = ({ parentId }) => {
     }, []);
 
     return (
-
         <View style={css.container} >
             <Text style={css.title}>Send your comment:</Text>
             {user_data ? (
@@ -58,7 +56,7 @@ const CommentForm = ({ parentId }) => {
                 >
                 </FormInput>
             </View>
-            <LoadingBtn style={css.btn} onPress={() => {
+            <LoadingBtn style={css.btn} loading={isLoading} onPress={() => {
                 // console.log(name.current, email.current, content.current, commentParent);
                 addComment(paperId, {
                     content: content.current,
@@ -84,14 +82,17 @@ const css = StyleSheet.create({
     },
     btn: {
         height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(164, 149, 219, 1)',
+        // justifyContent: 'center',
+        // alignItems: 'center',
         borderRadius: 10,
-        width: '100%'
+        width: '100%',
+        borderWidth: 1,
+        borderColor: 'green'
     },
     submitLabel: {
-        fontSize: 18, fontWeight: 'bold', color: 'white'
+        fontSize: 16, 
+        fontWeight: 'bold', 
+        color: 'green'
     },
     title: {
         textDecorationLine: 'underline',

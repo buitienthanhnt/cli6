@@ -3,6 +3,7 @@ import Config from '@config/Config';
 import axios from 'axios';
 import database from '@react-native-firebase/database';
 import firebaseType from '@constants/firebaseType';
+import rApi from '@netWork/rApi';
 
 const getComments = async (
   paperId: number,
@@ -29,19 +30,14 @@ const getComments = async (
   return waitData;
 };
 
-const addCommentServer = (paperId: number, params?: any): Promise<any> => {
-  const url =
-    Config.custom_url() + Config.api_request.paperAddComment + paperId;
-  // console.log(url);
-  const waitData = axios
-    .post(url, params)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  return waitData;
+const addCommentServer = async (params: any): Promise<any> => {
+   // @ts-ignore
+  const {data} = await rApi.callRequest({
+    method: "POST",
+    url: Config.api_request.paperAddComment + params.paperId,
+    params: params.params
+  })
+  return data;
 };
 
 const addLike = (commentId: number, params?: any): Promise<any> | null => {

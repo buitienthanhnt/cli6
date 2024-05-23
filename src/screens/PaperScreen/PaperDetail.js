@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   Dimensions,
   Image,
@@ -9,23 +9,23 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import IframeRenderer, {iframeModel} from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
+import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
 import RenderHTML from 'react-native-render-html'; // npm install react-native-render-html
 import WebView from 'react-native-webview'; // npm install react-native-webview
 import perf from '@react-native-firebase/perf';
 import Comments from './element/Comments';
 import DetailLike from './element/DetailLike';
-import {PaperDetailContext} from './PaperContext';
+import { PaperDetailContext } from './PaperContext';
 import CarolParax from '@screens/CodeScreen/components/animated/CarolParax';
-import {layoutDimension} from '@styles/css';
-import {caroll} from './api/datatest';
+import { layoutDimension } from '@styles/css';
+import { caroll } from './api/datatest';
 import Carolsel from '@screens/AccountScreen/components/Carolsel';
 import PaperTag from './element/PaperTag';
 import PaperCarousel from './element/PaperCarousel';
-import {usePaperDetail} from '@hooks/usePapers';
-import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
-import {openDetail} from '@utils/paper';
-import {debounce} from 'lodash';
+import { usePaperDetail } from '@hooks/usePapers';
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { openDetail } from '@utils/paper';
+import { debounce } from 'lodash';
 
 const renderers = {
   iframe: IframeRenderer,
@@ -35,23 +35,51 @@ const customHTMLElementModels = {
   iframe: iframeModel,
 };
 
-const PaperDetail = ({navigation, route}) => {
+const PaperDetail = ({ navigation, route }) => {
   const before = useRef(0);
+  const setBe = debounce(val => {
+    before.current = val;
+  }, 600);
   const [sug, setSug] = useState(false);
   const [showWebview, setShowwebview] = useState(false);
   const [commentParent, setCommentParent] = useState(null);
   const refRBSheet = useRef();
 
-  const {isLoading, data, refetch} = usePaperDetail(
+  const { isLoading, data, refetch } = usePaperDetail(
     route?.params?.id || route?.params?.data?.id,
   );
 
-  const setBe = debounce(val => {
-    before.current = val;
-  }, 600);
+  const onScroll = useCallback((e) => {
+    setBe(e.nativeEvent.contentOffset.y);
+    if (!sug && e.nativeEvent.contentOffset.y - before.current > 90) {
+      setSug(true);
+      navigation.getParent()?.setOptions({
+        tabBarStyle: {
+          display: 'none',
+        },
+        tabBarVisible: false,
+      });
+      navigation.setOptions({
+        headerShown: false,
+      });
+    }
+    if (sug && before.current - e.nativeEvent.contentOffset.y > 90) {
+      setSug(false);
+      navigation.getParent()?.setOptions({
+        tabBarStyle: {
+          display: 'flex',
+        },
+      });
+      navigation.setOptions({
+        headerShown: true,
+      });
+    }
+  }, [navigation, sug])
+
+
   if (data) {
     if (showWebview) {
-      return <WebView source={{uri: 'www.topsy-fashion.nl'}} />;
+      return <WebView source={{ uri: 'www.topsy-fashion.nl' }} />;
     }
     return (
       <PaperDetailContext.Provider
@@ -63,35 +91,10 @@ const PaperDetail = ({navigation, route}) => {
           commentParent,
           setCommentParent,
         }}>
-        <Suggest opa={sug} datas={[]} />
+        <Suggest show={sug} datas={data?.suggest} />
         <ScrollView
-          onScroll={e => {
-            setBe(e.nativeEvent.contentOffset.y);
-            if (!sug && e.nativeEvent.contentOffset.y - before.current > 90) {
-              setSug(true);
-              navigation.getParent()?.setOptions({
-                tabBarStyle: {
-                  display: 'none',
-                },
-                tabBarVisible: false,
-              });
-              navigation.setOptions({
-                headerShown: false,
-              });
-            }
-            if (sug && before.current - e.nativeEvent.contentOffset.y > 90) {
-              setSug(false);
-              navigation.getParent()?.setOptions({
-                tabBarStyle: {
-                  display: 'flex',
-                },
-              });
-              navigation.setOptions({
-                headerShown: true,
-              });
-            }
-          }}
-          contentContainerStyle={{paddingBottom: 20}}
+          onScroll={onScroll}
+          contentContainerStyle={{ paddingBottom: 20 }}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           style={css.container}
@@ -112,7 +115,7 @@ const PaperDetail = ({navigation, route}) => {
           <RenderHTML
             renderers={renderers}
             WebView={WebView}
-            source={{html: data?.conten || ''}}
+            source={{ html: data?.conten || '' }}
             contentWidth={Dimensions.get('screen').width}
             customHTMLElementModels={customHTMLElementModels}
             defaultWebViewProps={
@@ -136,7 +139,7 @@ const PaperDetail = ({navigation, route}) => {
           <DetailLike info={data.info} />
           <PaperTag tags={data?.tags} />
           <Comments paperId={data.id} />
-          <View style={{height: 1, backgroundColor: 'black'}} />
+          <View style={{ height: 1, backgroundColor: 'black' }} />
           <LastNews
             paper_id={route?.params?.data?.id || 1}
             navigation={navigation}
@@ -151,18 +154,21 @@ const PaperDetail = ({navigation, route}) => {
     );
   } else {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {/* <ActivityIndicator size="small" color="#0000ff" /> */}
         <Image
           source={require('@assets/Ripple-1s-200px.gif')}
-          style={{width: 60, height: 60}}
+          style={{ width: 60, height: 60 }}
         />
       </View>
     );
   }
 };
 
-const Suggest = ({opa, datas}) => {
+const Suggest = ({ show, datas }) => {
+  if (!datas) {
+    return null;
+  }
   return (
     <Animated.View
       style={[
@@ -170,44 +176,45 @@ const Suggest = ({opa, datas}) => {
           flex: 1,
           gap: 2,
           position: 'absolute',
-          height: 90,
+          height: 92,
           width: '100%',
           paddingHorizontal: 4,
-          top: 0,
+          top: 2,
           left: 0,
           zIndex: 999,
         },
       ]}>
-      {caroll.slice(0, 2).map((item, key) => {
-        return <SugItem index={key} item={item} opa={opa} />;
+      {datas.slice(0, 2).map((item, key) => {
+        return <SugItem index={key} item={item} show={show} />;
       })}
     </Animated.View>
   );
 };
 
-const SugItem = ({item, index, opa}) => {
+const SugItem = ({ item, index, show }) => {
   const aniStyle = useAnimatedStyle(() => {
     return {
       flex: 1,
-      opacity: withTiming(opa ? 1 : 0, {
-        duration: (opa ? index + 1 : 1 / (index + 1)) * 1000,
+      opacity: withTiming(show ? 1 : 0, {
+        duration: (show ? index + 1 : 1 / (index + 1)) * 1000,
       }),
     };
   });
   return (
     <Animated.View style={[aniStyle]}>
       <TouchableOpacity
-        style={{flex: 1, flexDirection: 'row', gap: 2}}
+        style={{ flex: 1, flexDirection: 'row', gap: 2 }}
         onPress={() => {
           openDetail(item);
         }}>
         <Image
-          source={{uri: item.image_path}}
+          source={{ uri: item.image_path }}
           style={{
             padding: 4,
             width: 80,
             borderRadius: 5,
           }}
+          resizeMode='cover.'
         />
         <View
           style={{
@@ -220,7 +227,7 @@ const SugItem = ({item, index, opa}) => {
             style={{
               fontWeight: '500',
               fontSize: 16,
-              color: '#9300ff',
+              color: 'blue',
             }}
             numberOfLines={2}>
             {item.title}
@@ -232,7 +239,7 @@ const SugItem = ({item, index, opa}) => {
 };
 
 const LastNews = props => {
-  const {navigation} = props;
+  const { navigation } = props;
 
   return <Carolsel navigation={navigation} />;
 };

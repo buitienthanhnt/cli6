@@ -1,6 +1,6 @@
 import { addCommentServer, getComments } from '@queries/comments';
 import { useCallback, useEffect, useState } from 'react';
-import { useQuery, useInfiniteQuery } from 'react-query';
+import { useQuery, useInfiniteQuery, useMutation } from 'react-query';
 import firebaseType from '@constants/firebaseType';
 import database, { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,27 @@ import rApi from '@netWork/rApi';
 const useComments = (paperId: number, parentId: number, page: any) => {
   const { useFirebase } = useSelector((state: any) => state.defRe);
   const [value, setValue] = useState([]);
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: addCommentServer,
+    mutationKey: ['addComment', paperId],
+    // onSuccess: onSuccess,
+  });
+
+  const addComment = useCallback(
+    (paperId: number, params: any) => {
+      if (useFirebase) {
+        let ref = database().ref(firebaseType.realTime.addComments).push();
+        ref.set({ paper_id: paperId, ...params });
+      } else {
+        mutate({
+          paperId: paperId,
+          params: params
+        });
+      }
+    },
+    [useFirebase, mutate, paperId],
+  );
 
   const commentServer = useCallback(async () => {
     // @ts-ignore
@@ -52,21 +73,10 @@ const useComments = (paperId: number, parentId: number, page: any) => {
     }
   }, [setValue, paperId, useFirebase, commentServer]);
 
-  const addComment = useCallback(
-    (paperId: number, params: any) => {
-      if (useFirebase) {
-        let ref = database().ref(firebaseType.realTime.addComments).push();
-        ref.set({ paper_id: paperId, ...params });
-      } else {
-        addCommentServer(paperId, params);
-      }
-    },
-    [useFirebase],
-  );
-
   return {
     data: value,
     addComment,
+    isLoading: isLoading
   };
 };
 

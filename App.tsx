@@ -111,7 +111,7 @@ const initRoot = async (setInit: (value: boolean) => void) => {
   // @ts-ignore
   rApi.reSetCaxiosAu(token);
   setInit(true);
-  // initUserData()
+  initUserData()
 };
 
 function App(): JSX.Element {

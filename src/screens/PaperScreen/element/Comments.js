@@ -28,50 +28,50 @@ const Comments = ({paperId}) => {
     refRBSheet.current.open();
   }, [refRBSheet]);
 
-  if (!data || !data.length) {
-    return (
-      <View style={{paddingVertical: 10}}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={css.title}>Comment{'...........................'} </Text>
-          <TouchableOpacity
-            style={{
-              ...css.moreBtn,
-              marginLeft: 8,
-              transform: [],
-              alignSelf: 'flex-end',
-            }}
-            onPress={() => {
-              if (!user_data) {
-                Navigate('Login', {onSuccess: onSuccess});
-                return;
-              }
-              refRBSheet.current.open();
-            }}>
-            <Icon name="reply" size={16} color="#821ab2" />
-          </TouchableOpacity>
-        </View>
-        <RBSheet
-          height={300}
-          animationType="slide"
-          customStyles={{
-            container: {
-              borderRadius: 10,
-              // backgroundColor: 'rgba(136, 238, 192, 0.4)',
-            },
-            wrapper: {
-              // backgroundColor: 'transparent'
-            },
-          }}
-          closeOnDragDown={true}
-          ref={refRBSheet}
-          onClose={() => {
-            setCommentParent(null);
-          }}>
-          <CommentForm />
-        </RBSheet>
-      </View>
-    );
-  }
+  // if (!data || !data.length) {
+  //   return (
+  //     <View style={{paddingVertical: 10}}>
+  //       <View style={{flexDirection: 'row'}}>
+  //         <Text style={css.title}>Comment{'...........................'} </Text>
+  //         <TouchableOpacity
+  //           style={{
+  //             ...css.moreBtn,
+  //             marginLeft: 8,
+  //             transform: [],
+  //             alignSelf: 'flex-end',
+  //           }}
+  //           onPress={() => {
+  //             if (!user_data) {
+  //               Navigate('Login', {onSuccess: onSuccess});
+  //               return;
+  //             }
+  //             refRBSheet.current.open();
+  //           }}>
+  //           <Icon name="reply" size={16} color="#821ab2" />
+  //         </TouchableOpacity>
+  //       </View>
+  //       <RBSheet
+  //         height={400}
+  //         animationType="slide"
+  //         customStyles={{
+  //           container: {
+  //             borderRadius: 10,
+  //             // backgroundColor: 'rgba(136, 238, 192, 0.4)',
+  //           },
+  //           wrapper: {
+  //             // backgroundColor: 'transparent'
+  //           },
+  //         }}
+  //         closeOnDragDown={true}
+  //         ref={refRBSheet}
+  //         onClose={() => {
+  //           setCommentParent(null);
+  //         }}>
+  //         <CommentForm />
+  //       </RBSheet>
+  //     </View>
+  //   );
+  // }
 
   return (
     <View style={{paddingVertical: 10}}>
@@ -87,7 +87,14 @@ const Comments = ({paperId}) => {
       </View>
       <CommentsRender comments={data} root={true} />
       <RBSheet
+        height={320}
         animationType="slide"
+        customStyles={{
+          container:{
+            paddingBottom: 20,
+            // backgroundColor: 'red'
+          }
+        }}
         closeOnDragDown={true}
         ref={refRBSheet}
         onClose={() => {

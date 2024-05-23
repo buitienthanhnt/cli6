@@ -13,16 +13,13 @@ export const addLike = async (paperId: number, params?: any): Promise<any> => {
     ref.set({ paper_id: paperId, ...params });
     return;
   } else {
-    const url = Config.custom_url() + Config.api_request.paperAddLike + paperId;
-    return axios
-      .post(url, params)
-      .then(response => {
-        // console.log(response.data);
-        return response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // @ts-ignore
+    const { data } = await rApi.callRequest({
+      method: "POST",
+      url: Config.api_request.paperAddLike + paperId,
+      params: params
+    })
+    return data;
   }
 };
 

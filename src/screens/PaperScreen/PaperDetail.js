@@ -8,6 +8,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
 import RenderHTML from 'react-native-render-html'; // npm install react-native-render-html
@@ -26,6 +27,10 @@ import { usePaperDetail } from '@hooks/usePapers';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { openDetail } from '@utils/paper';
 import { debounce } from 'lodash';
+
+const randomValue = (max) => {
+  return Math.floor(Math.random() * max);
+};
 
 const renderers = {
   iframe: IframeRenderer,
@@ -173,8 +178,6 @@ const Suggest = ({ show, datas }) => {
     <Animated.View
       style={[
         {
-          flex: 1,
-          gap: 2,
           position: 'absolute',
           height: 92,
           width: '100%',
@@ -184,9 +187,28 @@ const Suggest = ({ show, datas }) => {
           zIndex: 999,
         },
       ]}>
-      {datas.slice(0, 2).map((item, key) => {
-        return <SugItem index={key} item={item} show={show} />;
-      })}
+      <FlatList data={datas.slice(0, 2)}
+        horizontal={true}
+        pagingEnabled={true}
+        style={{ width: '100%' }}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item, index }) => {
+          return <View style={{
+            height: 92,
+            width: Dimensions.get('screen').width - 10-2,
+            paddingHorizontal: 5,
+            gap: 2,
+            // backgroundColor: `rgba(${randomValue(256)}, ${randomValue(256)}, ${randomValue(256)}, 1)`
+          }}>
+            {
+              datas.slice(0, 2).map((item, key) => {
+                return <SugItem index={key} item={item} show={show} />;
+              })
+            }
+          </View>
+        }}>
+
+      </FlatList>
     </Animated.View>
   );
 };

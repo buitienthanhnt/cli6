@@ -1,45 +1,62 @@
-import { addCommentServer, getComments } from '@queries/comments';
-import { useCallback, useEffect, useState } from 'react';
-import { useQuery, useInfiniteQuery, useMutation } from 'react-query';
+import {addCommentServer} from '@queries/comments';
+import {useCallback, useEffect, useState} from 'react';
+import {useQuery, useInfiniteQuery, useMutation} from 'react-query';
 import firebaseType from '@constants/firebaseType';
-import database, { FirebaseDatabaseTypes } from '@react-native-firebase/database';
-import { useSelector } from 'react-redux';
-import { getPapersByWriter } from '@queries/writer';
+import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
+import {useSelector} from 'react-redux';
+import {getPapersByWriter} from '@queries/writer';
 import homeInfo from '@queries/info';
 import Config from '@config/Config';
 import useDispatchState from '@hooks/redux/useDispatchState';
-import { Alert } from 'react-native';
-import { getDetail, getList } from '@queries/paper';
+import {Alert} from 'react-native';
+import {getDetail, getList} from '@queries/paper';
 import rApi from '@netWork/rApi';
+import {showMessage, hideMessage} from 'react-native-flash-message';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const useComments = (paperId: number, parentId: number, page: any) => {
-  const { useFirebase } = useSelector((state: any) => state.defRe);
+  const {useFirebase} = useSelector((state: any) => state.defRe);
   const [value, setValue] = useState([]);
 
-  const { mutate, isLoading } = useMutation({
+  const {mutate, isLoading} = useMutation({
     mutationFn: addCommentServer,
     mutationKey: ['addComment', paperId],
-    // onSuccess: onSuccess,
+    onSuccess: () => {
+      showMessage({
+        message: 'added the comment for detail!',
+        type: 'info',
+        color: 'green',
+        style: {zIndex: 999},
+        //icon: props => (<Icon name='check-circle' size={28} color='#07ff00'/>)
+      });
+    },
+    onError: () => {
+      showMessage({
+        message: 'error message',
+        type: 'warning',
+      });
+    },
   });
 
   const addComment = useCallback(
     (paperId: number, params: any) => {
       if (useFirebase) {
         let ref = database().ref(firebaseType.realTime.addComments).push();
-        ref.set({ paper_id: paperId, ...params });
+        ref.set({paper_id: paperId, ...params});
       } else {
         mutate({
           paperId: paperId,
-          params: params
+          params: params,
         });
       }
     },
-    [useFirebase, mutate, paperId],
+    [useFirebase, mutate],
   );
 
   const commentServer = useCallback(async () => {
     // @ts-ignore
-    const { data } = await rApi.callRequest({
+    const {data} = await rApi.callRequest({
       method: 'GET',
       url: Config.api_request.getPaperComments + paperId,
       params: {
@@ -76,7 +93,7 @@ const useComments = (paperId: number, parentId: number, page: any) => {
   return {
     data: value,
     addComment,
-    isLoading: isLoading
+    isLoading: isLoading,
   };
 };
 
@@ -92,8 +109,8 @@ const usePaperByWriter = (writerId: number) => {
 const useHomeInfo = () => {
   const [data, setData] = useState(null);
   // @ts-ignore
-  const { useFirebase } = useSelector(state => state.defRe);
-  const { actionReducer, updateState } = useDispatchState();
+  const {useFirebase} = useSelector(state => state.defRe);
+  const {actionReducer, updateState} = useDispatchState();
 
   const response = useQuery({
     queryKey: ['useHomeInfo'],
@@ -136,13 +153,14 @@ const usePaperDetail = (id: number) => {
     queryFn: () => getDetail(id),
     cacheTime: 1000 * 60 * 15,
   });
-  return { ...fn };
+  return {...fn};
 };
 
 const usePaperList = () => {
   const fn = useInfiniteQuery({
-    queryKey: 'usePaperList',
-    queryFn: ({ pageParam = 1 }) => getList(pageParam),
+    // @ts-ignore
+    queryKey: ['usePaperList'],
+    queryFn: ({pageParam = 1}) => getList(pageParam),
     initialPageParam: 1,
     // ...options,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
@@ -162,7 +180,13 @@ const usePaperList = () => {
       allPageParams,
     ) => firstPage.current_page,
   });
-  return { ...fn };
-}
+  return {...fn};
+};
 
-export { useComments, usePaperByWriter, useHomeInfo, usePaperDetail, usePaperList };
+export {
+  useComments,
+  usePaperByWriter,
+  useHomeInfo,
+  usePaperDetail,
+  usePaperList,
+};

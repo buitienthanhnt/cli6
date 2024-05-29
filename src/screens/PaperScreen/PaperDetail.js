@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import {
   Dimensions,
   Image,
@@ -11,8 +11,11 @@ import {
   FlatList,
   Button,
 } from 'react-native';
-import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
-import RenderHTML from 'react-native-render-html'; // npm install react-native-render-html
+import IframeRenderer, {iframeModel} from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
+import RenderHTML, {
+  defaultHTMLElementModels,
+  HTMLContentModel,
+} from 'react-native-render-html'; // npm install react-native-render-html
 import WebView from 'react-native-webview'; // npm install react-native-webview
 import perf from '@react-native-firebase/perf';
 import Comments from './element/Comments';
@@ -51,10 +54,15 @@ const PaperDetail = ({navigation, route}) => {
   const setBe = debounce(val => {
     before.current = val;
   }, 600);
+
   const [sug, setSug] = useState(false);
   const [showWebview, setShowwebview] = useState(false);
   const [commentParent, setCommentParent] = useState(null);
   const refRBSheet = useRef();
+
+  // useEffect(() => {
+  //   setSug(false);
+  // }, [route?.params?.id]);
 
   const {isLoading, data, refetch} = usePaperDetail(
     route?.params?.id || route?.params?.data?.id,
@@ -259,6 +267,7 @@ const SugItem = ({item, index, show}) => {
       }),
     };
   });
+
   return (
     <Animated.View style={[aniStyle]}>
       <TouchableOpacity

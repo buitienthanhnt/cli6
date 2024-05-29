@@ -11,7 +11,10 @@ import {
   FlatList,
 } from 'react-native';
 import IframeRenderer, {iframeModel} from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
-import RenderHTML from 'react-native-render-html'; // npm install react-native-render-html
+import RenderHTML, {
+  defaultHTMLElementModels,
+  HTMLContentModel,
+} from 'react-native-render-html'; // npm install react-native-render-html
 import WebView from 'react-native-webview'; // npm install react-native-webview
 import perf from '@react-native-firebase/perf';
 import Comments from './element/Comments';
@@ -28,16 +31,20 @@ import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {openDetail} from '@utils/paper';
 import {debounce} from 'lodash';
 
-const randomValue = max => {
-  return Math.floor(Math.random() * max);
-};
-
 const renderers = {
   iframe: IframeRenderer,
 };
 
 const customHTMLElementModels = {
   iframe: iframeModel,
+  input: defaultHTMLElementModels.input.extend({
+    mixedUAStyles: {
+      width: 150,
+      height: 40,
+      backgroundColor: 'yellow',
+    },
+    contentModel: HTMLContentModel.void, // change this from none to void
+  }),
 };
 
 const PaperDetail = ({navigation, route}) => {

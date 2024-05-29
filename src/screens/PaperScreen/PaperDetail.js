@@ -60,9 +60,10 @@ const PaperDetail = ({navigation, route}) => {
   const [commentParent, setCommentParent] = useState(null);
   const refRBSheet = useRef();
 
-  // useEffect(() => {
-  //   setSug(false);
-  // }, [route?.params?.id]);
+  useEffect(() => {
+    before.current = 0;
+    setSug(false);
+  }, [route?.params?.id]);
 
   const {isLoading, data, refetch} = usePaperDetail(
     route?.params?.id || route?.params?.data?.id,
@@ -173,8 +174,14 @@ const PaperDetail = ({navigation, route}) => {
               // setShowwebview(true);
               showMessage({
                 message: 'added the comment for detail!',
-                type: 'info',
+                type: 'warning',
                 color: 'green',
+                style: {
+                  borderRadius: 8,
+                  paddingHorizontal: 5,
+                  marginHorizontal: 10,
+                  marginTop: 2
+                }
               });
             }}
           />
@@ -289,7 +296,7 @@ const SugItem = ({item, index, show}) => {
             flex: 1,
             borderRadius: 5,
             paddingHorizontal: 5,
-            backgroundColor: 'rgba(31, 10, 28, 0.1)',
+            backgroundColor: 'rgba(0, 135, 0, 0.5)',
           }}>
           <Text
             style={{

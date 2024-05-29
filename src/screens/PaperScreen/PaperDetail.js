@@ -184,19 +184,19 @@ const Suggest = ({show, datas}) => {
   const flatRef = useRef(null);
   const interId = useRef('');
 
-  useEffect(() => {
-    if (!show) {
-      clearInterval(interId.current);
-    } else {
-      interId.current = setInterval(function () {
-        index.current = index.current === 0 ? 1 : 0;
-        flatRef?.current?.scrollToIndex({
-          index: index.current,
-          animated: true,
-        });
-      }, 4500);
-    }
-  }, [show]);
+  // useEffect(() => {
+  //   if (!show) {
+  //     clearInterval(interId.current);
+  //   } else {
+  //     interId.current = setInterval(function () {
+  //       index.current = index.current === 0 ? 1 : 0;
+  //       flatRef?.current?.scrollToIndex({
+  //         index: index.current,
+  //         animated: true,
+  //       });
+  //     }, 4500);
+  //   }
+  // }, [show]);
 
   if (!datas) {
     return null;
@@ -219,7 +219,6 @@ const Suggest = ({show, datas}) => {
         data={datas}
         horizontal={true}
         pagingEnabled={true}
-        style={{width: '100%'}}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => index + '_slug_key'}
         renderItem={({item, index}) => {
@@ -228,7 +227,7 @@ const Suggest = ({show, datas}) => {
               style={{
                 height: 92,
                 width: Dimensions.get('screen').width - 10 - 2,
-                paddingHorizontal: 5,
+                paddingHorizontal: 4,
                 gap: 2,
                 // backgroundColor: `rgba(${randomValue(256)}, ${randomValue(256)}, ${randomValue(256)}, 1)`
               }}>

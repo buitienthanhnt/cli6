@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   Dimensions,
   Image,
@@ -8,9 +8,10 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
   Button,
 } from 'react-native';
-import IframeRenderer, {iframeModel} from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
+import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
 import RenderHTML from 'react-native-render-html'; // npm install react-native-render-html
 import WebView from 'react-native-webview'; // npm install react-native-webview
 import perf from '@react-native-firebase/perf';
@@ -35,6 +36,14 @@ const renderers = {
 
 const customHTMLElementModels = {
   iframe: iframeModel,
+  input: defaultHTMLElementModels.input.extend({
+    mixedUAStyles: {
+      width: 150,
+      height: 40,
+      backgroundColor: 'yellow',
+    },
+    contentModel: HTMLContentModel.void, // change this from none to void
+  }),
 };
 
 const PaperDetail = ({navigation, route}) => {
@@ -178,6 +187,24 @@ const PaperDetail = ({navigation, route}) => {
 };
 
 const Suggest = ({show, datas}) => {
+  const index = useRef(0);
+  const flatRef = useRef(null);
+  const interId = useRef('');
+
+  // useEffect(() => {
+  //   if (!show) {
+  //     clearInterval(interId.current);
+  //   } else {
+  //     interId.current = setInterval(function () {
+  //       index.current = index.current === 0 ? 1 : 0;
+  //       flatRef?.current?.scrollToIndex({
+  //         index: index.current,
+  //         animated: true,
+  //       });
+  //     }, 4500);
+  //   }
+  // }, [show]);
+
   if (!datas) {
     return null;
   }
@@ -185,8 +212,6 @@ const Suggest = ({show, datas}) => {
     <Animated.View
       style={[
         {
-          flex: 1,
-          gap: 2,
           position: 'absolute',
           height: 92,
           width: '100%',
@@ -196,9 +221,31 @@ const Suggest = ({show, datas}) => {
           zIndex: 999,
         },
       ]}>
-      {datas.slice(0, 2).map((item, key) => {
-        return <SugItem index={key} item={item} show={show} />;
-      })}
+      <FlatList
+        ref={flatRef}
+        data={datas}
+        horizontal={true}
+        pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => index + '_slug_key'}
+        renderItem={({item, index}) => {
+          return (
+            <View
+              style={{
+                height: 92,
+                width: Dimensions.get('screen').width - 10 - 2,
+                paddingHorizontal: 4,
+                gap: 2,
+                // backgroundColor: `rgba(${randomValue(256)}, ${randomValue(256)}, ${randomValue(256)}, 1)`
+              }}>
+              {item.length == 2 &&
+                item.map((item, key) => {
+                  return <SugItem index={key} item={item} show={show} />;
+                })}
+            </View>
+          );
+        }}
+      />
     </Animated.View>
   );
 };

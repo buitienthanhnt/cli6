@@ -180,8 +180,8 @@ const PaperDetail = ({navigation, route}) => {
                   borderRadius: 8,
                   paddingHorizontal: 5,
                   marginHorizontal: 10,
-                  marginTop: 2
-                }
+                  marginTop: 2,
+                },
               });
             }}
           />
@@ -248,7 +248,7 @@ const Suggest = ({show, datas}) => {
             <View
               style={{
                 height: 92,
-                width: Dimensions.get('screen').width - 10 - 2,
+                width: Dimensions.get('screen').width - 8,
                 paddingHorizontal: 4,
                 gap: 2,
                 // backgroundColor: `rgba(${randomValue(256)}, ${randomValue(256)}, ${randomValue(256)}, 1)`

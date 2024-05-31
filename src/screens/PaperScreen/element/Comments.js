@@ -80,6 +80,10 @@ const Comments = ({paperId}) => {
         <TouchableOpacity
           style={{...css.moreBtn, marginLeft: 8, transform: []}}
           onPress={() => {
+            if (!user_data) {
+              Navigate('Login', {onSuccess: onSuccess});
+              return;
+            }
             refRBSheet.current.open();
           }}>
           <Icon name="reply" size={16} color="#821ab2" />
@@ -90,10 +94,15 @@ const Comments = ({paperId}) => {
         height={320}
         animationType="slide"
         customStyles={{
-          container:{
+          container: {
             paddingBottom: 20,
-            // backgroundColor: 'red'
-          }
+            borderTopStartRadius: 16,
+            borderTopEndRadius: 16,
+            backgroundColor: '#c99bff',
+          },
+          wrapper: {
+            backgroundColor: 'transparent',
+          },
         }}
         closeOnDragDown={true}
         ref={refRBSheet}
@@ -126,19 +135,8 @@ const CommentsRender = ({comments, parentId, root}) => {
     <View style={css.container}>
       <View style={css.content}>
         {!root && <View style={css.lineConten} />}
-        {/* <FlatList
-            data={comment}
-            keyExtractor={(item, index) => index + "_" + item.id}
-            renderItem={({ item, index }) => {
-                return <CommentItem comment={item} root={root} index={index} />
-            }}
-            ItemSeparatorComponent={() => {
-                return (<View style={{ height: 8 }}></View>)
-            }}
-         ></FlatList> */}
-
         <View style={{gap: 4}}>
-          {comment.map((item, index) => {
+          {comments.map((item, index) => {
             return (
               <CommentItem
                 comment={item}
@@ -150,7 +148,7 @@ const CommentsRender = ({comments, parentId, root}) => {
           })}
         </View>
       </View>
-      {comment.length >= 4 && showMore && !useFirebase && (
+      {comments.length >= 4 && showMore && !useFirebase && (
         <TouchableOpacity style={{...css.loadMore}} onPress={loadMoreComments}>
           <View
             style={{...css.moreBtn, transform: [{translateX: !root ? -3 : 0}]}}>
@@ -266,6 +264,7 @@ const css = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    paddingVertical: 2,
   },
   title: {
     textDecorationLine: 'underline',

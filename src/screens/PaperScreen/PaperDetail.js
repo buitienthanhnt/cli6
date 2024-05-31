@@ -119,6 +119,7 @@ const PaperDetail = ({navigation, route}) => {
           contentContainerStyle={{paddingBottom: 20}}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={100}
           style={css.container}
           refreshControl={
             <RefreshControl refreshing={isLoading} onRefresh={refetch} />

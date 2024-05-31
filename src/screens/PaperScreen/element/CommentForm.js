@@ -66,7 +66,7 @@ const CommentForm = ({parentId}) => {
           placeholder={'Content'}
           onChangeText={onChangeContent}
           numberOfLines={4}
-          inputStyle={{flex: 1}}
+          inputStyle={{flex: 1, color: 'white'}}
         />
       </View>
       <LoadingBtn
@@ -91,7 +91,7 @@ const css = StyleSheet.create({
   container: {
     flex: 1,
     gap: 8,
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 10,
   },
@@ -111,13 +111,13 @@ const css = StyleSheet.create({
   },
   title: {
     textDecorationLine: 'underline',
-    color: '#cd62ff',
+    color: 'white',
     fontSize: 16,
   },
   userInfo: {
     fontSize: 16,
     fontWeight: '600',
-    color: 'rgba(171, 142, 255, 1)',
+    color: 'white',
   },
 });
 

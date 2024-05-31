@@ -304,6 +304,7 @@ const Login = props => {
                 borderRadius: 10,
                 borderColor: 'rgba(0, 174, 215, 0.7)',
                 padding: 10,
+                color: 'white',
               }}
               placeholder="input email"
               placeholderTextColor={'rgba(0, 174, 215, 0.7)'}
@@ -318,6 +319,7 @@ const Login = props => {
                 borderRadius: 10,
                 borderColor: 'rgba(0, 174, 215, 0.7)',
                 padding: 10,
+                color: 'white',
               }}
               placeholder="input password"
               secureTextEntry={true}

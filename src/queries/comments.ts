@@ -31,16 +31,16 @@ const getComments = async (
 };
 
 const addCommentServer = async (params: any): Promise<any> => {
-   // @ts-ignore
+  // @ts-ignore
   const {data} = await rApi.callRequest({
-    method: "POST",
+    method: 'POST',
     url: Config.api_request.paperAddComment + params.paperId,
-    params: params.params
-  })
+    params: params.params,
+  });
   return data;
 };
 
-const addLike = (commentId: number, params?: any): Promise<any> | null => {
+const addLike = async (commentId: number, params?: any) => {
   const {defRe} = AppStore.getState();
 
   if (defRe.useFirebase) {
@@ -48,17 +48,13 @@ const addLike = (commentId: number, params?: any): Promise<any> | null => {
     ref.set({comment_id: commentId, ...params});
     return null;
   } else {
-    const url =
-      Config.custom_url() + Config.api_request.commentLike + commentId;
-    const waitData = axios
-      .post(url, params)
-      .then(response => {
-        return response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    return waitData;
+    // @ts-ignore
+    const {data} = await rApi.callRequest({
+      method: 'POST',
+      url: Config.api_request.commentLike + commentId,
+      params: params,
+    });
+    return data;
   }
 };
 

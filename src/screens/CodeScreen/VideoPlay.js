@@ -10,7 +10,7 @@ import Video from 'react-native-video'; // https://blog.logrocket.com/adding-vid
 const VideoPlay = () => {
   return (
     <View style={{flex: 1, paddingHorizontal: 10}}>
-      {/*<Video*/}
+      {/* <Video */}
       {/*  source={{uri: `${Config.public_url()}canh_dong_hoa_cai_vang.mp4`}} // the video file*/}
       {/*  paused={false} // make it start*/}
       {/*  style={styles.backgroundVideo} // any style you want*/}
@@ -24,13 +24,13 @@ const VideoPlay = () => {
       {/*  repeat={true} // make it a loop*/}
       {/*/>*/}
 
-      <Video
+      {/* <Video
         source={require('@assets/3125427-uhd_3840_2160_25fps.mp4')} // the video file
         paused={false} // make it start
         style={styles.backgroundVideo} // any style you want
         repeat={true} // make it a loop
         resizeMode="cover"
-      />
+      /> */}
     </View>
   );
 };

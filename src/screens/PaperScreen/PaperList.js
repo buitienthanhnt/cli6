@@ -81,6 +81,20 @@ class PaperList extends Component {
     }
   }
 
+  renderItem({ item, index }) {
+    if (index % 5 == 0) {
+      return (
+        <ProductItemHost
+          data={item}
+          navigation={this.props.navigation}
+        />
+      );
+    }
+    return (
+      <ProductItem data={item} navigation={this.props.navigation} />
+    );
+  }
+
   render() {
     // https://viblo.asia/p/react-native-lifecycle-gAm5yXY8ldb
     return (
@@ -97,19 +111,7 @@ class PaperList extends Component {
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item, index }) => {
-            if (index % 5 == 0) {
-              return (
-                <ProductItemHost
-                  data={item}
-                  navigation={this.props.navigation}
-                />
-              );
-            }
-            return (
-              <ProductItem data={item} navigation={this.props.navigation} />
-            );
-          }}
+          renderItem={renderItem}
           onEndReachedThreshold={0.1}
           onEndReached={() => {
             this.getSourceData();

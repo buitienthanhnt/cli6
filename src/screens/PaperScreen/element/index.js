@@ -1,10 +1,10 @@
-import { Component } from 'react';
+import { Component, PureComponent } from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import remoteConfig from '@react-native-firebase/remote-config';
 import PaperInfo from './PaperInfo';
 import { openDetail } from '@utils/paper';
 
-export class ProductItemHost extends Component {
+export class ProductItemHost extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -35,7 +35,7 @@ export class ProductItemHost extends Component {
     }
 }
 
-export class ProductItem extends Component {
+export class ProductItem extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {

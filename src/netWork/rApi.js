@@ -68,11 +68,10 @@ class rApi {
 
   async processRequest(config) {
     try {
-      // console.log(
-      //   'begin processRequest with token:',
-      //   this.token,
-      //   config?.headers,
-      // );
+      console.log(
+        'begin processRequest with token:',
+      config
+      );
       if (config?.headers && config.headers?.Authorization !== this.token) {
         config.headers.Authorization = this.token;
       }

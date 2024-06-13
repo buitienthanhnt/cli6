@@ -14,6 +14,7 @@ import {
   TimeLine,
   TopNew,
 } from '@screens/HomeScreen/components';
+import VideoPlay from '@screens/CodeScreen/VideoPlay';
 
 const Home = ({navigation}) => {
   const {isLoading, data, isError, error, refetch} = useHomeInfo();

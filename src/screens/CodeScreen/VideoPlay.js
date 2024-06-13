@@ -18,13 +18,15 @@ import Animated, {
 } from 'react-native-reanimated';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
+const datas = ['iLUhJGx40QM', 'xNAgOlLuUk8', 'hJ7Rg1821Q0', '61YBXPbgn7I'];
+
 // https://www.pexels.com/search/videos/gif/
 const VideoPlay = () => {
   const VideoPlayer = Animated.createAnimatedComponent(Video);
   const [pause, setPause] = useState(false);
   const leftNote = useSharedValue(0);
-  const width = (Dimensions.get('screen').width - 20) * (videosUrl.length - 1);
-  const onWidth = 12 * videosUrl.length + (videosUrl.length - 1) * 4;
+  const width = (Dimensions.get('screen').width - 20) * (datas.length - 1);
+  const onWidth = 12 * datas.length + (datas.length - 1) * 4;
 
   const animatedStyle = useAnimatedStyle(() => ({
     left: interpolate(
@@ -46,7 +48,7 @@ const VideoPlay = () => {
           height={205}
           mute={false}
           volume={0}
-          videoId="hJ7Rg1821Q0"
+          videoId={item}
           allowWebViewZoom={true}
         />
       </View>
@@ -97,11 +99,12 @@ const VideoPlay = () => {
           <Text style={{fontWeight: '600', color: '#22252D'}}>Videos</Text>
         </View>
         <FlatList
-          data={videosUrl}
+          data={datas}
           renderItem={renderItem}
           pagingEnabled={true}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => {}}
           onScroll={event => {
             // console.log(event.nativeEvent.contentOffset.x, width);
@@ -117,9 +120,9 @@ const VideoPlay = () => {
               gap: 8,
               left:
                 (Dimensions.get('screen').width - 20) / 2 -
-                (videosUrl.length * 2 - 1) * 4,
+                (datas.length * 2 - 1) * 4,
             }}>
-            {videosUrl.map(item => {
+            {datas.map(item => {
               return (
                 <View
                   style={{

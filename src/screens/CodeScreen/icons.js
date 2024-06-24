@@ -45,7 +45,7 @@ export const icons = ["500px", "accessible-icon", "accusoft", "acquisitions-inco
     "empire", "envelope", "envelope-open", "envelope-open-text", "envelope-square", "envira", "equals", "eraser", "erlang", "ethereum"
     , "ethernet", "etsy", "euro-sign", "evernote", "exchange-alt", "exclamation", "exclamation-circle", "exclamation-triangle", "expand",
     "expand-alt", "expand-arrows-alt", "expeditedssl", "external-link-alt", "external-link-square-alt", "eye", "eye-dropper", "eye-slash"
-    , "facebook", "facebook-f", "facebook-messenger", "facebook-square", "fan", "fantasy-flight-games", "fast-backward", "fast-forward",
+    , "facebook", "facebook-f.tsx", "facebook-messenger", "facebook-square", "fan", "fantasy-flight-games", "fast-backward", "fast-forward",
     "faucet", "fax", "feather", "feather-alt", "fedex", "fedora", "female", "fighter-jet", "figma", "file", "file-alt", "file-archive", "file-audio",
     "file-code", "file-contract", "file-csv", "file-download", "file-excel", "file-export", "file-image", "file-import", "file-invoice",
     "file-invoice-dollar", "file-medical", "file-medical-alt", "file-pdf", "file-powerpoint", "file-prescription", "file-signature",

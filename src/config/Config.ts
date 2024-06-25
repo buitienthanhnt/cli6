@@ -1,7 +1,7 @@
 const Config = () => {
   const Config = {
     useFirebase: false, // default=false, dev=true
-    domain: '',
+    domain: 'https://magento23x.jmango360.dev/pub/laravel1/public/',
     http: 'http://',
     https: 'https://',
     main: 'laravel1/',
@@ -53,7 +53,9 @@ const Config = () => {
       return values.slice(0, values.lastIndexOf('&')); // loại bỏ dấu:: "&" ở vị trí cuối cùng.
     },
     custom_url: function (path = ''): string {
-      return this.domain ? this.domain : this.http + this.ip + this.uri + path;
+      return this.domain
+        ? this.domain + path
+        : this.http + this.ip + this.uri + path;
     },
     public_url: function (): string {
       return this.http + this.ip + this.main + 'public/';

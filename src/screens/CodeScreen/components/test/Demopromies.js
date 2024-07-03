@@ -1,11 +1,12 @@
 import {useState, useEffect} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Button, Text, TouchableOpacity, View} from 'react-native';
 import {
   AppInstalledChecker,
   CheckPackageInstallation,
 } from 'react-native-check-app-install';
-import Config from 'react-native-config';
+import Config from '@config/Config';
 import {Rating, AirbnbRating} from 'react-native-ratings';
+import axios from 'axios';
 import {_css} from '@styles/css';
 import {BottomTabs} from '@bottoms/Bottom';
 import {HideBottom} from '@hooks/Navigate';
@@ -102,6 +103,32 @@ const Demopromies = ({navigation}) => {
         }}>
         <Text>show BottomTabs</Text>
       </TouchableOpacity>
+      <Button
+        title={'submit form'}
+        onPress={() => {
+          axios.post(Config.custom_url('api/test/submit'), {
+            a: 123,
+            b: ['car', 'board', 'plance'],
+            attribute: {
+              551: {
+                month: 7,
+                day: 2,
+                year: 2024,
+              },
+              552: {
+                month: 6,
+                day: 6,
+                year: 2023,
+              },
+              553: {
+                month: 2,
+                day: 9,
+                year: 2025,
+              },
+            },
+          });
+        }}
+      />
     </View>
   );
 };

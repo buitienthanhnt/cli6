@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react'; // gán lại giá trị mà không render lại đối tượng. https://www.w3schools.com/react/react_useref.asp
+import React, {Component, useCallback, useEffect, useMemo, useRef, useState} from 'react'; // gán lại giá trị mà không render lại đối tượng. https://www.w3schools.com/react/react_useref.asp
 import {
   Button,
   Image,
@@ -27,6 +27,44 @@ import ActionSheet from 'react-native-actionsheet'; // https://www.npmjs.com/pac
 import LoadingBtn from '@elements/LoadingBtn';
 import useDispatchState from '@hooks/redux/useDispatchState';
 import {useSelector} from 'react-redux';
+import DateTimePickerMd from "react-native-modal-datetime-picker";
+
+class DateTimePickerTester extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDateTimePickerVisible: false
+    };
+  }
+ 
+  showDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: true });
+  };
+ 
+  hideDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: false });
+  };
+ 
+  handleDatePicked = date => {
+    console.log("A date has been picked: ", date);
+    this.hideDateTimePicker();
+  };
+ 
+  render() {
+    return (
+      <>
+        <Button title="Show DatePicker" onPress={this.showDateTimePicker} />
+        <DateTimePickerMd
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this.handleDatePicked}
+          onCancel={this.hideDateTimePicker}
+          mode={'date'}
+          timePickerModeAndroid={'spinner'}
+        />
+      </>
+    );
+  }
+}
 
 // useRef doc::    https://react.dev/reference/react/useRef#i-cant-get-a-ref-to-a-custom-component
 
@@ -322,6 +360,8 @@ const AccountDetail = props => {
           setOpen(false);
         }}
       />
+
+      <DateTimePickerTester></DateTimePickerTester>
 
       <BasicSlider />
 

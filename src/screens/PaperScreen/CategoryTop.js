@@ -7,6 +7,7 @@ import {
   RefreshControl,
   ScrollView,
   Text,
+  TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native';
 import {StyleSheet, View} from 'react-native';
@@ -71,30 +72,39 @@ class CategoryTop extends Component {
                 this.state.topCategory &&
                 this.state.topCategory.map((item, index) => {
                   return (
-                    <View key={item.id} style={css.title_container}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.props.navigation.navigate('PaperCategory', {
-                            category_id: item.id,
-                          });
+                    <TouchableOpacity
+                      key={item.id}
+                      style={css.title_container}
+                      onPress={() => {
+                        this.props.navigation.navigate('PaperCategory', {
+                          category_id: item.id,
+                        });
+                      }}>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          position: 'absolute',
+                          backgroundColor: 'green',
+                          bottom: 20,
+                          left: 10,
+                          zIndex: 10,
                         }}>
-                        <View
+                        <Text
                           style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
+                            fontSize: 18,
+                            fontWeight: '600',
+                            color: 'red',
                           }}>
-                          <Text style={{fontSize: 18, fontWeight: '600'}}>
-                            {item.name}
-                          </Text>
-                        </View>
-                        <Image
-                          source={{uri: item.image_path}}
-                          style={css.top_image}
-                          resizeMode="cover"
-                          defaultSource={require('../../assets/favicon.png')}
-                        />
-                      </TouchableOpacity>
-                    </View>
+                          {item.name}
+                        </Text>
+                      </View>
+                      <Image
+                        source={{uri: item.image_path}}
+                        style={css.top_image}
+                        resizeMode="cover"
+                        defaultSource={require('../../assets/favicon.png')}
+                      />
+                    </TouchableOpacity>
                   );
                 })
               );

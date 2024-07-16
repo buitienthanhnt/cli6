@@ -84,22 +84,25 @@ class CategoryTop extends Component {
                         style={{
                           justifyContent: 'center',
                           position: 'absolute',
-                          backgroundColor: 'green',
+                          backgroundColor: 'rgba(83, 99, 255, 0.5)',
                           bottom: 20,
-                          left: 10,
+                          right: 10,
                           zIndex: 10,
+                          paddingVertical: 5,
+                          paddingHorizontal: 10,
+                          borderRadius: 6
                         }}>
                         <Text
                           style={{
                             fontSize: 18,
                             fontWeight: '600',
-                            color: 'red',
+                            color: '#ff0090',
                           }}>
                           {item.name}
                         </Text>
                       </View>
                       <Image
-                        source={{uri: item.image_path}}
+                        source={{uri: item?.image_path}}
                         style={css.top_image}
                         resizeMode="cover"
                         defaultSource={require('../../assets/favicon.png')}

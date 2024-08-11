@@ -115,6 +115,6 @@
     fixTerilinaSketDraw();
     fixErrorStyleMessage();
     fixCheckAppInstall();
-    fixColorAndIcon();
+//     fixColorAndIcon();
 
 ?>

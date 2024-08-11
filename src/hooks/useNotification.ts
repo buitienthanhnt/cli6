@@ -5,7 +5,7 @@ import {registerNotification} from '@queries/notification';
 
 const getNotifi = async () => {
   const noti = await AsyncStorage.getItem('listNotifi');
-  return JSON.parse(<string>noti).reverse();
+  return noti ? JSON.parse(<string>noti).reverse() : null;
 };
 
 const useNotification = () => {

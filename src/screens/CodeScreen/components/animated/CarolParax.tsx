@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Platform, Text, View} from 'react-native';
+import {Platform, View} from 'react-native';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -30,11 +30,7 @@ type Props = {
   autoPlay: boolean;
 };
 
-const CarolParax: React.FunctionComponent<Props> = ({
-  data,
-  hideIndicator,
-  autoPlay,
-}) => {
+const CarolParax: React.FunctionComponent<Props> = ({data, hideIndicator}) => {
   const [isVertical] = React.useState(false);
   const [pagingEnabled] = React.useState<boolean>(true);
   const [snapEnabled] = React.useState<boolean>(true);
@@ -84,6 +80,7 @@ const CarolParax: React.FunctionComponent<Props> = ({
         data={data}
         renderItem={({index}) => (
           <SBItem
+            key={index}
             index={index}
             pretty={true}
             img={data[index].image_path}
@@ -128,31 +125,6 @@ const CarolParax: React.FunctionComponent<Props> = ({
           })}
         </View>
       )}
-
-      {/* <SButton
-        onPress={() => setAutoPlay(!autoPlay)}
-      >{`${ElementsText.AUTOPLAY}:${autoPlay}`}</SButton>
-      <SButton
-        onPress={() => {
-          setIsVertical(!isVertical);
-        }}
-      >
-        {isVertical ? "Set horizontal" : "Set Vertical"}
-      </SButton>
-      <SButton
-        onPress={() => {
-          setPagingEnabled(!pagingEnabled);
-        }}
-      >
-        {`pagingEnabled:${pagingEnabled}`}
-      </SButton>
-      <SButton
-        onPress={() => {
-          setSnapEnabled(!snapEnabled);
-        }}
-      >
-        {`snapEnabled:${snapEnabled}`}
-      </SButton> */}
     </GestureHandlerRootView>
   );
 };

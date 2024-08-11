@@ -11,23 +11,18 @@ import {
   Image,
   Text,
   View,
-  Dimensions,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
   StyleSheet,
   Alert,
 } from 'react-native';
 
-// import { Ionicons } from '@expo/vector-icons';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import RBSheet from 'react-native-raw-bottom-sheet'; // npm i react-native-raw-bottom-sheet
 import DeviceInfo from 'react-native-device-info'; // npm install --save react-native-device-info  && react-native link react-native-device-info
 import DatePicker from 'react-native-date-picker';
-import {Colors, DateTimePicker, Dialog} from 'react-native-ui-lib'; // npm i react-native-ui-lib // https://wix.github.io/react-native-ui-lib/docs/foundation/colors
+import {Colors} from 'react-native-ui-lib'; // npm i react-native-ui-lib // https://wix.github.io/react-native-ui-lib/docs/foundation/colors
 import {useNetInfo} from '@react-native-community/netinfo';
 import remoteConfig from '@react-native-firebase/remote-config';
-import {BasicTable, TopTable} from '@screens/components/Table';
 import {BasicSlider} from '@screens/components/Slider';
 import {firebase} from '@react-native-firebase/auth';
 import ActionSheet from 'react-native-actionsheet'; // https://www.npmjs.com/package/react-native-actionsheet
@@ -144,32 +139,18 @@ const AccountDetail = props => {
         <Text>Ip: {netInfo?.details?.ipAddress}</Text>
       </View>
 
-      <Button
-        title="to Wishlist"
-        onPress={() => {
-          props.navigation.navigate('Wishlist');
-        }}
-      />
       <Text />
 
       <Button title="show remote config" onPress={showRemoteConfig} />
       <Text />
 
-      <Button
-        title="to test"
-        onPress={() => {
-          props.navigation.navigate('Test');
-        }}
-      />
-      <Text />
-
-      <Button
-        title="to test firebase"
-        onPress={() => {
-          props.navigation.navigate('ExFirebase');
-        }}
-      />
-      <Text />
+      {/*<Button*/}
+      {/*  title="to test"*/}
+      {/*  onPress={() => {*/}
+      {/*    props.navigation.navigate('Test');*/}
+      {/*  }}*/}
+      {/*/>*/}
+      {/*<Text />*/}
 
       {!user && (
         <Button
@@ -378,9 +359,6 @@ const AccountDetail = props => {
           actionSheet.current.show();
         }}
       />
-
-      <BasicTable />
-      <TopTable />
 
       <ActionSheet
         ref={actionSheet}

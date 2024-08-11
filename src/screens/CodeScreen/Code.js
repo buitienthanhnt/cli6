@@ -51,86 +51,86 @@ const Code = props => {
         style={css.container}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
-        <View style={css.functionItem}>
-          <View style={{flexDirection: 'row'}}>
-            <Icon name="search" size={30} color="black" />
-            <Text> </Text>
-            <Icon name="qrcode" size={30} color="black" />
-          </View>
-          <Text style={{fontSize: 18}}> scan QRCode </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('ScanScreen');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <View style={{flexDirection: 'row'}}>*/}
+        {/*    <Icon name="search" size={30} color="black" />*/}
+        {/*    <Text> </Text>*/}
+        {/*    <Icon name="qrcode" size={30} color="black" />*/}
+        {/*  </View>*/}
+        {/*  <Text style={{fontSize: 18}}> scan QRCode </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('ScanScreen');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
-        <View style={css.functionItem}>
-          <Icon name="qrcode" size={30} color="black" />
-          <Text style={{fontSize: 18}}> QrGenerator </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('QrGenerator');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <Icon name="qrcode" size={30} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> QrGenerator </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('QrGenerator');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
-        <View style={css.functionItem}>
-          <FontAwesome5Icon name="layer-group" size={28} color="black" />
-          <Text style={{fontSize: 18}}> RgbaColor </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('RgbaColor');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <FontAwesome5Icon name="layer-group" size={28} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> RgbaColor </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('RgbaColor');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
-        <View style={css.functionItem}>
-          <FontAwesome5Icon name="icons" size={28} color="black" />
-          <Text style={{fontSize: 18}}> Color&Icon </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('CodeScreen', {screen: 'ColorIcon'});
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <FontAwesome5Icon name="icons" size={28} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> Color&Icon </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('CodeScreen', {screen: 'ColorIcon'});*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
-        <View style={css.functionItem}>
-          <FontAwesome5Icon name="firefox-browser" size={28} color="black" />
-          <Text style={{fontSize: 18}}> WebView </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('WebviewApp');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <FontAwesome5Icon name="firefox-browser" size={28} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> WebView </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('WebviewApp');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
-        <View style={css.functionItem}>
-          <FontAwesome5Icon name="music" size={28} color="black" />
-          <Text style={{fontSize: 18}}> SoundPlay </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('SoundPlay');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <FontAwesome5Icon name="music" size={28} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> SoundPlay </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('SoundPlay');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
-        <View style={css.functionItem}>
-          <FontAwesome5Icon name="video" size={28} color="black" />
-          <Text style={{fontSize: 18}}> VideoPlay </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('VideoPlay');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <FontAwesome5Icon name="video" size={28} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> VideoPlay </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('VideoPlay');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
         <View style={css.functionItem}>
           <FontAwesome5Icon name="mail-bulk" size={28} color="black" />
@@ -143,38 +143,38 @@ const Code = props => {
           </TouchableOpacity>
         </View>
 
-        <View style={css.functionItem}>
-          <FontAwesome5Icon name="car" size={28} color="black" />
-          <Text style={{fontSize: 18}}> change theme </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('Dark');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <FontAwesome5Icon name="car" size={28} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> change theme </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('Dark');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
-        <View style={css.functionItem}>
-          <FontAwesome5Icon name="page4" size={28} color="black" />
-          <Text style={{fontSize: 18}}> ExAnimated </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('ExAnimated');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <FontAwesome5Icon name="page4" size={28} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> ExAnimated </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('ExAnimated');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
-        <View style={css.functionItem}>
-          <FontAwesome5Icon name="photo-video" size={28} color="black" />
-          <Text style={{fontSize: 18}}> demo test </Text>
-          <TouchableOpacity
-            onPress={() => {
-              props?.navigation.navigate('DemoTest');
-            }}>
-            <Icon name="arrow-circle-right" size={28} color="black" />
-          </TouchableOpacity>
-        </View>
+        {/*<View style={css.functionItem}>*/}
+        {/*  <FontAwesome5Icon name="photo-video" size={28} color="black" />*/}
+        {/*  <Text style={{fontSize: 18}}> demo test </Text>*/}
+        {/*  <TouchableOpacity*/}
+        {/*    onPress={() => {*/}
+        {/*      props?.navigation.navigate('DemoTest');*/}
+        {/*    }}>*/}
+        {/*    <Icon name="arrow-circle-right" size={28} color="black" />*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
         <View style={css.functionItem}>
           <FontAwesome5Icon name="user-cog" size={28} color="black" />

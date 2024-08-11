@@ -14,7 +14,6 @@ import {
   TimeLine,
   TopNew,
 } from '@screens/HomeScreen/components';
-import VideoPlay from '@screens/CodeScreen/VideoPlay';
 
 const Home = ({navigation}) => {
   const {isLoading, data, isError, error, refetch} = useHomeInfo();
@@ -38,16 +37,6 @@ const Home = ({navigation}) => {
       <ListWriter writers={data?.writers} />
       <SearchAll />
       <ListCarousel data={data?.mostRecents} />
-
-      <Button
-        title="to Process"
-        onPress={() => {
-          navigation.navigate('ExampleOne');
-        }}
-      />
-      {/* <Button title="to ExampleTwo" onPress={()=>{
-                navigation.navigate("ExampleTwo")
-            }}></Button> */}
       <Text />
     </ScrollView>
   );

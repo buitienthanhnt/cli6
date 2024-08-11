@@ -48,7 +48,6 @@ import {Provider} from 'react-redux'; // npm install react-redux --save :tạo c
 import AppStore from '@redux/AppStore';
 import remoteConfig from '@react-native-firebase/remote-config';
 import DeviceInfo from 'react-native-device-info';
-import {ExAnimated5} from '@screens/CodeScreen/components/animated/ExAnimated1';
 import Login from '@screens/AccountScreen/Login';
 import LoadingX from '@screens/CodeScreen/components/animated/LoadingX';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -246,11 +245,6 @@ function App(): JSX.Element {
               name="BottomTabs"
               component={BottomTabs}
               options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="ExAnimated5"
-              component={ExAnimated5}
-              options={{presentation: 'transparentModal', headerShown: false}}
             />
             <Stack.Screen
               name="Login"

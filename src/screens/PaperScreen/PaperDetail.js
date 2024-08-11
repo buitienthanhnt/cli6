@@ -17,7 +17,6 @@ import RenderHTML, {
   HTMLContentModel,
 } from 'react-native-render-html'; // npm install react-native-render-html
 import WebView from 'react-native-webview'; // npm install react-native-webview
-import perf from '@react-native-firebase/perf';
 import Comments from './element/Comments';
 import DetailLike from './element/DetailLike';
 import {PaperDetailContext} from './PaperContext';

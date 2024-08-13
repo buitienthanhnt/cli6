@@ -34,6 +34,7 @@ import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {openDetail} from '@utils/paper';
 import {debounce} from 'lodash';
 import {showMessage, hideMessage} from 'react-native-flash-message';
+import Price from '@screens/PaperScreen/element/Price';
 
 const renderers = {
   iframe: IframeRenderer,
@@ -114,6 +115,7 @@ const PaperDetail = ({navigation, route}) => {
           refRBSheet,
           commentParent,
           setCommentParent,
+          price: data?.price,
         }}>
         <Suggest show={sug} datas={data?.suggest} />
         <ScrollView
@@ -161,6 +163,7 @@ const PaperDetail = ({navigation, route}) => {
               return undefined;
             }}
           />
+          <Price />
           <Pressable
             onPress={async () => {
               await Linking.openURL(data.url);

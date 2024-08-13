@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   FlatList,
   Button,
+  Pressable,
+  Linking,
 } from 'react-native';
 import IframeRenderer, {iframeModel} from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
 import RenderHTML, {
@@ -159,6 +161,14 @@ const PaperDetail = ({navigation, route}) => {
               return undefined;
             }}
           />
+          <Pressable
+            onPress={async () => {
+              await Linking.openURL(data.url);
+            }}>
+            <Text style={{fontSize: 16, fontWeight: '500'}}>
+              Nguồn: <Text style={{color: 'blue'}}>{data?.title}</Text>
+            </Text>
+          </Pressable>
           <DetailLike info={data.info} />
           <PaperTag tags={data?.tags} />
           <Comments paperId={data.id} />

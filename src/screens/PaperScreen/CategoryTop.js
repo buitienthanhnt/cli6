@@ -7,11 +7,11 @@ import {
   RefreshControl,
   ScrollView,
   Text,
-  TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native';
 import {StyleSheet, View} from 'react-native';
 import rApi from '@netWork/rApi';
+import Animated, {FadeInUp, FadeOut} from 'react-native-reanimated';
 
 class CategoryTop extends Component {
   constructor(props) {
@@ -54,7 +54,9 @@ class CategoryTop extends Component {
     };
 
     return (
-      <View>
+      <Animated.View
+        entering={FadeInUp.duration(1000)}
+        exiting={FadeOut.duration(600)}>
         <ScrollView
           pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
@@ -90,7 +92,7 @@ class CategoryTop extends Component {
                           zIndex: 10,
                           paddingVertical: 5,
                           paddingHorizontal: 10,
-                          borderRadius: 6
+                          borderRadius: 6,
                         }}>
                         <Text
                           style={{
@@ -102,7 +104,9 @@ class CategoryTop extends Component {
                         </Text>
                       </View>
                       <Image
-                        source={{uri: item?.image_path}}
+                        source={{
+                          uri: 'https://cdn.coccoc.com/news_feed/20240813/16823132577389810075.webp',
+                        }}
                         style={css.top_image}
                         resizeMode="cover"
                         defaultSource={require('../../assets/favicon.png')}
@@ -121,7 +125,7 @@ class CategoryTop extends Component {
             }
           })()}
         </ScrollView>
-      </View>
+      </Animated.View>
     );
   }
 }

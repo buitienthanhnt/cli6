@@ -35,6 +35,7 @@ import {openDetail} from '@utils/paper';
 import {debounce} from 'lodash';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 import Price from '@screens/PaperScreen/element/Price';
+import Nguon from '@screens/PaperScreen/element/Nguon';
 
 const renderers = {
   iframe: IframeRenderer,
@@ -116,8 +117,9 @@ const PaperDetail = ({navigation, route}) => {
           commentParent,
           setCommentParent,
           price: data?.price,
+          paper: data,
         }}>
-        <Suggest show={sug} datas={data?.suggest} />
+        {/*<Suggest show={sug} datas={data?.suggest} />*/}
         <ScrollView
           onScroll={onScroll}
           contentContainerStyle={{paddingBottom: 20}}
@@ -164,15 +166,8 @@ const PaperDetail = ({navigation, route}) => {
             }}
           />
           <Price />
-          <Pressable
-            onPress={async () => {
-              await Linking.openURL(data.url);
-            }}>
-            <Text style={{fontSize: 16, fontWeight: '500'}}>
-              Nguồn: <Text style={{color: 'blue'}}>{data?.title}</Text>
-            </Text>
-          </Pressable>
           <DetailLike info={data.info} />
+          <Nguon />
           <PaperTag tags={data?.tags} />
           <Comments paperId={data.id} />
           <View style={{height: 1, backgroundColor: 'black'}} />
@@ -338,6 +333,7 @@ const css = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 8,
     paddingBottom: layoutDimension.bottomTabHeight,
+    // backgroundColor: 'white',
   },
 });
 

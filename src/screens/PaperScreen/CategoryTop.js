@@ -105,7 +105,9 @@ class CategoryTop extends Component {
                       </View>
                       <Image
                         source={{
-                          uri: 'https://cdn.coccoc.com/news_feed/20240813/16823132577389810075.webp',
+                          uri:
+                            item?.image_path ||
+                            'https://cdn.coccoc.com/news_feed/20240813/16823132577389810075.webp',
                         }}
                         style={css.top_image}
                         resizeMode="cover"

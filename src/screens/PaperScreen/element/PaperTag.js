@@ -1,4 +1,4 @@
-import react, {Component, useCallback} from 'react';
+import React, {Component, useCallback} from 'react';
 import {View, TouchableOpacity, Text, FlatList} from 'react-native';
 import {Navigate} from '@hooks/Navigate';
 

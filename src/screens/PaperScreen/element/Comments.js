@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useComments} from '@hooks/usePapers';
 import {capitalizeFirstLetter} from '@utils/textHelper';
 import {useCallback, useContext, useState} from 'react';
@@ -28,53 +22,15 @@ const Comments = ({paperId}) => {
     refRBSheet.current.open();
   }, [refRBSheet]);
 
-  // if (!data || !data.length) {
-  //   return (
-  //     <View style={{paddingVertical: 10}}>
-  //       <View style={{flexDirection: 'row'}}>
-  //         <Text style={css.title}>Comment{'...........................'} </Text>
-  //         <TouchableOpacity
-  //           style={{
-  //             ...css.moreBtn,
-  //             marginLeft: 8,
-  //             transform: [],
-  //             alignSelf: 'flex-end',
-  //           }}
-  //           onPress={() => {
-  //             if (!user_data) {
-  //               Navigate('Login', {onSuccess: onSuccess});
-  //               return;
-  //             }
-  //             refRBSheet.current.open();
-  //           }}>
-  //           <Icon name="reply" size={16} color="#821ab2" />
-  //         </TouchableOpacity>
-  //       </View>
-  //       <RBSheet
-  //         height={400}
-  //         animationType="slide"
-  //         customStyles={{
-  //           container: {
-  //             borderRadius: 10,
-  //             // backgroundColor: 'rgba(136, 238, 192, 0.4)',
-  //           },
-  //           wrapper: {
-  //             // backgroundColor: 'transparent'
-  //           },
-  //         }}
-  //         closeOnDragDown={true}
-  //         ref={refRBSheet}
-  //         onClose={() => {
-  //           setCommentParent(null);
-  //         }}>
-  //         <CommentForm />
-  //       </RBSheet>
-  //     </View>
-  //   );
-  // }
-
   return (
-    <View style={{paddingVertical: 10}}>
+    <View
+      style={{
+        paddingVertical: 10,
+        backgroundColor: 'white',
+        borderRadius: 4,
+        marginTop: 4,
+        paddingLeft: 4,
+      }}>
       <View style={{flexDirection: 'row'}}>
         <Text style={css.title}>Comment{'...........................'} </Text>
         <TouchableOpacity
@@ -279,7 +235,6 @@ const css = StyleSheet.create({
   loadMore: {
     borderRadius: 5,
     borderColor: '#ff00d9',
-    // alignSelf: 'flex-start'
   },
   userName: {
     color: '#4ac72e',

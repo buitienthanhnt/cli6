@@ -1,4 +1,4 @@
-import react, {Component} from 'react';
+import React, {Component} from 'react';
 import {
   Text,
   View,
@@ -54,11 +54,16 @@ class Carolsel extends Component {
   render() {
     return this.state.data ? (
       <SafeAreaView style={css.area}>
-        <View style={{marginBottom: 8}}>
-          <Text style={{color: '#d31bd6', fontSize: 16, fontWeight: 600}}>
-            Tin liên quan:
-          </Text>
-        </View>
+        <Text
+          style={{
+            color: '#d31bd6',
+            fontSize: 16,
+            fontWeight: 600,
+            marginBottom: 8,
+            paddingLeft: 4,
+          }}>
+          Tin liên quan:
+        </Text>
         <View style={css.container1}>
           <Carousel
             layout={'stack'}
@@ -72,39 +77,27 @@ class Carolsel extends Component {
         </View>
       </SafeAreaView>
     ) : null;
-    // <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-    //   <Image
-    //     source={require('../../../assets/Ripple-1s-200px.gif')}
-    //     style={{width: 60, height: 60}}
-    //   />
-    // </View>
   }
 }
 
 const css = StyleSheet.create({
   area: {
     flex: 1,
-    paddingTop: 8,
-    borderRadius: 12,
-    // paddingBottom: 10,
-    // height: 320,
-    // paddingLeft: 8,
-    // backgroundColor: '#c4f4b0',
+    borderRadius: 4,
+    backgroundColor: 'white',
+    marginTop: 4,
+    paddingBottom: 4,
   },
   item: {
     borderRadius: 5,
     height: 250,
     backgroundColor: '#ffdc9b',
-    // padding: 6,
-    // marginRight: 20
-    // marginLeft: 20,
   },
   container1: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     paddingRight: 4,
-    // backgroundColor: 'red',
   },
 });
 

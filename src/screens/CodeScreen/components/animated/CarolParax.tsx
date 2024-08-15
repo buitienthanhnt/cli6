@@ -64,7 +64,9 @@ const CarolParax: React.FunctionComponent<Props> = ({
         {...baseOptions}
         style={{
           width: PAGE_WIDTH,
-          //  backgroundColor: 'blue',
+          backgroundColor: 'white',
+          marginTop: 4,
+          borderRadius: 4,
         }}
         loop
         pagingEnabled={pagingEnabled}

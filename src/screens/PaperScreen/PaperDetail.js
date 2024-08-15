@@ -10,16 +10,8 @@ import {
   TouchableOpacity,
   FlatList,
   Button,
-  Pressable,
-  Linking,
 } from 'react-native';
-import IframeRenderer, {iframeModel} from '@native-html/iframe-plugin'; // npm install @native-html/iframe-plugin
-import RenderHTML, {
-  defaultHTMLElementModels,
-  HTMLContentModel,
-} from 'react-native-render-html'; // npm install react-native-render-html
 import WebView from 'react-native-webview'; // npm install react-native-webview
-import perf from '@react-native-firebase/perf';
 import Comments from './element/Comments';
 import DetailLike from './element/DetailLike';
 import {PaperDetailContext} from './PaperContext';
@@ -36,22 +28,8 @@ import {debounce} from 'lodash';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 import Price from '@screens/PaperScreen/element/Price';
 import Nguon from '@screens/PaperScreen/element/Nguon';
-
-const renderers = {
-  iframe: IframeRenderer,
-};
-
-const customHTMLElementModels = {
-  iframe: iframeModel,
-  input: defaultHTMLElementModels.input.extend({
-    mixedUAStyles: {
-      width: 150,
-      height: 40,
-      backgroundColor: 'yellow',
-    },
-    contentModel: HTMLContentModel.void, // change this from none to void
-  }),
-};
+import Title from '@screens/PaperScreen/element/Title';
+import Content from '@screens/PaperScreen/element/Content';
 
 const PaperDetail = ({navigation, route}) => {
   const before = useRef(0);
@@ -103,6 +81,16 @@ const PaperDetail = ({navigation, route}) => {
     [navigation, setBe, sug],
   );
 
+  useEffect(() => {
+    return () => {
+      navigation.getParent()?.setOptions({
+        tabBarStyle: {
+          display: 'flex',
+        },
+      });
+    };
+  }, [navigation]);
+
   if (data) {
     if (showWebview) {
       return <WebView source={{uri: 'www.topsy-fashion.nl'}} />;
@@ -130,47 +118,14 @@ const PaperDetail = ({navigation, route}) => {
           refreshControl={
             <RefreshControl refreshing={isLoading} onRefresh={refetch} />
           }>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: '600',
-              color: 'green',
-              textDecorationLine: 'underline',
-            }}>
-            {data.title}
-          </Text>
-          {/* <RenderHTML contentWidth={Dimensions.get("screen").width} source={{ html }}></RenderHTML> */}
+          <Title />
           <PaperCarousel slider_images={data.slider_images} />
-          <RenderHTML
-            renderers={renderers}
-            WebView={WebView}
-            source={{html: data?.conten || ''}}
-            contentWidth={Dimensions.get('screen').width}
-            customHTMLElementModels={customHTMLElementModels}
-            defaultWebViewProps={
-              {
-                /* Any prop you want to pass to all WebViews */
-              }
-            }
-            renderersProps={{
-              iframe: {
-                scalesPageToFit: true,
-                webViewProps: {
-                  /* Any prop you want to pass to iframe WebViews */
-                },
-              },
-            }}
-            onPress={event => {
-              console.log('&&&&', before.current);
-              return undefined;
-            }}
-          />
+          <Content />
           <Price />
           <DetailLike info={data.info} />
           <Nguon />
           <PaperTag tags={data?.tags} />
           <Comments paperId={data.id} />
-          <View style={{height: 1, backgroundColor: 'black'}} />
           <LastNews
             paper_id={route?.params?.data?.id || 1}
             navigation={navigation}
@@ -180,7 +135,6 @@ const PaperDetail = ({navigation, route}) => {
           <Button
             title="view in webview"
             onPress={() => {
-              // setShowwebview(true);
               showMessage({
                 message: 'added the comment for detail!',
                 type: 'warning',
@@ -331,7 +285,7 @@ const LastNews = props => {
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
     paddingBottom: layoutDimension.bottomTabHeight,
     // backgroundColor: 'white',
   },

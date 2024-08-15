@@ -132,22 +132,24 @@ const PaperDetail = ({navigation, route}) => {
           />
           <CarolParax data={caroll} />
 
-          <Button
-            title="view in webview"
-            onPress={() => {
-              showMessage({
-                message: 'added the comment for detail!',
-                type: 'warning',
-                color: 'green',
-                style: {
-                  borderRadius: 8,
-                  paddingHorizontal: 5,
-                  marginHorizontal: 10,
-                  marginTop: 2,
-                },
-              });
-            }}
-          />
+          <View style={{marginTop: 4}}>
+            <Button
+              title="view in webview"
+              onPress={() => {
+                showMessage({
+                  message: 'added the comment for detail!',
+                  type: 'warning',
+                  color: 'green',
+                  style: {
+                    borderRadius: 8,
+                    paddingHorizontal: 5,
+                    marginHorizontal: 10,
+                    marginTop: 2,
+                  },
+                });
+              }}
+            />
+          </View>
         </ScrollView>
       </PaperDetailContext.Provider>
     );

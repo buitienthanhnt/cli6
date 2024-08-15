@@ -59,14 +59,14 @@ const CarolParax: React.FunctionComponent<Props> = ({
     <GestureHandlerRootView
       style={{
         alignItems: 'center',
+        backgroundColor: 'white',
+        marginTop: 4,
+        paddingBottom: 4,
       }}>
       <Carousel
         {...baseOptions}
         style={{
           width: PAGE_WIDTH,
-          backgroundColor: 'white',
-          marginTop: 4,
-          borderRadius: 4,
         }}
         loop
         pagingEnabled={pagingEnabled}

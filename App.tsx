@@ -82,8 +82,10 @@ const initUserData = async () => {
 };
 
 const initRoot = async (setInit: (value: boolean) => void) => {
-  let token = await AsyncStorage.getItem('token');
-  let refresh_token = await AsyncStorage.getItem('refresh_token');
+  let {
+    authenRe: {token, refresh_token},
+  } = AppStore.getState();
+
   if (refresh_token && token) {
   } else {
     try {
@@ -96,8 +98,6 @@ const initRoot = async (setInit: (value: boolean) => void) => {
       if (data) {
         token = data.token.value;
         refresh_token = data.refresh_token.value;
-        await AsyncStorage.setItem('token', token || '');
-        await AsyncStorage.setItem('refresh_token', refresh_token || '');
       }
     } catch (e) {}
   }

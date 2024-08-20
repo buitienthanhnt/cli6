@@ -111,7 +111,7 @@ class rApi {
             if (newTokenData.data) {
               this.getTokenProcess = null;
               this.token = newTokenData.data?.token?.value;
-              this.dispathToken();
+              this.dispathToken(newTokenData.data?.token?.value);
               this.dispathRefreshToken(newTokenData.data?.refresh_token?.value);
               this.isTokenExpired = false;
             }

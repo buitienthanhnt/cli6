@@ -10,6 +10,8 @@ const persistConfig = {
   stateReconciler: autoMergeLevel2, // Xem thêm tại mục "Quá trình merge".
 };
 
+// cơ chế lưu và nạp tự động data giữa redux và bộ nhớ may
+// theo đó redux data được lưu vào AsyncStorage và nạp lại từ AsyncStorage sang redux kể cả khi tắt app.
 const pReducer = persistReducer(
   persistConfig,
   stateByreduces as unknown as Reducer,

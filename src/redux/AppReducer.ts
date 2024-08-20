@@ -1,5 +1,6 @@
 import {AppState, Application} from './AppState';
 import actionReducer from '@constants/actionReducer';
+import {combineReducers} from 'redux';
 
 const Reducer = (state = AppState, action: any) => {
   let newTaskList = state.data;
@@ -91,4 +92,19 @@ const AppliReducer = (state = Application, action: any) => {
   return state;
 };
 
-export {Reducer, NumberReducer, PaperReducer, AuthenReducer, AppliReducer};
+const stateByreduces = combineReducers({
+  defRe: Reducer,
+  numberRe: NumberReducer,
+  paperRe: PaperReducer,
+  authenRe: AuthenReducer,
+  appRe: AppliReducer,
+});
+
+export {
+  Reducer,
+  NumberReducer,
+  PaperReducer,
+  AuthenReducer,
+  AppliReducer,
+  stateByreduces,
+};

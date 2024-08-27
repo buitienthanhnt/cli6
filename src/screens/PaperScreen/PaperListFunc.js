@@ -74,6 +74,9 @@ const PaperListFunc = props => {
         estimatedItemSize={ScreenHeight / 4}
         onScroll={onScroll}
         scrollEventThrottle={200}
+        ItemSeparatorComponent={() => {
+          return <View style={{height: 4, backgroundColor: 'white'}} />;
+        }}
       />
     </View>
   );

@@ -88,8 +88,6 @@ const initRoot = async (setInit: (value: boolean) => void) => {
   let token = await AsyncStorage.getItem('token');
   let refresh_token = await AsyncStorage.getItem('refresh_token');
 
-  console.log('.................>', token, refresh_token);
-
   if (refresh_token && token) {
   } else {
     try {

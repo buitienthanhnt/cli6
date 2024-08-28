@@ -1,41 +1,39 @@
-import React, {
-  FunctionComponent,
-  useCallback,
-  useContext,
-  useState,
-} from 'react';
+import React, {FunctionComponent, useCallback, useContext} from 'react';
 import {
-  Alert,
   Pressable,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import {PaperDetailContext} from '@screens/PaperScreen/PaperContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // @ts-ignore
 import {debounce} from 'lodash';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import {useAddCart} from '@hooks/cart';
 
 interface Props {}
 const Price: FunctionComponent<Props> = () => {
-  const {price} = useContext(PaperDetailContext);
-  const [qty, setQty] = useState<number>(1);
+  const {price, qty, setQty} = useContext(PaperDetailContext);
+  const {onAddToCart: _onAddCart, isLoading} = useAddCart();
 
   const onAddQty = debounce(() => {
+    // @ts-ignore
     setQty(value => (value as number) + 1);
   }, 300);
 
   const onMinusQty = debounce(() => {
     if (qty > 1) {
+      // @ts-ignore
       setQty(value => (value as number) - 1);
     }
   }, 300);
 
   const onAddToCart = useCallback(() => {
-    Alert.alert('you choose add to cart');
-  }, []);
+    _onAddCart();
+  }, [_onAddCart]);
 
   if (!price) {
     return null;
@@ -88,13 +86,19 @@ const Price: FunctionComponent<Props> = () => {
       </View>
       <TouchableOpacity
         onPress={onAddToCart}
+        disabled={isLoading}
         style={{
           paddingHorizontal: 20,
           paddingVertical: 4,
           backgroundColor: 'rgba(121, 177, 226, 0.5)',
           borderRadius: 6,
+          opacity: isLoading ? 0.6 : 1,
         }}>
-        <Icon name="cart-arrow-down" size={28} color="#8400ff" />
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <Icon name="cart-arrow-down" size={28} color="#8400ff" />
+        )}
       </TouchableOpacity>
     </View>
   );

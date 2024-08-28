@@ -1,8 +1,8 @@
 const Config = () => {
   const Config = {
     useFirebase: false, // default=false, dev=true
-    domain: 'https://magento23x.jmango360.dev/pub/laravel1/public/',
-    // domain: null,
+    // domain: 'https://magento23x.jmango360.dev/pub/laravel1/public/',
+    domain: null,
     http: 'http://',
     https: 'https://',
     main: 'laravel1/',
@@ -34,6 +34,8 @@ const Config = () => {
       byWriter: 'api/byWriter/',
       getToken: '/getUserToken',
       userInfo: 'api/userInfo',
+      addCart: 'api/paper/addCart',
+      getCart: 'api/paper/cart',
     },
     googleService: {
       googleMapUrl: 'https://maps.googleapis.com/maps/api/',

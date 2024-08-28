@@ -55,6 +55,8 @@ const PaperDetail = ({navigation, route}) => {
     route?.params?.id || route?.params?.data?.id,
   );
 
+  const [qty, setQty] = useState(data?.qty || 1);
+
   const onScroll = useCallback(
     e => {
       setBe(e.nativeEvent.contentOffset.y);
@@ -110,6 +112,8 @@ const PaperDetail = ({navigation, route}) => {
           setCommentParent,
           price: data?.price,
           paper: data,
+          qty: qty,
+          setQty: setQty,
         }}>
         <Suggest show={sug} datas={data?.suggest} />
         <ScrollView

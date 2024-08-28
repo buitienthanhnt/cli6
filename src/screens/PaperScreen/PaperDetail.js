@@ -22,7 +22,11 @@ import Carolsel from '@screens/AccountScreen/components/Carolsel';
 import PaperTag from './element/PaperTag';
 import PaperCarousel from './element/PaperCarousel';
 import {usePaperDetail} from '@hooks/usePapers';
-import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import {openDetail} from '@utils/paper';
 import {debounce} from 'lodash';
 import {showMessage, hideMessage} from 'react-native-flash-message';
@@ -107,7 +111,7 @@ const PaperDetail = ({navigation, route}) => {
           price: data?.price,
           paper: data,
         }}>
-        {/*<Suggest show={sug} datas={data?.suggest} />*/}
+        <Suggest show={sug} datas={data?.suggest} />
         <ScrollView
           onScroll={onScroll}
           contentContainerStyle={{paddingBottom: 20}}
@@ -170,20 +174,15 @@ const Suggest = ({show, datas}) => {
   const index = useRef(0);
   const flatRef = useRef(null);
   const interId = useRef('');
+  const height = useSharedValue(0);
 
-  // useEffect(() => {
-  //   if (!show) {
-  //     clearInterval(interId.current);
-  //   } else {
-  //     interId.current = setInterval(function () {
-  //       index.current = index.current === 0 ? 1 : 0;
-  //       flatRef?.current?.scrollToIndex({
-  //         index: index.current,
-  //         animated: true,
-  //       });
-  //     }, 4500);
-  //   }
-  // }, [show]);
+  useEffect(() => {
+    if (!show) {
+      height.value = withTiming(0, {duration: 400});
+    } else {
+      height.value = withTiming(92, {duration: 250});
+    }
+  }, [height, show]);
 
   if (!datas) {
     return null;
@@ -193,7 +192,7 @@ const Suggest = ({show, datas}) => {
       style={[
         {
           position: 'absolute',
-          height: 92,
+          height: height,
           width: '100%',
           paddingHorizontal: 4,
           top: 2,

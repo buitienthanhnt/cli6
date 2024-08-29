@@ -2,14 +2,16 @@ import {useCallback, useContext} from 'react';
 import {PaperDetailContext} from '@screens/PaperScreen/PaperContext';
 import {useMutation} from 'react-query';
 import {addToCart} from '@queries/cart';
+import useDispatchState from '@hooks/redux/useDispatchState';
 
 const useAddCart = () => {
   const {qty, paperId} = useContext(PaperDetailContext);
+  const {actionReducer, updateState} = useDispatchState();
   const {mutate, ...query} = useMutation({
     mutationKey: ['addCartPaper'],
     mutationFn: addToCart,
     onSuccess: cartData => {
-      console.log('------>', cartData);
+      updateState(actionReducer.reUpdateCart, cartData);
     },
   });
 

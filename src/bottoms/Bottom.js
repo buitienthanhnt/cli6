@@ -8,13 +8,13 @@ import HomeScreen from '@bottoms/tabs/HomeScreen';
 import PaperScreen from '@bottoms/tabs/PaperScreen';
 import MoreScreen from '@bottoms/tabs/MoreScreen';
 import CodeScreen from '@bottoms/tabs/CodeScreen';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import useNotification from '@hooks/useNotification';
 
 const Tab = createBottomTabNavigator();
 const BottomTabs = ({navigation, route}) => {
   const {notifi_count} = useNotification();
-
+  const {cart_data} = useSelector(AppState => AppState.defRe);
   const bottomTabs = useMemo(() => {
     return [
       {
@@ -58,6 +58,7 @@ const BottomTabs = ({navigation, route}) => {
         tabBarOptions: {showLabel: false},
         options: {
           tabBarLabel: 'More',
+          tabBarBadge: cart_data ? cart_data?.length : undefined, // biểu tượng số thông báo trên bottomTab
           tabBarIcon: ({focused, color, size}) => (
             <Icon name={'windows'} size={26} color={color} />
           ),
@@ -69,7 +70,7 @@ const BottomTabs = ({navigation, route}) => {
         tabBarOptions: {showLabel: false},
         options: {
           tabBarLabel: 'code',
-          tabBarBadge: notifi_count, // biểu tượng số thông báo trên bottomTab
+          tabBarBadge: notifi_count > 1 ? notifi_count : undefined, // biểu tượng số thông báo trên bottomTab
           tabBarShowLabel: false, // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
           tabBarIcon: ({focused, color, size}) => (
             <Icon name={'code'} size={26} color={color} />
@@ -77,7 +78,7 @@ const BottomTabs = ({navigation, route}) => {
         },
       },
     ];
-  }, [notifi_count]);
+  }, [cart_data, notifi_count]);
 
   return (
     <Tab.Navigator

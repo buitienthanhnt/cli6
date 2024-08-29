@@ -26,7 +26,7 @@ interface CartItem {
 }
 const addToCart = async (params: AddCartParam) => {
   // @ts-ignore
-  const {data} = await rApi.callRequest({
+  const data = await rApi.callRequest({
     url: Config.api_request.addCart,
     method: 'POST',
     data: params,
@@ -36,10 +36,19 @@ const addToCart = async (params: AddCartParam) => {
 
 const getCart = async () => {
   // @ts-ignore
-  const {data} = await rApi.callRequest({
+  const data = await rApi.callRequest({
     url: Config.api_request.getCart,
   });
   return data;
 };
 
-export {addToCart, getCart};
+const removeCart = () => {
+  // @ts-ignore
+  const data = rApi.callRequest({
+    url: Config.api_request.clearCart,
+    method: 'DELETE',
+  });
+  return data;
+};
+
+export {addToCart, getCart, removeCart};

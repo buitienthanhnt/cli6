@@ -8,6 +8,8 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
+  Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import Config from '@config/Config';
 import axios from 'react-native-axios'; // npm i react-native-axios
@@ -15,6 +17,8 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'; // https:
 import Collapsible from 'react-native-collapsible'; // npm install --save react-native-collapsible
 import {useCategory} from '@hooks/Firebase';
 import rApi from '@netWork/rApi';
+import {useSelector} from 'react-redux';
+import useClearcart from '@hooks/cart/useClearcart';
 
 const CategoryTree = props => {
   const [category_id, setCategoryId] = useState(0);
@@ -22,6 +26,8 @@ const CategoryTree = props => {
   const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(true);
   const categoryTree = useCategory();
+  const {cart_data} = useSelector(State => State.defRe);
+  const {clearCart, isLoading} = useClearcart();
 
   const getCategoryTree = useCallback(async () => {
     try {
@@ -72,6 +78,29 @@ const CategoryTree = props => {
               setRefresh(true);
               CategoryTree();
             };
+          }}
+          ListFooterComponent={() => {
+            return (
+              <View style={{width: '100%', alignItems: 'center', marginTop: 4}}>
+                <TouchableOpacity
+                  onPress={clearCart}
+                  disabled={isLoading}
+                  style={{
+                    height: 40,
+                    backgroundColor: 'rgba(112, 35, 75, 1)',
+                    width: Dimensions.get('screen').width / 2,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 8,
+                  }}>
+                  {isLoading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Text>clear cart {cart_data?.length}</Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+            );
           }}
         />
       </ImageBackground>

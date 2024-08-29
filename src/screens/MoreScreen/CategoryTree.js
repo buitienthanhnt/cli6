@@ -50,6 +50,39 @@ const CategoryTree = props => {
     getCategoryTree();
   }, [category_id, getCategoryTree]);
 
+  const listCartItems = useMemo(() => {
+    let total = 0;
+    if (!cart_data) {
+      return null;
+    }
+    const listItem = cart_data.map(item => {
+      total += item.price * item.qty;
+      return <CartItem item={item} />;
+    });
+
+    return (
+      <View style={{gap: 4, width: '100%'}}>
+        {listItem}
+        <View>
+          <Text
+            style={{
+              width: '100%',
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              borderRadius: 8,
+              backgroundColor: 'rgba(244, 255, 255, 0.5)',
+              color: '#d700ff',
+              fontSize: 16,
+              fontWeight: '600',
+              textAlign: 'right',
+            }}>
+            Tổng tiền: {total}
+          </Text>
+        </View>
+      </View>
+    );
+  }, [cart_data]);
+
   if (!(tree || categoryTree)) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -74,31 +107,64 @@ const CategoryTree = props => {
           }}
           refreshing={refresh}
           onRefresh={() => {
-            () => {
-              setRefresh(true);
-              CategoryTree();
-            };
+            setRefresh(true);
+            CategoryTree();
           }}
           ListFooterComponent={() => {
             return (
-              <View style={{width: '100%', alignItems: 'center', marginTop: 4}}>
-                <TouchableOpacity
-                  onPress={clearCart}
-                  disabled={isLoading}
-                  style={{
-                    height: 40,
-                    backgroundColor: 'rgba(112, 35, 75, 1)',
-                    width: Dimensions.get('screen').width / 2,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 8,
-                  }}>
-                  {isLoading ? (
-                    <ActivityIndicator />
-                  ) : (
-                    <Text>clear cart {cart_data?.length}</Text>
-                  )}
-                </TouchableOpacity>
+              <View style={{marginTop: 4, gap: 4}}>
+                {listCartItems}
+                <View style={{flexDirection: 'row', gap: 4}}>
+                  <TouchableOpacity
+                    onPress={clearCart}
+                    disabled={isLoading}
+                    style={{
+                      height: 40,
+                      backgroundColor: 'rgba(112, 35, 75, 1)',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 8,
+                      flex: 1,
+                    }}>
+                    {isLoading ? (
+                      <ActivityIndicator />
+                    ) : (
+                      <Text
+                        style={{
+                          color: 'white',
+                          fontWeight: '600',
+                          fontSize: 16,
+                        }}>
+                        clear cart {cart_data?.length}
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={clearCart}
+                    disabled={isLoading}
+                    style={{
+                      height: 40,
+                      backgroundColor: 'green',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 8,
+                      flex: 1,
+                    }}>
+                    {isLoading ? (
+                      <ActivityIndicator />
+                    ) : (
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: 'violet',
+                          fontWeight: '600',
+                        }}>
+                        checkout
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
               </View>
             );
           }}
@@ -106,6 +172,36 @@ const CategoryTree = props => {
       </ImageBackground>
     );
   }
+};
+
+const CartItem = ({item}) => {
+  const onRemoveItem = useCallback(() => {
+    console.log('remove for the item');
+  }, []);
+  return (
+    <View
+      style={{
+        width: '100%',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 8,
+        backgroundColor: 'rgba(244, 255, 255, 0.5)',
+      }}>
+      <Text style={{color: 'rgba(59, 73, 255, 0.7)'}}>{item.title}</Text>
+      <Text style={{fontSize: 16}}>giá: {item.price}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+        <View style={{flex: 1}}>
+          <Text style={{fontSize: 16}}>số lượng: {item.qty}</Text>
+          <Text style={{fontSize: 16, color: 'green'}}>
+            Số tiền: {item.price * item.qty}
+          </Text>
+        </View>
+        <TouchableOpacity onPress={onRemoveItem}>
+          <FontAwesome5Icon name="trash-alt" size={24} color="blue" />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 };
 
 const CategoryItem = props => {
@@ -163,6 +259,7 @@ const css = StyleSheet.create({
     flex: 1,
     paddingTop: 12,
     resizeMode: 'cover',
+    paddingHorizontal: 4,
   },
   categoryItem: {
     padding: 4,

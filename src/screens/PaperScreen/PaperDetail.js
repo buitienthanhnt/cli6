@@ -8,8 +8,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
   Button,
+  FlatList,
 } from 'react-native';
 import WebView from 'react-native-webview'; // npm install react-native-webview
 import Comments from './element/Comments';
@@ -22,14 +22,10 @@ import Carolsel from '@screens/AccountScreen/components/Carolsel';
 import PaperTag from './element/PaperTag';
 import PaperCarousel from './element/PaperCarousel';
 import {usePaperDetail} from '@hooks/usePapers';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {openDetail} from '@utils/paper';
 import {debounce} from 'lodash';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
 import Price from '@screens/PaperScreen/element/Price';
 import Nguon from '@screens/PaperScreen/element/Nguon';
 import Title from '@screens/PaperScreen/element/Title';
@@ -49,6 +45,9 @@ const PaperDetail = ({navigation, route}) => {
   useEffect(() => {
     before.current = 0;
     setSug(false);
+    return () => {
+      setSug(false);
+    };
   }, [route?.params?.id]);
 
   const {isLoading, data, refetch} = usePaperDetail(
@@ -175,18 +174,17 @@ const PaperDetail = ({navigation, route}) => {
 };
 
 const Suggest = ({show, datas}) => {
-  const index = useRef(0);
   const flatRef = useRef(null);
-  const interId = useRef('');
-  const height = useSharedValue(0);
+  const width = Dimensions.get('screen').width - 8;
 
-  useEffect(() => {
-    if (!show) {
-      height.value = withTiming(0, {duration: 400});
-    } else {
-      height.value = withTiming(92, {duration: 250});
-    }
-  }, [height, show]);
+  const styleAnimate = useAnimatedStyle(() => {
+    return {
+      height: withTiming(show ? 92 : 0, {duration: 400}),
+      width: width,
+      paddingHorizontal: 4,
+      gap: 2,
+    };
+  });
 
   if (!datas) {
     return null;
@@ -196,7 +194,6 @@ const Suggest = ({show, datas}) => {
       style={[
         {
           position: 'absolute',
-          height: height,
           width: '100%',
           paddingHorizontal: 4,
           top: 2,
@@ -213,19 +210,12 @@ const Suggest = ({show, datas}) => {
         keyExtractor={(item, index) => index + '_slug_key'}
         renderItem={({item, index}) => {
           return (
-            <View
-              style={{
-                height: 92,
-                width: Dimensions.get('screen').width - 8,
-                paddingHorizontal: 4,
-                gap: 2,
-                // backgroundColor: `rgba(${randomValue(256)}, ${randomValue(256)}, ${randomValue(256)}, 1)`
-              }}>
+            <Animated.View style={styleAnimate}>
               {item.length == 2 &&
                 item.map((item, key) => {
                   return <SugItem index={key} item={item} show={show} />;
                 })}
-            </View>
+            </Animated.View>
           );
         }}
       />

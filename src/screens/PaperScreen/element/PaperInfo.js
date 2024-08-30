@@ -44,6 +44,19 @@ export default class PaperInfo extends Component {
           </View>
         )}
 
+        {!!info?.heart && (
+          <View
+            style={{
+              justifyContent: 'center',
+              flexDirection: 'row',
+              alignItems: 'baseline',
+            }}>
+            <Text> | </Text>
+            <FontAwesome5Icon name="heart" size={12} color="#ff2290" />
+            <Text style={{fontWeight: 'bold'}}> {info?.heart}</Text>
+          </View>
+        )}
+
         {!!info?.comment_count && (
           <View style={{justifyContent: 'center', flexDirection: 'row'}}>
             <Text style={{fontWeight: 'bold'}}> | {info?.comment_count} </Text>

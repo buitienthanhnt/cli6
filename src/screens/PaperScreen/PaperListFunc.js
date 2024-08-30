@@ -23,10 +23,12 @@ const PaperListFunc = props => {
       const y = e.nativeEvent.contentOffset.y;
       setCurrentPosition(y);
       if (showTopCategory && y - currentPosition.current > ScreenHeight / 3) {
+          console.log('hide top');
         setShowTopCategory(false);
       }
 
       if (!showTopCategory && currentPosition.current - y > ScreenHeight / 3) {
+          console.log('show top');
         setShowTopCategory(true);
       }
     },

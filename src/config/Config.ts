@@ -37,6 +37,7 @@ const Config = () => {
       addCart: 'api/paper/addCart',
       getCart: 'api/paper/cart',
       clearCart: 'api/paper/clearCart',
+      removeCartItem: 'api/paper/removeItem/',
     },
     googleService: {
       googleMapUrl: 'https://maps.googleapis.com/maps/api/',

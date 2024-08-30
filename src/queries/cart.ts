@@ -1,5 +1,6 @@
 import Config from '@config/Config';
 import rApi from '@netWork/rApi';
+import * as url from 'url';
 interface AddCartParam {
   id: number;
   qty: number;
@@ -51,4 +52,13 @@ const removeCart = () => {
   return data;
 };
 
-export {addToCart, getCart, removeCart};
+const removeCartItem = (itemIndex: string) => {
+  // @ts-ignore
+  const data = rApi.callRequest({
+    url: Config.api_request.removeCartItem + itemIndex,
+    method: 'DELETE',
+  });
+  return data;
+};
+
+export {addToCart, getCart, removeCart, removeCartItem};

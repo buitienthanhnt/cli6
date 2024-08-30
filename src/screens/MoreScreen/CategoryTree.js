@@ -4,21 +4,20 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
   ImageBackground,
-  Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import Config from '@config/Config';
-import axios from 'react-native-axios'; // npm i react-native-axios
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'; // https://fontawesome.com/v5/search?q=right&o=r
 import Collapsible from 'react-native-collapsible'; // npm install --save react-native-collapsible
 import {useCategory} from '@hooks/Firebase';
 import rApi from '@netWork/rApi';
 import {useSelector} from 'react-redux';
 import useClearcart from '@hooks/cart/useClearcart';
+import {useRemoveCartItem} from '@hooks/cart';
+import {isEmpty} from 'lodash';
 
 const CategoryTree = props => {
   const [category_id, setCategoryId] = useState(0);
@@ -52,12 +51,12 @@ const CategoryTree = props => {
 
   const listCartItems = useMemo(() => {
     let total = 0;
-    if (!cart_data) {
+    if (isEmpty(cart_data) || !Array.isArray(cart_data)) {
       return null;
     }
-    const listItem = cart_data.map(item => {
+    const listItem = cart_data.map((item, index) => {
       total += item.price * item.qty;
-      return <CartItem item={item} />;
+      return <CartItem item={item} index={index} />;
     });
 
     return (
@@ -111,6 +110,9 @@ const CategoryTree = props => {
             CategoryTree();
           }}
           ListFooterComponent={() => {
+            if (isEmpty(cart_data)) {
+              return null;
+            }
             return (
               <View style={{marginTop: 4, gap: 4}}>
                 {listCartItems}
@@ -174,10 +176,11 @@ const CategoryTree = props => {
   }
 };
 
-const CartItem = ({item}) => {
+const CartItem = ({item, index}) => {
+  const {isLoading, mutate} = useRemoveCartItem();
   const onRemoveItem = useCallback(() => {
-    console.log('remove for the item');
-  }, []);
+    mutate(index);
+  }, [index, mutate]);
   return (
     <View
       style={{
@@ -196,9 +199,13 @@ const CartItem = ({item}) => {
             Số tiền: {item.price * item.qty}
           </Text>
         </View>
-        <TouchableOpacity onPress={onRemoveItem}>
-          <FontAwesome5Icon name="trash-alt" size={24} color="blue" />
-        </TouchableOpacity>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <TouchableOpacity onPress={onRemoveItem}>
+            <FontAwesome5Icon name="trash-alt" size={24} color="blue" />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

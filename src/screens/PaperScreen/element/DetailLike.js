@@ -61,7 +61,7 @@ export default class DetailLike extends Component {
           flexDirection: 'row',
           justifyContent: 'flex-end',
           backgroundColor: 'white',
-          marginTop: 4,
+          marginVertical: 2,
           borderRadius: 4,
           paddingHorizontal: 8,
           paddingVertical: 2,

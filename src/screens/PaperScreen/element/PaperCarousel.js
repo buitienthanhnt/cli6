@@ -35,7 +35,7 @@ const PaperCarousel = ({slider_images}) => {
               textAlign: 'center',
               fontWeight: 600,
             }}>
-            {item.description}
+            {item.title || item.description}
           </Text>
         </ImageBackground>
       );
@@ -46,7 +46,8 @@ const PaperCarousel = ({slider_images}) => {
     return null;
   }
   return (
-    <View>
+    <View
+      style={{backgroundColor: 'white', borderRadius: 4, marginVertical: 2}}>
       <FlatList
         contentContainerStyle={{
           height: height + 10,

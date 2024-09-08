@@ -60,7 +60,7 @@ const CarolParax: React.FunctionComponent<Props> = ({
       style={{
         alignItems: 'center',
         backgroundColor: 'white',
-        marginTop: 4,
+        marginVertical: 2,
         paddingBottom: 4,
       }}>
       <Carousel

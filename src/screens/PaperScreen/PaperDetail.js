@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback, useEffect} from 'react';
+import React, {useState, useRef, useCallback, useEffect, useMemo} from 'react';
 import {
   Dimensions,
   Image,
@@ -30,6 +30,7 @@ import Price from '@screens/PaperScreen/element/Price';
 import Nguon from '@screens/PaperScreen/element/Nguon';
 import Title from '@screens/PaperScreen/element/Title';
 import Content from '@screens/PaperScreen/element/Content';
+import ImageConten from '@screens/PaperScreen/element/ImageConten';
 
 const PaperDetail = ({navigation, route}) => {
   const before = useRef(0);
@@ -96,6 +97,21 @@ const PaperDetail = ({navigation, route}) => {
     };
   }, [navigation]);
 
+  const renderContents = useCallback(item => {
+    switch (item.type) {
+      case 'price':
+        return <Price />;
+      case 'slider_data':
+        return <PaperCarousel slider_images={item.value} />;
+      case 'image':
+        return <ImageConten item={item} />;
+      case 'conten':
+        return <Content />;
+      default:
+        return null;
+    }
+  }, []);
+
   if (data) {
     if (showWebview) {
       return <WebView source={{uri: 'www.topsy-fashion.nl'}} />;
@@ -109,7 +125,7 @@ const PaperDetail = ({navigation, route}) => {
           refRBSheet,
           commentParent,
           setCommentParent,
-          price: data?.price,
+          price: data?.contents.find(i => i.type === 'price')?.value,
           paper: data,
           qty: qty,
           setQty: setQty,
@@ -126,9 +142,9 @@ const PaperDetail = ({navigation, route}) => {
             <RefreshControl refreshing={isLoading} onRefresh={refetch} />
           }>
           <Title />
-          <PaperCarousel slider_images={data.slider_images} />
-          <Content />
-          <Price />
+          {data?.contents.map(data => {
+            return renderContents(data);
+          })}
           <DetailLike info={data.info} />
           <Nguon />
           <PaperTag tags={data?.tags} />

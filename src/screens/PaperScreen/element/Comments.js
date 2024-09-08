@@ -28,7 +28,7 @@ const Comments = ({paperId}) => {
         paddingVertical: 10,
         backgroundColor: 'white',
         borderRadius: 4,
-        marginTop: 4,
+        marginVertical: 2,
         paddingLeft: 4,
       }}>
       <View style={{flexDirection: 'row'}}>

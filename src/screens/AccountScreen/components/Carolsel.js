@@ -85,7 +85,7 @@ const css = StyleSheet.create({
     flex: 1,
     borderRadius: 4,
     backgroundColor: 'white',
-    marginTop: 4,
+    marginVertical: 2,
     paddingBottom: 4,
   },
   item: {

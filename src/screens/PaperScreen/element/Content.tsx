@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useContext} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import WebView from 'react-native-webview';
 import RenderHTML, {
   defaultHTMLElementModels,
@@ -29,29 +29,42 @@ const Content: FunctionComponent<Props> = () => {
   const {paper: data} = useContext(PaperDetailContext);
   // {/* <RenderHTML contentWidth={Dimensions.get("screen").width} source={{ html }}></RenderHTML> */}
   return (
-    <RenderHTML
-      renderers={renderers}
-      WebView={WebView}
-      source={{html: data?.conten || ''}}
-      contentWidth={Dimensions.get('screen').width}
-      customHTMLElementModels={customHTMLElementModels}
-      defaultWebViewProps={
-        {
-          /* Any prop you want to pass to all WebViews */
+    <View
+      style={{
+        backgroundColor: 'white',
+        borderRadius: 4,
+        paddingHorizontal: 4,
+        marginVertical: 2,
+      }}>
+      <RenderHTML
+        renderers={renderers}
+        WebView={WebView}
+        source={{
+          html:
+            data?.conten ||
+            data?.contents.find((i: any) => i.type === 'conten')?.value ||
+            '',
+        }}
+        contentWidth={Dimensions.get('screen').width}
+        customHTMLElementModels={customHTMLElementModels}
+        defaultWebViewProps={
+          {
+            /* Any prop you want to pass to all WebViews */
+          }
         }
-      }
-      renderersProps={{
-        iframe: {
-          scalesPageToFit: true,
-          webViewProps: {
-            /* Any prop you want to pass to iframe WebViews */
+        renderersProps={{
+          iframe: {
+            scalesPageToFit: true,
+            webViewProps: {
+              /* Any prop you want to pass to iframe WebViews */
+            },
           },
-        },
-      }}
-      // onPress={event => {
-      //   return undefined;
-      // }}
-    />
+        }}
+        // onPress={event => {
+        //   return undefined;
+        // }}
+      />
+    </View>
   );
 };
 

@@ -8,7 +8,7 @@ const Nguon = () => {
       style={{
         backgroundColor: 'white',
         padding: 4,
-        marginTop: 4,
+        marginVertical: 2,
         borderRadius: 4,
       }}>
       <Pressable

@@ -48,7 +48,7 @@ const Price: FunctionComponent<Props> = () => {
         backgroundColor: 'white',
         paddingHorizontal: 4,
         borderRadius: 6,
-        marginTop: 4,
+        marginVertical: 2,
       }}>
       <View>
         <Text style={{fontWeight: '600', fontSize: 16, paddingVertical: 4}}>

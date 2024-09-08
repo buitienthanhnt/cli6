@@ -44,7 +44,7 @@ class PaperTag extends Component {
           flexDirection: 'row',
           paddingVertical: 8,
           backgroundColor: 'white',
-          marginTop: 4,
+          marginVertical: 2,
           borderRadius: 5,
         }}>
         <View style={{padding: 4, justifyContent: 'center'}}>

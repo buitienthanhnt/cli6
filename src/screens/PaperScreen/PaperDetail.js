@@ -71,7 +71,11 @@ const PaperDetail = ({navigation, route}) => {
           headerShown: false,
         });
       }
-      if (sug && before.current - e.nativeEvent.contentOffset.y > 90) {
+      if (
+        sug &&
+        (before.current - e.nativeEvent.contentOffset.y > 90 ||
+          e.nativeEvent.contentOffset.y === 0)
+      ) {
         setSug(false);
         navigation.getParent()?.setOptions({
           tabBarStyle: {

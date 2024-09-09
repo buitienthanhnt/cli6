@@ -129,7 +129,7 @@ const PaperDetail = ({navigation, route}) => {
           refRBSheet,
           commentParent,
           setCommentParent,
-          price: data?.contents.find(i => i.type === 'price')?.value,
+          price: data?.contents?.find(i => i.type === 'price')?.value,
           paper: data,
           qty: qty,
           setQty: setQty,
@@ -146,7 +146,7 @@ const PaperDetail = ({navigation, route}) => {
             <RefreshControl refreshing={isLoading} onRefresh={refetch} />
           }>
           <Title />
-          {data?.contents.map(data => {
+          {data?.contents?.map(data => {
             return renderContents(data);
           })}
           <DetailLike info={data.info} />

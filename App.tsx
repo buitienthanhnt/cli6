@@ -16,7 +16,6 @@ import {
   Linking,
   Modal,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import {navigationRef} from '@hooks/Navigate'; // để di chuyển qua các màn hình
 import {check, request, RESULTS} from 'react-native-permissions';

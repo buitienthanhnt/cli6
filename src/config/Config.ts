@@ -1,8 +1,8 @@
 const Config = () => {
   const Config = {
     useFirebase: false, // default=false, dev=true
-    // domain: 'https://magento23x.jmango360.dev/pub/laravel1/public/',
-    domain: null,
+    domain: 'https://magento23x.jmango360.dev/pub/laravel1/public/',
+    // domain: null,
     http: 'http://',
     https: 'https://',
     main: 'laravel1/',

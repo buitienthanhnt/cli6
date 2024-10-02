@@ -7,10 +7,10 @@ const Config = () => {
     https: 'https://',
     main: 'laravel1/',
     // ip: "192.168.99.103/",                 // 192.168.99.103       (4700-home) || 192.168.99.100 (6800-home)
-    // ip: '192.168.41.101/',                    // 192.168.41.101      (m4700-wf300)
-    ip: '192.168.41.104/', // 192.168.41.107      (m6800)
-    // ip: '192.168.100.156/', // 192.168.100.156        (jm-destop)
-    uri: 'laravel1/public/index.php/', // laravel1/public/index.php
+    // ip: '192.168.41.101/',                 // 192.168.41.101       (m4700-wf300)
+    ip: '192.168.41.102/',                    // 192.168.41.102       (m6800)
+    // ip: '192.168.100.156/',                // 192.168.100.156      (jm-destop)
+    uri: 'laravel1/public/index.php/',        // laravel1/public/index.php
     token: 'tha_nan_demo_request_token',
     api_key: 'laravel1.com',
     api_request: {

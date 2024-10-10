@@ -171,6 +171,14 @@ const AccountDetail = props => {
       />
       <Text />
 
+      <Button
+        title="reset redux state!"
+        onPress={() => {
+          updateState(actionReducer.reset_state, null);
+        }}
+      />
+      <Text />
+
       {!user && (
         <Button
           title="to Login"

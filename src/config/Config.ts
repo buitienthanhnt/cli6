@@ -14,30 +14,31 @@ const Config = () => {
     token: 'tha_nan_demo_request_token',
     api_key: 'laravel1.com',
     api_request: {
-      getInfo: 'api/info',
-      getpapers: 'api/getpapers/',
-      getCategoryTop: 'api/getcategorytop/',
-      getPaperCategory: 'api/papercategory/',
-      getRelatedPaper: 'api/getRelatedPaper',
-      getCategoryTree: 'api/getcategorytree',
-      getPaperDetail: 'api/paper/detail/',
-      getPaperComments: 'api/paperComment/',
-      paperAddComment: 'api/paperAddComment/',
-      paperAddLike: 'api/addLike/',
-      commentLike: 'api/paper/like/',
+      getInfo: 'homeInfo',
+      getpapers: 'getPapers',
+      getCategoryTree: 'getCategoryTree',
+      getCategoryTop: 'getCategoryTop',
+      getPaperCategory: 'paperByCategory',
+      getRelatedPaper: 'getRelatedPaper',
+      getPaperComments: 'paperComments',
+      search: 'search',
+      byWriter: 'byWriter',
+      parseUrl: 'parseUrl',
+      paperAddComment: 'paper/addComment', // paper
+      paperAddLike: 'paper/likePaper',
+      getPaperDetail: 'paper/detail',
+      commentLike: 'paper/like',
+      addCart: 'paper/addCart',
+      getCart: 'paper/cart',
+      clearCart: 'paper/clearCart',
+      removeCartItem: 'paper/removeItem',
+      registerFcm: 'notification/addFcm', // notifi
+      userInfo: 'userInfo',
+
       testData: 'api/testJson/',
       testPost: 'api/testPost/',
-      parseUrl: 'api/parseUrl/',
-      registerFcm: 'api/notification/addFcm',
       uploadImageMb: 'api/mobile/upimage/',
-      search: 'api/search/',
-      byWriter: 'api/byWriter/',
       getToken: '/getUserToken',
-      userInfo: 'api/userInfo',
-      addCart: 'api/paper/addCart',
-      getCart: 'api/paper/cart',
-      clearCart: 'api/paper/clearCart',
-      removeCartItem: 'api/paper/removeItem/',
     },
     googleService: {
       googleMapUrl: 'https://maps.googleapis.com/maps/api/',
@@ -59,11 +60,11 @@ const Config = () => {
     },
     custom_url: function (path = ''): string {
       return this.domain
-        ? this.domain + path
-        : this.http + this.ip + this.uri + path;
+        ? this.domain+ '/api/' + path
+        : this.http + this.ip + this.uri + '/api/' + path;
     },
     public_url: function (): string {
-      return this.http + this.ip + this.main + 'public/';
+      return this.http + this.ip + this.main + 'public/api/';
     },
   };
   return Config;

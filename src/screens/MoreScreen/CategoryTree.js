@@ -107,7 +107,7 @@ const CategoryTree = props => {
           refreshing={refresh}
           onRefresh={() => {
             setRefresh(true);
-            CategoryTree();
+            getCategoryTree();
           }}
           ListFooterComponent={() => {
             if (isEmpty(cart_data)) {

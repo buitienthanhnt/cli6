@@ -17,6 +17,7 @@ const actionReducerType = {
   useFirebase: 'USE_FIREBASE',
   setToken: 'SET_TOKEN',
   setRefreshToken: 'SET_REFRESH_TOKEN',
+  reset_state: 'RESET_STATE',
 };
 
 export default actionReducerType;
